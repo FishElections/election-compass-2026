@@ -28,11 +28,13 @@ export interface PlatformTopic {
 export interface Party {
   id: string;
   name: string;
-  shortName: string;
-  logo: string;
-  color: string;
   leader: string;
-  description: string;
+  color: string;
+  spectrum: string;
+  shortDescription: string;
+  logo: string;
+  /** נשמר לשימוש עתידי; לא מאוכלס בפועל כדי להימנע משימוש בדימויים לא מורשים של אנשים אמיתיים. */
+  leaderSketchUrl?: string;
   platform: PlatformTopic[];
 }
 

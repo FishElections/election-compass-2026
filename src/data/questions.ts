@@ -1,11 +1,11 @@
 import { Category, Question } from "@/types";
 
 export const categories: Category[] = [
-  { id: "security", label: "ביטחון", icon: "🛡️" },
-  { id: "economy", label: "כלכלה", icon: "💰" },
+  { id: "security", label: "ביטחון ומדיניות חוץ", icon: "🛡️" },
+  { id: "economy", label: "כלכלה ויוקר מחיה", icon: "💰" },
   { id: "religion_state", label: "דת ומדינה", icon: "🕊️" },
-  { id: "judiciary", label: "מערכת המשפט", icon: "⚖️" },
-  { id: "society", label: "חברה", icon: "🤝" },
+  { id: "judiciary", label: "מערכת המשפט וממשל", icon: "⚖️" },
+  { id: "society", label: "חברה ופנים", icon: "🤝" },
 ];
 
 export const questions: Question[] = [

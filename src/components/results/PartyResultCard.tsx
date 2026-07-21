@@ -31,9 +31,11 @@ export function PartyResultCard({
             <h3 className="font-display text-2xl font-normal">
               {result.party.name}
             </h3>
-            <p className="text-sm text-white/70">{result.party.leader}</p>
+            <p className="text-sm text-white/70">
+              {result.party.leader} · {result.party.spectrum}
+            </p>
             <p className="mt-3 text-sm leading-relaxed text-white/80">
-              {result.party.description}
+              {result.party.shortDescription}
             </p>
           </div>
           <div className="shrink-0 rounded-2xl bg-white/10 p-4 backdrop-blur-md">
@@ -65,14 +67,16 @@ export function PartyResultCard({
       </div>
 
       <h3 className="mt-4 font-bold text-navy">{result.party.name}</h3>
-      <p className="text-sm text-gray-dark">{result.party.leader}</p>
+      <p className="text-sm text-gray-dark">
+        {result.party.leader} · {result.party.spectrum}
+      </p>
 
       <div className="mt-4">
         <Gauge percentage={result.matchPercentage} size={92} />
       </div>
 
       <p className="mt-4 text-sm leading-relaxed text-gray-dark">
-        {result.party.description}
+        {result.party.shortDescription}
       </p>
     </div>
   );

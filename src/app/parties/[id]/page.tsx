@@ -40,14 +40,18 @@ export default async function PartyProfilePage({
             </div>
             <div className="relative z-10">
               <h1 className="font-display text-3xl font-normal">{party.name}</h1>
-              <p className="text-white/70">{party.leader}</p>
+              <p className="text-white/70">
+                {party.leader} · {party.spectrum}
+              </p>
             </div>
           </div>
         </div>
       </div>
 
       <div className="mx-auto max-w-3xl px-4 pb-16">
-        <p className="leading-relaxed text-foreground">{party.description}</p>
+        <p className="leading-relaxed text-foreground">
+          {party.shortDescription}
+        </p>
 
         <h2 className="font-display mt-10 mb-4 text-xl font-normal text-navy">
           מיקום כללי לפי קטגוריה

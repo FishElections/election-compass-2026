@@ -107,8 +107,8 @@ export default function HomePage() {
               <div className="flex-1 text-right">
                 <h3 className="font-bold text-navy">מפרק הבועות</h3>
                 <p className="text-sm text-gray-dark">
-                  בדקו את הפתיחות המחשבתית שלכם מול הטיעונים החזקים ביותר של
-                  המחנה הנגדי
+                  בחרתם כבר מפלגה? היכנסו ל־״מפרק הבועות״ ובחנו את העמדות
+                  שלכם מול הטיעונים החזקים ביותר של המחנה הנגדי
                 </p>
               </div>
               <ChevronLeft className="h-4 w-4 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />

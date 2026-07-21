@@ -114,13 +114,13 @@ export function PlatformsClient() {
                           {party.name}
                         </h2>
                         <p className="truncate text-sm text-gray-dark">
-                          {party.leader}
+                          {party.leader} · {party.spectrum}
                         </p>
                       </div>
                     </div>
 
                     <div className="mt-4 rounded-xl bg-gray-light px-4 py-3 text-sm leading-relaxed text-navy">
-                      {party.description}
+                      {party.shortDescription}
                     </div>
 
                     <div className="mt-4">
