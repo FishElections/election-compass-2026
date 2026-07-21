@@ -3,7 +3,17 @@
     "allow": [
       "Bash(npm -v)",
       "Bash(npx --version)",
-      "Bash(npx create-next-app@latest . --typescript --tailwind --app --eslint --src-dir --import-alias \"@/*\" --use-npm --no-turbopack --yes)"
+      "Bash(npx create-next-app@latest . --typescript --tailwind --app --eslint --src-dir --import-alias \"@/*\" --use-npm --no-turbopack --yes)",
+      "Bash(npm install *)",
+      "Bash(node /private/tmp/claude-501/-Users-ohad-Documents-elections-prj/1d096468-7766-49b8-845f-41a196e2b75c/scratchpad/gen_stances.mjs)",
+      "Bash(node -e \"const d=require\\('/private/tmp/claude-501/-Users-ohad-Documents-elections-prj/1d096468-7766-49b8-845f-41a196e2b75c/scratchpad/stances.json'\\); console.log\\(d.length\\)\")",
+      "Bash(node -e ' *)",
+      "Bash(mkdir -p \"/Users/ohad/Documents/elections_prj/src/app/parties/[id]\" /Users/ohad/Documents/elections_prj/src/app/compare /Users/ohad/Documents/elections_prj/src/app/news)",
+      "Bash(npx tsc *)",
+      "Bash(npx tsx -e ' *)",
+      "Bash(npm ls *)",
+      "Bash(npm run *)",
+      "Bash(git add *)"
     ]
   }
 }
