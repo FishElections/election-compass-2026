@@ -11,6 +11,20 @@ export interface Category {
   icon: string;
 }
 
+export type PlatformTopicKey =
+  | "security"
+  | "economy"
+  | "justice"
+  | "religionAndState"
+  | "society";
+
+export interface PlatformTopic {
+  topicKey: PlatformTopicKey;
+  topicName: string;
+  summary: string;
+  bulletPoints: string[];
+}
+
 export interface Party {
   id: string;
   name: string;
@@ -19,6 +33,7 @@ export interface Party {
   color: string;
   leader: string;
   description: string;
+  platform: PlatformTopic[];
 }
 
 export interface Question {

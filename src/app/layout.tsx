@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Heebo, Rubik } from "next/font/google";
+import { SidebarDrawer } from "@/components/SidebarDrawer";
 import "./globals.css";
 
 const heebo = Heebo({
@@ -29,6 +30,7 @@ export default function RootLayout({
       className={`${heebo.variable} ${rubik.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <SidebarDrawer />
         {children}
       </body>
     </html>
