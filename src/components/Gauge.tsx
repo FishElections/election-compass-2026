@@ -1,10 +1,24 @@
-interface OpennessGaugeProps {
+"use client";
+
+import { useId } from "react";
+
+interface GaugeProps {
   percentage: number;
   size?: number;
+  label?: string;
+  fromColor?: string;
+  toColor?: string;
 }
 
-export function OpennessGauge({ percentage, size = 180 }: OpennessGaugeProps) {
-  const strokeWidth = 14;
+export function Gauge({
+  percentage,
+  size = 160,
+  label,
+  fromColor = "var(--color-sapphire)",
+  toColor = "var(--color-success)",
+}: GaugeProps) {
+  const gradientId = useId();
+  const strokeWidth = 12;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const clamped = Math.max(0, Math.min(100, percentage));
@@ -15,9 +29,15 @@ export function OpennessGauge({ percentage, size = 180 }: OpennessGaugeProps) {
       className="relative mx-auto"
       style={{ width: size, height: size }}
       role="img"
-      aria-label={`מדד פתיחות מחשבתית: ${clamped}%`}
+      aria-label={label ? `${label}: ${clamped}%` : `${clamped}%`}
     >
-      <svg width={size} height={size} className="-rotate-90">
+      <svg width={size} height={size} className="-rotate-90 drop-shadow-[0_4px_16px_rgba(37,99,235,0.25)]">
+        <defs>
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor={fromColor} />
+            <stop offset="100%" stopColor={toColor} />
+          </linearGradient>
+        </defs>
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -31,7 +51,7 @@ export function OpennessGauge({ percentage, size = 180 }: OpennessGaugeProps) {
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="var(--color-navy)"
+          stroke={`url(#${gradientId})`}
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
@@ -40,8 +60,10 @@ export function OpennessGauge({ percentage, size = 180 }: OpennessGaugeProps) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-3xl font-extrabold text-navy">{clamped}%</span>
-        <span className="text-xs text-gray-dark">פתיחות מחשבתית</span>
+        <span className="font-display text-3xl font-normal text-navy">
+          {clamped}%
+        </span>
+        {label && <span className="text-xs text-gray-dark">{label}</span>}
       </div>
     </div>
   );

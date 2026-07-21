@@ -1,20 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f8fa;
-  --foreground: #1a2238;
+  --background: #f8fafc;
+  --foreground: #101728;
 
-  --color-navy: #0f2557;
-  --color-navy-dark: #0a1a3d;
-  --color-navy-light: #1e3a7a;
+  /* Midnight Israeli navy, deep contrast base */
+  --color-navy: #0b132b;
+  --color-navy-dark: #05070f;
+  --color-navy-light: #1c2541;
+
   --color-white: #ffffff;
-  --color-gray-light: #f1f3f6;
-  --color-gray: #e4e7ec;
-  --color-gray-dark: #6b7280;
-  --color-success: #15803d;
-  --color-success-light: #dcfce7;
-  --color-danger: #b91c1c;
+  --color-gray-light: #f1f2f6;
+  --color-gray: #e2e5ec;
+  --color-gray-dark: #64748b;
+
+  /* Electric sapphire, primary interactive accent */
+  --color-sapphire: #2563eb;
+  --color-sapphire-light: #3b82f6;
+
+  /* Openness / match / success accent */
+  --color-success: #059669;
+  --color-success-light: #d1fae5;
+  --color-emerald-light: #10b981;
+
+  /* Steelman / counter-argument accent */
+  --color-danger: #dc2626;
   --color-danger-light: #fee2e2;
+  --color-amber: #d97706;
+  --color-amber-light: #fef3c7;
+  --color-coral: #f97316;
+
   --color-gold: #c9a227;
 }
 
@@ -27,12 +42,19 @@
   --color-gray-light: var(--color-gray-light);
   --color-gray: var(--color-gray);
   --color-gray-dark: var(--color-gray-dark);
+  --color-sapphire: var(--color-sapphire);
+  --color-sapphire-light: var(--color-sapphire-light);
   --color-success: var(--color-success);
   --color-success-light: var(--color-success-light);
+  --color-emerald-light: var(--color-emerald-light);
   --color-danger: var(--color-danger);
   --color-danger-light: var(--color-danger-light);
+  --color-amber: var(--color-amber);
+  --color-amber-light: var(--color-amber-light);
+  --color-coral: var(--color-coral);
   --color-gold: var(--color-gold);
   --font-sans: var(--font-heebo), var(--font-rubik), system-ui, sans-serif;
+  --font-display: var(--font-secular-one), var(--font-heebo), sans-serif;
 }
 
 body {
@@ -53,6 +75,63 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--color-gray-dark);
   border-radius: 999px;
+}
+
+/* Subtle atmospheric dot-grid, used behind hero / header sections */
+.bg-dot-grid {
+  background-image: radial-gradient(
+    circle,
+    rgba(11, 19, 43, 0.09) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+.bg-dot-grid-dark {
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.08) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+/* Tactile card elevation */
+.shadow-ambient {
+  box-shadow: 0 4px 20px -4px rgba(11, 19, 43, 0.08);
+}
+
+.shadow-ambient-lg {
+  box-shadow: 0 16px 40px -8px rgba(11, 19, 43, 0.18);
+}
+
+.glow-sapphire {
+  box-shadow:
+    0 0 0 1px var(--color-sapphire),
+    0 8px 24px -6px rgba(37, 99, 235, 0.35);
+}
+
+.glow-emerald {
+  box-shadow:
+    0 0 0 1px var(--color-success),
+    0 8px 24px -6px rgba(5, 150, 105, 0.35);
+}
+
+.glow-amber {
+  box-shadow:
+    0 0 0 1px var(--color-amber),
+    0 8px 24px -6px rgba(217, 119, 6, 0.3);
+}
+
+.text-gradient-sapphire-emerald {
+  background: linear-gradient(
+    90deg,
+    var(--color-sapphire) 0%,
+    var(--color-success) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 @keyframes fade-in-up {

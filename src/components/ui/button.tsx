@@ -4,16 +4,22 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/40 cursor-pointer",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sapphire/50 cursor-pointer",
   {
     variants: {
       variant: {
-        default: "bg-navy text-white hover:bg-navy-light shadow-sm",
+        default:
+          "bg-navy text-white shadow-ambient hover:-translate-y-0.5 hover:bg-navy-light hover:shadow-[0_10px_28px_-6px_rgba(37,99,235,0.45)]",
+        accent:
+          "bg-sapphire text-white shadow-ambient hover:-translate-y-0.5 hover:bg-sapphire-light hover:glow-sapphire",
         outline:
-          "border-2 border-gray hover:border-navy bg-white text-navy hover:bg-gray-light",
-        ghost: "hover:bg-gray-light text-navy",
-        success: "bg-success text-white hover:brightness-110 shadow-sm",
-        link: "text-navy underline-offset-4 hover:underline",
+          "border-2 border-gray bg-white text-navy hover:-translate-y-0.5 hover:border-sapphire hover:bg-sapphire/5",
+        ghost: "text-navy hover:bg-navy/5",
+        success:
+          "bg-success text-white shadow-ambient hover:-translate-y-0.5 hover:brightness-110 hover:glow-emerald",
+        amber:
+          "bg-amber text-white shadow-ambient hover:-translate-y-0.5 hover:brightness-105 hover:glow-amber",
+        link: "text-sapphire underline-offset-4 hover:underline",
       },
       size: {
         default: "h-11 px-5 py-2",

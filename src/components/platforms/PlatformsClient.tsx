@@ -30,17 +30,19 @@ export function PlatformsClient() {
 
   return (
     <main className="flex-1">
-      <div className="mx-auto max-w-5xl px-4 pb-16 pt-20 sm:pt-24">
-        <div className="text-center">
-          <h1 className="text-2xl font-extrabold text-navy sm:text-3xl">
-            סיכומי מצעי המפלגות - בחירות 2026
+      <div className="bg-dot-grid">
+        <div className="mx-auto max-w-5xl px-4 pb-8 pt-20 text-center sm:pt-24">
+          <h1 className="font-display text-3xl font-normal text-navy sm:text-4xl">
+            סיכומי מצעי המפלגות לבחירות 2026
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-gray-dark">
             סקירה ניטרלית, תמציתית ומקיפה של עמדות המפלגות בנושאי הליבה.
           </p>
         </div>
+      </div>
 
-        <div className="mt-8 flex flex-col gap-4">
+      <div className="mx-auto max-w-5xl px-4 pb-16">
+        <div className="flex flex-col gap-4">
           <div className="relative">
             <Search className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-dark" />
             <input
@@ -48,7 +50,7 @@ export function PlatformsClient() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="חפש לפי שם מפלגה או מנהיג"
-              className="w-full rounded-xl border-2 border-gray bg-white py-3 pr-11 pl-4 text-sm text-foreground placeholder:text-gray-dark focus:border-navy focus:outline-none"
+              className="w-full rounded-xl border-2 border-gray bg-white py-3 pr-11 pl-4 text-sm text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none"
             />
           </div>
 
@@ -59,8 +61,8 @@ export function PlatformsClient() {
               className={cn(
                 "rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer",
                 category === "all"
-                  ? "border-navy bg-navy text-white"
-                  : "border-gray bg-white text-navy hover:border-navy"
+                  ? "border-sapphire bg-sapphire text-white"
+                  : "border-gray bg-white text-navy hover:border-sapphire"
               )}
             >
               הכל
@@ -73,8 +75,8 @@ export function PlatformsClient() {
                 className={cn(
                   "rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer",
                   category === topic.key
-                    ? "border-navy bg-navy text-white"
-                    : "border-gray bg-white text-navy hover:border-navy"
+                    ? "border-sapphire bg-sapphire text-white"
+                    : "border-gray bg-white text-navy hover:border-sapphire"
                 )}
               >
                 {topic.icon} {topic.label}
@@ -98,7 +100,7 @@ export function PlatformsClient() {
               return (
                 <div
                   key={party.id}
-                  className="overflow-hidden rounded-2xl border border-gray bg-white shadow-sm"
+                  className="overflow-hidden rounded-2xl border border-gray/80 bg-white shadow-ambient transition-all duration-200 hover:-translate-y-0.5 hover:shadow-ambient-lg"
                 >
                   <div
                     className="h-1.5 w-full"
@@ -117,7 +119,7 @@ export function PlatformsClient() {
                       </div>
                     </div>
 
-                    <div className="mt-4 rounded-xl bg-navy/5 px-4 py-3 text-sm leading-relaxed text-navy">
+                    <div className="mt-4 rounded-xl bg-gray-light px-4 py-3 text-sm leading-relaxed text-navy">
                       {party.description}
                     </div>
 
@@ -146,7 +148,7 @@ export function PlatformsClient() {
                                     key={point}
                                     className="flex items-start gap-2 text-sm text-gray-dark"
                                   >
-                                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-navy" />
+                                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sapphire" />
                                     {point}
                                   </li>
                                 ))}

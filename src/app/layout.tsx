@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Heebo, Rubik } from "next/font/google";
+import { Heebo, Rubik, Secular_One } from "next/font/google";
 import { SidebarDrawer } from "@/components/SidebarDrawer";
 import "./globals.css";
 
@@ -11,6 +11,12 @@ const heebo = Heebo({
 const rubik = Rubik({
   variable: "--font-rubik",
   subsets: ["hebrew", "latin"],
+});
+
+const secularOne = Secular_One({
+  variable: "--font-secular-one",
+  subsets: ["hebrew", "latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +33,7 @@ export default function RootLayout({
     <html
       lang="he"
       dir="rtl"
-      className={`${heebo.variable} ${rubik.variable} h-full antialiased`}
+      className={`${heebo.variable} ${rubik.variable} ${secularOne.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <SidebarDrawer />

@@ -36,7 +36,7 @@ export function ResultsClient() {
     return (
       <main className="flex-1">
         <div className="mx-auto flex max-w-md flex-col items-center gap-4 px-4 py-24 text-center">
-          <h1 className="text-2xl font-bold text-navy">
+          <h1 className="font-display text-2xl font-normal text-navy">
             עדיין לא נמצאו תשובות
           </h1>
           <p className="text-gray-dark">
@@ -76,8 +76,8 @@ export function ResultsClient() {
     <main className="flex-1">
       <div className="mx-auto max-w-4xl px-4 py-12 sm:py-16">
         <div className="mb-10 text-center">
-          <h1 className="text-2xl font-extrabold text-navy sm:text-3xl">
-            התוצאות שלך מוכנות!
+          <h1 className="font-display text-3xl font-normal text-navy sm:text-4xl">
+            התוצאות שלכם מוכנות
           </h1>
           <p className="mt-2 text-gray-dark">
             ענית על {answeredCount} מתוך {activeQuestions.length} שאלות. אלו
@@ -85,10 +85,21 @@ export function ResultsClient() {
           </p>
         </div>
 
-        <div className="grid gap-6 pt-4 sm:grid-cols-3">
-          {topThree.map((result, i) => (
-            <PartyResultCard key={result.party.id} result={result} rank={i + 1} />
-          ))}
+        <div className="flex flex-col gap-6 pt-4">
+          {topThree[0] && (
+            <PartyResultCard result={topThree[0]} rank={1} />
+          )}
+          {topThree.length > 1 && (
+            <div className="grid gap-6 sm:grid-cols-2">
+              {topThree.slice(1).map((result, i) => (
+                <PartyResultCard
+                  key={result.party.id}
+                  result={result}
+                  rank={i + 2}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {rest.length > 0 && (
@@ -117,7 +128,9 @@ export function ResultsClient() {
         )}
 
         <div className="mt-14">
-          <h2 className="mb-4 text-xl font-bold text-navy">פירוט תשובות</h2>
+          <h2 className="font-display mb-4 text-xl font-normal text-navy">
+            פירוט תשובות
+          </h2>
           {topThree.length > 1 && (
             <div className="mb-4 flex flex-wrap gap-2">
               {topThree.map((r) => (
@@ -127,8 +140,8 @@ export function ResultsClient() {
                   className={cn(
                     "rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer",
                     selectedPartyId === r.party.id
-                      ? "border-navy bg-navy text-white"
-                      : "border-gray bg-white text-navy hover:border-navy"
+                      ? "border-sapphire bg-sapphire text-white"
+                      : "border-gray bg-white text-navy hover:border-sapphire"
                   )}
                 >
                   לעומת {r.party.name}
@@ -137,7 +150,7 @@ export function ResultsClient() {
             </div>
           )}
           {selectedParty && (
-            <div className="rounded-2xl border border-gray bg-white px-5">
+            <div className="rounded-2xl border border-gray/80 bg-white px-5 shadow-ambient">
               <AnswerBreakdown
                 questions={activeQuestions}
                 answers={answers}
@@ -148,21 +161,19 @@ export function ResultsClient() {
         </div>
 
         {topThree[0] && (
-          <div className="mt-14 flex flex-col items-center gap-4 rounded-2xl border border-navy/20 bg-navy/5 p-6 text-center sm:flex-row sm:text-right">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-navy text-white">
+          <div className="mt-14 flex flex-col items-center gap-4 rounded-2xl border border-amber/30 bg-amber-light/40 p-6 text-center sm:flex-row sm:text-right">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber text-white">
               <Brain className="h-6 w-6" />
             </div>
             <div className="flex-1">
-              <h2 className="font-bold text-navy">
-                מוכנים לאתגר את עצמכם? 🧠
-              </h2>
+              <h2 className="font-bold text-navy">מוכנים לאתגר את עצמכם?</h2>
               <p className="mt-1 text-sm text-gray-dark">
                 בדקו את {topThree[0].party.name} מול הטיעונים החזקים ביותר של
                 המחנה הנגדי, במפרק הבועות.
               </p>
             </div>
             <Link href={`/challenge?party=${topThree[0].party.id}`}>
-              <Button size="lg">
+              <Button size="lg" variant="amber">
                 למפרק הבועות
                 <ChevronLeft className="h-4 w-4" />
               </Button>

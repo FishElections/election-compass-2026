@@ -63,7 +63,7 @@ export function QuizClient() {
 
   return (
     <main className="flex-1">
-      <div className="mx-auto flex max-w-2xl flex-col px-4 py-10 sm:py-16">
+      <div className="mx-auto flex max-w-2xl flex-col px-4 pb-10 pt-20 sm:py-16">
         <div className="mb-8">
           <div className="mb-2 flex items-center justify-between text-sm font-medium text-gray-dark">
             <span>
@@ -83,7 +83,7 @@ export function QuizClient() {
           <div className="mb-5">
             <CategoryBadge category={currentQuestion.category} />
           </div>
-          <h1 className="mb-8 text-2xl font-bold leading-snug text-navy sm:text-3xl">
+          <h1 className="font-display mb-8 text-2xl font-normal leading-snug text-navy sm:text-3xl">
             {currentQuestion.text}
           </h1>
 
@@ -100,7 +100,7 @@ export function QuizClient() {
           </div>
         </motion.div>
 
-        <div className="mt-10 flex items-center justify-between border-t border-gray pt-6">
+        <div className="sticky bottom-0 -mx-4 mt-10 flex items-center justify-between border-t border-gray bg-background/90 px-4 py-4 backdrop-blur-sm sm:static sm:mx-0 sm:bg-transparent sm:px-0 sm:py-0 sm:pt-6 sm:backdrop-blur-none">
           <Button
             variant="ghost"
             onClick={goPrev}

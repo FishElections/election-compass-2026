@@ -57,11 +57,13 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
   if (presetParty && !showFullChooser) {
     return (
       <div className="mx-auto max-w-md text-center">
-        <div className="flex flex-col items-center gap-4 rounded-2xl border border-gray bg-white p-8 shadow-sm">
+        <div className="flex flex-col items-center gap-4 rounded-2xl border border-amber/30 bg-white p-8 shadow-ambient-lg">
           <PartyLogo party={presetParty} size="lg" />
           <div>
             <p className="text-sm text-gray-dark">ההתאמה המובילה שלך היא</p>
-            <h2 className="text-xl font-bold text-navy">{presetParty.name}</h2>
+            <h2 className="font-display text-2xl font-normal text-navy">
+              {presetParty.name}
+            </h2>
           </div>
           <p className="text-sm leading-relaxed text-gray-dark">
             בואו נבדוק את הטיעונים החזקים ביותר של המחנה הנגדי מול העמדות
@@ -69,6 +71,7 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
           </p>
           <Button
             size="lg"
+            variant="amber"
             className="w-full"
             onClick={() => startWithParty(presetParty.id, presetParty.name)}
           >
@@ -95,8 +98,8 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
           className={cn(
             "flex items-center gap-2 rounded-full border-2 px-4 py-2 text-sm font-semibold transition-colors cursor-pointer",
             method === "party"
-              ? "border-navy bg-navy text-white"
-              : "border-gray bg-white text-navy hover:border-navy"
+              ? "border-amber bg-amber text-white"
+              : "border-gray bg-white text-navy hover:border-amber"
           )}
         >
           <Users className="h-4 w-4" />
@@ -108,8 +111,8 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
           className={cn(
             "flex items-center gap-2 rounded-full border-2 px-4 py-2 text-sm font-semibold transition-colors cursor-pointer",
             method === "quick"
-              ? "border-navy bg-navy text-white"
-              : "border-gray bg-white text-navy hover:border-navy"
+              ? "border-amber bg-amber text-white"
+              : "border-gray bg-white text-navy hover:border-amber"
           )}
         >
           <MessageCircleQuestion className="h-4 w-4" />
@@ -124,7 +127,7 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
               key={party.id}
               type="button"
               onClick={() => startWithParty(party.id, party.name)}
-              className="flex flex-col items-center gap-2 rounded-xl border-2 border-gray bg-white p-4 transition-colors hover:border-navy hover:bg-gray-light cursor-pointer"
+              className="flex flex-col items-center gap-2 rounded-xl border-2 border-gray bg-white p-4 shadow-ambient transition-all hover:-translate-y-0.5 hover:border-amber/60 hover:bg-amber-light/20 cursor-pointer"
             >
               <PartyLogo party={party} size="sm" />
               <span className="text-center text-sm font-medium text-navy">
@@ -141,7 +144,7 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
             return (
               <div
                 key={topicId}
-                className="rounded-xl border border-gray bg-white p-4"
+                className="rounded-xl border border-gray/80 bg-white p-4 shadow-ambient"
               >
                 <p className="mb-3 font-semibold text-navy">{labels.topic}</p>
                 <div className="flex flex-col gap-2 sm:flex-row">
@@ -153,8 +156,8 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
                     className={cn(
                       "flex-1 rounded-lg border-2 px-3 py-2 text-sm font-medium transition-colors cursor-pointer",
                       answer === "pro"
-                        ? "border-navy bg-navy text-white"
-                        : "border-gray bg-white text-foreground hover:border-navy"
+                        ? "border-amber bg-amber text-white"
+                        : "border-gray bg-white text-foreground hover:border-amber"
                     )}
                   >
                     {labels.proLabel}
@@ -167,8 +170,8 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
                     className={cn(
                       "flex-1 rounded-lg border-2 px-3 py-2 text-sm font-medium transition-colors cursor-pointer",
                       answer === "con"
-                        ? "border-navy bg-navy text-white"
-                        : "border-gray bg-white text-foreground hover:border-navy"
+                        ? "border-amber bg-amber text-white"
+                        : "border-gray bg-white text-foreground hover:border-amber"
                     )}
                   >
                     {labels.conLabel}
@@ -180,6 +183,7 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
 
           <Button
             size="lg"
+            variant="amber"
             disabled={!allQuickAnswered}
             onClick={startWithQuickAnswers}
           >
