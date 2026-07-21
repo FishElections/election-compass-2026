@@ -13,6 +13,7 @@ import {
   Swords,
   Info,
   Share2,
+  Brain,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +21,7 @@ const navItems = [
   { href: "/", label: "דף הבית", icon: Home },
   { href: "/quiz", label: "התחל שאלון", icon: FileText },
   { href: "/platforms", label: "סיכומי מצעי המפלגות", icon: ScrollText },
+  { href: "/challenge", label: "מפרק הבועות", icon: Brain },
   { href: "/compare", label: "השוואת מפלגות", icon: Swords },
   { href: "/about", label: "אודות והסבר על האלגוריתם", icon: Info },
 ];

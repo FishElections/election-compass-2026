@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronDown, RotateCcw, Share2 } from "lucide-react";
+import { Brain, ChevronDown, ChevronLeft, RotateCcw, Share2 } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
 import { calculateAllMatches } from "@/utils/calculator";
 import { Button } from "@/components/ui/button";
@@ -147,7 +147,30 @@ export function ResultsClient() {
           )}
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-center gap-3 border-t border-gray pt-8 sm:flex-row">
+        {topThree[0] && (
+          <div className="mt-14 flex flex-col items-center gap-4 rounded-2xl border border-navy/20 bg-navy/5 p-6 text-center sm:flex-row sm:text-right">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-navy text-white">
+              <Brain className="h-6 w-6" />
+            </div>
+            <div className="flex-1">
+              <h2 className="font-bold text-navy">
+                מוכנים לאתגר את עצמכם? 🧠
+              </h2>
+              <p className="mt-1 text-sm text-gray-dark">
+                בדקו את {topThree[0].party.name} מול הטיעונים החזקים ביותר של
+                המחנה הנגדי, במפרק הבועות.
+              </p>
+            </div>
+            <Link href={`/challenge?party=${topThree[0].party.id}`}>
+              <Button size="lg">
+                למפרק הבועות
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        )}
+
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 border-t border-gray pt-8 sm:flex-row">
           <Button onClick={handleShare} variant="default" size="lg">
             <Share2 className="h-4 w-4" />
             שתפו את התוצאה

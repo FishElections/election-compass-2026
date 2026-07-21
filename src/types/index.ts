@@ -66,3 +66,29 @@ export interface PartyResult {
   matchPercentage: number;
   answeredCount: number;
 }
+
+export interface SteelmanArgument {
+  id: string;
+  topic: string;
+  proPositionTitle: string;
+  proPositionArgument: string;
+  conPositionTitle: string;
+  conPositionArgument: string;
+}
+
+export type StanceSide = "pro" | "con";
+
+export interface PartyTopicStance {
+  partyId: string;
+  topicId: string;
+  side: StanceSide;
+}
+
+/** 1.0 = נקודה למחשבה, 0.5 = מכיר בטיעון, 0 = לא משכנע */
+export type OpennessReaction = 1 | 0.5 | 0;
+
+export interface ChallengeCardResult {
+  topicId: string;
+  userSide: StanceSide;
+  reaction: OpennessReaction;
+}
