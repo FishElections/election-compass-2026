@@ -8,12 +8,14 @@ import {
   ScrollText,
   Brain,
 } from "lucide-react";
+import { WavingFlag } from "@/components/WavingFlag";
 
 export default function HomePage() {
   return (
     <main className="flex-1">
-      <div className="bg-dot-grid">
-        <div className="mx-auto flex max-w-5xl flex-col items-center px-4 pb-10 pt-16 text-center sm:pt-24">
+      <div className="relative overflow-hidden">
+        <WavingFlag className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.14]" />
+        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-4 pb-10 pt-16 text-center sm:pt-24">
           <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-navy text-white shadow-ambient-lg">
             <ShieldCheck className="h-8 w-8" />
           </div>
