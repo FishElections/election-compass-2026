@@ -11,6 +11,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { CategoryBadge } from "@/components/quiz/CategoryBadge";
 import { LikertButton } from "@/components/quiz/LikertButton";
+import { QuestionMoreInfo } from "@/components/quiz/QuestionMoreInfo";
 
 export function QuizClient() {
   const router = useRouter();
@@ -98,6 +99,11 @@ export function QuizClient() {
               />
             ))}
           </div>
+
+          <QuestionMoreInfo
+            questionId={currentQuestion.id}
+            moreInfo={currentQuestion.moreInfo}
+          />
         </motion.div>
 
         <div className="sticky bottom-0 -mx-4 mt-10 flex items-center justify-between border-t border-gray bg-background/90 px-4 py-4 backdrop-blur-sm sm:static sm:mx-0 sm:bg-transparent sm:px-0 sm:py-0 sm:pt-6 sm:backdrop-blur-none">

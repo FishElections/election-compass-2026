@@ -55,11 +55,21 @@ export interface Party {
   platform: PlatformTopic[];
 }
 
+export interface QuestionMoreInfo {
+  /** הקשר ורקע עובדתי בקצרה, בשפה פשוטה */
+  summary: string;
+  /** הטיעון המרכזי של התומכים בהיגד */
+  proArguments: string;
+  /** הטיעון המרכזי של המתנגדים להיגד */
+  conArguments: string;
+}
+
 export interface Question {
   id: string;
   category: CategoryId;
   text: string;
   isShort: boolean;
+  moreInfo: QuestionMoreInfo;
 }
 
 /** -2 = נגד מאוד, -1 = נגד, 0 = ניטרלי, 1 = בעד, 2 = בעד מאוד */
@@ -110,4 +120,40 @@ export interface ChallengeCardResult {
   topicId: string;
   userSide: StanceSide;
   reaction: OpennessReaction;
+}
+
+export type IssueCategory =
+  | "ביטחון ומדיניות"
+  | "דת ומדינה"
+  | "משפט וממשל"
+  | "כלכלה ויוקר מחיה"
+  | "חברה וביטחון פנים";
+
+export interface IssueArgument {
+  title: string;
+  text: string;
+}
+
+export interface PartyStancesSummary {
+  /** מזהי מפלגות (Party.id) התומכות באופן פעיל */
+  support: string[];
+  /** מזהי מפלגות המתנגדות בתקיפות */
+  oppose: string[];
+  /** מזהי מפלגות עם עמדה מורכבת, מתפשרת או ניטרלית */
+  splitOrNeutral: string[];
+}
+
+export interface PoliticalIssue {
+  id: string;
+  category: IssueCategory;
+  title: string;
+  /** "במילים פשוטות" */
+  simpleExplanation: string;
+  /** "מה הדילמה המרכזית?" */
+  theDilemma: string;
+  proArgument: IssueArgument;
+  conArgument: IssueArgument;
+  partyStancesSummary: PartyStancesSummary;
+  /** מזהה השאלה המקבילה בשאלון (Question.id) */
+  relatedQuestionId: string;
 }
