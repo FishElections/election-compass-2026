@@ -41,7 +41,11 @@ function calculatePartyMatch(party: Party, answers: UserAnswers): PartyResult {
 export function calculateAllMatches(answers: UserAnswers): PartyResult[] {
   return parties
     .map((party) => calculatePartyMatch(party, answers))
-    .sort((a, b) => b.matchPercentage - a.matchPercentage);
+    .sort(
+      (a, b) =>
+        b.matchPercentage - a.matchPercentage ||
+        a.party.name.localeCompare(b.party.name, "he")
+    );
 }
 
 export function getPartyStance(partyId: string, questionId: string): number {

@@ -13,6 +13,7 @@ export const parties: Party[] = [
     leader: "גדי איזנקוט",
     color: "#334155",
     spectrum: "מרכז-ממלכתי",
+    spectrumCategory: "center",
     logo: "יש",
     shortDescription:
       "מפלגה ממלכתית בראשות הרמטכ\"ל לשעבר גדי איזנקוט, השמה דגש על אמון ציבורי, ניהול אחראי ושיקום הביטחון האישי והלאומי.",
@@ -82,6 +83,7 @@ export const parties: Party[] = [
     leader: "בנימין נתניהו",
     color: "#1e3a8a",
     spectrum: "ימין לאומי",
+    spectrumCategory: "right",
     logo: "ל",
     shortDescription:
       "מפלגה לאומית-ליברלית השמה דגש על ביטחון, כלכלת שוק חופשית וחיזוק הריבונות הישראלית.",
@@ -149,12 +151,13 @@ export const parties: Party[] = [
   {
     id: "beyachad",
     name: "ביחד",
-    leader: "נפתלי בנט",
+    leader: "נפתלי בנט / יאיר לפיד",
     color: "#0284c7",
-    spectrum: "מרכז-ימין ביצועי",
+    spectrum: "מרכז עד מרכז-ימין",
+    spectrumCategory: "center",
     logo: "יח",
     shortDescription:
-      "מפלגת מרכז-ימין בראשות ראש הממשלה לשעבר נפתלי בנט, השמה דגש על ניהול ביצועי, יזמות כלכלית וריפוי הקרעים בחברה הישראלית.",
+      "רשימה משותפת של ראש הממשלה לשעבר נפתלי בנט ויו\"ר יש עתיד לשעבר יאיר לפיד, בהנהגת בנט, השמה דגש על ניהול ביצועי, יזמות כלכלית וריפוי הקרעים בחברה הישראלית.",
     platform: [
       {
         topicKey: "security",
@@ -220,6 +223,7 @@ export const parties: Party[] = [
     leader: "איתמר בן גביר",
     color: "#b91c1c",
     spectrum: "ימין",
+    spectrumCategory: "far-right",
     logo: "ע",
     shortDescription:
       "מפלגה לאומנית-דתית המקדמת מדיניות ביטחונית תקיפה והרחבת ההתיישבות ביהודה ושומרון.",
@@ -289,6 +293,7 @@ export const parties: Party[] = [
     leader: "אביגדור ליברמן",
     color: "#0e7490",
     spectrum: "ימין-מרכז חילוני",
+    spectrumCategory: "right",
     logo: "ב",
     shortDescription:
       "מפלגה לאומית-חילונית המקדמת גיוס שוויוני, הפרדת דת ממדינה ומדיניות ביטחונית תקיפה.",
@@ -358,9 +363,10 @@ export const parties: Party[] = [
     leader: "יאיר גולן",
     color: "#15803d",
     spectrum: "מרכז-שמאל ליברלי",
+    spectrumCategory: "center-left",
     logo: "ד",
     shortDescription:
-      "מפלגת מרכז-שמאל המקדמת זכויות אזרח, שוויון חברתי ופתרון מדיני עם הפלסטינים.",
+      "מפלגה שקמה במיזוג העבודה ומרצ, בראשות יאיר גולן, המקדמת זכויות אזרח, שוויון חברתי ופתרון מדיני עם הפלסטינים.",
     platform: [
       {
         topicKey: "security",
@@ -427,6 +433,7 @@ export const parties: Party[] = [
     leader: "אריה דרעי",
     color: "#7c2d12",
     spectrum: "חרדית-ספרדית",
+    spectrumCategory: "sectoral",
     logo: "ש",
     shortDescription:
       "מפלגה חרדית-ספרדית המקדמת ערכי מסורת ויהדות, ותומכת בתקצוב מוסדות תורניים.",
@@ -495,6 +502,7 @@ export const parties: Party[] = [
     leader: "יצחק גולדקנופף / משה גפני",
     color: "#374151",
     spectrum: "חרדית-אשכנזית",
+    spectrumCategory: "sectoral",
     logo: "ת",
     shortDescription:
       "מפלגה חרדית-אשכנזית השמה דגש על שמירת אורח חיים תורני ומימון מוסדות לימוד תורה.",
@@ -564,9 +572,10 @@ export const parties: Party[] = [
     leader: "מנסור עבאס",
     color: "#0f766e",
     spectrum: "אזרחית-ערבית",
+    spectrumCategory: "sectoral",
     logo: "ר",
     shortDescription:
-      "מפלגה ערבית-אסלאמית המקדמת את האינטרסים של החברה הערבית וצמצום פערים חברתיים-כלכליים.",
+      "מפלגה אזרחית-ערבית-אסלאמית בראשות מנסור עבאס, המקדמת את האינטרסים של החברה הערבית וצמצום פערים חברתיים-כלכליים, תוך פתיחות מוצהרת גם למועמדים יהודים.",
     platform: [
       {
         topicKey: "security",
@@ -629,9 +638,10 @@ export const parties: Party[] = [
   {
     id: "hadash-taal",
     name: 'חד"ש-תע"ל',
-    leader: "אחמד טיבי / איימן עודה",
+    leader: "איימן עודה / אחמד טיבי",
     color: "#a16207",
     spectrum: "חזית ערבית-יהודית",
+    spectrumCategory: "sectoral",
     logo: "ח",
     shortDescription:
       "רשימה ערבית-יהודית משותפת המקדמת שוויון אזרחי מלא ופתרון מדיני מבוסס משא ומתן.",
@@ -701,6 +711,7 @@ export const parties: Party[] = [
     leader: "בצלאל סמוטריץ'",
     color: "#ea580c",
     spectrum: "ימין אידיאולוגי",
+    spectrumCategory: "far-right",
     logo: "צ",
     shortDescription:
       "מפלגה לאומית-דתית בראשות שר האוצר בצלאל סמוטריץ', המקדמת ריבונות מלאה על ארץ ישראל וחיזוק האופי היהודי של המדינה.",
@@ -772,6 +783,7 @@ export const parties: Party[] = [
     leader: "חילי טרופר / יואז הנדל",
     color: "#3f6212",
     spectrum: "מרכז ציוני-ממלכתי",
+    spectrumCategory: "center",
     logo: "יס",
     shortDescription:
       "מפלגה חדשה שקמה סביב ציבור המילואימניקים ומשפחות שכולות, בראשות חילי טרופר ויואז הנדל, הפועלת לחיזוק הסולידריות הלאומית והתמיכה בלוחמים.",

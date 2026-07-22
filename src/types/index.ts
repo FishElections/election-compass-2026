@@ -25,12 +25,29 @@ export interface PlatformTopic {
   bulletPoints: string[];
 }
 
+/**
+ * סיווג ספקטרום פוליטי סטנדרטי, בנוסף לתווית החופשית (spectrum).
+ * "sectoral" משמש למפלגות שאינן ממוקמות באופן משמעותי על ציר שמאל-ימין
+ * (חרדיות ומפלגות המגזר הערבי), כמקובל במיפוי הפוליטי הישראלי.
+ */
+export type SpectrumCategory =
+  | "left"
+  | "center-left"
+  | "center"
+  | "center-right"
+  | "right"
+  | "far-right"
+  | "sectoral";
+
 export interface Party {
   id: string;
   name: string;
   leader: string;
   color: string;
+  /** תווית תיאורית בעברית (לשימוש בממשק) */
   spectrum: string;
+  /** סיווג סטנדרטי לצורכי בקרת איכות ומיון אובייקטיבי */
+  spectrumCategory: SpectrumCategory;
   shortDescription: string;
   logo: string;
   /** נשמר לשימוש עתידי; לא מאוכלס בפועל כדי להימנע משימוש בדימויים לא מורשים של אנשים אמיתיים. */
