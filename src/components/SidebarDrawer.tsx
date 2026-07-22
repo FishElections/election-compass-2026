@@ -6,7 +6,6 @@ import * as Dialog from "@radix-ui/react-dialog";
 import {
   Menu,
   X,
-  ShieldCheck,
   Home,
   FileText,
   ScrollText,
@@ -16,6 +15,7 @@ import {
   Brain,
   BookOpen,
 } from "lucide-react";
+import { CompassMark } from "@/components/CompassMark";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -68,7 +68,7 @@ export function SidebarDrawer() {
           <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
             <div className="flex items-center gap-2">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-sapphire to-success text-white">
-                <ShieldCheck className="h-5 w-5" />
+                <CompassMark animate className="h-6 w-6" />
               </div>
               <Dialog.Title asChild>
                 <span className="font-bold text-white">מצפן בחירות 2026</span>
@@ -86,17 +86,18 @@ export function SidebarDrawer() {
           </div>
 
           <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-4">
-            {navItems.map((item) => {
+            {navItems.map((item, i) => {
               const isActive = pathname === item.href;
               return (
                 <Dialog.Close asChild key={item.href}>
                   <Link
                     href={item.href}
+                    style={{ animationDelay: `${i * 40}ms` }}
                     className={cn(
-                      "relative flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+                      "animate-nav-item-in relative flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-150",
                       isActive
                         ? "bg-gradient-to-l from-sapphire/90 to-sapphire/40 text-white"
-                        : "text-white/75 hover:bg-white/10 hover:text-white"
+                        : "text-white/75 hover:translate-x-[-3px] hover:bg-white/10 hover:text-white"
                     )}
                   >
                     {isActive && (

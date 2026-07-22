@@ -1,6 +1,10 @@
+"use client";
+
 import { PartyResult } from "@/types";
 import { PartyLogo } from "@/components/PartyLogo";
 import { Gauge } from "@/components/Gauge";
+import { CompassMark } from "@/components/CompassMark";
+import { ConfettiBurst } from "@/components/ConfettiBurst";
 import { cn } from "@/lib/utils";
 
 const rankLabel: Record<number, string> = {
@@ -18,8 +22,13 @@ export function PartyResultCard({
 }) {
   if (rank === 1) {
     return (
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-navy to-navy-light p-8 text-white shadow-ambient-lg">
+      <div className="notch-card bg-grain animate-pop-in relative overflow-hidden bg-gradient-to-br from-navy to-navy-light p-8 text-white shadow-ambient-lg">
         <div className="bg-dot-grid-dark pointer-events-none absolute inset-0 opacity-50" />
+        <CompassMark
+          animate
+          className="pointer-events-none absolute -left-6 -top-6 h-32 w-32 text-white/10"
+        />
+        <ConfettiBurst />
         <div className="relative z-10 flex flex-col items-center gap-6 text-center sm:flex-row sm:text-right">
           <span className="absolute -top-2 right-1/2 translate-x-1/2 rounded-full bg-gold px-3 py-1 text-xs font-bold text-navy shadow sm:static sm:translate-x-0">
             #1 · {rankLabel[1]}

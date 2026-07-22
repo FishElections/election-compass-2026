@@ -218,3 +218,111 @@ body {
 .animate-overlay-out {
   animation: overlay-fade-out 0.2s ease-in;
 }
+
+/* Signature clipped-corner shape, used sparingly on lede/hero cards
+   to give the product a recognizable silhouette instead of generic
+   uniform rounded rectangles everywhere. */
+.notch-card {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 32px) 0,
+    100% 32px,
+    100% 100%,
+    32px 100%,
+    0 calc(100% - 32px)
+  );
+}
+
+.notch-card-sm {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 18px) 0,
+    100% 18px,
+    100% 100%,
+    18px 100%,
+    0 calc(100% - 18px)
+  );
+}
+
+/* Faint film-grain overlay for navy panels, breaks up flat gradients */
+.bg-grain {
+  position: relative;
+  isolation: isolate;
+}
+
+.bg-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.86) translateY(14px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.03) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-pop-in {
+  animation: pop-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes confetti-burst {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty)))
+      rotate(var(--rot));
+    opacity: 0;
+  }
+}
+
+.animate-confetti-burst {
+  animation: confetti-burst 0.9s cubic-bezier(0.2, 0.8, 0.4, 1) both;
+}
+
+@keyframes nav-item-in {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-nav-item-in {
+  animation: nav-item-in 0.35s ease-out both;
+}
+
+@keyframes needle-settle {
+  0% {
+    transform: rotate(-18deg);
+  }
+  60% {
+    transform: rotate(6deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-needle-settle {
+  animation: needle-settle 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}

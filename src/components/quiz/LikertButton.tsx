@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { StanceValue } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +26,24 @@ const selectedStyles: Record<StanceValue, string> = {
   [-2]: "border-danger bg-danger-light/50 text-danger shadow-ambient",
 };
 
+/* Extremes read as "louder" opinions, so they get a touch more
+   presence than the middle of the scale, like a real survey dial. */
+const intensityPadding: Record<StanceValue, string> = {
+  2: "py-5",
+  1: "py-4",
+  0: "py-3.5",
+  [-1]: "py-4",
+  [-2]: "py-5",
+};
+
+const intensityDots: Record<StanceValue, number> = {
+  2: 2,
+  1: 1,
+  0: 0,
+  [-1]: 1,
+  [-2]: 2,
+};
+
 interface LikertButtonProps {
   value: StanceValue;
   label: string;
@@ -33,15 +52,19 @@ interface LikertButtonProps {
 }
 
 export function LikertButton({ value, label, selected, onClick }: LikertButtonProps) {
+  const dots = intensityDots[value];
+
   return (
-    <button
+    <motion.button
       type="button"
       onClick={onClick}
+      whileHover={{ x: -3 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 400, damping: 22 }}
       className={cn(
-        "relative w-full overflow-hidden rounded-xl border-2 border-gray/80 bg-white px-5 py-4 text-right text-base font-semibold text-foreground transition-all duration-150 cursor-pointer",
-        selected
-          ? selectedStyles[value]
-          : cn("hover:-translate-y-0.5", hoverStyles[value])
+        "relative flex w-full items-center justify-between overflow-hidden rounded-xl border-2 border-gray/80 bg-white px-5 text-right text-base font-semibold text-foreground cursor-pointer",
+        intensityPadding[value],
+        selected ? selectedStyles[value] : cn("border-gray/80", hoverStyles[value])
       )}
       aria-pressed={selected}
     >
@@ -52,7 +75,20 @@ export function LikertButton({ value, label, selected, onClick }: LikertButtonPr
           selected ? "opacity-100" : "opacity-0"
         )}
       />
-      {label}
-    </button>
+      <span>{label}</span>
+      {dots > 0 && (
+        <span className="flex items-center gap-1">
+          {Array.from({ length: dots }).map((_, i) => (
+            <span
+              key={i}
+              className={cn(
+                "h-1.5 w-1.5 rounded-full transition-colors",
+                selected ? accentBar[value] : "bg-gray"
+              )}
+            />
+          ))}
+        </span>
+      )}
+    </motion.button>
   );
 }

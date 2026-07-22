@@ -66,13 +66,21 @@ export function QuizClient() {
     <main className="flex-1">
       <div className="mx-auto flex max-w-2xl flex-col px-4 pb-10 pt-20 sm:py-16">
         <div className="mb-8">
-          <div className="mb-2 flex items-center justify-between text-sm font-medium text-gray-dark">
+          <div className="mb-3 flex items-center justify-between text-sm font-medium text-gray-dark">
             <span>
               שאלה {currentIndex + 1} מתוך {total}
             </span>
             <span>{Math.round(progressPercent)}%</span>
           </div>
-          <Progress value={progressPercent} />
+          <div className="relative py-1.5">
+            <Progress value={progressPercent} />
+            <span
+              className="absolute top-1/2 h-3.5 w-3.5 -translate-y-1/2 translate-x-1/2 rounded-full bg-white shadow-ambient ring-2 ring-sapphire transition-[right] duration-500 ease-out"
+              style={{ right: `${progressPercent}%` }}
+            >
+              <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-sapphire/50" />
+            </span>
+          </div>
         </div>
 
         <motion.div

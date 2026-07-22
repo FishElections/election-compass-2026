@@ -76,6 +76,9 @@ export function ResultsClient() {
     <main className="flex-1">
       <div className="mx-auto max-w-4xl px-4 py-12 sm:py-16">
         <div className="mb-10 text-center">
+          <p className="mb-2 text-xs font-bold uppercase tracking-wider text-sapphire">
+            הניתוח הושלם
+          </p>
           <h1 className="font-display text-3xl font-normal text-navy sm:text-4xl">
             התוצאות שלכם מוכנות
           </h1>
