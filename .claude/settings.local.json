@@ -19,7 +19,9 @@
       "Bash(node gen_stances_2026.mjs)",
       "Bash(lsof -ti:3000)",
       "Bash(xargs kill -9)",
-      "Bash(node gen_stances_2026_v2.mjs)"
+      "Bash(node gen_stances_2026_v2.mjs)",
+      "Bash(xargs -r kill)",
+      "Bash(npx eslint *)"
     ]
   }
 }
