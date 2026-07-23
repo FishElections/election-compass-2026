@@ -5,6 +5,7 @@ import { parties } from "@/data/parties";
 import { categories } from "@/data/questions";
 import { getPartyCategoryAverages } from "@/utils/calculator";
 import { PartyLogo } from "@/components/PartyLogo";
+import { BallotLetterBadge } from "@/components/BallotLetterBadge";
 
 export function generateStaticParams() {
   return parties.map((party) => ({ id: party.id }));
@@ -38,11 +39,14 @@ export default async function PartyProfilePage({
             <div className="relative z-10">
               <PartyLogo party={party} size="lg" className="ring-4 ring-white/20" />
             </div>
-            <div className="relative z-10">
+            <div className="relative z-10 flex-1">
               <h1 className="font-display text-3xl font-normal">{party.name}</h1>
               <p className="text-white/70">
                 {party.leader} · {party.spectrum}
               </p>
+            </div>
+            <div className="relative z-10">
+              <BallotLetterBadge party={party} />
             </div>
           </div>
         </div>
