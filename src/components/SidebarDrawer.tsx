@@ -14,6 +14,7 @@ import {
   Share2,
   Brain,
   BookOpen,
+  Flame,
 } from "lucide-react";
 import { CompassMark } from "@/components/CompassMark";
 import { cn } from "@/lib/utils";
@@ -21,6 +22,11 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { href: "/", label: "דף הבית", icon: Home },
   { href: "/quiz", label: "התחל שאלון", icon: FileText },
+  {
+    href: "/hot-topics",
+    label: "הנושאים החמים",
+    icon: Flame,
+  },
   {
     href: "/issues",
     label: "הנושאים המרכזיים לבחירות 2026",

@@ -157,3 +157,29 @@ export interface PoliticalIssue {
   /** מזהה השאלה המקבילה בשאלון (Question.id) */
   relatedQuestionId: string;
 }
+
+/** קטגוריות עבור עמוד "הנושאים החמים" - עמוד הסברה אזרחי ללא זיקה מפלגתית */
+export type TopicCategory =
+  | "משפט וממשל"
+  | "ביטחון וחוץ"
+  | "כלכלה וחברה"
+  | "דת ומדינה";
+
+export interface HotTopic {
+  id: string;
+  category: TopicCategory;
+  /** כותרת קליטה, לא יבשה */
+  title: string;
+  /** משפט או שאלה פותחת שמסקרנת */
+  hook: string;
+  /** מה זה בעצם קורה כאן, בשפה פשוטה */
+  simpleExplanation: string;
+  /** למה יש על זה ויכוח בכלל */
+  whyControversial: string;
+  /** מונח מרכזי שכדאי להכיר, עם הסבר */
+  keyTerm?: { term: string; definition: string };
+  argumentsFor: IssueArgument[];
+  argumentsAgainst: IssueArgument[];
+  /** עובדה קטנה שמוסיפה עניין */
+  funFact?: string;
+}
