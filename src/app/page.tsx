@@ -7,7 +7,7 @@ import {
   ScrollText,
   Brain,
 } from "lucide-react";
-import { WavingFlag } from "@/components/WavingFlag";
+import { InteractiveFlagBackdrop } from "@/components/InteractiveFlagBackdrop";
 import { CompassMark } from "@/components/CompassMark";
 import { parties } from "@/data/parties";
 import { questions } from "@/data/questions";
@@ -15,47 +15,49 @@ import { questions } from "@/data/questions";
 export default function HomePage() {
   return (
     <main className="flex-1">
-      <div className="mx-auto max-w-6xl px-4 pb-14 pt-20 sm:pt-24">
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
-            <div className="mb-5 flex items-center gap-2 text-sm font-semibold text-sapphire">
-              <CompassMark animate className="h-6 w-6 text-sapphire" />
-              <span>כלי אזרחי בלתי תלוי · בחירות 2026</span>
+      <div className="relative overflow-hidden">
+        <InteractiveFlagBackdrop className="pointer-events-none absolute -inset-y-24 inset-x-[-15%] opacity-[0.18]" />
+        <div className="relative z-10 mx-auto max-w-6xl px-4 pb-14 pt-20 sm:pt-24">
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-7">
+              <div className="mb-5 flex items-center gap-2 text-sm font-semibold text-sapphire">
+                <CompassMark animate className="h-6 w-6 text-sapphire" />
+                <span>כלי אזרחי בלתי תלוי · בחירות 2026</span>
+              </div>
+              <h1 className="font-display text-4xl font-normal leading-[1.15] text-navy sm:text-6xl">
+                למי הכי{" "}
+                <span className="text-gradient-sapphire-emerald font-bold">
+                  מתאים לך
+                </span>{" "}
+                להצביע?
+              </h1>
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-gray-dark sm:text-lg">
+                ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה
+                הטובה ביותר. השוואה מבוססת נתונים, בלי הטיה ובלי פרסום.
+              </p>
             </div>
-            <h1 className="font-display text-4xl font-normal leading-[1.15] text-navy sm:text-6xl">
-              למי הכי{" "}
-              <span className="text-gradient-sapphire-emerald font-bold">
-                מתאים לך
-              </span>{" "}
-              להצביע?
-            </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-gray-dark sm:text-lg">
-              ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה
-              הטובה ביותר. השוואה מבוססת נתונים, בלי הטיה ובלי פרסום.
-            </p>
-          </div>
 
-          <div className="lg:col-span-5">
-            <div className="bg-grain notch-card relative overflow-hidden bg-navy px-6 py-7 text-white shadow-ambient-lg">
-              <WavingFlag className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.16]" />
-              <div className="relative z-10 grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <p className="font-display text-3xl font-normal sm:text-4xl">
-                    {parties.length}
-                  </p>
-                  <p className="mt-1 text-xs text-white/60">מפלגות</p>
-                </div>
-                <div className="border-x border-white/15">
-                  <p className="font-display text-3xl font-normal sm:text-4xl">
-                    {questions.length}
-                  </p>
-                  <p className="mt-1 text-xs text-white/60">שאלות במאגר</p>
-                </div>
-                <div>
-                  <p className="font-display text-3xl font-normal sm:text-4xl">
-                    0%
-                  </p>
-                  <p className="mt-1 text-xs text-white/60">פרסום ומעקב</p>
+            <div className="lg:col-span-5">
+              <div className="bg-grain notch-card relative overflow-hidden bg-navy px-6 py-7 text-white shadow-ambient-lg">
+                <div className="relative z-10 grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <p className="font-display text-3xl font-normal sm:text-4xl">
+                      {parties.length}
+                    </p>
+                    <p className="mt-1 text-xs text-white/60">מפלגות</p>
+                  </div>
+                  <div className="border-x border-white/15">
+                    <p className="font-display text-3xl font-normal sm:text-4xl">
+                      {questions.length}
+                    </p>
+                    <p className="mt-1 text-xs text-white/60">שאלות במאגר</p>
+                  </div>
+                  <div>
+                    <p className="font-display text-3xl font-normal sm:text-4xl">
+                      0%
+                    </p>
+                    <p className="mt-1 text-xs text-white/60">פרסום ומעקב</p>
+                  </div>
                 </div>
               </div>
             </div>

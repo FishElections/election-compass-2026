@@ -326,3 +326,26 @@ body {
 .animate-needle-settle {
   animation: needle-settle 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
+
+/* Slow autonomous sway used as the touch/mobile fallback for the
+   mouse-driven flag parallax, so the backdrop still feels alive
+   without a pointer to react to. */
+@keyframes flag-idle-drift {
+  0%,
+  100% {
+    transform: translate3d(-6px, 0, 0) rotate(-0.4deg);
+  }
+  50% {
+    transform: translate3d(6px, -4px, 0) rotate(0.4deg);
+  }
+}
+
+.animate-flag-idle-drift {
+  animation: flag-idle-drift 9s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waving-flag-band {
+    animation: none !important;
+  }
+}
