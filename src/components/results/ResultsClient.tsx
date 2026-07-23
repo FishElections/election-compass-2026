@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Brain, Check, ChevronDown, ChevronLeft, Link2, RotateCcw } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
 import { parties } from "@/data/parties";
 import { calculateAllMatches } from "@/utils/calculator";
+import { trackEvent } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { PartyResultCard } from "@/components/results/PartyResultCard";
 import { PartyResultRow } from "@/components/results/PartyResultRow";
@@ -40,6 +41,24 @@ export function ResultsClient() {
   const answeredCount = Object.values(answers).filter(
     (v) => v !== undefined
   ).length;
+
+  // Fire a single quiz_complete event once real results are shown.
+  const completeTracked = useRef(false);
+  useEffect(() => {
+    if (
+      !completeTracked.current &&
+      activeQuestions.length > 0 &&
+      answeredCount > 0 &&
+      topThree[0]
+    ) {
+      completeTracked.current = true;
+      trackEvent("quiz_complete", {
+        top_party: topThree[0].party.id,
+        match: topThree[0].matchPercentage,
+        answered: answeredCount,
+      });
+    }
+  }, [activeQuestions.length, answeredCount, topThree]);
 
   if (activeQuestions.length === 0 || answeredCount === 0) {
     if (sharedParty && Number.isFinite(sharedScore)) {
@@ -106,6 +125,7 @@ export function ResultsClient() {
   const shareText = `גיליתי שהמפלגה שהכי מתאימה לי היא ${topParty?.name} (${topScore}% התאמה)! בדקו גם אתם:`;
 
   function shareVia(target: "whatsapp" | "linkedin") {
+    trackEvent("share", { method: target, party: topParty?.id, match: topScore });
     // LinkedIn's share endpoint only accepts a URL and ignores custom text,
     // so the headline is carried by WhatsApp only.
     const link =
@@ -119,6 +139,7 @@ export function ResultsClient() {
     if (typeof navigator === "undefined") return;
     try {
       if (navigator.share) {
+        trackEvent("share", { method: "native", party: topParty?.id, match: topScore });
         await navigator.share({
           title: "מצפן בחירות 2026",
           text: shareText,
@@ -127,6 +148,7 @@ export function ResultsClient() {
         return;
       }
       if (navigator.clipboard) {
+        trackEvent("share", { method: "copy", party: topParty?.id, match: topScore });
         await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
         setCopied(true);
         window.setTimeout(() => setCopied(false), 2000);

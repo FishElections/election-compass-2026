@@ -40,7 +40,7 @@ export async function GET(request: Request) {
     "מצפן בחירות 2026 המפלגה שהכי מתאימה לי התאמה גלו גם אתם לאיזו אתם מתאימים " +
     partyName +
     partyLogo +
-    "0123456789%›";
+    "0123456789%‹›";
 
   const [regular, bold] = await Promise.all([
     loadHeebo(glyphs, 500),
@@ -56,8 +56,9 @@ export async function GET(request: Request) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          alignItems: "flex-end",
+          alignItems: "flex-start",
           textAlign: "right",
+          direction: "rtl",
           background: "linear-gradient(135deg, #0b1220 0%, #1e293b 100%)",
           color: "#ffffff",
           fontFamily: "Heebo",
@@ -160,7 +161,7 @@ export async function GET(request: Request) {
             borderRadius: "9999px",
           }}
         >
-          גלו גם אתם לאיזו מפלגה אתם מתאימים ›
+          ‹ גלו גם אתם לאיזו מפלגה אתם מתאימים
         </div>
       </div>
     ),
