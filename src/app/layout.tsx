@@ -19,7 +19,16 @@ const secularOne = Secular_One({
   weight: "400",
 });
 
+// Read at request time (not a NEXT_PUBLIC_ var, so it is NOT inlined at build)
+// — lets `docker run -e SITE_URL=…` set the public origin without rebuilding.
+const siteUrl =
+  process.env.SITE_URL ??
+  (process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000");
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "מצפן בחירות 2026",
   description: "ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה הטובה ביותר.",
 };
