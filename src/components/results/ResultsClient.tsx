@@ -177,6 +177,30 @@ export function ResultsClient() {
           {topThree[0] && (
             <PartyResultCard result={topThree[0]} rank={1} />
           )}
+          {topThree[0] && (
+            <div className="flex flex-col items-center gap-3 rounded-2xl border border-success/30 bg-success/5 p-5 text-center sm:flex-row sm:justify-between sm:text-right">
+              <div className="flex-1">
+                <p className="font-bold text-navy">שתפו את התוצאה שלכם</p>
+                <p className="mt-0.5 text-sm text-gray-dark">
+                  תנו לחברים לגלות לאיזו מפלגה הם מתאימים.
+                </p>
+              </div>
+              <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+                <Button onClick={shareWhatsApp} variant="success">
+                  <WhatsAppIcon className="h-4 w-4" />
+                  שתפו ב-WhatsApp
+                </Button>
+                <Button onClick={handleCopyLink} variant="outline">
+                  {copied ? (
+                    <Check className="h-4 w-4" />
+                  ) : (
+                    <Link2 className="h-4 w-4" />
+                  )}
+                  {copied ? "הקישור הועתק" : "העתקת קישור"}
+                </Button>
+              </div>
+            </div>
+          )}
           {topThree.length > 1 && (
             <div className="grid gap-6 sm:grid-cols-2">
               {topThree.slice(1).map((result, i) => (
@@ -189,31 +213,6 @@ export function ResultsClient() {
             </div>
           )}
         </div>
-
-        {topThree[0] && (
-          <div className="mt-6 flex flex-col items-center gap-3 rounded-2xl border border-success/30 bg-success/5 p-5 text-center sm:flex-row sm:justify-between sm:text-right">
-            <div className="flex-1">
-              <p className="font-bold text-navy">שתפו את התוצאה שלכם</p>
-              <p className="mt-0.5 text-sm text-gray-dark">
-                תנו לחברים לגלות לאיזו מפלגה הם מתאימים.
-              </p>
-            </div>
-            <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <Button onClick={shareWhatsApp} variant="success">
-                <WhatsAppIcon className="h-4 w-4" />
-                שתפו ב-WhatsApp
-              </Button>
-              <Button onClick={handleCopyLink} variant="outline">
-                {copied ? (
-                  <Check className="h-4 w-4" />
-                ) : (
-                  <Link2 className="h-4 w-4" />
-                )}
-                {copied ? "הקישור הועתק" : "העתקת קישור"}
-              </Button>
-            </div>
-          </div>
-        )}
 
         {rest.length > 0 && (
           <div className="mt-8 text-center">
@@ -295,21 +294,6 @@ export function ResultsClient() {
         )}
 
         <div className="mt-8 flex flex-col items-center gap-4 border-t border-gray pt-8">
-          <p className="text-sm font-bold text-navy">שתפו את התוצאה</p>
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button onClick={shareWhatsApp} variant="success" size="lg">
-              <WhatsAppIcon className="h-4 w-4" />
-              שתפו ב-WhatsApp
-            </Button>
-            <Button onClick={handleCopyLink} variant="outline" size="lg">
-              {copied ? (
-                <Check className="h-4 w-4" />
-              ) : (
-                <Link2 className="h-4 w-4" />
-              )}
-              {copied ? "הקישור הועתק" : "העתקת קישור"}
-            </Button>
-          </div>
           <Button onClick={handleRestart} variant="ghost" size="lg">
             <RotateCcw className="h-4 w-4" />
             התחילו מחדש
