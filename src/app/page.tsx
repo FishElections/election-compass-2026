@@ -16,8 +16,8 @@ export default function HomePage() {
   return (
     <main className="flex-1">
       <div className="relative overflow-hidden">
-        <InteractiveFlagBackdrop className="pointer-events-none absolute -inset-y-24 inset-x-[-15%] opacity-[0.18]" />
-        <div className="relative z-10 mx-auto max-w-6xl px-4 pb-14 pt-20 sm:pt-24">
+        <InteractiveFlagBackdrop className="pointer-events-none absolute -inset-y-16 inset-x-[-15%] opacity-[0.18]" />
+        <div className="relative z-10 mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pt-20">
           <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-7">
               <div className="mb-5 flex items-center gap-2 text-sm font-semibold text-sapphire">
@@ -62,63 +62,63 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+          <div className="mt-10 grid gap-5 lg:grid-cols-12">
+            <Link
+              href="/quiz?mode=short"
+              className="group block lg:col-span-7"
+            >
+              <div className="notch-card bg-grain relative flex h-full flex-col overflow-hidden bg-gradient-to-br from-navy to-navy-light p-8 text-white transition-all duration-200 group-hover:-translate-y-1 group-hover:shadow-[0_16px_40px_-6px_rgba(37,99,235,0.4)] sm:p-10">
+                <div className="relative z-10 mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-white backdrop-blur-md">
+                  <Zap className="h-6 w-6" />
+                </div>
+                <h2 className="font-display relative z-10 text-3xl font-normal">
+                  מסלול מהיר
+                </h2>
+                <p className="relative z-10 mt-3 max-w-md flex-1 text-sm leading-relaxed text-white/75">
+                  20 שאלות מרכזיות שייתנו לכם תמונה מהירה וברורה. מתאים כשהזמן
+                  קצר.
+                </p>
+                <div className="relative z-10 mt-8 flex items-center justify-between text-sm">
+                  <span className="rounded-full bg-white/10 px-3 py-1 font-medium backdrop-blur-md">
+                    כ־3 דקות
+                  </span>
+                  <span className="flex items-center gap-1 font-semibold">
+                    התחילו כאן
+                    <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                  </span>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/quiz?mode=long" className="group block lg:col-span-5">
+              <div className="flex h-full flex-col rounded-2xl border border-gray/80 bg-white p-8 shadow-ambient transition-all duration-200 group-hover:-translate-y-1 group-hover:border-sapphire/50 group-hover:shadow-ambient-lg">
+                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-sapphire/10 text-sapphire">
+                  <ListChecks className="h-6 w-6" />
+                </div>
+                <h2 className="font-display text-3xl font-normal text-navy">
+                  מסלול מקיף
+                </h2>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-gray-dark">
+                  50 שאלות על פני כל הנושאים, לתוצאה מדויקת ומעמיקה יותר.
+                </p>
+                <div className="mt-8 flex items-center justify-between text-sm">
+                  <span className="rounded-full bg-gray-light px-3 py-1 font-medium text-navy">
+                    כ־8 דקות
+                  </span>
+                  <span className="flex items-center gap-1 font-semibold text-navy">
+                    התחילו כאן
+                    <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                  </span>
+                </div>
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
 
       <div className="mx-auto max-w-6xl px-4 pb-20">
-        <div className="grid gap-5 lg:grid-cols-12">
-          <Link
-            href="/quiz?mode=short"
-            className="group block lg:col-span-7"
-          >
-            <div className="notch-card bg-grain relative flex h-full flex-col overflow-hidden bg-gradient-to-br from-navy to-navy-light p-8 text-white transition-all duration-200 group-hover:-translate-y-1 group-hover:shadow-[0_16px_40px_-6px_rgba(37,99,235,0.4)] sm:p-10">
-              <div className="relative z-10 mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-white backdrop-blur-md">
-                <Zap className="h-6 w-6" />
-              </div>
-              <h2 className="font-display relative z-10 text-3xl font-normal">
-                מסלול מהיר
-              </h2>
-              <p className="relative z-10 mt-3 max-w-md flex-1 text-sm leading-relaxed text-white/75">
-                20 שאלות מרכזיות שייתנו לכם תמונה מהירה וברורה. מתאים כשהזמן
-                קצר.
-              </p>
-              <div className="relative z-10 mt-8 flex items-center justify-between text-sm">
-                <span className="rounded-full bg-white/10 px-3 py-1 font-medium backdrop-blur-md">
-                  כ־3 דקות
-                </span>
-                <span className="flex items-center gap-1 font-semibold">
-                  התחילו כאן
-                  <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                </span>
-              </div>
-            </div>
-          </Link>
-
-          <Link href="/quiz?mode=long" className="group block lg:col-span-5">
-            <div className="flex h-full flex-col rounded-2xl border border-gray/80 bg-white p-8 shadow-ambient transition-all duration-200 group-hover:-translate-y-1 group-hover:border-sapphire/50 group-hover:shadow-ambient-lg">
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-sapphire/10 text-sapphire">
-                <ListChecks className="h-6 w-6" />
-              </div>
-              <h2 className="font-display text-3xl font-normal text-navy">
-                מסלול מקיף
-              </h2>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-gray-dark">
-                50 שאלות על פני כל הנושאים, לתוצאה מדויקת ומעמיקה יותר.
-              </p>
-              <div className="mt-8 flex items-center justify-between text-sm">
-                <span className="rounded-full bg-gray-light px-3 py-1 font-medium text-navy">
-                  כ־8 דקות
-                </span>
-                <span className="flex items-center gap-1 font-semibold text-navy">
-                  התחילו כאן
-                  <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                </span>
-              </div>
-            </div>
-          </Link>
-        </div>
-
-        <div className="mt-10">
+        <div className="mt-2">
           <p className="mb-3 text-xs font-bold uppercase tracking-wider text-gray-dark">
             עוד באתר
           </p>
