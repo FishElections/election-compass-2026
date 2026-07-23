@@ -33,7 +33,7 @@ export default function HomePage() {
               </h1>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-gray-dark sm:text-lg">
                 ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה
-                הטובה ביותר. השוואה מבוססת נתונים, בלי הטיה ובלי פרסום.
+                הטובה ביותר. אמלק; השוואה מבוססת נתונים, בלי הטיה ובלי פרסום.
               </p>
             </div>
 
