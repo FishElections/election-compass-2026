@@ -37,10 +37,10 @@ export async function GET(request: Request) {
   const partyColor = party?.color ?? "#3b82f6";
 
   const glyphs =
-    "מצפן בחירות 2026 המפלגה שהכי מתאימה לי התאמה גלו גם אתם לאיזו אתם מתאימים " +
+    "מצפן בחירות 2026 המפלגה שהכי מתאימה לי התאמה גלו גם אתם " +
     partyName +
     partyLogo +
-    "0123456789%‹›";
+    "0123456789%‹";
 
   const [regular, bold] = await Promise.all([
     loadHeebo(glyphs, 500),
@@ -111,12 +111,24 @@ export async function GET(request: Request) {
 
         {/* main */}
         <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-          <div style={{ display: "flex", fontSize: "34px", color: "#94a3b8" }}>
+          <div
+            dir="rtl"
+            style={{
+              display: "flex",
+              direction: "rtl",
+              unicodeBidi: "isolate",
+              fontSize: "34px",
+              color: "#94a3b8",
+            }}
+          >
             המפלגה שהכי מתאימה לי
           </div>
           <div
+            dir="rtl"
             style={{
               display: "flex",
+              direction: "rtl",
+              unicodeBidi: "isolate",
               fontSize: "104px",
               fontWeight: 800,
               lineHeight: 1.05,
@@ -148,20 +160,34 @@ export async function GET(request: Request) {
           </div>
         </div>
 
-        {/* cta */}
+        {/* cta — arrow is a separate element so BiDi never has to place
+            punctuation inside the Hebrew run */}
         <div
           style={{
             display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: "14px",
             alignSelf: "flex-start",
             background: "#ffffff",
             color: "#0b1220",
-            fontSize: "32px",
+            fontSize: "34px",
             fontWeight: 800,
-            padding: "18px 32px",
+            padding: "18px 34px",
             borderRadius: "9999px",
           }}
         >
-          ‹ גלו גם אתם לאיזו מפלגה אתם מתאימים
+          <div
+            dir="rtl"
+            style={{
+              display: "flex",
+              direction: "rtl",
+              unicodeBidi: "isolate",
+            }}
+          >
+            גלו גם אתם
+          </div>
+          <div style={{ display: "flex" }}>‹</div>
         </div>
       </div>
     ),
