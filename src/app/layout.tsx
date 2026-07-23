@@ -39,6 +39,14 @@ export const metadata: Metadata = {
   description: "ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה הטובה ביותר.",
 };
 
+// Render every page per-request instead of prerendering it at build time.
+// SITE_URL and GA_ID are only present in the running container (docker run
+// --env-file), not during `docker build`. Without this, static pages bake in
+// the build-time values — GA_ID is undefined then, so analytics (and the
+// quiz_start events) never load on the homepage/quiz. Per-request rendering
+// reads the real runtime env, so GA fires on every page.
+export const dynamic = "force-dynamic";
+
 export default function RootLayout({
   children,
 }: Readonly<{
