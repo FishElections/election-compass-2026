@@ -27,7 +27,11 @@
       "Bash(git config *)",
       "Bash(ssh -T git@github.com -o ConnectTimeout=5 -o StrictHostKeyChecking=accept-new)",
       "Bash(brew install *)",
-      "Bash(jobs -l)"
+      "Bash(jobs -l)",
+      "Bash(gh repo *)",
+      "Bash(git push *)",
+      "Bash(git remote *)",
+      "Bash(git checkout *)"
     ]
   }
 }
