@@ -38,7 +38,10 @@
       "Bash(git pull *)",
       "Bash(git stash *)",
       "Bash(git branch *)",
-      "WebFetch(domain:he.wikipedia.org)"
+      "WebFetch(domain:he.wikipedia.org)",
+      "WebFetch(domain:elections.walla.co.il)",
+      "Bash(git fetch *)",
+      "Bash(git cherry-pick *)"
     ]
   }
 }
