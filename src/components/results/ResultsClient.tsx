@@ -190,6 +190,31 @@ export function ResultsClient() {
           )}
         </div>
 
+        {topThree[0] && (
+          <div className="mt-6 flex flex-col items-center gap-3 rounded-2xl border border-success/30 bg-success/5 p-5 text-center sm:flex-row sm:justify-between sm:text-right">
+            <div className="flex-1">
+              <p className="font-bold text-navy">שתפו את התוצאה שלכם</p>
+              <p className="mt-0.5 text-sm text-gray-dark">
+                תנו לחברים לגלות לאיזו מפלגה הם מתאימים.
+              </p>
+            </div>
+            <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+              <Button onClick={shareWhatsApp} variant="success">
+                <WhatsAppIcon className="h-4 w-4" />
+                שתפו ב-WhatsApp
+              </Button>
+              <Button onClick={handleCopyLink} variant="outline">
+                {copied ? (
+                  <Check className="h-4 w-4" />
+                ) : (
+                  <Link2 className="h-4 w-4" />
+                )}
+                {copied ? "הקישור הועתק" : "העתקת קישור"}
+              </Button>
+            </div>
+          </div>
+        )}
+
         {rest.length > 0 && (
           <div className="mt-8 text-center">
             <Button variant="outline" onClick={() => setShowAll((v) => !v)}>
