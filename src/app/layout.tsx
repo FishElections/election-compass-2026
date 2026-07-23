@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Heebo, Rubik, Secular_One } from "next/font/google";
 import { SidebarDrawer } from "@/components/SidebarDrawer";
 import "./globals.css";
@@ -19,7 +20,21 @@ const secularOne = Secular_One({
   weight: "400",
 });
 
+// Read at request time (not a NEXT_PUBLIC_ var, so it is NOT inlined at build)
+// — lets `docker run -e SITE_URL=…` set the public origin without rebuilding.
+const siteUrl =
+  process.env.SITE_URL ??
+  (process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000");
+
+// Google Analytics measurement id (e.g. G-XXXXXXX). Read at request time so it
+// can be set with `docker run -e GA_ID=…` without a rebuild. Analytics is off
+// when unset.
+const gaId = process.env.GA_ID;
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "מצפן בחירות 2026",
   description: "ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה הטובה ביותר.",
 };
@@ -38,6 +53,17 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <SidebarDrawer />
         {children}
+        {gaId ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`}
+            </Script>
+          </>
+        ) : null}
       </body>
     </html>
   );

@@ -1,11 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Brain, ChevronDown, ChevronLeft, RotateCcw, Share2 } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Brain, Check, ChevronDown, ChevronLeft, Link2, RotateCcw } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
+import { parties } from "@/data/parties";
 import { calculateAllMatches } from "@/utils/calculator";
+import { trackEvent } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { PartyResultCard } from "@/components/results/PartyResultCard";
 import { PartyResultRow } from "@/components/results/PartyResultRow";
@@ -14,8 +16,16 @@ import { cn } from "@/lib/utils";
 
 export function ResultsClient() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { answers, activeQuestions, reset } = useQuizStore();
   const [showAll, setShowAll] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  // When someone opens a shared link (…/results?p=…&s=…) without having taken
+  // the quiz themselves, we greet them with the sharer's result instead of a
+  // dead-end.
+  const sharedParty = parties.find((p) => p.id === searchParams.get("p"));
+  const sharedScore = Number(searchParams.get("s"));
 
   const results = useMemo(() => calculateAllMatches(answers), [answers]);
   const topThree = results.slice(0, 3);
@@ -32,7 +42,56 @@ export function ResultsClient() {
     (v) => v !== undefined
   ).length;
 
+  // Fire a single quiz_complete event once real results are shown.
+  const completeTracked = useRef(false);
+  useEffect(() => {
+    if (
+      !completeTracked.current &&
+      activeQuestions.length > 0 &&
+      answeredCount > 0 &&
+      topThree[0]
+    ) {
+      completeTracked.current = true;
+      trackEvent("quiz_complete", {
+        top_party: topThree[0].party.id,
+        match: topThree[0].matchPercentage,
+        answered: answeredCount,
+      });
+    }
+  }, [activeQuestions.length, answeredCount, topThree]);
+
   if (activeQuestions.length === 0 || answeredCount === 0) {
+    if (sharedParty && Number.isFinite(sharedScore)) {
+      const shownScore = Math.max(0, Math.min(100, Math.round(sharedScore)));
+      return (
+        <main className="flex-1">
+          <div className="mx-auto flex max-w-md flex-col items-center gap-5 px-4 py-24 text-center">
+            <span
+              className="flex h-16 w-16 items-center justify-center rounded-2xl text-2xl font-bold text-white"
+              style={{ backgroundColor: sharedParty.color }}
+            >
+              {sharedParty.logo}
+            </span>
+            <p className="text-sm font-bold uppercase tracking-wider text-sapphire">
+              שיתפו איתך תוצאה
+            </p>
+            <h1 className="font-display text-2xl font-normal leading-snug text-navy">
+              קיבלו {shownScore}% התאמה ל{sharedParty.name}
+            </h1>
+            <p className="text-gray-dark">
+              רוצים לגלות לאיזו מפלגה <span className="font-bold">אתם</span> הכי
+              מתאימים? ענו על השאלון וקבלו את התוצאות שלכם.
+            </p>
+            <Link href="/quiz">
+              <Button size="lg">
+                התחילו בשאלון
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </main>
+      );
+    }
     return (
       <main className="flex-1">
         <div className="mx-auto flex max-w-md flex-col items-center gap-4 px-4 py-24 text-center">
@@ -55,20 +114,47 @@ export function ResultsClient() {
     router.push("/");
   }
 
-  async function handleShare() {
-    const shareData = {
-      title: "מצפן בחירות 2026",
-      text: `גיליתי שהמפלגה שהכי מתאימה לי היא ${topThree[0]?.party.name} (${topThree[0]?.matchPercentage}% התאמה)! בדקו גם אתם:`,
-      url: typeof window !== "undefined" ? window.location.origin : "",
-    };
-    if (typeof navigator !== "undefined" && navigator.share) {
-      try {
-        await navigator.share(shareData);
-      } catch {
-        // המשתמש ביטל את השיתוף
+  const topParty = topThree[0]?.party;
+  const topScore = topThree[0]?.matchPercentage ?? 0;
+  const shareUrl =
+    typeof window !== "undefined" && topParty
+      ? `${window.location.origin}/results?p=${encodeURIComponent(
+          topParty.id
+        )}&s=${topScore}`
+      : "";
+  const shareText = `גיליתי שהמפלגה שהכי מתאימה לי היא ${topParty?.name} (${topScore}% התאמה)! בדקו גם אתם:`;
+
+  function shareVia(target: "whatsapp" | "linkedin") {
+    trackEvent("share", { method: target, party: topParty?.id, match: topScore });
+    // LinkedIn's share endpoint only accepts a URL and ignores custom text,
+    // so the headline is carried by WhatsApp only.
+    const link =
+      target === "whatsapp"
+        ? `https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`
+        : `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+    window.open(link, "_blank", "noopener,noreferrer");
+  }
+
+  async function handleCopyLink() {
+    if (typeof navigator === "undefined") return;
+    try {
+      if (navigator.share) {
+        trackEvent("share", { method: "native", party: topParty?.id, match: topScore });
+        await navigator.share({
+          title: "מצפן בחירות 2026",
+          text: shareText,
+          url: shareUrl,
+        });
+        return;
       }
-    } else if (typeof navigator !== "undefined" && navigator.clipboard) {
-      await navigator.clipboard.writeText(shareData.url);
+      if (navigator.clipboard) {
+        trackEvent("share", { method: "copy", party: topParty?.id, match: topScore });
+        await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 2000);
+      }
+    } catch {
+      // המשתמש ביטל את השיתוף
     }
   }
 
@@ -184,17 +270,66 @@ export function ResultsClient() {
           </div>
         )}
 
-        <div className="mt-8 flex flex-col items-center justify-center gap-3 border-t border-gray pt-8 sm:flex-row">
-          <Button onClick={handleShare} variant="default" size="lg">
-            <Share2 className="h-4 w-4" />
-            שתפו את התוצאה
-          </Button>
-          <Button onClick={handleRestart} variant="outline" size="lg">
+        <div className="mt-8 flex flex-col items-center gap-4 border-t border-gray pt-8">
+          <p className="text-sm font-bold text-navy">שתפו את התוצאה</p>
+          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Button
+              onClick={() => shareVia("whatsapp")}
+              variant="success"
+              size="lg"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              שתפו ב-WhatsApp
+            </Button>
+            <Button
+              onClick={() => shareVia("linkedin")}
+              variant="accent"
+              size="lg"
+            >
+              <LinkedInIcon className="h-4 w-4" />
+              שתפו ב-LinkedIn
+            </Button>
+            <Button onClick={handleCopyLink} variant="outline" size="lg">
+              {copied ? (
+                <Check className="h-4 w-4" />
+              ) : (
+                <Link2 className="h-4 w-4" />
+              )}
+              {copied ? "הקישור הועתק" : "העתקת קישור"}
+            </Button>
+          </div>
+          <Button onClick={handleRestart} variant="ghost" size="lg">
             <RotateCcw className="h-4 w-4" />
             התחילו מחדש
           </Button>
         </div>
       </div>
     </main>
+  );
+}
+
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+    </svg>
+  );
+}
+
+function LinkedInIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
   );
 }

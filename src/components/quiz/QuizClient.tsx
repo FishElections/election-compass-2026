@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { CategoryBadge } from "@/components/quiz/CategoryBadge";
 import { LikertButton } from "@/components/quiz/LikertButton";
 import { QuestionMoreInfo } from "@/components/quiz/QuestionMoreInfo";
+import { trackEvent } from "@/lib/analytics";
 
 export function QuizClient() {
   const router = useRouter();
@@ -33,6 +34,7 @@ export function QuizClient() {
     if (initializedMode.current !== mode) {
       initializedMode.current = mode;
       startQuiz(mode);
+      trackEvent("quiz_start", { mode });
     }
   }, [mode, startQuiz]);
 
