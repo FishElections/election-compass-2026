@@ -27,7 +27,14 @@
       "Bash(git config *)",
       "Bash(ssh -T git@github.com -o ConnectTimeout=5 -o StrictHostKeyChecking=accept-new)",
       "Bash(brew install *)",
-      "Bash(jobs -l)"
+      "Bash(jobs -l)",
+      "Bash(gh repo *)",
+      "Bash(git push *)",
+      "Bash(git remote *)",
+      "Bash(git checkout *)",
+      "Bash(gh pr create --title 'Grant local permissions for repo creation and push commands' --body ' *)",
+      "Bash(gh pr *)",
+      "Bash(gh api *)"
     ]
   }
 }
