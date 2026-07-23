@@ -1,0 +1,24 @@
+name: Deploy
+
+# Auto-deploy on every push to main. Runs on a self-hosted runner installed on
+# the home server (outbound connection to GitHub, so it works behind NAT with no
+# public IP or port-forwarding). Also runnable manually from the Actions tab.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Never let two deploys run at once; a newer push supersedes an in-flight one.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build and relaunch
+        run: bash scripts/deploy.sh
