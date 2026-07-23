@@ -21,7 +21,13 @@
       "Bash(xargs kill -9)",
       "Bash(node gen_stances_2026_v2.mjs)",
       "Bash(xargs -r kill)",
-      "Bash(npx eslint *)"
+      "Bash(npx eslint *)",
+      "Bash(gh auth *)",
+      "Read(//Users/ohad/.ssh/**)",
+      "Bash(git config *)",
+      "Bash(ssh -T git@github.com -o ConnectTimeout=5 -o StrictHostKeyChecking=accept-new)",
+      "Bash(brew install *)",
+      "Bash(jobs -l)"
     ]
   }
 }
