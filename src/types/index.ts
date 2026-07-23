@@ -39,6 +39,19 @@ export type SpectrumCategory =
   | "far-right"
   | "sectoral";
 
+/**
+ * האות/אותיות הרשמיות של המפלגה בפתק ההצבעה, כפי שנקבעות על ידי ועדת
+ * הבחירות המרכזית. שדה זה נשאר undefined עד לפרסום הרשמי - הגשת הרשימות
+ * מתבצעת כ-57 יום לפני הבחירות, כך שלרוב אין אות רשמית זמן רב לפני כן.
+ */
+export interface OfficialBallotLetter {
+  letters: string;
+  /** תאריך הפרסום הרשמי, בפורמט YYYY-MM-DD */
+  confirmedAt: string;
+  /** קישור למקור הרשמי (ועדת הבחירות המרכזית) */
+  source: string;
+}
+
 export interface Party {
   id: string;
   name: string;
@@ -49,7 +62,10 @@ export interface Party {
   /** סיווג סטנדרטי לצורכי בקרת איכות ומיון אובייקטיבי */
   spectrumCategory: SpectrumCategory;
   shortDescription: string;
+  /** כינוי לשימוש שוטף בממשק (לא בהכרח האות הרשמית בפתק) */
   logo: string;
+  /** האות הרשמית בפתק, כשתפורסם. ראו OfficialBallotLetter. */
+  officialBallotLetter?: OfficialBallotLetter;
   /** נשמר לשימוש עתידי; לא מאוכלס בפועל כדי להימנע משימוש בדימויים לא מורשים של אנשים אמיתיים. */
   leaderSketchUrl?: string;
   platform: PlatformTopic[];
