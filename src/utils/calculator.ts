@@ -1,7 +1,13 @@
 import { parties } from "@/data/parties";
 import { partyStances } from "@/data/party_stances";
 import { categories, questions } from "@/data/questions";
-import { CategoryId, Party, PartyResult, UserAnswers } from "@/types";
+import {
+  CategoryId,
+  CategoryWeights,
+  Party,
+  PartyResult,
+  UserAnswers,
+} from "@/types";
 
 const MAX_DISTANCE_PER_QUESTION = 4; // |2 - (-2)|
 
@@ -11,7 +17,25 @@ for (const stance of partyStances) {
   stanceLookup[stance.partyId][stance.questionId] = stance.stanceValue;
 }
 
-function calculatePartyMatch(party: Party, answers: UserAnswers): PartyResult {
+const questionCategoryLookup: Record<string, CategoryId> = {};
+for (const question of questions) {
+  questionCategoryLookup[question.id] = question.category;
+}
+
+function weightFor(
+  questionId: string,
+  categoryWeights: CategoryWeights | undefined
+): number {
+  if (!categoryWeights) return 1;
+  const category = questionCategoryLookup[questionId];
+  return categoryWeights[category] ?? 1;
+}
+
+function calculatePartyMatch(
+  party: Party,
+  answers: UserAnswers,
+  categoryWeights?: CategoryWeights
+): PartyResult {
   const answeredQuestionIds = Object.keys(answers).filter(
     (id) => answers[id] !== undefined
   );
@@ -21,14 +45,15 @@ function calculatePartyMatch(party: Party, answers: UserAnswers): PartyResult {
   }
 
   let totalDistance = 0;
+  let maxPossibleDistance = 0;
   for (const questionId of answeredQuestionIds) {
     const userValue = answers[questionId] ?? 0;
     const partyValue = stanceLookup[party.id]?.[questionId] ?? 0;
-    totalDistance += Math.abs(userValue - partyValue);
+    const weight = weightFor(questionId, categoryWeights);
+    totalDistance += weight * Math.abs(userValue - partyValue);
+    maxPossibleDistance += weight * MAX_DISTANCE_PER_QUESTION;
   }
 
-  const maxPossibleDistance =
-    MAX_DISTANCE_PER_QUESTION * answeredQuestionIds.length;
   const score = (1 - totalDistance / maxPossibleDistance) * 100;
 
   return {
@@ -38,9 +63,12 @@ function calculatePartyMatch(party: Party, answers: UserAnswers): PartyResult {
   };
 }
 
-export function calculateAllMatches(answers: UserAnswers): PartyResult[] {
+export function calculateAllMatches(
+  answers: UserAnswers,
+  categoryWeights?: CategoryWeights
+): PartyResult[] {
   return parties
-    .map((party) => calculatePartyMatch(party, answers))
+    .map((party) => calculatePartyMatch(party, answers, categoryWeights))
     .sort(
       (a, b) =>
         b.matchPercentage - a.matchPercentage ||

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { ChevronRight, SkipForward } from "lucide-react";
@@ -12,21 +12,25 @@ import { Button } from "@/components/ui/button";
 import { CategoryBadge } from "@/components/quiz/CategoryBadge";
 import { LikertButton } from "@/components/quiz/LikertButton";
 import { QuestionMoreInfo } from "@/components/quiz/QuestionMoreInfo";
+import { TopicPriorityStep } from "@/components/quiz/TopicPriorityStep";
 import { trackEvent } from "@/lib/analytics";
 
 export function QuizClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const mode: QuizMode = searchParams.get("mode") === "long" ? "long" : "short";
+  const [showPriorityStep, setShowPriorityStep] = useState(false);
 
   const {
     activeQuestions,
     currentIndex,
     answers,
+    categoryWeights,
     startQuiz,
     answerQuestion,
     goPrev,
     skip,
+    resetCategoryWeights,
   } = useQuizStore();
 
   const initializedMode = useRef<QuizMode | null>(null);
@@ -34,6 +38,7 @@ export function QuizClient() {
     if (initializedMode.current !== mode) {
       initializedMode.current = mode;
       startQuiz(mode);
+      setShowPriorityStep(false);
       trackEvent("quiz_start", { mode });
     }
   }, [mode, startQuiz]);
@@ -46,20 +51,53 @@ export function QuizClient() {
   const progressPercent = ((currentIndex + 1) / total) * 100;
   const selectedValue = currentQuestion ? answers[currentQuestion.id] : undefined;
 
+  function finishQuiz() {
+    if (mode === "long") {
+      setShowPriorityStep(true);
+    } else {
+      router.push("/results");
+    }
+  }
+
   function handleAnswer(value: StanceValue) {
     if (!currentQuestion) return;
     answerQuestion(currentQuestion.id, value);
     if (isLast) {
-      router.push("/results");
+      finishQuiz();
     }
   }
 
   function handleSkip() {
     if (isLast) {
-      router.push("/results");
+      finishQuiz();
     } else {
       skip();
     }
+  }
+
+  function handlePriorityContinue() {
+    const weightedCount = Object.keys(categoryWeights).length;
+    trackEvent("topic_priority_step", { skipped: false, weightedCount });
+    router.push("/results");
+  }
+
+  function handlePrioritySkip() {
+    resetCategoryWeights();
+    trackEvent("topic_priority_step", { skipped: true, weightedCount: 0 });
+    router.push("/results");
+  }
+
+  if (showPriorityStep) {
+    return (
+      <main className="flex-1">
+        <div className="mx-auto flex max-w-2xl flex-col px-4 pb-10 pt-20 sm:py-16">
+          <TopicPriorityStep
+            onContinue={handlePriorityContinue}
+            onSkip={handlePrioritySkip}
+          />
+        </div>
+      </main>
+    );
   }
 
   if (!currentQuestion) return null;

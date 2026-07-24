@@ -11,6 +11,12 @@ export interface Category {
   icon: string;
 }
 
+/** 1 = רגיל, 1.5 = חשוב לי, 2 = הכי קריטי לי */
+export type TopicWeight = 1 | 1.5 | 2;
+
+/** מפתחות חסרים = משקל רגיל (1). מוגדר רק במסלול המקיף. */
+export type CategoryWeights = Partial<Record<CategoryId, TopicWeight>>;
+
 export type PlatformTopicKey =
   | "security"
   | "economy"
