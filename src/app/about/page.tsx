@@ -1,4 +1,4 @@
-import { Info, Lock, Calculator } from "lucide-react";
+import { Info, Lock, Calculator, Users } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -49,6 +49,28 @@ export default function AboutPage() {
         <p className="leading-relaxed text-gray-dark">
           התשובות שלכם אנונימיות לחלוטין ואינן נשמרות בשרת. כל החישוב מתבצע
           בדפדפן שלכם בלבד, וברגע שתסגרו את הדף התשובות נמחקות.
+        </p>
+
+        <h2 className="font-display mt-10 mb-3 flex items-center gap-2 text-xl font-normal text-navy">
+          <Users className="h-5 w-5 text-amber" />
+          מי בנה את זה
+        </h2>
+        <p className="leading-relaxed text-gray-dark">
+          אוהד בר אלי (
+          <a
+            href="mailto:ohadoo20@gmail.com"
+            className="text-sapphire hover:underline"
+          >
+            ohadoo20@gmail.com
+          </a>
+          ) ואיתי אילת (
+          <a
+            href="mailto:itay.ey@gmail.com"
+            className="text-sapphire hover:underline"
+          >
+            itay.ey@gmail.com
+          </a>
+          )
         </p>
       </div>
     </main>
