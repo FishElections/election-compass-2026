@@ -1,49 +1,60 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { ChevronRight, SkipForward } from "lucide-react";
-import { useQuizStore } from "@/store/quizStore";
+import { getActiveQuestions, useQuizHydrated, useQuizStore } from "@/store/quizStore";
 import { likertOptions } from "@/data/likert";
-import { QuizMode, StanceValue } from "@/types";
+import { CategoryId, QuizMode, StanceValue } from "@/types";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { CategoryBadge } from "@/components/quiz/CategoryBadge";
 import { LikertButton } from "@/components/quiz/LikertButton";
 import { QuestionMoreInfo } from "@/components/quiz/QuestionMoreInfo";
+import { QuizIntro } from "@/components/quiz/QuizIntro";
 import { TopicPriorityStep } from "@/components/quiz/TopicPriorityStep";
+import { PmChoiceStep } from "@/components/quiz/PmChoiceStep";
 import { trackEvent } from "@/lib/analytics";
+
+type QuizPhase = "intro" | "questions" | "priority" | "pm";
 
 export function QuizClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const mode: QuizMode = searchParams.get("mode") === "long" ? "long" : "short";
-  const [showPriorityStep, setShowPriorityStep] = useState(false);
+  const hydrated = useQuizHydrated();
+  const [phase, setPhase] = useState<QuizPhase>("intro");
 
   const {
-    activeQuestions,
+    mode: storedMode,
     currentIndex,
     answers,
     categoryWeights,
+    categoryOrder,
     startQuiz,
     answerQuestion,
     goPrev,
     skip,
+    setCategoryWeight,
     resetCategoryWeights,
+    setPmChoice,
   } = useQuizStore();
 
-  const initializedMode = useRef<QuizMode | null>(null);
-  useEffect(() => {
-    if (initializedMode.current !== mode) {
-      initializedMode.current = mode;
-      startQuiz(mode);
-      setShowPriorityStep(false);
-      trackEvent("quiz_start", { mode });
-    }
-  }, [mode, startQuiz]);
+  const activeQuestions = useMemo(
+    () => getActiveQuestions(mode, storedMode === mode ? categoryOrder : []),
+    [mode, storedMode, categoryOrder]
+  );
 
-  if (activeQuestions.length === 0) return null;
+  // הצעת ברירת מחדל לשלב השקלול: הנושא שהמשתמש בחר ראשון מסומן "חשוב לי".
+  const prioritySuggestion = useRef<CategoryId | null>(null);
+
+  if (!hydrated) return null;
+
+  const answeredCount = Object.values(answers).filter(
+    (v) => v !== undefined
+  ).length;
+  const resumeAvailable = storedMode === mode && answeredCount > 0;
 
   const currentQuestion = activeQuestions[currentIndex];
   const total = activeQuestions.length;
@@ -51,11 +62,31 @@ export function QuizClient() {
   const progressPercent = ((currentIndex + 1) / total) * 100;
   const selectedValue = currentQuestion ? answers[currentQuestion.id] : undefined;
 
-  function finishQuiz() {
+  function handleStart(order: CategoryId[]) {
+    startQuiz(mode, order);
+    setPhase("questions");
+    trackEvent("quiz_start", { mode, ordered_topics: order.length });
+    if (order.length > 0) {
+      trackEvent("category_order", { mode, order: order.join(",") });
+    }
+  }
+
+  function handleResume() {
+    setPhase("questions");
+    trackEvent("quiz_resume", { mode, answered: answeredCount });
+  }
+
+  function finishQuestions() {
     if (mode === "long") {
-      setShowPriorityStep(true);
+      const { categoryWeights: weights, categoryOrder: order } =
+        useQuizStore.getState();
+      if (Object.keys(weights).length === 0 && order.length > 0) {
+        prioritySuggestion.current = order[0];
+        setCategoryWeight(order[0], 1.5);
+      }
+      setPhase("priority");
     } else {
-      router.push("/results");
+      setPhase("pm");
     }
   }
 
@@ -63,38 +94,78 @@ export function QuizClient() {
     if (!currentQuestion) return;
     answerQuestion(currentQuestion.id, value);
     if (isLast) {
-      finishQuiz();
+      finishQuestions();
     }
   }
 
   function handleSkip() {
     if (isLast) {
-      finishQuiz();
+      finishQuestions();
     } else {
       skip();
     }
   }
 
   function handlePriorityContinue() {
-    const weightedCount = Object.keys(categoryWeights).length;
+    const weightedCount = Object.keys(
+      useQuizStore.getState().categoryWeights
+    ).length;
     trackEvent("topic_priority_step", { skipped: false, weightedCount });
-    router.push("/results");
+    setPhase("pm");
   }
 
   function handlePrioritySkip() {
     resetCategoryWeights();
     trackEvent("topic_priority_step", { skipped: true, weightedCount: 0 });
+    setPhase("pm");
+  }
+
+  function handlePmChoice(partyId: string | "none") {
+    setPmChoice(partyId);
+    trackEvent("pm_choice", { party: partyId });
     router.push("/results");
   }
 
-  if (showPriorityStep) {
+  function handlePmSkip() {
+    setPmChoice(null);
+    trackEvent("pm_choice", { party: "skipped" });
+    router.push("/results");
+  }
+
+  if (phase === "intro") {
+    return (
+      <main className="flex-1">
+        <div className="mx-auto flex max-w-2xl flex-col px-4 pb-10 pt-20 sm:py-16">
+          <QuizIntro
+            mode={mode}
+            resumeAtQuestion={resumeAvailable ? currentIndex + 1 : null}
+            onStart={handleStart}
+            onResume={handleResume}
+          />
+        </div>
+      </main>
+    );
+  }
+
+  if (phase === "priority") {
     return (
       <main className="flex-1">
         <div className="mx-auto flex max-w-2xl flex-col px-4 pb-10 pt-20 sm:py-16">
           <TopicPriorityStep
+            suggestedCategory={prioritySuggestion.current}
             onContinue={handlePriorityContinue}
             onSkip={handlePrioritySkip}
           />
+        </div>
+      </main>
+    );
+  }
+
+  if (phase === "pm") {
+    return (
+      <main className="flex-1">
+        <div className="mx-auto flex max-w-2xl flex-col px-4 pb-10 pt-20 sm:py-16">
+          <PmChoiceStep onChoose={handlePmChoice} onSkip={handlePmSkip} />
         </div>
       </main>
     );

@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Brain, Check, ChevronDown, ChevronLeft, Link2, RotateCcw, SlidersHorizontal } from "lucide-react";
-import { useQuizStore } from "@/store/quizStore";
+import { Brain, Check, ChevronDown, ChevronLeft, Heart, Link2, RotateCcw, SlidersHorizontal } from "lucide-react";
+import { getActiveQuestions, useQuizHydrated, useQuizStore } from "@/store/quizStore";
 import { parties } from "@/data/parties";
 import { categories } from "@/data/questions";
 import { calculateAllMatches } from "@/utils/calculator";
@@ -23,8 +23,20 @@ const weightLabels: Record<number, string> = {
 export function ResultsClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { answers, activeQuestions, categoryWeights, reset, resetCategoryWeights } =
-    useQuizStore();
+  const hydrated = useQuizHydrated();
+  const {
+    mode,
+    answers,
+    categoryWeights,
+    categoryOrder,
+    pmChoice,
+    reset,
+    resetCategoryWeights,
+  } = useQuizStore();
+  const activeQuestions = useMemo(
+    () => getActiveQuestions(mode, categoryOrder),
+    [mode, categoryOrder]
+  );
   const [showAll, setShowAll] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -74,7 +86,11 @@ export function ResultsClient() {
     }
   }, [activeQuestions.length, answeredCount, topThree]);
 
-  if (activeQuestions.length === 0 || answeredCount === 0) {
+  // עד שהמצב שוחזר מ-localStorage אין לדעת אם יש תשובות - לא מרנדרים,
+  // כדי לא להבליח את מסך "עדיין לא נמצאו תשובות" למי שכן ענה.
+  if (!hydrated) return null;
+
+  if (answeredCount === 0) {
     if (sharedParty && Number.isFinite(sharedScore)) {
       const shownScore = Math.max(0, Math.min(100, Math.round(sharedScore)));
       return (
@@ -130,6 +146,14 @@ export function ResultsClient() {
 
   const topParty = topThree[0]?.party;
   const topScore = topThree[0]?.matchPercentage ?? 0;
+
+  const pmParty =
+    pmChoice && pmChoice !== "none"
+      ? parties.find((p) => p.id === pmChoice)
+      : undefined;
+  const pmResult = pmParty
+    ? results.find((r) => r.party.id === pmParty.id)
+    : undefined;
   const shareUrl =
     typeof window !== "undefined" && topParty
       ? `${window.location.origin}/results?p=${encodeURIComponent(
@@ -250,6 +274,33 @@ export function ResultsClient() {
                   rank={i + 2}
                 />
               ))}
+            </div>
+          )}
+
+          {pmParty && pmResult && topParty && (
+            <div className="flex flex-col items-center gap-4 rounded-2xl border border-sapphire/20 bg-sapphire/5 p-6 text-center sm:flex-row sm:text-right">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-sapphire/10 text-sapphire">
+                <Heart className="h-6 w-6" />
+              </div>
+              <div className="flex-1">
+                <h2 className="font-bold text-navy">הלב מול העמדות</h2>
+                {pmParty.id === topParty.id ? (
+                  <p className="mt-1 text-sm text-gray-dark">
+                    הלב והראש מסכימים: בחרת את {pmParty.leader} כראש
+                    הממשלה המועדף, ו{pmParty.name} היא גם ההתאמה הגבוהה
+                    ביותר שלך בעמדות ({topScore}%).
+                  </p>
+                ) : (
+                  <p className="mt-1 text-sm text-gray-dark">
+                    כראש ממשלה בחרת את {pmParty.leader} ({pmParty.name}
+                    ), שם ההתאמה שלך בעמדות היא{" "}
+                    {pmResult.matchPercentage}% — בעוד שבעמדות עצמן
+                    ההתאמה הגבוהה ביותר שלך היא ל{topParty.name} (
+                    {topScore}%). פער כזה הוא לגמרי לגיטימי, ושווה הצצה
+                    בפירוט התשובות למטה.
+                  </p>
+                )}
+              </div>
             </div>
           )}
         </div>

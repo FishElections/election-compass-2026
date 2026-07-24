@@ -15,15 +15,21 @@ const weightOptions: { value: TopicWeight; label: string }[] = [
 ];
 
 interface TopicPriorityStepProps {
+  /** נושא שסומן אוטומטית כ"חשוב לי" לפי סדר הפרקים שבחר המשתמש */
+  suggestedCategory?: CategoryId | null;
   onContinue: () => void;
   onSkip: () => void;
 }
 
 export function TopicPriorityStep({
+  suggestedCategory,
   onContinue,
   onSkip,
 }: TopicPriorityStepProps) {
   const { categoryWeights, setCategoryWeight } = useQuizStore();
+  const suggestedLabel = categories.find(
+    (c) => c.id === suggestedCategory
+  )?.label;
 
   function currentWeight(category: CategoryId): TopicWeight {
     return categoryWeights[category] ?? 1;
@@ -48,6 +54,12 @@ export function TopicPriorityStep({
             סמנו נושאים שחשובים לכם במיוחד, ואנחנו נשקלל את זה בחישוב
             ההתאמה. אפשר גם פשוט לדלג ולקבל תוצאה רגילה, ללא שקלול.
           </p>
+          {suggestedLabel && (
+            <p className="mt-2 text-sm font-medium text-sapphire">
+              סימנו עבורך את "{suggestedLabel}" כחשוב, לפי הסדר שבחרת
+              בתחילת השאלון — אפשר לשנות הכול.
+            </p>
+          )}
         </div>
         <Button variant="ghost" onClick={onSkip} className="shrink-0">
           דלג
