@@ -97,7 +97,7 @@ export const hotTopics: Topic[] = [
       oppose: ["likud", "otzma-yehudit", "shas", "yahadut-hatorah", "raam", "religious-zionism"],
       splitOrNeutral: [],
     },
-    relatedQuestionId: "rel-6",
+    relatedQuestionId: "rel-5",
   },
   {
     id: "civil-marriage",

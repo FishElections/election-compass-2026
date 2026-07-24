@@ -73,7 +73,7 @@ export default function HomePage() {
                   מסלול מהיר
                 </h2>
                 <p className="relative z-10 mt-3 max-w-md flex-1 text-sm leading-relaxed text-white/75">
-                  20 שאלות מרכזיות שייתנו לכם תמונה מהירה וברורה. מתאים כשהזמן
+                  25 שאלות מרכזיות שייתנו לכם תמונה מהירה וברורה. מתאים כשהזמן
                   קצר.
                 </p>
                 <div className="relative z-10 mt-8 flex items-center justify-between text-sm">
@@ -97,11 +97,11 @@ export default function HomePage() {
                   מסלול מקיף
                 </h2>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-gray-dark">
-                  50 שאלות על פני כל הנושאים, לתוצאה מדויקת ומעמיקה יותר.
+                  61 שאלות על פני כל הנושאים, לתוצאה מדויקת ומעמיקה יותר.
                 </p>
                 <div className="mt-8 flex items-center justify-between text-sm">
                   <span className="rounded-full bg-gray-light px-3 py-1 font-medium text-navy">
-                    כ־8 דקות
+                    כ־10 דקות
                   </span>
                   <span className="flex items-center gap-1 font-semibold text-navy">
                     התחילו כאן
