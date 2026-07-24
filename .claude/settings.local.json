@@ -41,7 +41,8 @@
       "WebFetch(domain:he.wikipedia.org)",
       "WebFetch(domain:elections.walla.co.il)",
       "Bash(git fetch *)",
-      "Bash(git cherry-pick *)"
+      "Bash(git cherry-pick *)",
+      "Bash(git merge *)"
     ]
   }
 }
