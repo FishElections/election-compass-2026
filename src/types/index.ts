@@ -1,8 +1,10 @@
 export type CategoryId =
   | "security"
   | "economy"
+  | "infrastructure"
   | "religion_state"
   | "judiciary"
+  | "governance"
   | "society";
 
 export interface Category {
