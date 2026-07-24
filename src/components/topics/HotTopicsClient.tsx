@@ -2,29 +2,43 @@
 
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import { hotTopics, topicCategories } from "@/data/hotTopics";
-import { TopicCategory } from "@/types";
+import { categoryIcons, categorySlugs, hotTopics, topicCategories } from "@/data/hotTopics";
+import { Topic, TopicCategory } from "@/types";
 import { TopicCard } from "@/components/topics/TopicCard";
-import { cn } from "@/lib/utils";
-
-type CategoryFilter = "all" | TopicCategory;
+import { TopicShelf } from "@/components/topics/TopicShelf";
+import { TopicDetailSheet } from "@/components/topics/TopicDetailSheet";
+import { useTopicProgress } from "@/hooks/useTopicProgress";
 
 export function HotTopicsClient() {
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<CategoryFilter>("all");
+  const [activeTopicId, setActiveTopicId] = useState<string | null>(null);
+  const { openedIds, isOpened, markOpened } = useTopicProgress();
 
-  const filteredTopics = useMemo(() => {
-    const q = query.trim();
-    return hotTopics.filter((topic) => {
-      const matchesCategory = category === "all" || topic.category === category;
-      const matchesQuery =
-        !q ||
-        topic.title.includes(q) ||
-        topic.hook.includes(q) ||
-        topic.simpleExplanation.includes(q);
-      return matchesCategory && matchesQuery;
-    });
-  }, [query, category]);
+  const trimmedQuery = query.trim();
+  const searchResults = useMemo(() => {
+    if (!trimmedQuery) return null;
+    return hotTopics.filter(
+      (topic) =>
+        topic.title.includes(trimmedQuery) ||
+        topic.hook.includes(trimmedQuery) ||
+        topic.simpleExplanation.includes(trimmedQuery)
+    );
+  }, [trimmedQuery]);
+
+  const activeTopic = useMemo(
+    () => hotTopics.find((t) => t.id === activeTopicId) ?? null,
+    [activeTopicId]
+  );
+
+  const total = hotTopics.length;
+  const openedCount = openedIds.length;
+  const allDone = openedCount >= total;
+
+  function scrollToAisle(category: TopicCategory) {
+    document
+      .getElementById(`aisle-${categorySlugs[category]}`)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   return (
     <main className="flex-1">
@@ -41,8 +55,8 @@ export function HotTopicsClient() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-4xl px-4 pb-16 pt-8">
-        <div className="flex flex-col gap-4">
+      <div className="mx-auto max-w-6xl px-4 pb-16 pt-8">
+        <div id="topics-top" className="flex scroll-mt-24 flex-col gap-4">
           <div className="relative">
             <Search className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-dark" />
             <input
@@ -54,49 +68,93 @@ export function HotTopicsClient() {
             />
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={() => setCategory("all")}
-              className={cn(
-                "rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer",
-                category === "all"
-                  ? "border-sapphire bg-sapphire text-white"
-                  : "border-gray bg-white text-navy hover:border-sapphire"
-              )}
-            >
-              הכל
-            </button>
-            {topicCategories.map((cat) => (
+          {!trimmedQuery && (
+            <div className="flex flex-wrap gap-2">
               <button
-                key={cat}
                 type="button"
-                onClick={() => setCategory(cat)}
-                className={cn(
-                  "rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer",
-                  category === cat
-                    ? "border-sapphire bg-sapphire text-white"
-                    : "border-gray bg-white text-navy hover:border-sapphire"
-                )}
+                onClick={() =>
+                  document
+                    .getElementById("topics-top")
+                    ?.scrollIntoView({ behavior: "smooth", block: "start" })
+                }
+                className="rounded-full border-2 border-gray bg-white px-4 py-1.5 text-sm font-medium text-navy transition-colors hover:border-sapphire cursor-pointer"
               >
-                {cat}
+                הכל
               </button>
-            ))}
+              {topicCategories.map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => scrollToAisle(cat)}
+                  className="inline-flex items-center gap-1.5 rounded-full border-2 border-gray bg-white px-4 py-1.5 text-sm font-medium text-navy transition-colors hover:border-sapphire cursor-pointer"
+                >
+                  <span aria-hidden>{categoryIcons[cat]}</span>
+                  {cat}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="flex items-center gap-3 rounded-xl border border-gray bg-white px-4 py-3 shadow-ambient">
+            <span aria-hidden className="text-lg">
+              🧺
+            </span>
+            <div className="h-2 flex-1 overflow-hidden rounded-full bg-gray">
+              <div
+                className="h-full rounded-full bg-gradient-to-l from-sapphire to-gold transition-all duration-500"
+                style={{ width: `${total ? (openedCount / total) * 100 : 0}%` }}
+              />
+            </div>
+            <span className="whitespace-nowrap text-xs font-bold text-navy">
+              {openedCount}/{total} נושאים
+            </span>
           </div>
+          {allDone && (
+            <p className="text-center text-sm font-semibold text-success">
+              עברתם על כל הנושאים החמים 🎉 כל הכבוד!
+            </p>
+          )}
         </div>
 
-        {filteredTopics.length === 0 ? (
-          <p className="mt-14 text-center text-gray-dark">
-            לא נמצאו נושאים התואמים את החיפוש.
-          </p>
+        {trimmedQuery ? (
+          searchResults && searchResults.length === 0 ? (
+            <p className="mt-14 text-center text-gray-dark">
+              לא נמצאו נושאים התואמים את החיפוש.
+            </p>
+          ) : (
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {searchResults?.map((topic) => (
+                <TopicCard
+                  key={topic.id}
+                  topic={topic}
+                  done={isOpened(topic.id)}
+                  onOpen={() => setActiveTopicId(topic.id)}
+                />
+              ))}
+            </div>
+          )
         ) : (
-          <div className="mt-8 flex flex-col gap-4">
-            {filteredTopics.map((topic) => (
-              <TopicCard key={topic.id} topic={topic} />
+          <div className="mt-4 flex flex-col divide-y divide-gray/60">
+            {topicCategories.map((cat) => (
+              <TopicShelf
+                key={cat}
+                category={cat}
+                icon={categoryIcons[cat]}
+                topics={hotTopics.filter((t) => t.category === cat)}
+                isOpened={isOpened}
+                onOpenTopic={(topic: Topic) => setActiveTopicId(topic.id)}
+              />
             ))}
           </div>
         )}
       </div>
+
+      <TopicDetailSheet
+        topic={activeTopic}
+        isOpened={isOpened}
+        onMarkDone={markOpened}
+        onClose={() => setActiveTopicId(null)}
+      />
     </main>
   );
 }
