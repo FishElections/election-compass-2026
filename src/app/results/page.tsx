@@ -22,9 +22,8 @@ export async function generateMetadata({
   }
 
   const rounded = Math.max(0, Math.min(100, Math.round(score)));
-  const title = `המפלגה שהכי מתאימה לי: ${party.name} (${rounded}% התאמה)`;
-  const description =
-    "עשיתי את מצפן הבחירות 2026 וגיליתי לאיזו מפלגה אני הכי מתאים. גלו גם אתם!";
+  const title = `🎯 קיבלתי ${rounded}% התאמה ל${party.name}`;
+  const description = "עשיתי את מצפן הבחירות 2026. מה איתכם? גלו גם אתם 👇";
   const ogImage = `/api/og?p=${encodeURIComponent(party.id)}&s=${rounded}`;
 
   return {
