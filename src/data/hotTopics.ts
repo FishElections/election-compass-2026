@@ -461,3 +461,21 @@ export const topicCategories: TopicCategory[] = [
   "כלכלה ויוקר מחיה",
   "חברה וביטחון פנים",
 ];
+
+/** אייקון קטן לכל קטגוריה, לשילוט ה"מדפים" בעמוד הנושאים החמים */
+export const categoryIcons: Record<TopicCategory, string> = {
+  "ביטחון ומדיניות": "🛡️",
+  "דת ומדינה": "🕯️",
+  "משפט וממשל": "⚖️",
+  "כלכלה ויוקר מחיה": "💰",
+  "חברה וביטחון פנים": "🏘️",
+};
+
+/** מזהה יציב (אנגלית) לכל קטגוריה, לשימוש בעוגני גלילה בעמוד */
+export const categorySlugs: Record<TopicCategory, string> = {
+  "ביטחון ומדיניות": "security",
+  "דת ומדינה": "religion",
+  "משפט וממשל": "law",
+  "כלכלה ויוקר מחיה": "economy",
+  "חברה וביטחון פנים": "society",
+};
