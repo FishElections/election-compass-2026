@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# מצפן בחירות 2026
 
-## Getting Started
+כלי אזרחי בלתי תלוי לבחירות 2026 בישראל. עונים על שאלון עמדות (מסלול מהיר של 20 שאלות, או מסלול מקיף של 50), ומקבלים התאמה מדורגת לכל המפלגות המתמודדות, לצד אפשרות לשקלל אילו נושאים חשובים לכם יותר.
 
-First, run the development server:
+מעבר לשאלון, האתר כולל:
+- **הנושאים החמים** - הסברים פשוטים ונטולי-צד לסוגיות השנויות במחלוקת במדינה, עם מיפוי אופציונלי של עמדות המפלגות
+- **סיכומי מצעי המפלגות** - עמדות רשמיות לפי נושא
+- **מפרק הבועות** - אתגר לבחינת נקודות עיוורון מול הטיעונים החזקים ביותר של המחנה הנגדי
+- **השוואת מפלגות** - השוואה ישירה בין שתי מפלגות לפי קטגוריה
+
+התשובות אנונימיות לחלוטין ואינן נשמרות בשרת.
+
+## פותח על ידי
+
+- **אוהד בר אלי** - [ohadoo20@gmail.com](mailto:ohadoo20@gmail.com)
+- **איתי אילת** - [itay.ey@gmail.com](mailto:itay.ey@gmail.com)
+
+## טכנולוגיה
+
+Next.js (App Router) + TypeScript + Tailwind CSS, עם Zustand לניהול מצב השאלון.
+
+### הרצה מקומית
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+האתר יעלה בכתובת [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### בדיקות לפני commit
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npx tsc --noEmit
+npx eslint src --max-warnings=0
+npm run build
+```
