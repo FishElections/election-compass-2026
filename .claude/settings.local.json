@@ -45,7 +45,11 @@
       "Bash(git merge *)",
       "Bash(grep -rn \"\\\\\"/issues\\\\\"\\\\|'/issues'\\\\|href=\\\\\"/issues\\\\|/issues\\\\`\" /Users/ohad/Documents/elections_prj/src --include=\"*.tsx\" --include=\"*.ts\")",
       "Bash(git -C /Users/ohad/Documents/elections_prj status --short)",
-      "Bash(git -C /Users/ohad/Documents/elections_prj diff --stat)"
+      "Bash(git -C /Users/ohad/Documents/elections_prj diff --stat)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000 --max-time 3)",
+      "Bash(curl -s https://election-compass-2026.vercel.app/)",
+      "Bash(curl -sI https://election-compass-2026.vercel.app/)",
+      "Bash(python3 -c ' *)"
     ]
   }
 }
