@@ -3,9 +3,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Brain, Check, ChevronDown, ChevronLeft, Link2, RotateCcw } from "lucide-react";
+import { Brain, Check, ChevronDown, ChevronLeft, Link2, RotateCcw, SlidersHorizontal } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
 import { parties } from "@/data/parties";
+import { categories } from "@/data/questions";
 import { calculateAllMatches } from "@/utils/calculator";
 import { trackEvent } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
@@ -14,10 +15,16 @@ import { PartyResultRow } from "@/components/results/PartyResultRow";
 import { AnswerBreakdown } from "@/components/results/AnswerBreakdown";
 import { cn } from "@/lib/utils";
 
+const weightLabels: Record<number, string> = {
+  2: "הכי קריטי",
+  1.5: "חשוב",
+};
+
 export function ResultsClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { answers, activeQuestions, reset } = useQuizStore();
+  const { answers, activeQuestions, categoryWeights, reset, resetCategoryWeights } =
+    useQuizStore();
   const [showAll, setShowAll] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -27,7 +34,14 @@ export function ResultsClient() {
   const sharedParty = parties.find((p) => p.id === searchParams.get("p"));
   const sharedScore = Number(searchParams.get("s"));
 
-  const results = useMemo(() => calculateAllMatches(answers), [answers]);
+  const weightedCategories = categories.filter(
+    (c) => categoryWeights[c.id] && categoryWeights[c.id] !== 1
+  );
+
+  const results = useMemo(
+    () => calculateAllMatches(answers, categoryWeights),
+    [answers, categoryWeights]
+  );
   const topThree = results.slice(0, 3);
   const rest = results.slice(3);
 
@@ -172,6 +186,32 @@ export function ResultsClient() {
             שלוש המפלגות שהכי מתאימות לעמדות שלך.
           </p>
         </div>
+
+        {weightedCategories.length > 0 && (
+          <div className="mb-8 flex flex-col items-center gap-3 rounded-2xl border border-sapphire/20 bg-sapphire/5 p-5 text-center sm:flex-row sm:text-right">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sapphire/10 text-sapphire">
+              <SlidersHorizontal className="h-5 w-5" />
+            </div>
+            <p className="flex-1 text-sm text-navy">
+              התוצאות שלך משוקללות לפי החשיבות שסימנת:{" "}
+              {weightedCategories
+                .map(
+                  (c) =>
+                    `${c.label} (${weightLabels[categoryWeights[c.id] as number]})`
+                )
+                .join(", ")}
+              .
+            </p>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={resetCategoryWeights}
+              className="shrink-0"
+            >
+              אפס שקלול
+            </Button>
+          </div>
+        )}
 
         <div className="flex flex-col gap-6 pt-4">
           {topThree[0] && (
