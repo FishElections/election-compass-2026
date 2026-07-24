@@ -1,11 +1,70 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, BookOpen, HelpCircle, Key, Sparkles } from "lucide-react";
-import { HotTopic } from "@/types";
+import Link from "next/link";
+import {
+  ChevronDown,
+  ChevronLeft,
+  BookOpen,
+  HelpCircle,
+  Key,
+  Shield,
+  Sparkles,
+} from "lucide-react";
+import { parties } from "@/data/parties";
+import { Topic } from "@/types";
+import { PartyLogo } from "@/components/PartyLogo";
 import { cn } from "@/lib/utils";
 
-export function TopicCard({ topic }: { topic: HotTopic }) {
+interface PartyGroupProps {
+  label: string;
+  ids: string[];
+  tone: "support" | "oppose" | "neutral";
+}
+
+function PartyGroup({ label, ids, tone }: PartyGroupProps) {
+  const toneClasses: Record<typeof tone, string> = {
+    support: "border-success/30 bg-success-light/30",
+    oppose: "border-rose-300 bg-rose-50",
+    neutral: "border-amber/30 bg-amber-light/30",
+  };
+  const dotClasses: Record<typeof tone, string> = {
+    support: "bg-success",
+    oppose: "bg-rose-600",
+    neutral: "bg-amber",
+  };
+
+  return (
+    <div className={cn("rounded-xl border p-4", toneClasses[tone])}>
+      <p className="mb-3 flex items-center gap-2 text-sm font-bold text-navy">
+        <span className={cn("h-2 w-2 shrink-0 rounded-full", dotClasses[tone])} />
+        {label}
+      </p>
+      {ids.length === 0 ? (
+        <p className="text-sm text-gray-dark">אין מפלגות בקטגוריה זו</p>
+      ) : (
+        <div className="flex flex-wrap gap-2">
+          {ids.map((id) => {
+            const party = parties.find((p) => p.id === id);
+            if (!party) return null;
+            return (
+              <Link
+                key={id}
+                href={`/parties/${id}`}
+                className="flex items-center gap-2 rounded-full border border-gray/60 bg-white py-1 pl-3 pr-1.5 text-sm font-medium text-navy transition-colors hover:border-sapphire"
+              >
+                <PartyLogo party={party} size="sm" />
+                {party.name}
+              </Link>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function TopicCard({ topic }: { topic: Topic }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -121,6 +180,40 @@ export function TopicCard({ topic }: { topic: HotTopic }) {
                 {topic.funFact}
               </p>
             </div>
+          )}
+
+          {topic.partyStancesSummary && (
+            <div className="flex flex-col gap-3 border-t border-gray pt-4">
+              <p className="flex items-center gap-1.5 text-xs font-bold text-navy">
+                <Shield className="h-3.5 w-3.5" />
+                איפה המפלגות עומדות?
+              </p>
+              <PartyGroup
+                label="תומכים באופן פעיל"
+                ids={topic.partyStancesSummary.support}
+                tone="support"
+              />
+              <PartyGroup
+                label="מתנגדים בתקיפות"
+                ids={topic.partyStancesSummary.oppose}
+                tone="oppose"
+              />
+              <PartyGroup
+                label="מורכב / פשרה"
+                ids={topic.partyStancesSummary.splitOrNeutral}
+                tone="neutral"
+              />
+            </div>
+          )}
+
+          {topic.relatedQuestionId && (
+            <Link
+              href="/quiz?mode=long"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-sapphire hover:underline"
+            >
+              רוצה לענות על השאלה הקשורה בשאלון?
+              <ChevronLeft className="h-4 w-4" />
+            </Link>
           )}
         </div>
       )}

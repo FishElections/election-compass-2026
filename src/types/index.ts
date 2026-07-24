@@ -144,7 +144,8 @@ export interface ChallengeCardResult {
   reaction: OpennessReaction;
 }
 
-export type IssueCategory =
+/** קטגוריות עמוד "הנושאים החמים" - העמוד היחיד להסברה אזרחית באתר */
+export type TopicCategory =
   | "ביטחון ומדיניות"
   | "דת ומדינה"
   | "משפט וממשל"
@@ -165,29 +166,7 @@ export interface PartyStancesSummary {
   splitOrNeutral: string[];
 }
 
-export interface PoliticalIssue {
-  id: string;
-  category: IssueCategory;
-  title: string;
-  /** "במילים פשוטות" */
-  simpleExplanation: string;
-  /** "מה הדילמה המרכזית?" */
-  theDilemma: string;
-  proArgument: IssueArgument;
-  conArgument: IssueArgument;
-  partyStancesSummary: PartyStancesSummary;
-  /** מזהה השאלה המקבילה בשאלון (Question.id) */
-  relatedQuestionId: string;
-}
-
-/** קטגוריות עבור עמוד "הנושאים החמים" - עמוד הסברה אזרחי ללא זיקה מפלגתית */
-export type TopicCategory =
-  | "משפט וממשל"
-  | "ביטחון וחוץ"
-  | "כלכלה וחברה"
-  | "דת ומדינה";
-
-export interface HotTopic {
+export interface Topic {
   id: string;
   category: TopicCategory;
   /** כותרת קליטה, לא יבשה */
@@ -204,4 +183,11 @@ export interface HotTopic {
   argumentsAgainst: IssueArgument[];
   /** עובדה קטנה שמוסיפה עניין */
   funFact?: string;
+  /**
+   * עמדות המפלגות, כשקיימות. אופציונלי במכוון: לא לכל נושא יש עמדות
+   * מפלגתיות מבוקרות, וההסבר הבסיסי חייב לעמוד גם בלעדיו.
+   */
+  partyStancesSummary?: PartyStancesSummary;
+  /** מזהה השאלה המקבילה בשאלון (Question.id), כשקיימת */
+  relatedQuestionId?: string;
 }

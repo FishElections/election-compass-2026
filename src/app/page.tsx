@@ -6,17 +6,26 @@ import {
   Lock,
   ScrollText,
   Brain,
+  Flame,
 } from "lucide-react";
 import { InteractiveFlagBackdrop } from "@/components/InteractiveFlagBackdrop";
 import { CompassMark } from "@/components/CompassMark";
-import { parties } from "@/data/parties";
-import { questions } from "@/data/questions";
 
 export default function HomePage() {
   return (
     <main className="flex-1">
       <div className="relative overflow-hidden">
         <InteractiveFlagBackdrop className="pointer-events-none absolute -inset-y-16 inset-x-[-15%] opacity-[0.18]" />
+
+        <div className="absolute left-3 top-3 z-20 flex -rotate-[8deg] flex-col overflow-hidden rounded shadow-md lg:hidden">
+          <span className="bg-gradient-to-l from-success to-emerald-light px-3 py-1 text-[10px] font-bold tracking-wide text-white">
+            100% אובייקטיבי
+          </span>
+          <span className="bg-white px-3 py-1 text-[10px] font-bold tracking-wide text-navy">
+            0% ממומן
+          </span>
+        </div>
+
         <div className="relative z-10 mx-auto max-w-6xl px-4 pb-10 pt-16 sm:pt-20">
           <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-7">
@@ -37,26 +46,14 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="lg:col-span-5">
-              <div className="bg-grain notch-card relative overflow-hidden bg-navy px-6 py-7 text-white shadow-ambient-lg">
-                <div className="relative z-10 grid grid-cols-3 gap-4 text-center">
-                  <div>
-                    <p className="font-display text-3xl font-normal sm:text-4xl">
-                      {parties.length}
-                    </p>
-                    <p className="mt-1 text-xs text-white/60">מפלגות</p>
+            <div className="hidden lg:col-span-5 lg:block">
+              <div className="relative flex min-h-[190px] items-center overflow-hidden">
+                <div className="absolute left-1/2 top-1/2 flex w-[140%] -translate-x-1/2 -translate-y-1/2 -rotate-[8deg] flex-col gap-3">
+                  <div className="bg-gradient-to-l from-success to-emerald-light py-3 text-center text-lg font-bold tracking-wide text-white shadow-lg sm:text-xl">
+                    100% אובייקטיבי
                   </div>
-                  <div className="border-x border-white/15">
-                    <p className="font-display text-3xl font-normal sm:text-4xl">
-                      {questions.length}
-                    </p>
-                    <p className="mt-1 text-xs text-white/60">שאלות במאגר</p>
-                  </div>
-                  <div>
-                    <p className="font-display text-3xl font-normal sm:text-4xl">
-                      0%
-                    </p>
-                    <p className="mt-1 text-xs text-white/60">פרסום ומעקב</p>
+                  <div className="bg-white py-3 text-center text-lg font-bold tracking-wide text-navy shadow-lg sm:text-xl">
+                    0% ממומן
                   </div>
                 </div>
               </div>
@@ -119,47 +116,72 @@ export default function HomePage() {
 
       <div className="mx-auto max-w-6xl px-4 pb-20">
         <div className="mt-2">
-          <p className="mb-3 text-xs font-bold uppercase tracking-wider text-gray-dark">
+          <p className="mb-4 text-sm font-bold uppercase tracking-wider text-gray-dark">
             עוד באתר
           </p>
           <div className="divide-y divide-gray overflow-hidden rounded-2xl border border-gray/80 bg-white">
             <Link
               href="/platforms"
-              className="group flex items-center gap-5 p-5 transition-colors hover:bg-success-light/20"
+              className="group flex items-center gap-6 p-7 transition-colors hover:bg-success-light/20"
             >
-              <span className="font-display shrink-0 text-2xl font-normal text-gray-dark/50 transition-colors group-hover:text-success">
+              <span className="font-display shrink-0 text-3xl font-normal text-gray-dark/50 transition-colors group-hover:text-success">
                 01
               </span>
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-success/10 text-success">
-                <ScrollText className="h-5 w-5" />
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-success/10 text-success">
+                <ScrollText className="h-7 w-7" />
               </div>
               <div className="flex-1 text-right">
-                <h3 className="font-bold text-navy">סיכומי מצעי המפלגות</h3>
-                <p className="text-sm text-gray-dark">
+                <h3 className="font-display text-xl font-normal text-navy">
+                  סיכומי מצעי המפלגות
+                </h3>
+                <p className="mt-1 text-sm text-gray-dark sm:text-base">
                   עמדות רשמיות, נושא אחרי נושא
                 </p>
               </div>
-              <ChevronLeft className="h-4 w-4 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
+              <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
+            </Link>
+
+            <Link
+              href="/hot-topics"
+              className="group flex items-center gap-6 p-7 transition-colors hover:bg-coral/10"
+            >
+              <span className="font-display shrink-0 text-3xl font-normal text-gray-dark/50 transition-colors group-hover:text-coral">
+                02
+              </span>
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-coral/15 text-coral">
+                <Flame className="h-7 w-7" />
+              </div>
+              <div className="flex-1 text-right">
+                <h3 className="font-display text-xl font-normal text-navy">
+                  הנושאים החמים
+                </h3>
+                <p className="mt-1 text-sm text-gray-dark sm:text-base">
+                  הסברים פשוטים לסוגיות הכי שנויות במחלוקת, בלי קשר למפלגות
+                </p>
+              </div>
+              <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
             </Link>
 
             <Link
               href="/challenge"
-              className="group flex items-center gap-5 p-5 transition-colors hover:bg-amber-light/20"
+              className="group flex items-center gap-6 p-7 transition-colors hover:bg-amber-light/20"
             >
-              <span className="font-display shrink-0 text-2xl font-normal text-gray-dark/50 transition-colors group-hover:text-amber">
-                02
+              <span className="font-display shrink-0 text-3xl font-normal text-gray-dark/50 transition-colors group-hover:text-amber">
+                03
               </span>
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber/15 text-amber">
-                <Brain className="h-5 w-5" />
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-amber/15 text-amber">
+                <Brain className="h-7 w-7" />
               </div>
               <div className="flex-1 text-right">
-                <h3 className="font-bold text-navy">מפרק הבועות</h3>
-                <p className="text-sm text-gray-dark">
+                <h3 className="font-display text-xl font-normal text-navy">
+                  מפרק הבועות
+                </h3>
+                <p className="mt-1 text-sm text-gray-dark sm:text-base">
                   בחרתם כבר מפלגה? בחנו את העמדות שלכם מול הטיעונים החזקים
                   ביותר של המחנה הנגדי
                 </p>
               </div>
-              <ChevronLeft className="h-4 w-4 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
+              <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
             </Link>
           </div>
         </div>
