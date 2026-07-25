@@ -14,6 +14,7 @@ import {
   Share2,
   Brain,
   Flame,
+  Vote,
 } from "lucide-react";
 import { CompassMark } from "@/components/CompassMark";
 import { cn } from "@/lib/utils";
@@ -21,6 +22,7 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { href: "/", label: "דף הבית", icon: Home },
   { href: "/quiz", label: "התחל שאלון", icon: FileText },
+  { href: "/how-it-works", label: "איך הבחירות עובדות?", icon: Vote },
   {
     href: "/hot-topics",
     label: "הנושאים החמים",
