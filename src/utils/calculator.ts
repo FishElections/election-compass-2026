@@ -22,13 +22,51 @@ for (const question of questions) {
   questionCategoryLookup[question.id] = question.category;
 }
 
+/**
+ * משקל קיטוב לכל שאלה: נגזר מפיזור עמדות המפלגות עליה (סטיית תקן על פני כל
+ * המפלגות), ומנורמל כך שממוצע המשקלים על פני כל השאלות הוא 1.
+ *
+ * הרציונל: שאלה שבה כל המפלגות כמעט מסכימות לא עוזרת להבחין ביניהן, אבל
+ * במדד מרחק לינארי רגיל היא סופרת באותו משקל כמו שאלה שנויה במחלוקת אמיתית
+ * - וכך "גוררת" הפרשי ניקוד קטנים על פני שאלות רבות בלי משמעות אידאולוגית,
+ * מה שמעניק יתרון מבני למפלגה שנוקטת עמדות מתונות באופן עקבי (כי היא כמעט
+ * לעולם לא רחוקה מאוד מאף תשובה אפשרית). שקלול לפי קיטוב מצמצם את היתרון
+ * הזה ומגדיל את השפעתן של השאלות שבאמת מבדילות בין מפלגות.
+ */
+const questionPolarizationWeight: Record<string, number> = (() => {
+  const valuesByQuestion: Record<string, number[]> = {};
+  for (const stance of partyStances) {
+    (valuesByQuestion[stance.questionId] ??= []).push(stance.stanceValue);
+  }
+
+  const stdevByQuestion: Record<string, number> = {};
+  for (const [questionId, values] of Object.entries(valuesByQuestion)) {
+    const mean = values.reduce((sum, v) => sum + v, 0) / values.length;
+    const variance =
+      values.reduce((sum, v) => sum + (v - mean) ** 2, 0) / values.length;
+    stdevByQuestion[questionId] = Math.sqrt(variance);
+  }
+
+  const stdevs = Object.values(stdevByQuestion);
+  const meanStdev = stdevs.reduce((sum, v) => sum + v, 0) / stdevs.length;
+
+  const weights: Record<string, number> = {};
+  for (const [questionId, stdev] of Object.entries(stdevByQuestion)) {
+    // רצפת ביטחון: גם שאלה עם הסכמה כמעט מוחלטת בין המפלגות שומרת על השפעה
+    // מינימלית, למקרה של שאלות עתידיות עם קיטוב אפסי.
+    weights[questionId] = meanStdev > 0 ? Math.max(stdev / meanStdev, 0.1) : 1;
+  }
+  return weights;
+})();
+
 function weightFor(
   questionId: string,
   categoryWeights: CategoryWeights | undefined
 ): number {
-  if (!categoryWeights) return 1;
   const category = questionCategoryLookup[questionId];
-  return categoryWeights[category] ?? 1;
+  const categoryWeight = categoryWeights ? categoryWeights[category] ?? 1 : 1;
+  const polarizationWeight = questionPolarizationWeight[questionId] ?? 1;
+  return categoryWeight * polarizationWeight;
 }
 
 function calculatePartyMatch(
@@ -46,15 +84,41 @@ function calculatePartyMatch(
 
   let totalDistance = 0;
   let maxPossibleDistance = 0;
+  let dotProduct = 0;
+  let userMagnitudeSquared = 0;
+  let partyMagnitudeSquared = 0;
   for (const questionId of answeredQuestionIds) {
     const userValue = answers[questionId] ?? 0;
     const partyValue = stanceLookup[party.id]?.[questionId] ?? 0;
     const weight = weightFor(questionId, categoryWeights);
     totalDistance += weight * Math.abs(userValue - partyValue);
     maxPossibleDistance += weight * MAX_DISTANCE_PER_QUESTION;
+    dotProduct += weight * userValue * partyValue;
+    userMagnitudeSquared += weight * userValue * userValue;
+    partyMagnitudeSquared += weight * partyValue * partyValue;
   }
 
-  const score = (1 - totalDistance / maxPossibleDistance) * 100;
+  const distanceScore = (1 - totalDistance / maxPossibleDistance) * 100;
+
+  /**
+   * ציון כיווני (דמיון קוסינוס): בודק האם הכיוון הכללי של העמדות שלכם תואם
+   * את כיוון המפלגה, ולא רק את המרחק המספרי הגולמי. הסיבה: מדד מרחק גרידא
+   * מעניק יתרון מבני למפלגה שנוקטת עמדות מתונות בעקביות על פני כל הנושאים
+   * (כי היא כמעט לעולם לא רחוקה *מאוד* מאף תשובה אפשרית) - גם כשמשתמש
+   * מתאים אידאולוגית בבירור למפלגה אחרת שנוקטת עמדות נחרצות יותר. דמיון
+   * כיווני לא "מעניש" מפלגה על נחרצות יתר כשהכיוון תואם, ולכן מזהה נכון גם
+   * התאמות אידאולוגיות מובהקות שמדד מרחק גרידא היה מדרג נמוך מדי בטעות.
+   * כשלמשתמש אין שום סימן כיווני (כל התשובות "ניטרלי" - הווקטור אפס), חוזרים
+   * לציון המרחק, כי כיוון של וקטור אפס אינו מוגדר.
+   */
+  const directionScore =
+    userMagnitudeSquared > 0 && partyMagnitudeSquared > 0
+      ? ((dotProduct / Math.sqrt(userMagnitudeSquared * partyMagnitudeSquared)) +
+          1) *
+        50
+      : distanceScore;
+
+  const score = 0.5 * distanceScore + 0.5 * directionScore;
 
   return {
     party,
