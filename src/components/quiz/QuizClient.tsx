@@ -117,9 +117,7 @@ export function QuizClient() {
             <span
               className="absolute top-1/2 h-3.5 w-3.5 -translate-y-1/2 translate-x-1/2 rounded-full bg-white shadow-ambient ring-2 ring-sapphire transition-[right] duration-500 ease-out"
               style={{ right: `${progressPercent}%` }}
-            >
-              <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-sapphire/50" />
-            </span>
+            />
           </div>
         </div>
 

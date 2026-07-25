@@ -86,7 +86,16 @@ export default function HomePage() {
             <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-dark">
               עוד באתר
             </p>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-4 gap-2">
+              <Link
+                href="/how-it-works"
+                className="flex flex-col items-center justify-center gap-1 rounded-xl bg-sapphire/10 py-2.5 text-sapphire"
+              >
+                <Vote className="h-5 w-5" />
+                <span className="text-[10px] font-bold text-navy">
+                  איך זה עובד
+                </span>
+              </Link>
               <Link
                 href="/platforms"
                 className="flex flex-col items-center justify-center gap-1 rounded-xl bg-success/10 py-2.5 text-success"
@@ -116,15 +125,6 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-
-          <Link
-            href="/how-it-works"
-            className="flex items-center justify-center gap-1.5 rounded-full bg-sapphire/10 px-3 py-2 text-[11px] font-bold text-sapphire"
-          >
-            <Vote className="h-3.5 w-3.5 shrink-0" />
-            <span>חדשים בעניינים? כך עובדות הבחירות — ב-5 דקות</span>
-            <ChevronLeft className="h-3 w-3 shrink-0" />
-          </Link>
 
           <div className="flex items-center justify-center gap-1.5 rounded-full bg-gray-light px-3 py-2 text-[10px] text-gray-dark">
             <Lock className="h-3 w-3 shrink-0 text-navy" />
@@ -231,11 +231,33 @@ export default function HomePage() {
             </p>
             <div className="divide-y divide-gray overflow-hidden rounded-2xl border border-gray/80 bg-white">
               <Link
+                href="/how-it-works"
+                className="group flex items-center gap-6 p-7 transition-colors hover:bg-sapphire/5"
+              >
+                <span className="font-display shrink-0 text-3xl font-normal text-gray-dark/50 transition-colors group-hover:text-sapphire">
+                  01
+                </span>
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-sapphire/10 text-sapphire">
+                  <Vote className="h-7 w-7" />
+                </div>
+                <div className="flex-1 text-right">
+                  <h3 className="font-display text-xl font-normal text-navy">
+                    איך הבחירות בישראל עובדות?
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-dark sm:text-base">
+                    המסע של פתק אחד — מנדטים, אחוז חסימה וקואליציה, מוסבר
+                    פשוט וב-5 דקות
+                  </p>
+                </div>
+                <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
+              </Link>
+
+              <Link
                 href="/platforms"
                 className="group flex items-center gap-6 p-7 transition-colors hover:bg-success-light/20"
               >
                 <span className="font-display shrink-0 text-3xl font-normal text-gray-dark/50 transition-colors group-hover:text-success">
-                  01
+                  02
                 </span>
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-success/10 text-success">
                   <ScrollText className="h-7 w-7" />
@@ -256,7 +278,7 @@ export default function HomePage() {
                 className="group flex items-center gap-6 p-7 transition-colors hover:bg-coral/10"
               >
                 <span className="font-display shrink-0 text-3xl font-normal text-gray-dark/50 transition-colors group-hover:text-coral">
-                  02
+                  03
                 </span>
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-coral/15 text-coral">
                   <Flame className="h-7 w-7" />
@@ -278,7 +300,7 @@ export default function HomePage() {
                 className="group flex items-center gap-6 p-7 transition-colors hover:bg-amber-light/20"
               >
                 <span className="font-display shrink-0 text-3xl font-normal text-gray-dark/50 transition-colors group-hover:text-amber">
-                  03
+                  04
                 </span>
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-amber/15 text-amber">
                   <Brain className="h-7 w-7" />
@@ -290,28 +312,6 @@ export default function HomePage() {
                   <p className="mt-1 text-sm text-gray-dark sm:text-base">
                     בחרתם כבר מפלגה? בחנו את העמדות שלכם מול הטיעונים
                     החזקים ביותר של המחנה הנגדי
-                  </p>
-                </div>
-                <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
-              </Link>
-
-              <Link
-                href="/how-it-works"
-                className="group flex items-center gap-6 p-7 transition-colors hover:bg-sapphire/5"
-              >
-                <span className="font-display shrink-0 text-3xl font-normal text-gray-dark/50 transition-colors group-hover:text-sapphire">
-                  04
-                </span>
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-sapphire/10 text-sapphire">
-                  <Vote className="h-7 w-7" />
-                </div>
-                <div className="flex-1 text-right">
-                  <h3 className="font-display text-xl font-normal text-navy">
-                    איך הבחירות בישראל עובדות?
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-dark sm:text-base">
-                    המסע של פתק אחד — מנדטים, אחוז חסימה וקואליציה, מוסבר
-                    פשוט וב-5 דקות
                   </p>
                 </div>
                 <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
