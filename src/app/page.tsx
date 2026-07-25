@@ -7,6 +7,7 @@ import {
   ScrollText,
   Brain,
   Flame,
+  Vote,
 } from "lucide-react";
 import { InteractiveFlagBackdrop } from "@/components/InteractiveFlagBackdrop";
 import { CompassMark } from "@/components/CompassMark";
@@ -115,6 +116,15 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
+
+          <Link
+            href="/how-it-works"
+            className="flex items-center justify-center gap-1.5 rounded-full bg-sapphire/10 px-3 py-2 text-[11px] font-bold text-sapphire"
+          >
+            <Vote className="h-3.5 w-3.5 shrink-0" />
+            <span>חדשים בעניינים? כך עובדות הבחירות — ב-5 דקות</span>
+            <ChevronLeft className="h-3 w-3 shrink-0" />
+          </Link>
 
           <div className="flex items-center justify-center gap-1.5 rounded-full bg-gray-light px-3 py-2 text-[10px] text-gray-dark">
             <Lock className="h-3 w-3 shrink-0 text-navy" />
@@ -280,6 +290,28 @@ export default function HomePage() {
                   <p className="mt-1 text-sm text-gray-dark sm:text-base">
                     בחרתם כבר מפלגה? בחנו את העמדות שלכם מול הטיעונים
                     החזקים ביותר של המחנה הנגדי
+                  </p>
+                </div>
+                <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
+              </Link>
+
+              <Link
+                href="/how-it-works"
+                className="group flex items-center gap-6 p-7 transition-colors hover:bg-sapphire/5"
+              >
+                <span className="font-display shrink-0 text-3xl font-normal text-gray-dark/50 transition-colors group-hover:text-sapphire">
+                  04
+                </span>
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-sapphire/10 text-sapphire">
+                  <Vote className="h-7 w-7" />
+                </div>
+                <div className="flex-1 text-right">
+                  <h3 className="font-display text-xl font-normal text-navy">
+                    איך הבחירות בישראל עובדות?
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-dark sm:text-base">
+                    המסע של פתק אחד — מנדטים, אחוז חסימה וקואליציה, מוסבר
+                    פשוט וב-5 דקות
                   </p>
                 </div>
                 <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
