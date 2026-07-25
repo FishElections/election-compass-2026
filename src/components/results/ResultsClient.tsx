@@ -18,6 +18,8 @@ import { cn } from "@/lib/utils";
 const weightLabels: Record<number, string> = {
   2: "הכי קריטי",
   1.5: "חשוב",
+  0.5: "לא חשוב",
+  0: "לא חשוב בכלל",
 };
 
 export function ResultsClient() {
@@ -35,7 +37,7 @@ export function ResultsClient() {
   const sharedScore = Number(searchParams.get("s"));
 
   const weightedCategories = categories.filter(
-    (c) => categoryWeights[c.id] && categoryWeights[c.id] !== 1
+    (c) => categoryWeights[c.id] !== undefined && categoryWeights[c.id] !== 1
   );
 
   const results = useMemo(

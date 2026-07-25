@@ -2,24 +2,62 @@
 
 import { motion } from "framer-motion";
 import { SkipForward, Sparkles } from "lucide-react";
-import { categories } from "@/data/questions";
 import { useQuizStore } from "@/store/quizStore";
-import { CategoryId, TopicWeight } from "@/types";
+import { Category, CategoryId, TopicWeight } from "@/types";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const weightOptions: { value: TopicWeight; label: string }[] = [
-  { value: 1, label: "רגיל" },
-  { value: 1.5, label: "חשוב לי" },
-  { value: 2, label: "הכי קריטי לי" },
+// TODO: pending dictionary extraction once he/en i18n infra lands (site is
+// currently Hebrew-only — see AGENTS.md / bilingual-feature skill).
+const STRINGS = {
+  eyebrow: "שלב אחרון, לגמרי אופציונלי",
+  heading: "יש נושאים שחשובים לכם יותר מאחרים - או פחות?",
+  description:
+    "סמנו אילו נושאים חשובים לכם יותר ואילו פחות, ואנחנו נשקלל את זה בחישוב ההתאמה. אפשר גם פשוט לדלג ולקבל תוצאה רגילה, ללא שקלול.",
+  skip: "דלג",
+  continue: "המשך לתוצאות",
+};
+
+const weightOptions: {
+  value: TopicWeight;
+  label: string;
+  activeClass: string;
+}[] = [
+  {
+    value: 0,
+    label: "לא חשוב בכלל",
+    activeClass: "border-danger bg-danger text-white",
+  },
+  {
+    value: 0.5,
+    label: "לא חשוב",
+    activeClass: "border-coral bg-coral text-white",
+  },
+  {
+    value: 1,
+    label: "רגיל",
+    activeClass: "border-gray bg-gray-light text-navy",
+  },
+  {
+    value: 1.5,
+    label: "חשוב לי",
+    activeClass: "border-sapphire bg-sapphire text-white",
+  },
+  {
+    value: 2,
+    label: "הכי קריטי לי",
+    activeClass: "border-amber bg-amber text-white",
+  },
 ];
 
 interface TopicPriorityStepProps {
+  categories: Category[];
   onContinue: () => void;
   onSkip: () => void;
 }
 
 export function TopicPriorityStep({
+  categories,
   onContinue,
   onSkip,
 }: TopicPriorityStepProps) {
@@ -39,18 +77,17 @@ export function TopicPriorityStep({
         <div>
           <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-sapphire">
             <Sparkles className="h-4 w-4" />
-            <span>שלב אחרון, לגמרי אופציונלי</span>
+            <span>{STRINGS.eyebrow}</span>
           </div>
           <h1 className="font-display text-2xl font-normal leading-snug text-navy sm:text-3xl">
-            יש נושאים שחשובים לכם יותר מאחרים?
+            {STRINGS.heading}
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-gray-dark">
-            סמנו נושאים שחשובים לכם במיוחד, ואנחנו נשקלל את זה בחישוב
-            ההתאמה. אפשר גם פשוט לדלג ולקבל תוצאה רגילה, ללא שקלול.
+            {STRINGS.description}
           </p>
         </div>
         <Button variant="ghost" onClick={onSkip} className="shrink-0">
-          דלג
+          {STRINGS.skip}
           <SkipForward className="h-4 w-4" />
         </Button>
       </div>
@@ -67,7 +104,7 @@ export function TopicPriorityStep({
                 <span>{category.icon}</span>
                 <span>{category.label}</span>
               </span>
-              <div className="flex gap-2">
+              <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap">
                 {weightOptions.map((option) => (
                   <button
                     key={option.value}
@@ -76,11 +113,7 @@ export function TopicPriorityStep({
                     className={cn(
                       "rounded-full border-2 px-3 py-1.5 text-sm font-medium transition-colors cursor-pointer",
                       weight === option.value
-                        ? option.value === 2
-                          ? "border-amber bg-amber text-white"
-                          : option.value === 1.5
-                            ? "border-sapphire bg-sapphire text-white"
-                            : "border-gray bg-gray-light text-navy"
+                        ? option.activeClass
                         : "border-gray bg-white text-navy hover:border-sapphire"
                     )}
                   >
@@ -95,7 +128,7 @@ export function TopicPriorityStep({
 
       <div className="mt-8 flex justify-center">
         <Button size="lg" onClick={onContinue}>
-          המשך לתוצאות
+          {STRINGS.continue}
         </Button>
       </div>
     </motion.div>
