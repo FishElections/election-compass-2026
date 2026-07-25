@@ -98,6 +98,12 @@ function calculatePartyMatch(
     partyMagnitudeSquared += weight * partyValue * partyValue;
   }
 
+  // כל הקטגוריות הנענות סומנו "לא חשוב בכלל" (משקל 0): נופלים חזרה לחישוב
+  // בלתי-משוקלל כדי למנוע חלוקה ב-0 (NaN), במקום ל"ענוש" בציון שרירותי.
+  if (maxPossibleDistance === 0) {
+    return calculatePartyMatch(party, answers, undefined);
+  }
+
   const distanceScore = (1 - totalDistance / maxPossibleDistance) * 100;
 
   /**
