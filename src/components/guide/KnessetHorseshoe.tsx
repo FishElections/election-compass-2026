@@ -39,35 +39,57 @@ const seats: Array<{ cx: number; cy: number; color: string }> = [];
   }
 }
 
-/** פרסת 120 מושבי הכנסת, מתמלאת מושב-מושב בגלילה. */
+const seatContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.012 } },
+};
+
+const seatVariant = {
+  hidden: { opacity: 0, scale: 0.2 },
+  show: { opacity: 1, scale: 1, transition: { duration: 0.4 } },
+};
+
+/**
+ * פרסת 120 מושבי הכנסת, מתמלאת מושב-מושב בגלילה.
+ *
+ * ה-viewport trigger יושב על ה-wrapper (אלמנט HTML), לא על כל <circle> בנפרד:
+ * ל-Safari במובייל יש בעיה ידועה במעקב IntersectionObserver אחרי אלמנטי SVG
+ * ישירות, מה שהשאיר את המושבים תקועים ב-opacity:0 (בלתי נראים) בלי שהאנימציה
+ * אי-פעם מתחילה. observer יחיד על ה-div אמין בכל דפדפן, והמושבים יורשים את
+ * מצב האנימציה דרך variants.
+ */
 export function KnessetHorseshoe() {
   const reduceMotion = useReducedMotion();
 
   return (
     <figure className="mx-auto mt-7 w-fit text-center">
-      <svg
-        width="320"
-        height="180"
-        viewBox="0 0 320 180"
-        role="img"
-        aria-label={`איור של ${TOTAL_SEATS} מושבי הכנסת מסודרים בחצי גורן, צבועים לפי חלוקה דמיונית בין מפלגות`}
-        className="max-w-full"
+      <motion.div
+        initial={reduceMotion ? "show" : "hidden"}
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={seatContainer}
       >
-        {seats.map((seat, i) => (
-          <motion.circle
-            key={i}
-            cx={seat.cx}
-            cy={seat.cy}
-            r={5.2}
-            fill={seat.color}
-            initial={reduceMotion ? false : { opacity: 0, scale: 0.2 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.012 }}
-            style={{ transformOrigin: `${seat.cx}px ${seat.cy}px` }}
-          />
-        ))}
-      </svg>
+        <svg
+          width="320"
+          height="180"
+          viewBox="0 0 320 180"
+          role="img"
+          aria-label={`איור של ${TOTAL_SEATS} מושבי הכנסת מסודרים בחצי גורן, צבועים לפי חלוקה דמיונית בין מפלגות`}
+          className="max-w-full"
+        >
+          {seats.map((seat, i) => (
+            <motion.circle
+              key={i}
+              cx={seat.cx}
+              cy={seat.cy}
+              r={5.2}
+              fill={seat.color}
+              variants={seatVariant}
+              style={{ transformOrigin: `${seat.cx}px ${seat.cy}px` }}
+            />
+          ))}
+        </svg>
+      </motion.div>
       <figcaption className="mt-1 text-xs text-gray-dark">
         כך זה יכול להיראות (חלוקה דמיונית לגמרי)
       </figcaption>
