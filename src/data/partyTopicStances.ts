@@ -107,14 +107,32 @@ export const partyTopicStances: PartyTopicStance[] = [
   },
   { partyId: "religious-zionism", topicId: "economy-model", side: "pro" },
 
-  // יסודות ישראל (המילואימניקים)
-  { partyId: "yesodot-israel", topicId: "haredi-draft", side: "pro" },
-  { partyId: "yesodot-israel", topicId: "gaza-control", side: "pro" },
-  { partyId: "yesodot-israel", topicId: "judicial-reform", side: "con" },
+  // בית ציוני
+  { partyId: "beit-tzioni", topicId: "haredi-draft", side: "pro" },
+  { partyId: "beit-tzioni", topicId: "gaza-control", side: "pro" },
+  { partyId: "beit-tzioni", topicId: "judicial-reform", side: "con" },
   {
-    partyId: "yesodot-israel",
+    partyId: "beit-tzioni",
     topicId: "religion-state-separation",
     side: "pro",
   },
-  { partyId: "yesodot-israel", topicId: "economy-model", side: "con" },
+  { partyId: "beit-tzioni", topicId: "economy-model", side: "con" },
+
+  // בל"ד
+  { partyId: "balad", topicId: "haredi-draft", side: "pro" },
+  { partyId: "balad", topicId: "gaza-control", side: "con" },
+  { partyId: "balad", topicId: "judicial-reform", side: "con" },
+  { partyId: "balad", topicId: "religion-state-separation", side: "pro" },
+  { partyId: "balad", topicId: "economy-model", side: "con" },
+
+  // כחול לבן
+  { partyId: "kachol-lavan", topicId: "haredi-draft", side: "pro" },
+  { partyId: "kachol-lavan", topicId: "gaza-control", side: "con" },
+  { partyId: "kachol-lavan", topicId: "judicial-reform", side: "con" },
+  {
+    partyId: "kachol-lavan",
+    topicId: "religion-state-separation",
+    side: "pro",
+  },
+  { partyId: "kachol-lavan", topicId: "economy-model", side: "pro" },
 ];
