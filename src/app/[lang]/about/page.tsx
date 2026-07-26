@@ -34,6 +34,7 @@ export const metadata: Metadata = {
   title: "מי אנחנו ואיך מחושבת ההתאמה",
   description:
     "מצפן בחירות 2026 הוא כלי חינמי ובלתי תלוי לבדיקת התאמה למפלגות. גלו איך מחושב אחוז ההתאמה, מה זה מדד המרחק ומדד הכיוון, ומי עומד מאחורי הפרויקט.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {

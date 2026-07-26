@@ -788,11 +788,25 @@ export const partyStances: PartyStance[] = [
   { partyId: "raam", questionId: "sec-12", stanceValue: 1 },
   { partyId: "raam", questionId: "sec-13", stanceValue: 0 },
   { partyId: "raam", questionId: "eco-1", stanceValue: -1 },
-  { partyId: "raam", questionId: "eco-2", stanceValue: 1 },
+  {
+    partyId: "raam",
+    questionId: "eco-2",
+    stanceValue: 1,
+    sourceUrl: "https://www.ynet.co.il/news/article/hjmpnzqut",
+    sourceNote:
+      'תוכנית החומש (30 מיליארד ש"ח) שהשיג עבאס כללה גם רכיבי רווחה, בריאות ותעסוקה לצמצום פערים בחברה הערבית.',
+  },
   { partyId: "raam", questionId: "eco-3", stanceValue: -1 },
   { partyId: "raam", questionId: "eco-4", stanceValue: 1 },
   { partyId: "raam", questionId: "eco-5", stanceValue: 0 },
-  { partyId: "raam", questionId: "eco-6", stanceValue: 1 },
+  {
+    partyId: "raam",
+    questionId: "eco-6",
+    stanceValue: 1,
+    sourceUrl: "https://www.globes.co.il/news/article.aspx?did=1001373921",
+    sourceNote:
+      'ההישג המרכזי של מנסור עבאס במו"מ הקואליציוני ב-2021 היה תוכנית חומש בהיקף 30 מיליארד ש"ח לצמצום פערים בחברה הערבית, שכללה גם רכיב דיור משמעותי.',
+  },
   { partyId: "raam", questionId: "eco-7", stanceValue: 0 },
   { partyId: "raam", questionId: "eco-8", stanceValue: 1 },
   { partyId: "raam", questionId: "eco-9", stanceValue: 0 },
@@ -821,7 +835,14 @@ export const partyStances: PartyStance[] = [
   { partyId: "raam", questionId: "jud-7", stanceValue: -1 },
   { partyId: "raam", questionId: "jud-8", stanceValue: 1 },
   { partyId: "raam", questionId: "jud-9", stanceValue: -1 },
-  { partyId: "raam", questionId: "gov-1", stanceValue: 1 },
+  {
+    partyId: "raam",
+    questionId: "gov-1",
+    stanceValue: 1,
+    sourceUrl: "https://www.youtube.com/shorts/lxpjaUhPRdo",
+    sourceNote:
+      'יו"ר רע"ם מנסור עבאס הביע תמיכה בחקירת מחדלי 7 באוקטובר, כולל בחינת שרשרת האירועים עשורים אחורה.',
+  },
   { partyId: "raam", questionId: "gov-3", stanceValue: 0 },
   { partyId: "raam", questionId: "gov-4", stanceValue: 0 },
   { partyId: "raam", questionId: "gov-5", stanceValue: 0 },
@@ -834,7 +855,14 @@ export const partyStances: PartyStance[] = [
   { partyId: "raam", questionId: "soc-10", stanceValue: 2 },
   { partyId: "hadash-taal", questionId: "sec-1", stanceValue: -2 },
   { partyId: "hadash-taal", questionId: "sec-2", stanceValue: -2 },
-  { partyId: "hadash-taal", questionId: "sec-3", stanceValue: 2 },
+  {
+    partyId: "hadash-taal",
+    questionId: "sec-3",
+    stanceValue: 2,
+    sourceUrl: "https://www.mekomit.co.il/%D7%90%D7%99%D7%99%D7%9E%D7%9F-%D7%A2%D7%95%D7%93%D7%94-%D7%94%D7%A6%D7%99%D7%92-%D7%97%D7%96%D7%95%D7%9F-%D7%9C%D7%A4%D7%9C%D7%A1%D7%98%D7%99%D7%A0%D7%99%D7%9D-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C/",
+    sourceNote:
+      'איימן עודה: "אני מתריע מזניחת ההישגים המצטברים העמוקים [של פתרון שתי המדינות] והחלפתם בבריחה קדימה לכיוון פתרון המדינה האחת" - בניגוד לבל"ד, חד"ש תומכת בכנות בפתרון שתי המדינות המסורתי.',
+  },
   { partyId: "hadash-taal", questionId: "sec-4", stanceValue: 2 },
   { partyId: "hadash-taal", questionId: "sec-5", stanceValue: -2 },
   { partyId: "hadash-taal", questionId: "sec-6", stanceValue: -2 },
@@ -846,11 +874,32 @@ export const partyStances: PartyStance[] = [
   { partyId: "hadash-taal", questionId: "sec-12", stanceValue: 2 },
   { partyId: "hadash-taal", questionId: "sec-13", stanceValue: 0 },
   { partyId: "hadash-taal", questionId: "eco-1", stanceValue: -2 },
-  { partyId: "hadash-taal", questionId: "eco-2", stanceValue: 2 },
+  {
+    partyId: "hadash-taal",
+    questionId: "eco-2",
+    stanceValue: 2,
+    sourceUrl: "https://maki.org.il/%D7%A4%D7%95%D7%A8%D7%A1%D7%9D-%D7%94%D7%9E%D7%A6%D7%A2-%D7%A9%D7%9C-%D7%94%D7%A8%D7%A9%D7%99%D7%9E%D7%94-%D7%94%D7%9E%D7%A9%D7%95%D7%AA%D7%A4%D7%AA-%D7%A9%D7%9C-%D7%97%D7%93%D7%A9-%D7%95%D7%94/",
+    sourceNote:
+      'מצע הרשימה המשותפת (בהובלת חד"ש) קורא להבטיח זכויות יסוד לבריאות, חינוך, רווחה ודיור לכלל האזרחים.',
+  },
   { partyId: "hadash-taal", questionId: "eco-3", stanceValue: -2 },
-  { partyId: "hadash-taal", questionId: "eco-4", stanceValue: 2 },
+  {
+    partyId: "hadash-taal",
+    questionId: "eco-4",
+    stanceValue: 2,
+    sourceUrl: "https://maki.org.il/%D7%A4%D7%95%D7%A8%D7%A1%D7%9D-%D7%94%D7%9E%D7%A6%D7%A2-%D7%A9%D7%9C-%D7%94%D7%A8%D7%A9%D7%99%D7%9E%D7%94-%D7%94%D7%9E%D7%A9%D7%95%D7%AA%D7%A4%D7%AA-%D7%A9%D7%9C-%D7%97%D7%93%D7%A9-%D7%95%D7%94/",
+    sourceNote:
+      "מצע הרשימה המשותפת קורא במפורש להעלאת שכר המינימום לכ-60% משכר הממוצע במשק.",
+  },
   { partyId: "hadash-taal", questionId: "eco-5", stanceValue: 1 },
-  { partyId: "hadash-taal", questionId: "eco-6", stanceValue: 2 },
+  {
+    partyId: "hadash-taal",
+    questionId: "eco-6",
+    stanceValue: 2,
+    sourceUrl: "https://maki.org.il/%D7%A4%D7%95%D7%A8%D7%A1%D7%9D-%D7%94%D7%9E%D7%A6%D7%A2-%D7%A9%D7%9C-%D7%94%D7%A8%D7%A9%D7%99%D7%9E%D7%94-%D7%94%D7%9E%D7%A9%D7%95%D7%AA%D7%A4%D7%AA-%D7%A9%D7%9C-%D7%97%D7%93%D7%A9-%D7%95%D7%94/",
+    sourceNote:
+      'מצע הרשימה המשותפת (בהובלת חד"ש) כולל הבטחת דיור כזכות יסוד לכלל האזרחים.',
+  },
   { partyId: "hadash-taal", questionId: "eco-7", stanceValue: -2 },
   { partyId: "hadash-taal", questionId: "eco-8", stanceValue: 2 },
   { partyId: "hadash-taal", questionId: "eco-9", stanceValue: 1 },
@@ -1100,7 +1149,14 @@ export const partyStances: PartyStance[] = [
 
   { partyId: "balad", questionId: "sec-1", stanceValue: -2 },
   { partyId: "balad", questionId: "sec-2", stanceValue: -2 },
-  { partyId: "balad", questionId: "sec-3", stanceValue: 1 },
+  {
+    partyId: "balad",
+    questionId: "sec-3",
+    stanceValue: 1,
+    sourceUrl: "https://www.mekomit.co.il/%D7%A2%D7%A9%D7%A8%D7%99%D7%9D-%D7%A9%D7%A0%D7%94-%D7%9C%D7%9E%D7%A4%D7%9C%D7%92%D7%AA-%D7%91%D7%9C%D7%93/",
+    sourceNote:
+      'עמדתו ההיסטורית של בשארה ובל"ד היא בעצם לא "שתי מדינות" אלא הפיכת ישראל למדינה אזרחית רב-תרבותית אחת; הערך הנמוך יחסית (1, לא 2) משקף שזו אינה החזון המלא של המפלגה, אלא רק שיפור על פני המצב הקיים.',
+  },
   { partyId: "balad", questionId: "sec-4", stanceValue: 2 },
   { partyId: "balad", questionId: "sec-5", stanceValue: -2 },
   { partyId: "balad", questionId: "sec-6", stanceValue: -2 },
@@ -1129,7 +1185,14 @@ export const partyStances: PartyStance[] = [
   { partyId: "balad", questionId: "inf-4", stanceValue: 0 },
   { partyId: "balad", questionId: "inf-5", stanceValue: 1 },
   { partyId: "balad", questionId: "inf-6", stanceValue: 2 },
-  { partyId: "balad", questionId: "rel-2", stanceValue: 2 },
+  {
+    partyId: "balad",
+    questionId: "rel-2",
+    stanceValue: 2,
+    sourceUrl: "https://www.mekomit.co.il/%D7%A2%D7%A9%D7%A8%D7%99%D7%9D-%D7%A9%D7%A0%D7%94-%D7%9C%D7%9E%D7%A4%D7%9C%D7%92%D7%AA-%D7%91%D7%9C%D7%93/",
+    sourceNote:
+      'האידיאולוגיה המכוננת של בל"ד קוראת להפרדה מלאה בין דת למדינה, ולכן תומכת גם בהסרת מגבלות דתיות כמו איסור תחבורה ציבורית בשבת.',
+  },
   { partyId: "balad", questionId: "rel-3", stanceValue: -2 },
   {
     partyId: "balad",
@@ -1178,7 +1241,14 @@ export const partyStances: PartyStance[] = [
   { partyId: "balad", questionId: "gov-4", stanceValue: 1 },
   { partyId: "balad", questionId: "gov-5", stanceValue: 1 },
   { partyId: "balad", questionId: "soc-1", stanceValue: -1 },
-  { partyId: "balad", questionId: "soc-2", stanceValue: 2 },
+  {
+    partyId: "balad",
+    questionId: "soc-2",
+    stanceValue: 2,
+    sourceUrl: "https://www.mekomit.co.il/%D7%A2%D7%A9%D7%A8%D7%99%D7%9D-%D7%A9%D7%A0%D7%94-%D7%9C%D7%9E%D7%A4%D7%9C%D7%92%D7%AA-%D7%91%D7%9C%D7%93/",
+    sourceNote:
+      'אידיאולוגיית בל"ד קוראת למדינה אזרחית-חילונית מלאה, עם הפרדה בין דת למדינה - עמדה התומכת בהכרה מלאה בנישואין אזרחיים.',
+  },
   { partyId: "balad", questionId: "soc-3", stanceValue: -1 },
   { partyId: "balad", questionId: "soc-5", stanceValue: -1 },
   { partyId: "balad", questionId: "soc-6", stanceValue: 1 },
@@ -1194,7 +1264,14 @@ export const partyStances: PartyStance[] = [
   { partyId: "kachol-lavan", questionId: "sec-7", stanceValue: 1 },
   { partyId: "kachol-lavan", questionId: "sec-8", stanceValue: 0 },
   { partyId: "kachol-lavan", questionId: "sec-9", stanceValue: 1 },
-  { partyId: "kachol-lavan", questionId: "sec-10", stanceValue: 1 },
+  {
+    partyId: "kachol-lavan",
+    questionId: "sec-10",
+    stanceValue: 1,
+    sourceUrl: "https://www.srugim.co.il/1116188-%D7%92%D7%A0%D7%A5-%D7%A7%D7%95%D7%A8%D7%90-%D7%9C%D7%A4%D7%A2%D7%95%D7%9C%D7%94-%D7%9E%D7%99%D7%99%D7%93%D7%99%D7%AA-%D7%91%D7%90%D7%99%D7%A8%D7%90%D7%9F-%D7%96%D7%94-%D7%94%D7%96%D7%9E%D7%9F",
+    sourceNote:
+      'גנץ קרא לפעולה צבאית מתואמת נגד איראן ("חלון הזדמנויות היסטורי וצר"), אך תוך תיאום עם ארה"ב - לא פעולה עצמאית.',
+  },
   { partyId: "kachol-lavan", questionId: "sec-11", stanceValue: -1 },
   { partyId: "kachol-lavan", questionId: "sec-12", stanceValue: 1 },
   { partyId: "kachol-lavan", questionId: "sec-13", stanceValue: 1 },
@@ -1255,7 +1332,14 @@ export const partyStances: PartyStance[] = [
   { partyId: "kachol-lavan", questionId: "jud-9", stanceValue: -1 },
   { partyId: "kachol-lavan", questionId: "gov-1", stanceValue: 2 },
   { partyId: "kachol-lavan", questionId: "gov-3", stanceValue: 1 },
-  { partyId: "kachol-lavan", questionId: "gov-4", stanceValue: 2 },
+  {
+    partyId: "kachol-lavan",
+    questionId: "gov-4",
+    stanceValue: 2,
+    sourceUrl: "https://www.ynet.co.il/articles/0,7340,L-5454672,00.html",
+    sourceNote:
+      'גנץ בנאומו הראשון כיו"ר המפלגה: "ראש ממשלה שמוגש נגדו אישום לא יכול לכהן" - עמדה עקבית שחזר עליה לאורך השנים.',
+  },
   { partyId: "kachol-lavan", questionId: "gov-5", stanceValue: 1 },
   { partyId: "kachol-lavan", questionId: "soc-1", stanceValue: 0 },
   { partyId: "kachol-lavan", questionId: "soc-2", stanceValue: 1 },

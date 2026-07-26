@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "מפרק בועות",
   description:
     "בחרתם כבר מפלגה? בחנו את העמדות שלכם מול הטיעונים החזקים ביותר של המחנה הנגדי.",
+  alternates: { canonical: "/challenge" },
 };
 
 export default function ChallengePage() {

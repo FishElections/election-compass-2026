@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "מצעי המפלגות לבחירות 2026 בקצרה",
   description:
     "סיכום עמדות המפלגות המתמודדות בבחירות 2026, נושא אחרי נושא: ביטחון, כלכלה, מערכת המשפט, דת ומדינה וחברה.",
+  alternates: { canonical: "/platforms" },
 };
 
 export default function PlatformsPage() {

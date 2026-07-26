@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "עדכוני בחירות",
   description: "בקרוב: חדשות ועדכונים שוטפים על מערכת הבחירות לכנסת 2026.",
   robots: { index: false, follow: true },
+  alternates: { canonical: "/news" },
 };
 
 export default function NewsPage() {

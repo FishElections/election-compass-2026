@@ -11,10 +11,25 @@ import {
 } from "lucide-react";
 import { InteractiveFlagBackdrop } from "@/components/InteractiveFlagBackdrop";
 import { CompassMark } from "@/components/CompassMark";
+import { getSiteUrl } from "@/utils/site";
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "מצפן בחירות 2026",
+  url: getSiteUrl(),
+  description:
+    "ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה הטובה ביותר.",
+  inLanguage: "he-IL",
+};
 
 export default function HomePage() {
   return (
     <main className="flex-1">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
       {/* Mobile: everything fits in one viewport — no scroll needed */}
       <div className="relative flex h-dvh flex-col overflow-hidden px-4 pb-3 pt-14 lg:hidden">
         <InteractiveFlagBackdrop className="pointer-events-none absolute -inset-y-16 inset-x-[-15%] opacity-[0.12]" />
