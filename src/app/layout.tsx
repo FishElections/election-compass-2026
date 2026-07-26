@@ -26,27 +26,28 @@ const secularOne = Secular_One({
 // when unset.
 const gaId = process.env.GA_ID;
 
-const title = "מצפן בחירות 2026";
+const siteName = "מצפן בחירות 2026";
+const homeTitle = "בחירות 2026- מצאו את המפלגה המתאימה לכם ביותר";
 const description =
   "ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה הטובה ביותר.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
-    default: title,
-    template: `%s | ${title}`,
+    default: homeTitle,
+    template: `%s | ${siteName}`,
   },
   description,
   openGraph: {
-    title,
+    title: homeTitle,
     description,
     type: "website",
     locale: "he_IL",
-    siteName: title,
+    siteName,
   },
   twitter: {
     card: "summary_large_image",
-    title,
+    title: homeTitle,
     description,
   },
 };
