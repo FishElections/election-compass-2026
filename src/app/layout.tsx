@@ -31,6 +31,11 @@ const homeTitle = "בחירות 2026- מצאו את המפלגה המתאימה 
 const description =
   "ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה הטובה ביותר.";
 
+// Generic branded card from the same route /results uses for personalized
+// shares — /api/og with no query params falls back to "השאלון"/"מצפן" text,
+// so every page gets a real preview image instead of none at all.
+const defaultOgImage = "/api/og";
+
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
@@ -38,17 +43,22 @@ export const metadata: Metadata = {
     template: `%s | ${siteName}`,
   },
   description,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: homeTitle,
     description,
     type: "website",
     locale: "he_IL",
     siteName,
+    images: [{ url: defaultOgImage, width: 1200, height: 630, alt: siteName }],
   },
   twitter: {
     card: "summary_large_image",
     title: homeTitle,
     description,
+    images: [defaultOgImage],
   },
 };
 

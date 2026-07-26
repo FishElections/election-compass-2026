@@ -27,6 +27,7 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: { canonical: `/parties/${party.id}` },
     openGraph: { title, description, type: "profile" },
     twitter: { card: "summary", title, description },
   };
