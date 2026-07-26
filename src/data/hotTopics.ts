@@ -242,8 +242,8 @@ export const hotTopics: Topic[] = [
     ],
     partyStancesSummary: {
       support: ["likud", "otzma-yehudit", "shas", "yahadut-hatorah", "religious-zionism"],
-      oppose: ["yashar", "yisrael-beiteinu", "hademocratim", "hadash-taal", "beit-tzioni", "balad", "kachol-lavan"],
-      splitOrNeutral: ["beyachad", "raam"],
+      oppose: ["yashar", "beyachad", "yisrael-beiteinu", "hademocratim", "hadash-taal", "beit-tzioni", "balad", "kachol-lavan"],
+      splitOrNeutral: ["raam"],
     },
     relatedQuestionId: "jud-1",
   },
