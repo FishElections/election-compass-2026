@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { ChevronRight, SkipForward } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
 import { likertOptions } from "@/data/likert";
-import { categories } from "@/data/questions";
 import { QuizMode, StanceValue } from "@/types";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
@@ -44,11 +43,6 @@ export function QuizClient() {
     }
   }, [mode, startQuiz]);
 
-  const priorityCategories = useMemo(() => {
-    const activeCategoryIds = new Set(activeQuestions.map((q) => q.category));
-    return categories.filter((c) => activeCategoryIds.has(c.id));
-  }, [activeQuestions]);
-
   if (activeQuestions.length === 0) return null;
 
   const currentQuestion = activeQuestions[currentIndex];
@@ -58,7 +52,11 @@ export function QuizClient() {
   const selectedValue = currentQuestion ? answers[currentQuestion.id] : undefined;
 
   function finishQuiz() {
-    setShowPriorityStep(true);
+    if (mode === "long") {
+      setShowPriorityStep(true);
+    } else {
+      router.push("/results");
+    }
   }
 
   function handleAnswer(value: StanceValue) {
@@ -94,7 +92,6 @@ export function QuizClient() {
       <main className="flex-1">
         <div className="mx-auto flex max-w-2xl flex-col px-4 pb-10 pt-20 sm:py-16">
           <TopicPriorityStep
-            categories={priorityCategories}
             onContinue={handlePriorityContinue}
             onSkip={handlePrioritySkip}
           />
