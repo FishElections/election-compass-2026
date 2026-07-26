@@ -72,6 +72,8 @@ export interface Party {
   shortDescription: string;
   /** כינוי לשימוש שוטף בממשק (לא בהכרח האות הרשמית בפתק) */
   logo: string;
+  /** נתיב ללוגו הרשמי של המפלגה (public/party_logos), כשקיים. ראו PartyLogo. */
+  logoImageUrl?: string;
   /** האות הרשמית בפתק, כשתפורסם. ראו OfficialBallotLetter. */
   officialBallotLetter?: OfficialBallotLetter;
   /** נשמר לשימוש עתידי; לא מאוכלס בפועל כדי להימנע משימוש בדימויים לא מורשים של אנשים אמיתיים. */
@@ -103,6 +105,14 @@ export interface PartyStance {
   partyId: string;
   questionId: string;
   stanceValue: StanceValue;
+  /**
+   * קישור למקור פומבי אמיתי (מצע רשמי, פרוטוקול הצבעה בכנסת, ריאיון מתועד)
+   * שמאמת את הערך. כשהשדה חסר, הערך נגזר מפרופיל אידאולוגי כללי ולא מעמדה
+   * מתועדת ספציפית - ראו ההערה בראש party_stances.ts.
+   */
+  sourceUrl?: string;
+  /** תיאור קצר / ציטוט של המקור, בעברית */
+  sourceNote?: string;
 }
 
 export interface LikertOption {

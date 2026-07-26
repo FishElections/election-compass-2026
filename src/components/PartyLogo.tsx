@@ -14,6 +14,26 @@ const sizeClasses = {
 };
 
 export function PartyLogo({ party, size = "md", className }: PartyLogoProps) {
+  if (party.logoImageUrl) {
+    return (
+      <div
+        className={cn(
+          "flex shrink-0 items-center justify-center rounded-xl border border-gray bg-white p-1 shadow-sm",
+          sizeClasses[size],
+          className
+        )}
+        aria-hidden
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element -- small static asset from public/, next/image's overhead isn't worth it here */}
+        <img
+          src={party.logoImageUrl}
+          alt=""
+          className="h-full w-full object-contain"
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn(
