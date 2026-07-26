@@ -13,7 +13,7 @@ cd "$(dirname "$0")/.."
 if [[ ! -f "$ENV_FILE" ]]; then
   echo "Missing env file: $ENV_FILE" >&2
   echo "Create it with e.g.:" >&2
-  echo "  SITE_URL=https://elections.fishdev.org" >&2
+  echo "  SITE_URL=https://www.elections-il.com" >&2
   echo "  GA_ID=G-XXXXXXXXXX" >&2
   exit 1
 fi
