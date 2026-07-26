@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { ChevronRight } from "lucide-react";
 import { parties } from "@/data/parties";
 import { categories } from "@/data/questions";
@@ -9,6 +10,26 @@ import { BallotLetterBadge } from "@/components/BallotLetterBadge";
 
 export function generateStaticParams() {
   return parties.map((party) => ({ id: party.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const party = parties.find((p) => p.id === id);
+  if (!party) return {};
+
+  const title = `${party.name} - עמדות ומצע לבחירות 2026`;
+  const description = `${party.shortDescription} בדקו כמה אתם מתאימים ל${party.name} במצפן הבחירות.`;
+
+  return {
+    title,
+    description,
+    openGraph: { title, description, type: "profile" },
+    twitter: { card: "summary", title, description },
+  };
 }
 
 export default async function PartyProfilePage({
