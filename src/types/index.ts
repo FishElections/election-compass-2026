@@ -72,6 +72,8 @@ export interface Party {
   shortDescription: string;
   /** כינוי לשימוש שוטף בממשק (לא בהכרח האות הרשמית בפתק) */
   logo: string;
+  /** נתיב ללוגו הרשמי של המפלגה (public/party_logos), כשקיים. ראו PartyLogo. */
+  logoImageUrl?: string;
   /** האות הרשמית בפתק, כשתפורסם. ראו OfficialBallotLetter. */
   officialBallotLetter?: OfficialBallotLetter;
   /** נשמר לשימוש עתידי; לא מאוכלס בפועל כדי להימנע משימוש בדימויים לא מורשים של אנשים אמיתיים. */

@@ -30,6 +30,7 @@ export const parties: Party[] = [
     spectrum: "מרכז-ממלכתי",
     spectrumCategory: "center",
     logo: "יש",
+    logoImageUrl: "/party_logos/yashar.png",
     shortDescription:
       "מפלגה ממלכתית בראשות הרמטכ\"ל לשעבר גדי איזנקוט, השמה דגש על אמון ציבורי, ניהול אחראי ושיקום הביטחון האישי והלאומי.",
     platform: [
@@ -100,6 +101,7 @@ export const parties: Party[] = [
     spectrum: "ימין לאומי",
     spectrumCategory: "right",
     logo: "מחל",
+    logoImageUrl: "/party_logos/likud.png",
     shortDescription:
       "מפלגה לאומית-ליברלית השמה דגש על ביטחון, כלכלת שוק חופשית וחיזוק הריבונות הישראלית.",
     platform: [
@@ -171,6 +173,7 @@ export const parties: Party[] = [
     spectrum: "מרכז עד מרכז-ימין",
     spectrumCategory: "center",
     logo: "יח",
+    logoImageUrl: "/party_logos/beyachad.png",
     shortDescription:
       "רשימה משותפת של ראש הממשלה לשעבר נפתלי בנט ויו\"ר יש עתיד לשעבר יאיר לפיד, בהנהגת בנט, השמה דגש על ניהול ביצועי, יזמות כלכלית וריפוי הקרעים בחברה הישראלית.",
     platform: [
@@ -240,6 +243,7 @@ export const parties: Party[] = [
     spectrum: "ימין",
     spectrumCategory: "far-right",
     logo: "ע",
+    logoImageUrl: "/party_logos/otzma-yehudit.png",
     shortDescription:
       "מפלגה לאומנית-דתית המקדמת מדיניות ביטחונית תקיפה והרחבת ההתיישבות ביהודה ושומרון.",
     platform: [
@@ -310,6 +314,7 @@ export const parties: Party[] = [
     spectrum: "ימין-מרכז חילוני",
     spectrumCategory: "right",
     logo: "ל",
+    logoImageUrl: "/party_logos/yisrael-beiteinu.png",
     shortDescription:
       "מפלגה לאומית-חילונית המקדמת גיוס שוויוני, הפרדת דת ממדינה ומדיניות ביטחונית תקיפה.",
     platform: [
@@ -380,6 +385,7 @@ export const parties: Party[] = [
     spectrum: "מרכז-שמאל ליברלי",
     spectrumCategory: "center-left",
     logo: "ד",
+    logoImageUrl: "/party_logos/hademocratim.png",
     shortDescription:
       "מפלגה שקמה במיזוג העבודה ומרצ, בראשות יאיר גולן, המקדמת זכויות אזרח, שוויון חברתי ופתרון מדיני עם הפלסטינים.",
     platform: [
@@ -450,6 +456,7 @@ export const parties: Party[] = [
     spectrum: "חרדית-ספרדית",
     spectrumCategory: "sectoral",
     logo: "שס",
+    logoImageUrl: "/party_logos/shas.png",
     shortDescription:
       "מפלגה חרדית-ספרדית המקדמת ערכי מסורת ויהדות, ותומכת בתקצוב מוסדות תורניים.",
     platform: [
@@ -519,6 +526,7 @@ export const parties: Party[] = [
     spectrum: "חרדית-אשכנזית",
     spectrumCategory: "sectoral",
     logo: "ג",
+    logoImageUrl: "/party_logos/yahadut-hatorah.png",
     shortDescription:
       "מפלגה חרדית-אשכנזית השמה דגש על שמירת אורח חיים תורני ומימון מוסדות לימוד תורה.",
     platform: [
@@ -658,6 +666,7 @@ export const parties: Party[] = [
     spectrum: "חזית ערבית-יהודית",
     spectrumCategory: "sectoral",
     logo: "ום",
+    logoImageUrl: "/party_logos/hadash-taal.png",
     shortDescription:
       "רשימה ערבית-יהודית משותפת המקדמת שוויון אזרחי מלא ופתרון מדיני מבוסס משא ומתן.",
     platform: [
@@ -728,6 +737,7 @@ export const parties: Party[] = [
     spectrum: "ימין אידיאולוגי",
     spectrumCategory: "far-right",
     logo: "צ",
+    logoImageUrl: "/party_logos/religious-zionism.png",
     shortDescription:
       "מפלגה לאומית-דתית בראשות שר האוצר בצלאל סמוטריץ', המקדמת ריבונות מלאה על ארץ ישראל וחיזוק האופי היהודי של המדינה.",
     platform: [
@@ -942,6 +952,7 @@ export const parties: Party[] = [
     spectrum: "מרכז ביטחוני-ממלכתי",
     spectrumCategory: "center",
     logo: "כל",
+    logoImageUrl: "/party_logos/kachol-lavan.png",
     shortDescription:
       "מפלגת מרכז בראשות בני גנץ, שהוקמה סביב בכירי צבא לשעבר, המשלבת גישה ביטחונית תקיפה עם ממלכתיות, ממשל תקין ושמירה על מוסדות המדינה.",
     platform: [
