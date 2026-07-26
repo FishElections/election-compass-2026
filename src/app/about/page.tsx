@@ -92,6 +92,10 @@ export default function AboutPage() {
           </a>
           )
         </p>
+        <p className="mt-4 leading-relaxed text-gray-dark">
+          ותודה מכל הלב לטובה בני, בת זוגתי (של אוהד), שבזכות האמונה שלה
+          בפרויקט הזה הוא קם ונולד.
+        </p>
       </div>
     </main>
   );
