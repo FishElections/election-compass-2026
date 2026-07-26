@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import { SkipForward, Sparkles } from "lucide-react";
+import { categories } from "@/data/questions";
 import { useQuizStore } from "@/store/quizStore";
-import { Category, CategoryId, TopicWeight } from "@/types";
+import { CategoryId, TopicWeight } from "@/types";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -51,13 +52,11 @@ const weightOptions: {
 ];
 
 interface TopicPriorityStepProps {
-  categories: Category[];
   onContinue: () => void;
   onSkip: () => void;
 }
 
 export function TopicPriorityStep({
-  categories,
   onContinue,
   onSkip,
 }: TopicPriorityStepProps) {
