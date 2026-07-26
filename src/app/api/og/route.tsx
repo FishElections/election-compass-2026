@@ -82,7 +82,7 @@ export async function GET(request: Request) {
 
   const glyphs =
     "מצפן בחירות 2026 המפלגה שהכי מתאימה לי התאמה " +
-    "elections.fishdev.org" +
+    "elections-il.com" +
     partyName +
     partyLogo +
     "0123456789% ";
@@ -270,7 +270,7 @@ export async function GET(request: Request) {
             color: "#94a3b8",
           }}
         >
-          elections.fishdev.org
+          elections-il.com
         </div>
       </div>
     ),
