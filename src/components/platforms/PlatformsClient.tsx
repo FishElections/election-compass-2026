@@ -6,6 +6,8 @@ import { parties } from "@/data/parties";
 import { platformTopics } from "@/data/platformTopics";
 import { PlatformTopicKey } from "@/types";
 import { PartyLogo } from "@/components/PartyLogo";
+import { PartyLogoGrid } from "@/components/platforms/PartyLogoGrid";
+import { PartyDetailSheet } from "@/components/platforms/PartyDetailSheet";
 import { cn } from "@/lib/utils";
 import {
   Accordion,
@@ -19,6 +21,9 @@ type CategoryFilter = "all" | PlatformTopicKey;
 export function PlatformsClient() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<CategoryFilter>("all");
+  const [activePartyId, setActivePartyId] = useState<string | null>(null);
+
+  const activeParty = parties.find((p) => p.id === activePartyId) ?? null;
 
   const filteredParties = useMemo(() => {
     const q = query.trim();
@@ -90,7 +95,16 @@ export function PlatformsClient() {
             לא נמצאו מפלגות התואמות את החיפוש.
           </p>
         ) : (
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mt-10 sm:hidden">
+            <PartyLogoGrid
+              parties={filteredParties}
+              onSelect={(party) => setActivePartyId(party.id)}
+            />
+          </div>
+        )}
+
+        {filteredParties.length > 0 && (
+          <div className="mt-10 hidden gap-6 sm:grid sm:grid-cols-2">
             {filteredParties.map((party) => {
               const topicsToShow =
                 category === "all"
@@ -165,6 +179,12 @@ export function PlatformsClient() {
           </div>
         )}
       </div>
+
+      <PartyDetailSheet
+        party={activeParty}
+        defaultTopicKey={category !== "all" ? category : null}
+        onClose={() => setActivePartyId(null)}
+      />
     </main>
   );
 }
