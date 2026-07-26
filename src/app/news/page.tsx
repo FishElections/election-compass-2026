@@ -1,5 +1,14 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { Newspaper } from "lucide-react";
+
+// Placeholder page with no real content yet — kept out of the index until
+// actual news content ships, to avoid a thin/"coming soon" page in search.
+export const metadata: Metadata = {
+  title: "עדכוני בחירות",
+  description: "בקרוב: חדשות ועדכונים שוטפים על מערכת הבחירות לכנסת 2026.",
+  robots: { index: false, follow: true },
+};
 
 export default function NewsPage() {
   return (

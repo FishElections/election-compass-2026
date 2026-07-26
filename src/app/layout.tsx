@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Heebo, Rubik, Secular_One } from "next/font/google";
 import { SidebarDrawer } from "@/components/SidebarDrawer";
+import { getSiteUrl } from "@/utils/site";
 import "./globals.css";
 
 const heebo = Heebo({
@@ -20,23 +21,34 @@ const secularOne = Secular_One({
   weight: "400",
 });
 
-// Read at request time (not a NEXT_PUBLIC_ var, so it is NOT inlined at build)
-// — lets `docker run -e SITE_URL=…` set the public origin without rebuilding.
-const siteUrl =
-  process.env.SITE_URL ??
-  (process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000");
-
 // Google Analytics measurement id (e.g. G-XXXXXXX). Read at request time so it
 // can be set with `docker run -e GA_ID=…` without a rebuild. Analytics is off
 // when unset.
 const gaId = process.env.GA_ID;
 
+const title = "מצפן בחירות 2026";
+const description =
+  "ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה הטובה ביותר.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: "מצפן בחירות 2026",
-  description: "ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה הטובה ביותר.",
+  metadataBase: new URL(getSiteUrl()),
+  title: {
+    default: title,
+    template: `%s | ${title}`,
+  },
+  description,
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    locale: "he_IL",
+    siteName: title,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
 };
 
 // Render every page per-request instead of prerendering it at build time.

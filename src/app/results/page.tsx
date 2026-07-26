@@ -14,10 +14,16 @@ export async function generateMetadata({
   const party = parties.find((x) => x.id === p);
   const score = Number(s);
 
+  // Personalized share page driven entirely by query params — not a page
+  // anyone should land on from organic search, so keep it out of the index
+  // while still letting social crawlers read the OG tags for link previews.
+  const robots = { index: false, follow: true };
+
   if (!party || !Number.isFinite(score)) {
     return {
-      title: "התוצאות שלי | מצפן בחירות 2026",
+      title: "התוצאות שלי",
       description: "ענו על השאלון וגלו לאיזו מפלגה אתם הכי מתאימים.",
+      robots,
     };
   }
 
@@ -29,6 +35,7 @@ export async function generateMetadata({
   return {
     title,
     description,
+    robots,
     openGraph: {
       title,
       description,
