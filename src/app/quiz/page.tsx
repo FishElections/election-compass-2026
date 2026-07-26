@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "שאלון עמדות",
   description:
     "ענו על 20 או 58 שאלות עמדה וגלו תוך דקות אילו מפלגות הכי מתאימות לכם - בלי הטיה ובלי פרסום.",
+  alternates: { canonical: "/quiz" },
 };
 
 export default function QuizPage() {
