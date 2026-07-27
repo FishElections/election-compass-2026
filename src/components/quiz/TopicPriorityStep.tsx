@@ -87,7 +87,7 @@ export function TopicPriorityStep({
                     type="button"
                     onClick={() => setCategoryWeight(category.id, option.value)}
                     className={cn(
-                      "rounded-full border-2 px-3 py-1.5 text-sm font-medium transition-colors cursor-pointer",
+                      "rounded-full border-2 px-3 py-1.5 text-sm font-medium transition-colors cursor-pointer active:scale-[0.97]",
                       weight === option.value
                         ? option.activeClass
                         : "border-gray bg-white text-navy hover:border-sapphire"

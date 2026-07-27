@@ -22,7 +22,7 @@ export function TopicCard({ topic, done, onOpen }: TopicCardProps) {
     <button
       type="button"
       onClick={onOpen}
-      className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-gray/80 bg-white text-start shadow-ambient transition-all duration-200 hover:-translate-y-0.5 hover:shadow-ambient-lg cursor-pointer"
+      className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-gray/80 bg-white text-start shadow-ambient transition-all duration-200 hover:-translate-y-0.5 hover:shadow-ambient-lg cursor-pointer active:scale-[0.98]"
     >
       {done && (
         <span

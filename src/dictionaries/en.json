@@ -2,7 +2,8 @@
   "meta": {
     "siteName": "Election Compass 2026",
     "homeTitle": "Israel Elections 2026 — Find the Party That Fits You Best",
-    "description": "Take the quiz and discover which parties best represent your views."
+    "description": "Take the quiz and discover which parties best represent your views.",
+    "appleTitle": "Election Compass"
   },
   "nav": {
     "home": "Home",
@@ -16,7 +17,13 @@
     "closeMenu": "Close menu",
     "brandName": "Election Compass 2026",
     "shareSite": "Share this site",
-    "version": "v1.0 · Elections 2026"
+    "version": "v1.0 · Elections 2026",
+    "tabHome": "Home",
+    "tabQuiz": "Quiz",
+    "tabHotTopics": "Topics",
+    "tabPlatforms": "Platforms",
+    "tabMore": "More",
+    "primaryNav": "Primary navigation"
   },
   "home": {
     "badgeObjective": "100% objective",
@@ -184,6 +191,12 @@
         "important": "Important to me",
         "critical": "Most critical to me"
       }
+    },
+    "resume": {
+      "title": "Continue where you left off?",
+      "body": "We saved your progress — you've answered {answered} of {total} questions.",
+      "continue": "Continue to question {question}",
+      "restart": "Start over"
     }
   },
   "results": {
@@ -386,7 +399,10 @@
       "heading": "Who built this",
       "intro": "Election Compass 2026 was built as a volunteer effort by two independent entrepreneurs, out of a belief in a free, transparent, and independent tool for the Israeli voter.",
       "thanks": "And a heartfelt thank-you to Tova Bani, Ohad's partner, whose belief in this project is the reason it came to be.",
-      "names": ["Ohad Bar-Eli", "Itay Eylat"]
+      "names": [
+        "Ohad Bar-Eli",
+        "Itay Eylat"
+      ]
     }
   },
   "news": {

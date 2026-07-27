@@ -5,6 +5,7 @@ import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Brain, Check, ChevronDown, ChevronRight, Link2, RotateCcw, SlidersHorizontal } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
+import { useQuizHydration } from "@/hooks/useQuizHydration";
 import { getParties } from "@/data/parties";
 import { getCategories } from "@/data/questions";
 import { calculateAllMatches } from "@/utils/calculator";
@@ -31,6 +32,9 @@ export function ResultsClient() {
   };
   const { answers, activeQuestions, categoryWeights, reset, resetCategoryWeights } =
     useQuizStore();
+  // Results are the page people reload and reopen from a share link, so they
+  // have to read the saved quiz back too — not just /quiz.
+  const hasHydrated = useQuizHydration(locale);
   const [showAll, setShowAll] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -79,6 +83,9 @@ export function ResultsClient() {
       });
     }
   }, [activeQuestions.length, answeredCount, topThree]);
+
+  // Don't flash "no answers yet" before the saved quiz has been read back.
+  if (!hasHydrated) return <main className="flex-1" />;
 
   if (activeQuestions.length === 0 || answeredCount === 0) {
     if (sharedParty && Number.isFinite(sharedScore)) {
@@ -182,7 +189,8 @@ export function ResultsClient() {
 
   return (
     <main className="flex-1">
-      <div className="mx-auto max-w-4xl px-4 py-12 sm:py-16">
+      {/* pb-28 leaves room for the sticky mobile share bar docked at the bottom. */}
+      <div className="mx-auto max-w-4xl px-4 pb-28 pt-8 sm:py-16 lg:pb-16">
         <div className="mb-10 text-center">
           <p className="mb-2 text-xs font-bold uppercase tracking-wider text-sapphire">
             {t.analysisComplete}
@@ -300,7 +308,7 @@ export function ResultsClient() {
                   key={r.party.id}
                   onClick={() => setSelectedPartyId(r.party.id)}
                   className={cn(
-                    "rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer",
+                    "rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer active:scale-[0.97]",
                     selectedPartyId === r.party.id
                       ? "border-sapphire bg-sapphire text-white"
                       : "border-gray bg-white text-navy hover:border-sapphire"
@@ -352,6 +360,30 @@ export function ResultsClient() {
           </Button>
         </div>
       </div>
+
+      {/* Sharing is what actually spreads this tool, and on a phone the share
+          block sits over a screen down the page. Keep it docked just above the
+          tab bar the whole way down. */}
+      {topThree[0] && (
+        <div className="fixed inset-x-0 bottom-[var(--mobile-nav-h)] z-30 flex gap-2 border-t border-gray bg-background/95 px-4 py-2.5 backdrop-blur-md lg:hidden">
+          <Button onClick={shareWhatsApp} variant="success" className="flex-1">
+            <WhatsAppIcon className="h-4 w-4" />
+            {t.share.whatsapp}
+          </Button>
+          <Button
+            onClick={handleCopyLink}
+            variant="outline"
+            size="icon"
+            aria-label={copied ? t.share.copied : t.share.copyLink}
+          >
+            {copied ? (
+              <Check className="h-4 w-4" />
+            ) : (
+              <Link2 className="h-4 w-4" />
+            )}
+          </Button>
+        </div>
+      )}
     </main>
   );
 }

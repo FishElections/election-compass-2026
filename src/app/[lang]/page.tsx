@@ -43,9 +43,13 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
-      {/* Mobile: everything fits in one viewport — no scroll needed */}
-      <div className="relative flex h-dvh flex-col overflow-hidden px-4 pb-3 pt-14 lg:hidden">
-        <InteractiveFlagBackdrop className="pointer-events-none absolute -inset-y-16 inset-x-[-15%] opacity-[0.12]" />
+      {/* Mobile: fits one viewport in portrait, but min-h (not h) + no clipping
+          so landscape — where the content is taller than the screen — stays
+          scrollable instead of cutting the headline off with no way to reach it. */}
+      <div className="relative flex min-h-dvh flex-col px-4 pb-3 pt-6 lg:hidden">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <InteractiveFlagBackdrop className="absolute -inset-y-16 inset-x-[-15%] opacity-[0.12]" />
+        </div>
 
         <div className="absolute start-3 top-3 z-20 flex -rotate-[8deg] flex-col overflow-hidden rounded shadow-md">
           <span className={cn(gradientDir, "from-success to-emerald-light px-3 py-1 text-[10px] font-bold tracking-wide text-white")}>
@@ -56,7 +60,7 @@ export default function HomePage() {
           </span>
         </div>
 
-        <div className="relative z-10 flex h-full flex-col justify-center gap-8">
+        <div className="relative z-10 flex flex-1 flex-col justify-center gap-8">
           <div>
             <div className="mb-2 flex items-center gap-1.5 text-xs font-semibold text-sapphire">
               <CompassMark animate className="h-4 w-4 text-sapphire" />

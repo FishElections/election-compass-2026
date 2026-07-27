@@ -30,6 +30,15 @@ const navItems = [
   { href: "/about", icon: Info, key: "about" as const },
 ];
 
+// The four destinations worth a permanent thumb-reachable slot; everything else
+// lives behind "More", which opens the same drawer as the desktop pill.
+const tabItems = [
+  { href: "/", icon: Home, key: "tabHome" as const },
+  { href: "/quiz", icon: FileText, key: "tabQuiz" as const },
+  { href: "/hot-topics", icon: Flame, key: "tabHotTopics" as const },
+  { href: "/platforms", icon: ScrollText, key: "tabPlatforms" as const },
+];
+
 export function SidebarDrawer() {
   const pathname = usePathname();
   const { dict, locale } = useDictionary();
@@ -45,15 +54,61 @@ export function SidebarDrawer() {
 
   return (
     <Dialog.Root>
+      {/* Desktop keeps the floating pill. On a phone the top corner is the worst
+          place a one-handed thumb can reach, so the same drawer is opened from
+          the bottom tab bar below instead. */}
       <Dialog.Trigger asChild>
         <button
           type="button"
-          className="fixed top-4 start-4 z-40 flex items-center gap-2 rounded-full bg-navy px-4 py-2.5 text-sm font-semibold text-white shadow-ambient-lg transition-all hover:-translate-y-0.5 hover:glow-sapphire cursor-pointer"
+          className="fixed top-4 start-4 z-40 hidden items-center gap-2 rounded-full bg-navy px-4 py-2.5 text-sm font-semibold text-white shadow-ambient-lg transition-all hover:-translate-y-0.5 hover:glow-sapphire cursor-pointer lg:flex"
         >
           <Menu className="h-4 w-4" />
           {dict.nav.menuButton}
         </button>
       </Dialog.Trigger>
+
+      {/* Navy, not white: against the #f8fafc page a white bar with a hairline
+          border reads as part of the page and gets missed. Solid navy also
+          matches the drawer and the themeColor tinting the browser chrome, so
+          the app ends up framed top and bottom. Gold marks the current tab,
+          same "you are here" cue the drawer uses. */}
+      <nav
+        aria-label={dict.nav.primaryNav}
+        className="fixed inset-x-0 bottom-0 z-40 flex h-[var(--mobile-nav-h)] items-stretch bg-navy pb-[env(safe-area-inset-bottom)] shadow-[0_-6px_24px_-6px_rgba(11,19,43,0.45)] lg:hidden"
+      >
+        {tabItems.map((item) => {
+          const href = localizedPath(item.href, locale);
+          const isActive =
+            item.href === "/" ? pathname === href : pathname.startsWith(href);
+          return (
+            <Link
+              key={item.href}
+              href={href}
+              aria-current={isActive ? "page" : undefined}
+              className={cn(
+                "relative flex flex-1 flex-col items-center justify-center gap-0.5 text-[10px] font-bold transition-colors active:bg-white/10",
+                isActive ? "text-white" : "text-white/55"
+              )}
+            >
+              {isActive && (
+                <span className="absolute top-0 h-0.5 w-8 rounded-b-full bg-gold" />
+              )}
+              <item.icon className="h-5 w-5" />
+              {dict.nav[item.key]}
+            </Link>
+          );
+        })}
+        <Dialog.Trigger asChild>
+          <button
+            type="button"
+            className="flex flex-1 cursor-pointer flex-col items-center justify-center gap-0.5 text-[10px] font-bold text-white/55 transition-colors active:bg-white/10"
+          >
+            <Menu className="h-5 w-5" />
+            {dict.nav.tabMore}
+          </button>
+        </Dialog.Trigger>
+      </nav>
+
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-40 bg-navy-dark/60 backdrop-blur-[2px] data-[state=open]:animate-overlay-in data-[state=closed]:animate-overlay-out" />
         <Dialog.Content

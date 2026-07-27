@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import { Heebo, Rubik, Secular_One } from "next/font/google";
@@ -39,7 +39,7 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const dict = await getDictionary(lang);
-  const { siteName, homeTitle, description } = dict.meta;
+  const { siteName, homeTitle, description, appleTitle } = dict.meta;
   // Generic branded card from the same route /results uses for personalized
   // shares — /api/og with no ?p=/?s= falls back to the dictionary's own
   // fallback text, so every page gets a real preview image instead of none.
@@ -69,8 +69,27 @@ export async function generateMetadata({
       description,
       images: [defaultOgImage],
     },
+    manifest: "/manifest.webmanifest",
+    appleWebApp: {
+      capable: true,
+      // Short on purpose: iOS truncates anything longer under the home-screen icon.
+      title: appleTitle,
+      statusBarStyle: "default",
+    },
+    icons: {
+      apple: "/apple-touch-icon.png",
+    },
   };
 }
+
+// viewportFit: "cover" is what makes env(safe-area-inset-*) resolve to real
+// values — without it the sticky quiz footer sits on the iPhone home indicator.
+// themeColor tints the mobile browser chrome navy to match the site.
+export const viewport: Viewport = {
+  themeColor: "#0b132b",
+  colorScheme: "light",
+  viewportFit: "cover",
+};
 
 // Render every page per-request instead of prerendering it at build time.
 // SITE_URL and GA_ID are only present in the running container (docker run

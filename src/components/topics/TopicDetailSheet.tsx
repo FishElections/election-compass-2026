@@ -119,7 +119,7 @@ function SheetInner({ topic, breakdown, done, onMarkDone }: SheetInnerProps) {
             aria-selected={tab === t.id}
             onClick={() => setTab(t.id)}
             className={cn(
-              "shrink-0 rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors cursor-pointer",
+              "shrink-0 rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors cursor-pointer active:scale-[0.97]",
               tab === t.id ? "bg-sapphire text-white" : "bg-gray-light text-gray-dark hover:bg-gray"
             )}
           >
@@ -285,7 +285,7 @@ export function TopicDetailSheet({ topic, isOpened, onMarkDone, onClose }: Topic
             </Dialog.Overlay>
             <Dialog.Content asChild forceMount aria-describedby={undefined}>
               <motion.div
-                className="fixed inset-x-0 bottom-0 z-50 flex h-[85vh] flex-col rounded-t-3xl bg-background shadow-2xl focus:outline-none sm:inset-y-0 sm:end-auto sm:start-0 sm:h-full sm:w-[440px] sm:rounded-none"
+                className="fixed inset-x-0 bottom-0 z-50 flex h-[85dvh] flex-col rounded-t-3xl bg-background shadow-2xl focus:outline-none sm:inset-y-0 sm:end-auto sm:start-0 sm:h-full sm:w-[440px] sm:rounded-none"
                 initial={isDesktop ? { x: offscreenX } : { y: "100%" }}
                 animate={isDesktop ? { x: 0 } : { y: 0 }}
                 exit={isDesktop ? { x: offscreenX } : { y: "100%" }}

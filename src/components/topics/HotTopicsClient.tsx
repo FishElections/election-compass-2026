@@ -49,7 +49,7 @@ export function HotTopicsClient() {
   return (
     <main className="flex-1">
       <div className="bg-navy">
-        <div className="mx-auto max-w-4xl px-4 pb-10 pt-20 text-center sm:pt-24">
+        <div className="mx-auto max-w-4xl px-4 pb-10 pt-8 text-center lg:pt-20">
           <h1 className="font-display text-3xl font-normal text-white sm:text-4xl">
             {t.heading}
           </h1>
@@ -63,12 +63,15 @@ export function HotTopicsClient() {
         <div id="topics-top" className="flex scroll-mt-24 flex-col gap-4">
           <div className="relative">
             <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-dark" />
+            {/* text-base (16px), not text-sm — a sub-16px input triggers Safari's
+                auto-zoom on iOS; shrink to text-sm only from sm: up. */}
             <input
-              type="text"
+              type="search"
+              enterKeyHint="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t.searchPlaceholder}
-              className="w-full rounded-xl border-2 border-gray bg-white py-3 ps-11 pe-4 text-sm text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none"
+              className="w-full rounded-xl border-2 border-gray bg-white py-3 ps-11 pe-4 text-base text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none sm:text-sm"
             />
           </div>
 

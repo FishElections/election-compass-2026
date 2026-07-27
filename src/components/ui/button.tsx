@@ -4,7 +4,9 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sapphire/50 cursor-pointer",
+  // active:scale is the only press feedback a touch user gets — hover: does
+  // nothing on a finger — so it belongs in the base, not per call site.
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sapphire/50 cursor-pointer active:scale-[0.97] active:duration-75",
   {
     variants: {
       variant: {
@@ -22,10 +24,12 @@ const buttonVariants = cva(
         link: "text-sapphire underline-offset-4 hover:underline",
       },
       size: {
+        // 44px is the minimum comfortable touch target; `sm` and `icon` were
+        // below it, so they get bumped on touch and stay compact on desktop.
         default: "h-11 px-5 py-2",
-        sm: "h-9 px-3 text-xs",
+        sm: "h-11 px-3 text-xs sm:h-9",
         lg: "h-14 px-8 text-base",
-        icon: "h-10 w-10",
+        icon: "h-11 w-11 sm:h-10 sm:w-10",
       },
     },
     defaultVariants: {

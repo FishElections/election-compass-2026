@@ -121,7 +121,7 @@ export function ChallengeCard({
               key={option.reaction}
               type="button"
               onClick={() => onReact(option.reaction)}
-              className="flex items-center gap-3 rounded-xl border-2 border-gray px-4 py-3 text-start text-sm font-medium text-foreground transition-all hover:-translate-y-0.5 hover:border-navy hover:bg-gray-light cursor-pointer"
+              className="flex items-center gap-3 rounded-xl border-2 border-gray px-4 py-3 text-start text-sm font-medium text-foreground transition-all hover:-translate-y-0.5 hover:border-navy hover:bg-gray-light cursor-pointer active:scale-[0.98]"
             >
               <option.icon className={cn("h-5 w-5 shrink-0", option.iconClass)} />
               {option.label}
