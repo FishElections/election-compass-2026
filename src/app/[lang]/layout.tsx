@@ -76,7 +76,15 @@ export async function generateMetadata({
       title: appleTitle,
       statusBarStyle: "default",
     },
+    // Declaring `apple` alone suppresses Next's automatic favicon detection of
+    // app/icon.svg, so the browser-tab compass goes missing — list the icon
+    // (SVG + a PNG fallback for browsers that ignore SVG favicons) explicitly.
     icons: {
+      icon: [
+        { url: "/icon.svg", type: "image/svg+xml" },
+        { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      ],
+      shortcut: "/icon.svg",
       apple: "/apple-touch-icon.png",
     },
   };
