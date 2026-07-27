@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -14,6 +15,7 @@ import {
   Brain,
   Flame,
   Globe,
+  ChevronDown,
   Vote,
 } from "lucide-react";
 import { CompassMark } from "@/components/CompassMark";
@@ -43,11 +45,25 @@ const tabItems = [
 export function SidebarDrawer() {
   const pathname = usePathname();
   const { dict, locale } = useDictionary();
-  // The language toggle cycles to the next registered locale (he → en → ar →
-  // he …), so every locale is reachable from it, and mirrors to the corner
-  // opposite the menu pill. The drawer still lists all locales explicitly.
-  const localeIndex = locales.findIndex((l) => l.code === locale);
-  const nextLocale = locales[(localeIndex + 1) % locales.length];
+  // Desktop language menu (opposite the menu pill): clicking opens the OTHER
+  // locales the user isn't viewing. Mobile has no pill here — language lives in
+  // the drawer instead — so this menu is desktop-only and the drawer's own
+  // switcher is hidden on desktop to avoid duplicating it.
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
+  const currentLocale = locales.find((l) => l.code === locale)!;
+  const otherLocales = locales.filter((l) => l.code !== locale);
+
+  useEffect(() => {
+    if (!langOpen) return;
+    function onDown(e: MouseEvent) {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [langOpen]);
 
   function handleShare() {
     const url = window.location.origin;
@@ -73,16 +89,45 @@ export function SidebarDrawer() {
         </button>
       </Dialog.Trigger>
 
-      {/* Language toggle, docked in the corner opposite the menu pill (menu is
-          top-start, this is top-end) so the two never collide. */}
-      <Link
-        href={localizedPath(pathname, nextLocale.code)}
-        aria-label={dict.nav.switchLanguage}
-        className="fixed top-4 end-4 z-40 hidden items-center gap-1.5 rounded-full bg-white px-3.5 py-2.5 text-sm font-semibold text-navy shadow-ambient-lg ring-1 ring-navy/10 transition-all hover:-translate-y-0.5 hover:glow-sapphire cursor-pointer lg:flex"
-      >
-        <Globe className="h-4 w-4" />
-        {nextLocale.label}
-      </Link>
+      {/* Language menu, docked in the corner opposite the menu pill (menu is
+          top-start, this is top-end). Click opens the other locales. */}
+      <div ref={langRef} className="fixed top-4 end-4 z-40 hidden lg:block">
+        <button
+          type="button"
+          onClick={() => setLangOpen((v) => !v)}
+          aria-haspopup="menu"
+          aria-expanded={langOpen}
+          aria-label={dict.nav.switchLanguage}
+          className="flex items-center gap-1.5 rounded-full bg-white px-3.5 py-2.5 text-sm font-semibold text-navy shadow-ambient-lg ring-1 ring-navy/10 transition-all hover:-translate-y-0.5 hover:glow-sapphire cursor-pointer"
+        >
+          <Globe className="h-4 w-4" />
+          {currentLocale.label}
+          <ChevronDown
+            className={cn(
+              "h-3.5 w-3.5 transition-transform",
+              langOpen && "rotate-180"
+            )}
+          />
+        </button>
+        {langOpen && (
+          <div
+            role="menu"
+            className="absolute end-0 mt-2 flex min-w-[9rem] flex-col overflow-hidden rounded-xl bg-white shadow-ambient-lg ring-1 ring-navy/10"
+          >
+            {otherLocales.map((l) => (
+              <Link
+                key={l.code}
+                href={localizedPath(pathname, l.code)}
+                role="menuitem"
+                onClick={() => setLangOpen(false)}
+                className="px-4 py-2.5 text-start text-sm font-medium text-navy transition-colors hover:bg-sapphire/10"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Navy, not white: against the #f8fafc page a white bar with a hairline
           border reads as part of the page and gets missed. Solid navy also
@@ -152,7 +197,8 @@ export function SidebarDrawer() {
             </Dialog.Close>
           </div>
 
-          <div className="flex gap-2 border-b border-white/10 px-4 py-3">
+          {/* Mobile only: on desktop the top-end language menu covers this. */}
+          <div className="flex gap-2 border-b border-white/10 px-4 py-3 lg:hidden">
             {locales.map((l) => (
               <Dialog.Close asChild key={l.code}>
                 <Link
