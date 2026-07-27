@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { TOTAL_SEATS } from "@/data/electionGuide";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 /** 4 קשתות של מושבים, מהחיצונית לפנימית. סה"כ 120. */
 const ROWS: Array<[radius: number, seats: number]> = [
@@ -60,6 +61,8 @@ const seatVariant = {
  */
 export function KnessetHorseshoe() {
   const reduceMotion = useReducedMotion();
+  const { dict } = useDictionary();
+  const t = dict.guide.knessetHorseshoe;
 
   return (
     <figure className="mx-auto mt-7 w-fit text-center">
@@ -74,7 +77,7 @@ export function KnessetHorseshoe() {
           height="180"
           viewBox="0 0 320 180"
           role="img"
-          aria-label={`איור של ${TOTAL_SEATS} מושבי הכנסת מסודרים בחצי גורן, צבועים לפי חלוקה דמיונית בין מפלגות`}
+          aria-label={t.ariaLabelTemplate.replace("{seats}", String(TOTAL_SEATS))}
           className="max-w-full"
         >
           {seats.map((seat, i) => (
@@ -91,7 +94,7 @@ export function KnessetHorseshoe() {
         </svg>
       </motion.div>
       <figcaption className="mt-1 text-xs text-gray-dark">
-        כך זה יכול להיראות (חלוקה דמיונית לגמרי)
+        {t.caption}
       </figcaption>
     </figure>
   );

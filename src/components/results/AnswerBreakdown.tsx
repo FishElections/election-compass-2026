@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { likertOptions } from "@/data/likert";
+import { getLikertOptions } from "@/data/likert";
 import { getPartyStance } from "@/utils/calculator";
 import { Party, Question, StanceValue, UserAnswers } from "@/types";
 import { useDictionary } from "@/i18n/DictionaryProvider";
@@ -18,8 +18,9 @@ export function AnswerBreakdown({
   answers: UserAnswers;
   party: Party;
 }) {
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const t = dict.results.answerBreakdown;
+  const likertOptions = getLikertOptions(locale);
 
   function labelForValue(value: number) {
     return (

@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { RotateCcw } from "lucide-react";
 import { ConfettiBurst } from "@/components/ConfettiBurst";
-import { MAGIC_NUMBER, TOTAL_SEATS, toyParties } from "@/data/electionGuide";
+import { MAGIC_NUMBER, TOTAL_SEATS, getToyParties } from "@/data/electionGuide";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { useDictionary } from "@/i18n/DictionaryProvider";
@@ -15,24 +15,25 @@ import { useDictionary } from "@/i18n/DictionaryProvider";
 export function CoalitionBlocks() {
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const celebrated = useRef(false);
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const t = dict.guide.coalitionBlocks;
+  const toyParties = getToyParties(locale);
 
   const sum = toyParties
-    .filter((p) => picked.has(p.name))
+    .filter((p) => picked.has(p.id))
     .reduce((acc, p) => acc + p.seats, 0);
   const hasGovernment = sum >= MAGIC_NUMBER;
 
-  function toggle(name: string) {
+  function toggle(id: string) {
     setPicked((prev) => {
       const next = new Set(prev);
-      if (next.has(name)) {
-        next.delete(name);
+      if (next.has(id)) {
+        next.delete(id);
       } else {
-        next.add(name);
+        next.add(id);
       }
       const nextSum = toyParties
-        .filter((p) => next.has(p.name))
+        .filter((p) => next.has(p.id))
         .reduce((acc, p) => acc + p.seats, 0);
       if (nextSum >= MAGIC_NUMBER && !celebrated.current) {
         celebrated.current = true;
@@ -72,13 +73,13 @@ export function CoalitionBlocks() {
 
       <div className="mt-4 flex flex-wrap gap-2.5">
         {toyParties.map((party) => {
-          const isPicked = picked.has(party.name);
+          const isPicked = picked.has(party.id);
           return (
             <button
-              key={party.name}
+              key={party.id}
               type="button"
               aria-pressed={isPicked}
-              onClick={() => toggle(party.name)}
+              onClick={() => toggle(party.id)}
               className={cn(
                 "cursor-pointer rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-white transition-all hover:-translate-y-0.5",
                 isPicked && "scale-95 opacity-40 hover:translate-y-0"

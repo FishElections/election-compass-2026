@@ -2,8 +2,13 @@
 
 import Link from "next/link";
 import { RotateCcw, Home, Sparkles } from "lucide-react";
-import { quickStanceLabels } from "@/data/quickStanceLabels";
-import { getArgumentByTopic, computeOpennessScore, getOpennessTier } from "@/utils/challenge";
+import { getQuickStanceLabels } from "@/data/quickStanceLabels";
+import {
+  getArgumentByTopic,
+  computeOpennessScore,
+  getOpennessTierKey,
+  opennessTierEmoji,
+} from "@/utils/challenge";
 import { ChallengeCardResult, StanceSide } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Gauge } from "@/components/Gauge";
@@ -15,15 +20,17 @@ interface SummaryScreenProps {
 }
 
 export function SummaryScreen({ results, onRestart }: SummaryScreenProps) {
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const t = dict.challenge.summary;
   const score = computeOpennessScore(results);
-  const tier = getOpennessTier(score);
+  const tierKey = getOpennessTierKey(score);
+  const tier = { emoji: opennessTierEmoji[tierKey], ...t.tiers[tierKey] };
+  const quickStanceLabels = getQuickStanceLabels(locale);
 
   const takeaways = results
     .filter((r) => r.reaction === 1)
     .map((r) => {
-      const argument = getArgumentByTopic(r.topicId);
+      const argument = getArgumentByTopic(r.topicId, locale);
       const labels = quickStanceLabels[r.topicId];
       if (!argument || !labels) return null;
       const oppositeSide: StanceSide = r.userSide === "pro" ? "con" : "pro";

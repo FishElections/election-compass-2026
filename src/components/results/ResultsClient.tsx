@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Brain, Check, ChevronDown, ChevronLeft, Link2, RotateCcw, SlidersHorizontal } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
-import { parties } from "@/data/parties";
-import { categories } from "@/data/questions";
+import { getParties } from "@/data/parties";
+import { getCategories } from "@/data/questions";
 import { calculateAllMatches } from "@/utils/calculator";
 import { trackEvent } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
@@ -19,8 +19,10 @@ import { useDictionary } from "@/i18n/DictionaryProvider";
 export function ResultsClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const t = dict.results;
+  const parties = useMemo(() => getParties(locale), [locale]);
+  const categories = useMemo(() => getCategories(locale), [locale]);
   const weightLabels: Record<number, string> = {
     2: t.weightLabels.critical,
     1.5: t.weightLabels.important,
@@ -43,8 +45,8 @@ export function ResultsClient() {
   );
 
   const results = useMemo(
-    () => calculateAllMatches(answers, categoryWeights),
-    [answers, categoryWeights]
+    () => calculateAllMatches(parties, answers, categoryWeights, locale),
+    [parties, answers, categoryWeights, locale]
   );
   const topThree = results.slice(0, 3);
   const rest = results.slice(3);

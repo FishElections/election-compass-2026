@@ -1,14 +1,7 @@
 import { partyTopicStances } from "@/data/partyTopicStances";
-import { counterArguments } from "@/data/counterArguments";
+import { getCounterArguments } from "@/data/counterArguments";
+import { Locale } from "@/i18n/config";
 import { ChallengeCardResult, StanceSide } from "@/types";
-
-/** ארבעת הנושאים המוצעים למסלול ההצהרה המהירה. */
-export const quickStanceTopicIds = [
-  "haredi-draft",
-  "gaza-control",
-  "judicial-reform",
-  "religion-state-separation",
-];
 
 export function getPartySide(
   partyId: string,
@@ -19,8 +12,8 @@ export function getPartySide(
   )?.side;
 }
 
-export function getArgumentByTopic(topicId: string) {
-  return counterArguments.find((a) => a.id === topicId);
+export function getArgumentByTopic(topicId: string, locale: Locale) {
+  return getCounterArguments(locale).find((a) => a.id === topicId);
 }
 
 export function computeOpennessScore(results: ChallengeCardResult[]): number {
@@ -29,32 +22,17 @@ export function computeOpennessScore(results: ChallengeCardResult[]): number {
   return Math.round((total / results.length) * 100);
 }
 
-export interface OpennessTier {
-  emoji: string;
-  title: string;
-  description: string;
+export type OpennessTierKey = "skeptic" | "balanced" | "ideologue";
+
+export function getOpennessTierKey(score: number): OpennessTierKey {
+  if (score >= 70) return "skeptic";
+  if (score >= 40) return "balanced";
+  return "ideologue";
 }
 
-export function getOpennessTier(score: number): OpennessTier {
-  if (score >= 70) {
-    return {
-      emoji: "🧪",
-      title: "ספקן קרטזיאני / חוקר ביקורתי",
-      description:
-        "אתה מסוגל לראות את המורכבות ולהעריך טיעונים של מחנות יריבים.",
-    };
-  }
-  if (score >= 40) {
-    return {
-      emoji: "⚖️",
-      title: "שקול ומאוזן",
-      description: "יש לך עקרונות חזקים, אך אתה קשוב ומבין נימוקים נגדיים.",
-    };
-  }
-  return {
-    emoji: "🏛️",
-    title: "אידיאולוג נחוש",
-    description:
-      "ערכי היסוד שלך ברורים ומנומקים, ואתה דבק בהם גם מול אתגרים.",
-  };
-}
+/** Locale-invariant — title/description text lives in the dictionary. */
+export const opennessTierEmoji: Record<OpennessTierKey, string> = {
+  skeptic: "🧪",
+  balanced: "⚖️",
+  ideologue: "🏛️",
+};

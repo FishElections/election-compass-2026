@@ -2,8 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ChevronRight } from "lucide-react";
-import { parties } from "@/data/parties";
-import { categories } from "@/data/questions";
+import { getParties } from "@/data/parties";
+import { partiesCore } from "@/data/parties/core";
+import { getCategories } from "@/data/questions";
 import { getPartyCategoryAverages } from "@/utils/calculator";
 import { PartyLogo } from "@/components/PartyLogo";
 import { BallotLetterBadge } from "@/components/BallotLetterBadge";
@@ -11,7 +12,7 @@ import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 
 export function generateStaticParams() {
-  return parties.map((party) => ({ id: party.id }));
+  return partiesCore.map((party) => ({ id: party.id }));
 }
 
 export async function generateMetadata({
@@ -20,8 +21,9 @@ export async function generateMetadata({
   params: Promise<{ lang: string; id: string }>;
 }): Promise<Metadata> {
   const { lang, id } = await params;
-  const party = parties.find((p) => p.id === id);
-  if (!party || !isLocale(lang)) return {};
+  if (!isLocale(lang)) return {};
+  const party = getParties(lang).find((p) => p.id === id);
+  if (!party) return {};
   const dict = await getDictionary(lang);
   const t = dict.partyProfile;
 
@@ -45,10 +47,12 @@ export default async function PartyProfilePage({
   params: Promise<{ lang: string; id: string }>;
 }) {
   const { lang, id } = await params;
-  const party = parties.find((p) => p.id === id);
-  if (!party || !isLocale(lang)) notFound();
+  if (!isLocale(lang)) notFound();
+  const party = getParties(lang).find((p) => p.id === id);
+  if (!party) notFound();
   const dict = await getDictionary(lang);
   const t = dict.partyProfile;
+  const categories = getCategories(lang);
 
   const averages = getPartyCategoryAverages(party.id);
 

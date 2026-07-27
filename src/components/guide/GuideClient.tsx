@@ -20,11 +20,11 @@ import { KnessetHorseshoe } from "@/components/guide/KnessetHorseshoe";
 import { MarkerFact } from "@/components/guide/MarkerFact";
 import { ThresholdDoor } from "@/components/guide/ThresholdDoor";
 import {
-  demoSlips,
+  getDemoSlips,
+  getStationFacts,
+  getWhyVoteFacts,
   MAGIC_NUMBER,
-  stationFacts,
   VOTES_PER_SEAT_APPROX,
-  whyVoteFacts,
 } from "@/data/electionGuide";
 import { trackEvent } from "@/lib/analytics";
 import { useDictionary } from "@/i18n/DictionaryProvider";
@@ -36,8 +36,11 @@ function Lead({ children }: { children: React.ReactNode }) {
 }
 
 export function GuideClient() {
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const t = dict.guide;
+  const demoSlips = getDemoSlips(locale);
+  const stationFacts = getStationFacts(locale);
+  const whyVoteFacts = getWhyVoteFacts(locale);
 
   useEffect(() => {
     trackEvent("guide_view");
@@ -167,7 +170,7 @@ export function GuideClient() {
         <div className="mt-5 grid gap-3">
           {whyVoteFacts.map((fact) => (
             <div
-              key={fact.lead}
+              key={fact.id}
               className="rounded-2xl border border-gray/80 bg-white px-4 py-3 shadow-ambient"
             >
               <MarkerFact fact={fact} />

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { parties } from "@/data/parties";
+import { partiesCore } from "@/data/parties/core";
 import { getSiteUrl } from "@/utils/site";
 
 // /results and /news are intentionally excluded: /results is a personalized,
@@ -19,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/about`, lastModified, changeFrequency: "monthly", priority: 0.5 },
   ];
 
-  const partyRoutes: MetadataRoute.Sitemap = parties.map((party) => ({
+  const partyRoutes: MetadataRoute.Sitemap = partiesCore.map((party) => ({
     url: `${siteUrl}/parties/${party.id}`,
     lastModified,
     changeFrequency: "weekly",

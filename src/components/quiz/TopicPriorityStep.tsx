@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { SkipForward, Sparkles } from "lucide-react";
-import { categories } from "@/data/questions";
+import { getCategories } from "@/data/questions";
 import { useQuizStore } from "@/store/quizStore";
 import { CategoryId, TopicWeight } from "@/types";
 import { Button } from "@/components/ui/button";
@@ -27,8 +27,9 @@ export function TopicPriorityStep({
   onSkip,
 }: TopicPriorityStepProps) {
   const { categoryWeights, setCategoryWeight } = useQuizStore();
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const t = dict.quiz.priorityStep;
+  const categories = getCategories(locale);
 
   const weightOptions: { value: TopicWeight; label: string; activeClass: string }[] = [
     { value: 0, label: t.weights.none, activeClass: weightActiveClasses[0] },

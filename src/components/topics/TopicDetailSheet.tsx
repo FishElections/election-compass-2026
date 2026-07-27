@@ -14,8 +14,8 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
-import { parties } from "@/data/parties";
-import { categoryIcons } from "@/data/hotTopics";
+import { getParties } from "@/data/parties";
+import { categoryIcons, getCategoryLabels } from "@/data/hotTopics";
 import { Topic } from "@/types";
 import { PartyLogo } from "@/components/PartyLogo";
 import { ConfettiBurst } from "@/components/ConfettiBurst";
@@ -33,7 +33,8 @@ interface PartyGroupProps {
 }
 
 function PartyGroup({ label, ids, tone }: PartyGroupProps) {
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
+  const parties = getParties(locale);
   const toneClasses: Record<typeof tone, string> = {
     support: "border-success/30 bg-success-light/30",
     oppose: "border-rose-300 bg-rose-50",
@@ -249,7 +250,8 @@ interface TopicDetailSheetProps {
 
 export function TopicDetailSheet({ topic, isOpened, onMarkDone, onClose }: TopicDetailSheetProps) {
   const isDesktop = useMediaQuery("(min-width: 640px)");
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
+  const categoryLabels = getCategoryLabels(locale);
 
   // שומר את הנושא האחרון גם אחרי ש-topic הופך ל-null, כדי שיהיה מה להציג
   // בזמן אנימציית היציאה (במקום שהתוכן ייעלם מיידית לפני שהגיליון נסגר).
@@ -292,7 +294,7 @@ export function TopicDetailSheet({ topic, isOpened, onMarkDone, onClose }: Topic
                   <div>
                     <span className="mb-2 inline-flex w-fit items-center gap-1.5 rounded-full bg-sapphire/10 px-3 py-1 text-xs font-semibold text-sapphire">
                       <span aria-hidden>{categoryIcons[renderedTopic.category]}</span>
-                      {renderedTopic.category}
+                      {categoryLabels[renderedTopic.category]}
                     </span>
                     <Dialog.Title asChild>
                       <h3 className="font-display text-lg font-normal leading-snug text-navy">

@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { parties } from "@/data/parties";
+import { getParties } from "@/data/parties";
 import { defaultLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -51,14 +51,14 @@ function hexToRgba(hex: string, alpha: number): string {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const party = parties.find((p) => p.id === searchParams.get("p"));
+  // No ?lang= param yet — this route only ever serves the default locale
+  // until English ships (that PR adds the param + a per-locale bidi/font path).
+  const party = getParties(defaultLocale).find((p) => p.id === searchParams.get("p"));
   const rawScore = Number(searchParams.get("s"));
   const score = Number.isFinite(rawScore)
     ? Math.max(0, Math.min(100, Math.round(rawScore)))
     : 0;
 
-  // No ?lang= param yet — this route only ever serves the default locale
-  // until English ships (that PR adds the param + a per-locale bidi/font path).
   const dict = await getDictionary(defaultLocale);
 
   const partyName = party?.name ?? dict.og.fallbackPartyName;

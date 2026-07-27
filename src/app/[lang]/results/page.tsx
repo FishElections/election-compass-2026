@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { parties } from "@/data/parties";
+import { getParties } from "@/data/parties";
 import { ResultsClient } from "@/components/results/ResultsClient";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -20,7 +20,7 @@ export async function generateMetadata({
   const t = dict.results;
 
   const { p, s } = await searchParams;
-  const party = parties.find((x) => x.id === p);
+  const party = getParties(lang).find((x) => x.id === p);
   const score = Number(s);
 
   // Personalized share page driven entirely by query params — not a page

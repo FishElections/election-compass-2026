@@ -1,5 +1,5 @@
 import { Topic, TopicCategory } from "@/types";
-import { categorySlugs } from "@/data/hotTopics";
+import { getCategoryLabels } from "@/data/hotTopics";
 import { TopicCard } from "@/components/topics/TopicCard";
 import { useDictionary } from "@/i18n/DictionaryProvider";
 
@@ -18,16 +18,19 @@ export function TopicShelf({
   isOpened,
   onOpenTopic,
 }: TopicShelfProps) {
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
+  const categoryLabels = getCategoryLabels(locale);
   if (topics.length === 0) return null;
 
   return (
-    <section id={`aisle-${categorySlugs[category]}`} className="scroll-mt-24 py-4">
+    <section id={`aisle-${category}`} className="scroll-mt-24 py-4">
       <div className="mb-3 flex items-baseline gap-2">
         <span aria-hidden className="text-lg">
           {icon}
         </span>
-        <h2 className="font-display text-lg font-normal text-navy">{category}</h2>
+        <h2 className="font-display text-lg font-normal text-navy">
+          {categoryLabels[category]}
+        </h2>
         <span className="text-xs text-gray-dark">
           {topics.length} {dict.hotTopics.topicsCountSuffix}
         </span>

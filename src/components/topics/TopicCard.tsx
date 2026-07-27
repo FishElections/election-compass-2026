@@ -2,7 +2,7 @@
 
 import { ChevronLeft } from "lucide-react";
 import { Topic } from "@/types";
-import { categoryIcons } from "@/data/hotTopics";
+import { categoryIcons, getCategoryLabels } from "@/data/hotTopics";
 import { getStanceBreakdown } from "@/lib/topicStance";
 import { useDictionary } from "@/i18n/DictionaryProvider";
 
@@ -14,8 +14,9 @@ interface TopicCardProps {
 
 export function TopicCard({ topic, done, onOpen }: TopicCardProps) {
   const breakdown = getStanceBreakdown(topic);
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const t = dict.hotTopics.card;
+  const categoryLabels = getCategoryLabels(locale);
 
   return (
     <button
@@ -35,7 +36,7 @@ export function TopicCard({ topic, done, onOpen }: TopicCardProps) {
       <div className="flex flex-1 flex-col gap-2 p-5">
         <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-sapphire/10 px-3 py-1 text-xs font-semibold text-sapphire">
           <span aria-hidden>{categoryIcons[topic.category]}</span>
-          {topic.category}
+          {categoryLabels[topic.category]}
         </span>
         <h3 className="font-display text-lg font-normal leading-snug text-navy">
           {topic.title}
