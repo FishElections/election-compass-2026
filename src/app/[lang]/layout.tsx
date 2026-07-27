@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import { Heebo, Rubik, Secular_One } from "next/font/google";
@@ -62,6 +62,25 @@ export const metadata: Metadata = {
     description,
     images: [defaultOgImage],
   },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    // Short on purpose: iOS truncates anything longer under the home-screen icon.
+    title: "מצפן בחירות",
+    statusBarStyle: "default",
+  },
+  icons: {
+    apple: "/apple-touch-icon.png",
+  },
+};
+
+// viewportFit: "cover" is what makes env(safe-area-inset-*) resolve to real
+// values — without it the sticky quiz footer sits on the iPhone home indicator.
+// themeColor tints the mobile browser chrome navy to match the site.
+export const viewport: Viewport = {
+  themeColor: "#0b132b",
+  colorScheme: "light",
+  viewportFit: "cover",
 };
 
 // Render every page per-request instead of prerendering it at build time.

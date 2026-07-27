@@ -42,7 +42,7 @@ export function GuideClient() {
   return (
     <main className="flex-1">
       {/* תחנה 0: פתיחה */}
-      <section className="px-4 pb-14 pt-24 text-center sm:pt-28">
+      <section className="px-4 pb-14 pt-10 text-center lg:pt-24">
         <div className="mx-auto max-w-2xl">
           <span className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-sapphire/10 px-4 py-1.5 text-sm font-bold text-sapphire">
             🧭 המדריך לבוחר · 5 דקות

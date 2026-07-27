@@ -43,7 +43,7 @@ export function HotTopicsClient() {
   return (
     <main className="flex-1">
       <div className="bg-navy">
-        <div className="mx-auto max-w-4xl px-4 pb-10 pt-20 text-center sm:pt-24">
+        <div className="mx-auto max-w-4xl px-4 pb-10 pt-8 text-center lg:pt-20">
           <h1 className="font-display text-3xl font-normal text-white sm:text-4xl">
             🔥 הנושאים החמים
           </h1>
@@ -59,12 +59,15 @@ export function HotTopicsClient() {
         <div id="topics-top" className="flex scroll-mt-24 flex-col gap-4">
           <div className="relative">
             <Search className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-dark" />
+            {/* text-base (16px) ולא text-sm במכוון — ראו ההערה ב-PlatformsClient:
+                שדה קלט מתחת ל-16px מפעיל זום אוטומטי ב-Safari ב-iOS. */}
             <input
-              type="text"
+              type="search"
+              enterKeyHint="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="חפש נושא (למשל: שופטים, גיוס, שבת...)"
-              className="w-full rounded-xl border-2 border-gray bg-white py-3 pr-11 pl-4 text-sm text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none"
+              className="w-full rounded-xl border-2 border-gray bg-white py-3 pr-11 pl-4 text-base text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none sm:text-sm"
             />
           </div>
 

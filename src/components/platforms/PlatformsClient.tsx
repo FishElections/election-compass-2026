@@ -36,7 +36,7 @@ export function PlatformsClient() {
   return (
     <main className="flex-1">
       <div className="bg-dot-grid">
-        <div className="mx-auto max-w-5xl px-4 pb-8 pt-20 text-center sm:pt-24">
+        <div className="mx-auto max-w-5xl px-4 pb-8 pt-8 text-center lg:pt-20">
           <h1 className="font-display text-3xl font-normal text-navy sm:text-4xl">
             סיכומי מצעי המפלגות לבחירות 2026
           </h1>
@@ -50,12 +50,15 @@ export function PlatformsClient() {
         <div className="flex flex-col gap-4">
           <div className="relative">
             <Search className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-dark" />
+            {/* text-base (16px) ולא text-sm במכוון: כל שדה קלט מתחת ל-16px גורם
+                ל-Safari ב-iOS לזום אוטומטי על העמוד בפוקוס, והוא לא חוזר. */}
             <input
-              type="text"
+              type="search"
+              enterKeyHint="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="חפש לפי שם מפלגה או מנהיג"
-              className="w-full rounded-xl border-2 border-gray bg-white py-3 pr-11 pl-4 text-sm text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none"
+              className="w-full rounded-xl border-2 border-gray bg-white py-3 pr-11 pl-4 text-base text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none sm:text-sm"
             />
           </div>
 
@@ -64,7 +67,7 @@ export function PlatformsClient() {
               type="button"
               onClick={() => setCategory("all")}
               className={cn(
-                "rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer",
+                "rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer active:scale-[0.97]",
                 category === "all"
                   ? "border-sapphire bg-sapphire text-white"
                   : "border-gray bg-white text-navy hover:border-sapphire"
@@ -78,7 +81,7 @@ export function PlatformsClient() {
                 type="button"
                 onClick={() => setCategory(topic.key)}
                 className={cn(
-                  "rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer",
+                  "rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer active:scale-[0.97]",
                   category === topic.key
                     ? "border-sapphire bg-sapphire text-white"
                     : "border-gray bg-white text-navy hover:border-sapphire"

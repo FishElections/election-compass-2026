@@ -47,7 +47,7 @@ export default async function PartyProfilePage({
   return (
     <main className="flex-1">
       <div className="bg-dot-grid">
-        <div className="mx-auto max-w-3xl px-4 pb-8 pt-20 sm:pt-24">
+        <div className="mx-auto max-w-3xl px-4 pb-8 pt-8 lg:pt-20">
           <Link
             href="/"
             className="mb-6 inline-flex items-center gap-1 text-sm font-medium text-navy hover:underline"

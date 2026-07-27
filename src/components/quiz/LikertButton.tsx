@@ -27,13 +27,15 @@ const selectedStyles: Record<StanceValue, string> = {
 };
 
 /* Extremes read as "louder" opinions, so they get a touch more
-   presence than the middle of the scale, like a real survey dial. */
+   presence than the middle of the scale, like a real survey dial.
+   Phones get a uniform compact height instead: the graduated padding cost ~24px
+   of a screen that has to hold all five options plus the question at once. */
 const intensityPadding: Record<StanceValue, string> = {
-  2: "py-5",
-  1: "py-4",
-  0: "py-3.5",
-  [-1]: "py-4",
-  [-2]: "py-5",
+  2: "py-3 sm:py-5",
+  1: "py-3 sm:py-4",
+  0: "py-3 sm:py-3.5",
+  [-1]: "py-3 sm:py-4",
+  [-2]: "py-3 sm:py-5",
 };
 
 const intensityDots: Record<StanceValue, number> = {
@@ -62,7 +64,7 @@ export function LikertButton({ value, label, selected, onClick }: LikertButtonPr
       whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 400, damping: 22 }}
       className={cn(
-        "relative flex w-full items-center justify-between overflow-hidden rounded-xl border-2 border-gray/80 bg-white px-5 text-right text-base font-semibold text-foreground cursor-pointer",
+        "relative flex min-h-[52px] w-full items-center justify-between overflow-hidden rounded-xl border-2 border-gray/80 bg-white px-5 text-right text-base font-semibold text-foreground cursor-pointer sm:min-h-0",
         intensityPadding[value],
         selected ? selectedStyles[value] : cn("border-gray/80", hoverStyles[value])
       )}
