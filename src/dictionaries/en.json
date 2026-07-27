@@ -262,7 +262,16 @@
       "bodyTemplate": "Test {party} against the strongest arguments from the other side, in the Bubble Breaker.",
       "cta": "Go to Bubble Breaker"
     },
-    "restart": "Start over"
+    "restart": "Start over",
+    "emailOptIn": {
+      "heading": "Want the full picture before the election?",
+      "description": "Leave your email and we'll send one update near election day: which party matched users best overall. No spam.",
+      "placeholder": "Your email",
+      "button": "Keep me posted",
+      "success": "Thanks! We'll be in touch before the election.",
+      "error": "Something went wrong, please try again.",
+      "privacyNote": "Used only for this update, and you can unsubscribe anytime."
+    }
   },
   "platforms": {
     "pageTitle": "Party Platforms for the 2026 Elections, in Brief",

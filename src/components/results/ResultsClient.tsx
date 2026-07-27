@@ -17,8 +17,13 @@ import { AnswerBreakdown } from "@/components/results/AnswerBreakdown";
 import { cn } from "@/lib/utils";
 import { useDictionary } from "@/i18n/DictionaryProvider";
 import { localizedPath } from "@/i18n/config";
+import { EmailOptIn } from "@/components/results/EmailOptIn";
 
-export function ResultsClient() {
+export function ResultsClient({
+  subscribeEnabled = false,
+}: {
+  subscribeEnabled?: boolean;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { dict, locale } = useDictionary();
@@ -352,6 +357,10 @@ export function ResultsClient() {
               </Button>
             </Link>
           </div>
+        )}
+
+        {subscribeEnabled && topThree[0] && (
+          <EmailOptIn topPartyId={topThree[0].party.id} />
         )}
 
         <div className="mt-8 flex flex-col items-center gap-4 border-t border-gray pt-8">
