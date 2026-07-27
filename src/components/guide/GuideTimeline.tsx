@@ -1,15 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { formationTimeline } from "@/data/electionGuide";
+import { getFormationTimeline } from "@/data/electionGuide";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 /** ציר הזמן מהקלפי ועד ממשלה - כל תחנה נדלקת בתורה בגלילה. */
 export function GuideTimeline() {
+  const { locale } = useDictionary();
+  const formationTimeline = getFormationTimeline(locale);
+
   return (
     <div className="mt-7">
       {formationTimeline.map((step, i) => (
         <motion.div
-          key={step.title}
+          key={step.id}
           className="flex gap-4"
           initial={{ opacity: 0, x: 16 }}
           whileInView={{ opacity: 1, x: 0 }}

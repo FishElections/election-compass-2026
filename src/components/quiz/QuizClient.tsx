@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { ChevronRight, RotateCcw, SkipForward } from "lucide-react";
+import { ChevronLeft, RotateCcw, SkipForward } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
 import { useQuizHydration } from "@/hooks/useQuizHydration";
-import { likertOptions } from "@/data/likert";
+import { getLikertOptions } from "@/data/likert";
 import { QuizMode, StanceValue } from "@/types";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
@@ -15,10 +15,14 @@ import { LikertButton } from "@/components/quiz/LikertButton";
 import { QuestionMoreInfo } from "@/components/quiz/QuestionMoreInfo";
 import { TopicPriorityStep } from "@/components/quiz/TopicPriorityStep";
 import { trackEvent } from "@/lib/analytics";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 export function QuizClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { dict, locale } = useDictionary();
+  const t = dict.quiz;
+  const likertOptions = getLikertOptions(locale);
   const mode: QuizMode = searchParams.get("mode") === "long" ? "long" : "short";
   const [showPriorityStep, setShowPriorityStep] = useState(false);
 
@@ -38,11 +42,14 @@ export function QuizClient() {
     resetCategoryWeights,
   } = useQuizStore();
 
-  const hasHydrated = useQuizHydration();
+  const hasHydrated = useQuizHydration(locale);
 
   const initializedMode = useRef<QuizMode | null>(null);
   useEffect(() => {
     if (!hasHydrated) return;
+    // Guard on mode only: a mid-quiz language switch re-runs this effect (locale
+    // is a dep) but must NOT restart the quiz. retext (in useQuizHydration)
+    // handles the text; this early-return keeps the answers.
     if (initializedMode.current === mode) return;
     initializedMode.current = mode;
 
@@ -51,12 +58,12 @@ export function QuizClient() {
       state.mode === mode && Object.keys(state.answers).length > 0;
 
     if (hasProgress) {
-      resumeOrStart(mode);
+      resumeOrStart(mode, locale);
     } else {
-      startQuiz(mode);
+      startQuiz(mode, locale);
       trackEvent("quiz_start", { mode });
     }
-  }, [mode, hasHydrated, startQuiz, resumeOrStart]);
+  }, [mode, locale, hasHydrated, startQuiz, resumeOrStart]);
 
   if (!hasHydrated) return null;
   if (activeQuestions.length === 0) return null;
@@ -109,11 +116,12 @@ export function QuizClient() {
       <main className="flex-1">
         <div className="mx-auto flex max-w-md flex-col items-center gap-5 px-4 py-20 text-center">
           <h1 className="font-display text-2xl font-normal leading-snug text-navy">
-            להמשיך מאיפה שהפסקתם?
+            {t.resume.title}
           </h1>
           <p className="text-gray-dark">
-            שמרנו את ההתקדמות שלכם — ענית על {answeredCount} מתוך {total}{" "}
-            שאלות.
+            {t.resume.body
+              .replace("{answered}", String(answeredCount))
+              .replace("{total}", String(total))}
           </p>
           <div className="flex w-full flex-col gap-3">
             <Button
@@ -123,18 +131,18 @@ export function QuizClient() {
                 dismissResume();
               }}
             >
-              המשיכו לשאלה {currentIndex + 1}
+              {t.resume.continue.replace("{question}", String(currentIndex + 1))}
             </Button>
             <Button
               variant="outline"
               size="lg"
               onClick={() => {
-                startQuiz(mode);
+                startQuiz(mode, locale);
                 trackEvent("quiz_start", { mode });
               }}
             >
               <RotateCcw className="h-4 w-4" />
-              להתחיל מחדש
+              {t.resume.restart}
             </Button>
           </div>
         </div>
@@ -167,7 +175,9 @@ export function QuizClient() {
         <div className="shrink-0">
           <div className="mb-1.5 flex items-center justify-between text-xs font-medium text-gray-dark sm:text-sm">
             <span>
-              שאלה {currentIndex + 1} מתוך {total}
+              {t.questionOfTotal
+                .replace("{current}", String(currentIndex + 1))
+                .replace("{total}", String(total))}
             </span>
             <span>{Math.round(progressPercent)}%</span>
           </div>
@@ -208,12 +218,12 @@ export function QuizClient() {
 
         <div className="flex shrink-0 items-center justify-between border-t border-gray pt-1.5 lg:mt-10 lg:pt-6">
           <Button variant="ghost" onClick={goPrev} disabled={currentIndex === 0}>
-            <ChevronRight className="h-4 w-4" />
-            שאלה קודמת
+            <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
+            {t.previousQuestion}
           </Button>
           <Button variant="ghost" onClick={handleSkip}>
-            דלג על שאלה
-            <SkipForward className="h-4 w-4" />
+            {t.skipQuestion}
+            <SkipForward className="h-4 w-4 rtl:rotate-180" />
           </Button>
         </div>
       </div>

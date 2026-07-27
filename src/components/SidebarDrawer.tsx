@@ -17,41 +17,36 @@ import {
 } from "lucide-react";
 import { CompassMark } from "@/components/CompassMark";
 import { cn } from "@/lib/utils";
+import { useDictionary } from "@/i18n/DictionaryProvider";
+import { locales, localizedPath } from "@/i18n/config";
 
 const navItems = [
-  { href: "/", label: "דף הבית", icon: Home },
-  { href: "/quiz", label: "התחל שאלון", icon: FileText },
-  { href: "/how-it-works", label: "איך הבחירות עובדות?", icon: Vote },
-  {
-    href: "/hot-topics",
-    label: "הנושאים החמים",
-    icon: Flame,
-  },
-  { href: "/platforms", label: "סיכומי מצעי המפלגות", icon: ScrollText },
-  {
-    href: "/challenge",
-    label: "מפרק הבועות (דע את היריב)",
-    icon: Brain,
-  },
-  { href: "/about", label: "אודות והסבר על האלגוריתם", icon: Info },
+  { href: "/", icon: Home, key: "home" as const },
+  { href: "/quiz", icon: FileText, key: "startQuiz" as const },
+  { href: "/how-it-works", icon: Vote, key: "howItWorks" as const },
+  { href: "/hot-topics", icon: Flame, key: "hotTopics" as const },
+  { href: "/platforms", icon: ScrollText, key: "platforms" as const },
+  { href: "/challenge", icon: Brain, key: "challenge" as const },
+  { href: "/about", icon: Info, key: "about" as const },
 ];
 
 // The four destinations worth a permanent thumb-reachable slot; everything else
-// lives behind "עוד", which opens the same drawer as the desktop pill.
+// lives behind "More", which opens the same drawer as the desktop pill.
 const tabItems = [
-  { href: "/", label: "בית", icon: Home },
-  { href: "/quiz", label: "שאלון", icon: FileText },
-  { href: "/hot-topics", label: "נושאים", icon: Flame },
-  { href: "/platforms", label: "מצעים", icon: ScrollText },
+  { href: "/", icon: Home, key: "tabHome" as const },
+  { href: "/quiz", icon: FileText, key: "tabQuiz" as const },
+  { href: "/hot-topics", icon: Flame, key: "tabHotTopics" as const },
+  { href: "/platforms", icon: ScrollText, key: "tabPlatforms" as const },
 ];
 
 export function SidebarDrawer() {
   const pathname = usePathname();
+  const { dict, locale } = useDictionary();
 
   function handleShare() {
     const url = window.location.origin;
     if (navigator.share) {
-      navigator.share({ title: "מצפן בחירות 2026", url }).catch(() => {});
+      navigator.share({ title: dict.nav.brandName, url }).catch(() => {});
     } else if (navigator.clipboard) {
       navigator.clipboard.writeText(url);
     }
@@ -59,16 +54,16 @@ export function SidebarDrawer() {
 
   return (
     <Dialog.Root>
-      {/* Desktop keeps the floating pill. On a phone the top-right corner is the
-          worst place a one-handed thumb can reach, so the same drawer is opened
-          from the bottom tab bar below instead. */}
+      {/* Desktop keeps the floating pill. On a phone the top corner is the worst
+          place a one-handed thumb can reach, so the same drawer is opened from
+          the bottom tab bar below instead. */}
       <Dialog.Trigger asChild>
         <button
           type="button"
-          className="fixed top-4 right-4 z-40 hidden items-center gap-2 rounded-full bg-navy px-4 py-2.5 text-sm font-semibold text-white shadow-ambient-lg transition-all hover:-translate-y-0.5 hover:glow-sapphire cursor-pointer lg:flex"
+          className="fixed top-4 start-4 z-40 hidden items-center gap-2 rounded-full bg-navy px-4 py-2.5 text-sm font-semibold text-white shadow-ambient-lg transition-all hover:-translate-y-0.5 hover:glow-sapphire cursor-pointer lg:flex"
         >
           <Menu className="h-4 w-4" />
-          תפריט
+          {dict.nav.menuButton}
         </button>
       </Dialog.Trigger>
 
@@ -78,16 +73,17 @@ export function SidebarDrawer() {
           the app ends up framed top and bottom. Gold marks the current tab,
           same "you are here" cue the drawer uses. */}
       <nav
-        aria-label="ניווט ראשי"
+        aria-label={dict.nav.primaryNav}
         className="fixed inset-x-0 bottom-0 z-40 flex h-[var(--mobile-nav-h)] items-stretch bg-navy pb-[env(safe-area-inset-bottom)] shadow-[0_-6px_24px_-6px_rgba(11,19,43,0.45)] lg:hidden"
       >
         {tabItems.map((item) => {
+          const href = localizedPath(item.href, locale);
           const isActive =
-            item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            item.href === "/" ? pathname === href : pathname.startsWith(href);
           return (
             <Link
               key={item.href}
-              href={item.href}
+              href={href}
               aria-current={isActive ? "page" : undefined}
               className={cn(
                 "relative flex flex-1 flex-col items-center justify-center gap-0.5 text-[10px] font-bold transition-colors active:bg-white/10",
@@ -98,7 +94,7 @@ export function SidebarDrawer() {
                 <span className="absolute top-0 h-0.5 w-8 rounded-b-full bg-gold" />
               )}
               <item.icon className="h-5 w-5" />
-              {item.label}
+              {dict.nav[item.key]}
             </Link>
           );
         })}
@@ -108,14 +104,15 @@ export function SidebarDrawer() {
             className="flex flex-1 cursor-pointer flex-col items-center justify-center gap-0.5 text-[10px] font-bold text-white/55 transition-colors active:bg-white/10"
           >
             <Menu className="h-5 w-5" />
-            עוד
+            {dict.nav.tabMore}
           </button>
         </Dialog.Trigger>
       </nav>
+
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-40 bg-navy-dark/60 backdrop-blur-[2px] data-[state=open]:animate-overlay-in data-[state=closed]:animate-overlay-out" />
         <Dialog.Content
-          className="fixed inset-y-0 right-0 z-50 flex h-full w-[85vw] max-w-sm flex-col bg-navy/95 text-white shadow-2xl backdrop-blur-lg focus:outline-none data-[state=open]:animate-drawer-in data-[state=closed]:animate-drawer-out"
+          className="fixed inset-y-0 start-0 z-50 flex h-full w-[85vw] max-w-sm flex-col bg-navy/95 text-white shadow-2xl backdrop-blur-lg focus:outline-none data-[state=open]:animate-drawer-in data-[state=closed]:animate-drawer-out"
           aria-describedby={undefined}
         >
           <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
@@ -124,40 +121,59 @@ export function SidebarDrawer() {
                 <CompassMark animate className="h-6 w-6" />
               </div>
               <Dialog.Title asChild>
-                <span className="font-bold text-white">מצפן בחירות 2026</span>
+                <span className="font-bold text-white">{dict.nav.brandName}</span>
               </Dialog.Title>
             </div>
             <Dialog.Close asChild>
               <button
                 type="button"
                 className="flex h-9 w-9 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white cursor-pointer"
-                aria-label="סגור תפריט"
+                aria-label={dict.nav.closeMenu}
               >
                 <X className="h-5 w-5" />
               </button>
             </Dialog.Close>
           </div>
 
+          <div className="flex gap-2 border-b border-white/10 px-4 py-3">
+            {locales.map((l) => (
+              <Dialog.Close asChild key={l.code}>
+                <Link
+                  href={localizedPath(pathname, l.code)}
+                  className={cn(
+                    "flex-1 rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors cursor-pointer",
+                    l.code === locale
+                      ? "bg-sapphire text-white"
+                      : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+                  )}
+                >
+                  {l.label}
+                </Link>
+              </Dialog.Close>
+            ))}
+          </div>
+
           <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-4">
             {navItems.map((item, i) => {
-              const isActive = pathname === item.href;
+              const href = localizedPath(item.href, locale);
+              const isActive = pathname === href;
               return (
                 <Dialog.Close asChild key={item.href}>
                   <Link
-                    href={item.href}
+                    href={href}
                     style={{ animationDelay: `${i * 40}ms` }}
                     className={cn(
                       "animate-nav-item-in relative flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-150",
                       isActive
-                        ? "bg-gradient-to-l from-sapphire/90 to-sapphire/40 text-white"
-                        : "text-white/75 hover:translate-x-[-3px] hover:bg-white/10 hover:text-white"
+                        ? "from-sapphire/90 to-sapphire/40 text-white rtl:bg-gradient-to-l ltr:bg-gradient-to-r"
+                        : "text-white/75 hover:bg-white/10 hover:text-white rtl:hover:-translate-x-[3px] ltr:hover:translate-x-[3px]"
                     )}
                   >
                     {isActive && (
-                      <span className="absolute right-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-full bg-gold" />
+                      <span className="absolute start-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-full bg-gold" />
                     )}
                     <item.icon className="h-5 w-5 shrink-0" />
-                    {item.label}
+                    {dict.nav[item.key]}
                   </Link>
                 </Dialog.Close>
               );
@@ -171,10 +187,10 @@ export function SidebarDrawer() {
               className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-white/15 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:border-sapphire hover:bg-white/5 cursor-pointer"
             >
               <Share2 className="h-4 w-4" />
-              שתפו את האתר
+              {dict.nav.shareSite}
             </button>
             <p className="mt-3 text-center text-xs text-white/40">
-              v1.0 · בחירות 2026
+              {dict.nav.version}
             </p>
           </div>
         </Dialog.Content>

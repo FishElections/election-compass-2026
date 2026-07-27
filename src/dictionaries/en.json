@@ -1,0 +1,421 @@
+{
+  "meta": {
+    "siteName": "Election Compass 2026",
+    "homeTitle": "Israel Elections 2026 — Find the Party That Fits You Best",
+    "description": "Take the quiz and discover which parties best represent your views.",
+    "appleTitle": "Election Compass"
+  },
+  "nav": {
+    "home": "Home",
+    "startQuiz": "Start the Quiz",
+    "howItWorks": "How Elections Work",
+    "hotTopics": "Hot Topics",
+    "platforms": "Party Platform Summaries",
+    "challenge": "Bubble Breaker (Know the Other Side)",
+    "about": "About & How the Algorithm Works",
+    "menuButton": "Menu",
+    "closeMenu": "Close menu",
+    "brandName": "Election Compass 2026",
+    "shareSite": "Share this site",
+    "version": "v1.0 · Elections 2026",
+    "tabHome": "Home",
+    "tabQuiz": "Quiz",
+    "tabHotTopics": "Topics",
+    "tabPlatforms": "Platforms",
+    "tabMore": "More",
+    "primaryNav": "Primary navigation"
+  },
+  "home": {
+    "badgeObjective": "100% objective",
+    "badgeFunded": "0% funded",
+    "kicker": "Independent civic tool · Elections 2026",
+    "headingStart": "Which party is your",
+    "headingHighlight": "best match",
+    "headingEnd": "?",
+    "subtitleMobile": "A data-driven comparison, with no bias and no ads.",
+    "subtitleDesktop": "Take the quiz and discover which parties best represent your views. A data-driven comparison, with no bias and no ads.",
+    "fastTrack": {
+      "title": "Fast Track",
+      "durationShort": "~3 min",
+      "duration": "~3 minutes",
+      "description": "20 core questions that give you a quick, clear picture. Good when time is short.",
+      "cta": "Start here"
+    },
+    "comprehensiveTrack": {
+      "title": "Comprehensive Track",
+      "durationShort": "~8 min",
+      "duration": "~8 minutes",
+      "description": "58 questions across every topic, for a more precise, in-depth result.",
+      "cta": "Start here"
+    },
+    "moreOnSite": "More on the site",
+    "links": {
+      "howItWorks": {
+        "labelShort": "How it works",
+        "title": "How do Israeli elections work?",
+        "description": "The journey of a single ballot — seats, the electoral threshold, and coalitions, explained simply in 5 minutes"
+      },
+      "platforms": {
+        "labelShort": "Platforms",
+        "title": "Party Platform Summaries",
+        "description": "Official positions, topic by topic"
+      },
+      "hotTopics": {
+        "labelShort": "Hot topics",
+        "title": "Hot Topics",
+        "description": "Simple explanations of the most contested issues, independent of any party"
+      },
+      "challenge": {
+        "labelShort": "Bubble breaker",
+        "title": "Bubble Breaker",
+        "description": "Already picked a party? Test your views against the strongest arguments from the other side"
+      }
+    },
+    "privacyNoteMobile": "Anonymous answers, nothing saved on a server",
+    "privacyNoteDesktop": "Your answers are completely anonymous and are never saved on a server."
+  },
+  "guide": {
+    "ballotHeroAlt": "Illustration of a ballot box with a slip going into it",
+    "thresholdDoorAlt": "Illustration: a party with 4.1% of the vote passes through a door marked {threshold}, while a party with 2.9% is left outside",
+    "chatLabels": {
+      "you": "You",
+      "guide": "🧭 Guide"
+    },
+    "intro": {
+      "badge": "🧭 The Voter's Guide · 5 minutes",
+      "headingLine1": "How does one ballot",
+      "headingLine2": "become a government?",
+      "subtitle": "Israel's simplest guide to how elections work. No jargon, promise.",
+      "readTimeBadge": "⏱ 5 min read · 0% politics, 100% explanation",
+      "startCta": "Let's start the journey"
+    },
+    "station1": {
+      "kicker": "Station 1 · The Ballot",
+      "title": "Wait, who are you even voting for?",
+      "leadStart": "In Israel you vote",
+      "leadBold1": "for a list",
+      "leadMid": "— a party with a slate of candidates — not for one person. Behind the curtain waits a stack of slips, one per party. You choose, put it in an envelope, and that's it.",
+      "chatQuestion": "Wait... so I'm not voting for a prime minister? 😯",
+      "chatAnswer": "Exactly. No one in Israel directly chooses a prime minister. This whole journey is about that."
+    },
+    "station2": {
+      "kicker": "Station 2 · The Count",
+      "title": "120 seats, one pie",
+      "lead": "The whole country is a single electoral district. Got 10% of the vote? You get about 10% of the seats. That simple.",
+      "votesLabel": "votes",
+      "votesCaption": "roughly equal to one seat in the Knesset (a mandate)",
+      "accordionTrigger": "Want to sound smart? 🤓",
+      "accordionContent": "The exact seat allocation uses the Bader-Ofer method: a formula that gives a slight edge to relatively larger parties, and lets two parties sign a \"surplus agreement\" to pool their leftover votes. That's all you need to know to impress people at a dinner party."
+    },
+    "station3": {
+      "kicker": "Station 3 · The Front Door",
+      "title": "The electoral threshold",
+      "leadStart": "A party that doesn't reach at least",
+      "leadBold": "3.25%",
+      "leadEnd": "of valid votes is left out. And its votes? They evaporate. Not counted for anyone.",
+      "statLine": "3.25% ≈ 4 seats",
+      "statCaption": "the minimum entry ticket to the Knesset"
+    },
+    "station4": {
+      "kicker": "Station 4 · The Magic Number ⭐",
+      "title": "Sixty. And one.",
+      "leadStart": "No party reaches",
+      "leadMid1": "out of 120 on its own. To govern you need partners — that's a",
+      "leadBold1": "coalition",
+      "leadMid2": ". Everyone else?",
+      "leadBold2": "Opposition",
+      "leadEnd": "— whose job is to scrutinize, ask hard questions, and be a government-in-waiting.",
+      "prompt": "👇 Try it yourself — tap parties (entirely fictional) and build a government:"
+    },
+    "station5": {
+      "kicker": "Station 5 · The Big Moment",
+      "title": "So who's actually prime minister?",
+      "lead": "Once the votes are counted, it's the President's turn:",
+      "chatQuestion": "So... does the biggest party always win? 🤔",
+      "chatAnswerTemplate": "Not necessarily at all! What matters is who manages to put together {n}. It's happened before that the party with the most votes ended up in the opposition."
+    },
+    "station6": {
+      "kicker": "Station 6 · Why It Matters",
+      "title": "So why does my vote matter?",
+      "closing": "On October 27th, this little slip of paper is the loudest voice you have."
+    },
+    "closing": {
+      "heading": "Now you know how it works 🎓",
+      "subtitle": "All that's left is to find out who you're the best match for.",
+      "cta": "Take the Fast Track — 20 questions",
+      "browseFirstPrefix": "Or browse the",
+      "browseFirstLink": "hot topics"
+    },
+    "coalitionBlocks": {
+      "yourCoalition": "Your coalition",
+      "target": "Target:",
+      "hasGovernment": "You have a government!",
+      "seatsSuffix": "seats",
+      "restart": "Start over"
+    },
+    "knessetHorseshoe": {
+      "ariaLabelTemplate": "Illustration of {seats} Knesset seats arranged in a horseshoe, colored by a fictional division among parties",
+      "caption": "This is roughly what it could look like (a completely fictional split)"
+    }
+  },
+  "og": {
+    "brand": "Election Compass 2026",
+    "kicker": "The party that's the best match for me",
+    "matchLabel": "match",
+    "fallbackPartyName": "The Quiz",
+    "fallbackPartyLogo": "Compass"
+  },
+  "quiz": {
+    "pageTitle": "Position Quiz",
+    "pageDescription": "Answer 20 or 58 position questions and find out in minutes which parties best fit you — with no bias and no ads.",
+    "questionOfTotal": "Question {current} of {total}",
+    "previousQuestion": "Previous question",
+    "skipQuestion": "Skip question",
+    "moreInfo": {
+      "trigger": "Want to understand more? Click for background and context",
+      "context": "Brief context and background",
+      "argumentsHeading": "Arguments for and against",
+      "proArgument": "The case for",
+      "conArgument": "The case against"
+    },
+    "priorityStep": {
+      "eyebrow": "Last step, completely optional",
+      "heading": "Are some topics more important to you than others — or less?",
+      "description": "Mark which topics matter more to you and which matter less, and we'll weight that into the match calculation. You can also just skip and get a standard result, with no weighting.",
+      "skip": "Skip",
+      "continue": "Continue to results",
+      "weights": {
+        "none": "Not important at all",
+        "notImportant": "Not important",
+        "normal": "Normal",
+        "important": "Important to me",
+        "critical": "Most critical to me"
+      }
+    },
+    "resume": {
+      "title": "Continue where you left off?",
+      "body": "We saved your progress — you've answered {answered} of {total} questions.",
+      "continue": "Continue to question {question}",
+      "restart": "Start over"
+    }
+  },
+  "results": {
+    "pageTitle": "My Results",
+    "pageDescription": "Take the quiz and find out which party is your best match.",
+    "shareTitleTemplate": "🎯 I got a {score}% match with {party}",
+    "shareDescription": "I took the Election Compass 2026 quiz. What about you? Find out too 👇",
+    "weightLabels": {
+      "critical": "Most critical",
+      "important": "Important",
+      "notImportant": "Not important",
+      "none": "Not important at all"
+    },
+    "rankLabels": {
+      "first": "Top match",
+      "second": "2nd place",
+      "third": "3rd place"
+    },
+    "matchLabel": "match",
+    "sharedResult": {
+      "kicker": "Someone shared a result with you",
+      "headingTemplate": "They got a {score}% match with {party}",
+      "bodyStart": "Want to find out which party",
+      "bodyBoldYou": "you",
+      "bodyEnd": "are the best match for? Take the quiz and get your own results.",
+      "cta": "Start the quiz"
+    },
+    "noAnswers": {
+      "heading": "No answers found yet",
+      "body": "To see results, you first need to take the quiz.",
+      "cta": "Go to homepage"
+    },
+    "analysisComplete": "Analysis complete",
+    "heading": "Your results are ready",
+    "answeredSummaryTemplate": "You answered {answered} of {total} questions. These are the three parties that best match your views.",
+    "weighting": {
+      "prefix": "Your results are weighted by the importance you marked:",
+      "reset": "Reset weighting"
+    },
+    "share": {
+      "heading": "Share your result",
+      "subtitle": "Let your friends find out which party they match.",
+      "whatsapp": "Share on WhatsApp",
+      "copyLink": "Copy link",
+      "copied": "Link copied",
+      "shareTextTemplate": "I found out the party that best matches me is {party} ({score}% match)! 🚀\nCheck yours too 👇",
+      "nativeShareTitle": "Election Compass 2026"
+    },
+    "showMore": "Show all other parties",
+    "showLess": "Hide extra parties",
+    "answerBreakdownHeading": "Answer breakdown",
+    "comparedToTemplate": "Compared to {party}",
+    "answerBreakdown": {
+      "neutralFallback": "Neutral / no position",
+      "yourAnswer": "Your answer:",
+      "partyStanceTemplate": "{party}'s position:",
+      "closeStances": "Close positions",
+      "distantStances": "Distant positions"
+    },
+    "challengeCta": {
+      "heading": "Ready to challenge yourself?",
+      "bodyTemplate": "Test {party} against the strongest arguments from the other side, in the Bubble Breaker.",
+      "cta": "Go to Bubble Breaker"
+    },
+    "restart": "Start over"
+  },
+  "platforms": {
+    "pageTitle": "Party Platforms for the 2026 Elections, in Brief",
+    "pageDescription": "A summary of the positions of parties running in the 2026 elections, topic by topic: security, economy, judiciary, religion and state, and society.",
+    "heading": "Party Platform Summaries for the 2026 Elections",
+    "subtitle": "A neutral, concise, and comprehensive overview of party positions on core issues.",
+    "searchPlaceholder": "Search by party name or leader",
+    "allFilter": "All",
+    "noResults": "No parties match your search.",
+    "partyDetailSheet": {
+      "close": "Close",
+      "fullProfileCta": "View full profile"
+    }
+  },
+  "partyProfile": {
+    "backToHome": "Back to homepage",
+    "titleTemplate": "{party} - Positions and Platform for the 2026 Elections",
+    "descriptionTemplate": "{description} See how well you match {party} on the Election Compass.",
+    "categoryPositionHeading": "General position by category",
+    "comingSoon": "Coming soon: full platform, list of Knesset members, and party history."
+  },
+  "hotTopics": {
+    "pageTitle": "Hot Topics in the 2026 Elections",
+    "pageDescription": "Simple, unbiased explanations of the most contested issues in Israeli politics, independent of any party.",
+    "heading": "🔥 Hot Topics",
+    "subtitle": "Let's understand together: what's everyone arguing about right now? Simple, unbiased explanations of the most contested issues in the country — and for those who want to go deeper, a map of where each party stands.",
+    "searchPlaceholder": "Search a topic (e.g.: judges, conscription, Shabbat...)",
+    "allFilter": "All",
+    "topicsCountSuffix": "topics",
+    "allDone": "You've gone through every hot topic 🎉 Well done!",
+    "noResults": "No topics match your search.",
+    "card": {
+      "noPartyMapping": "No party mapping yet",
+      "reopen": "Reopen",
+      "open": "Let's understand"
+    },
+    "detail": {
+      "tabs": {
+        "what": "What's happening",
+        "why": "Why it's contested",
+        "args": "For/against",
+        "parties": "Parties"
+      },
+      "noPartiesInCategory": "No parties in this category",
+      "whatHappening": "What's happening here, in plain words",
+      "keyTermPrefix": "Key term:",
+      "whyControversial": "Why is this even debated?",
+      "funFact": "Fun fact",
+      "argumentsFor": "Those arguing in favor",
+      "argumentsAgainst": "And those arguing against",
+      "relatedQuestionCta": "Want to answer the related question in the quiz?",
+      "partyGroups": {
+        "support": "Actively support",
+        "oppose": "Firmly oppose",
+        "neutral": "Mixed / compromise"
+      },
+      "close": "Close",
+      "markDone": "Got it",
+      "doneLabel": "Saved to your understanding basket"
+    }
+  },
+  "challenge": {
+    "pageTitle": "Bubble Breaker",
+    "pageDescription": "Already picked a party? Test your views against the strongest arguments from the other side.",
+    "intro": {
+      "heading": "Bubble Breaker: The Blind-Spot Challenge",
+      "subtitle": "Test your open-mindedness against the strongest arguments from the other side, no pressure and no judgment."
+    },
+    "setup": {
+      "presetIntro": "Your top match is",
+      "presetDescription": "Let's test the strongest arguments from the other side against the positions it likely represents for you.",
+      "startChallenge": "Start the challenge",
+      "chooseAnotherWay": "Choose another way",
+      "methodParty": "Who do you plan to vote for?",
+      "methodQuick": "Quick position statement"
+    },
+    "card": {
+      "cardOfTotalTemplate": "Card {current} of {total}",
+      "opponentArgument": "The other side's argument",
+      "yourPositionTemplate": "Your position:",
+      "partyPositionTemplate": "{party}'s position:",
+      "howDoesItFeel": "How does this argument feel to you?",
+      "reactions": {
+        "thoughtProvoking": "Food for thought / raises a healthy doubt",
+        "acknowledgeButPrefer": "I recognize the argument, but prefer my own reasoning",
+        "notConvincing": "Not convincing / I stand firm on my position"
+      }
+    },
+    "summary": {
+      "heading": "Your open-mindedness score",
+      "subtitle": "This is how you responded to the strongest arguments from the other side.",
+      "worthRemembering": "Worth remembering",
+      "noTakeaways": "This time you stood firm against every argument presented to you. There's nothing wrong with that, but it's always worth listening to the other side again once in a while.",
+      "shareWhatsapp": "Share on WhatsApp",
+      "shareX": "Share on X",
+      "shareTextTemplate": "My open-mindedness score in the Bubble Breaker: {score}% {emoji} {tier}. Check yours too:",
+      "tryAgain": "Try again",
+      "backToHome": "Back to homepage",
+      "tiers": {
+        "skeptic": {
+          "title": "Cartesian Skeptic / Critical Thinker",
+          "description": "You can see the nuance and appreciate arguments from opposing camps."
+        },
+        "balanced": {
+          "title": "Balanced and Measured",
+          "description": "You have strong principles, but you listen to and understand counterarguments."
+        },
+        "ideologue": {
+          "title": "Firm Ideologue",
+          "description": "Your core values are clear and well-reasoned, and you hold to them even under challenge."
+        }
+      }
+    }
+  },
+  "about": {
+    "pageTitle": "Who We Are and How the Match Is Calculated",
+    "pageDescription": "Election Compass 2026 is a free, independent tool for checking your match with parties. Learn how the match percentage is calculated, what the distance and direction scores are, and who's behind the project.",
+    "heading": "About Election Compass 2026",
+    "intro": "Election Compass 2026 is a free, independent tool designed to help you understand which parties best represent your views, based on your answers to a position quiz across a range of core topics.",
+    "howCalculated": {
+      "heading": "How is the match calculated?",
+      "intro": "For every question you answer, we compare your position to each party's position, on a scale from -2 (strongly against) to +2 (strongly in favor). The final match percentage is an average of two complementary scores, each capturing a different aspect of \"match\":",
+      "formula": "Score(%) = 0.5 × DistanceScore + 0.5 × DirectionScore",
+      "distanceLabel": "The distance score",
+      "distanceBody": "checks how close the actual positions are, number against number: DistanceScore = (1 − Σ(wᵢ × |Uᵢ − Pᵢ|) / Σ(wᵢ × 4)) × 100, where U is your position, P is the party's position, and w is the question's weight.",
+      "directionLabel": "The direction score",
+      "directionBody": "checks something else: whether the overall direction of your positions matches the party's direction across all the questions together, even if the intensity differs (for example: you're \"in favor\" and the party is \"strongly in favor\" on the exact same issue). Without this score, a party that consistently takes moderate positions would gain an unfair advantage from the distance score alone, even against someone who clearly matches ideologically with another party that takes more decisive positions.",
+      "weightingBody": "Parties are ranked from the highest to the lowest match. A question's weight (w) has two components: in the comprehensive track you can mark which topics matter more to you, which produces a higher weight for questions in that category. In addition, every question has a built-in \"polarization weight,\" derived from how much parties actually disagree on it: a question where parties are spread across the whole scale (a genuinely contested issue) affects the result more than a question where almost all parties agree, so the match mainly reflects what actually distinguishes the parties."
+    },
+    "privacy": {
+      "heading": "Privacy",
+      "body": "Your answers are completely anonymous and are never saved on a server. The entire calculation happens in your browser alone, and the moment you close the page, the answers are deleted."
+    },
+    "builders": {
+      "heading": "Who built this",
+      "intro": "Election Compass 2026 was built as a volunteer effort by two independent entrepreneurs, out of a belief in a free, transparent, and independent tool for the Israeli voter.",
+      "thanks": "And a heartfelt thank-you to Tova Bani, Ohad's partner, whose belief in this project is the reason it came to be.",
+      "names": [
+        "Ohad Bar-Eli",
+        "Itay Eylat"
+      ]
+    }
+  },
+  "news": {
+    "pageTitle": "Election Updates",
+    "pageDescription": "Coming soon: ongoing news and updates on the 2026 Knesset elections.",
+    "heading": "Election Updates",
+    "body": "Coming soon: ongoing news and updates on the 2026 Knesset elections.",
+    "backToHome": "Back to homepage"
+  },
+  "ballotLetterBadge": {
+    "confirmedTitleTemplate": "Officially confirmed on {date}",
+    "letterCaption": "Ballot letter",
+    "notYetConfirmed": "Ballot letter not yet confirmed",
+    "currentNicknameTemplate": "(current nickname: {logo})"
+  }
+}

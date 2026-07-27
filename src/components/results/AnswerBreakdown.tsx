@@ -4,15 +4,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { likertOptions } from "@/data/likert";
+import { getLikertOptions } from "@/data/likert";
 import { getPartyStance } from "@/utils/calculator";
 import { Party, Question, StanceValue, UserAnswers } from "@/types";
-
-function labelForValue(value: number) {
-  return (
-    likertOptions.find((o) => o.value === value)?.label ?? "ניטרלי / ללא עמדה"
-  );
-}
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 export function AnswerBreakdown({
   questions,
@@ -23,6 +18,16 @@ export function AnswerBreakdown({
   answers: UserAnswers;
   party: Party;
 }) {
+  const { dict, locale } = useDictionary();
+  const t = dict.results.answerBreakdown;
+  const likertOptions = getLikertOptions(locale);
+
+  function labelForValue(value: number) {
+    return (
+      likertOptions.find((o) => o.value === value)?.label ?? t.neutralFallback
+    );
+  }
+
   const answeredQuestions = questions.filter((q) => answers[q.id] !== undefined);
 
   if (answeredQuestions.length === 0) return null;
@@ -40,12 +45,14 @@ export function AnswerBreakdown({
             <AccordionContent>
               <div className="flex flex-col gap-2 text-sm sm:flex-row sm:gap-6">
                 <p>
-                  <span className="font-semibold text-navy">התשובה שלך: </span>
+                  <span className="font-semibold text-navy">
+                    {t.yourAnswer}{" "}
+                  </span>
                   {labelForValue(userValue)}
                 </p>
                 <p>
                   <span className="font-semibold text-navy">
-                    עמדת {party.name}:{" "}
+                    {t.partyStanceTemplate.replace("{party}", party.name)}{" "}
                   </span>
                   {labelForValue(partyValue)}
                 </p>
@@ -56,7 +63,7 @@ export function AnswerBreakdown({
                       : "font-medium text-danger"
                   }
                 >
-                  {agree ? "עמדות קרובות" : "עמדות מרוחקות"}
+                  {agree ? t.closeStances : t.distantStances}
                 </span>
               </div>
             </AccordionContent>

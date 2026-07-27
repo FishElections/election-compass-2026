@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import { Users, MessageCircleQuestion } from "lucide-react";
-import { parties } from "@/data/parties";
-import { counterArguments } from "@/data/counterArguments";
-import { quickStanceLabels } from "@/data/quickStanceLabels";
-import { getPartySide, quickStanceTopicIds } from "@/utils/challenge";
+import { getParties } from "@/data/parties";
+import { getCounterArguments } from "@/data/counterArguments";
+import { getQuickStanceLabels, quickStanceTopicIds } from "@/data/quickStanceLabels";
+import { getPartySide } from "@/utils/challenge";
 import { StanceSide } from "@/types";
 import { PartyLogo } from "@/components/PartyLogo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 export interface ChallengeDeckItem {
   topicId: string;
@@ -22,6 +23,11 @@ interface SetupStepProps {
 }
 
 export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
+  const { dict, locale } = useDictionary();
+  const t = dict.challenge.setup;
+  const parties = getParties(locale);
+  const counterArguments = getCounterArguments(locale);
+  const quickStanceLabels = getQuickStanceLabels(locale);
   const presetParty = presetPartyId
     ? parties.find((p) => p.id === presetPartyId)
     : undefined;
@@ -60,14 +66,13 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
         <div className="flex flex-col items-center gap-4 rounded-2xl border border-amber/30 bg-white p-8 shadow-ambient-lg">
           <PartyLogo party={presetParty} size="lg" />
           <div>
-            <p className="text-sm text-gray-dark">ההתאמה המובילה שלך היא</p>
+            <p className="text-sm text-gray-dark">{t.presetIntro}</p>
             <h2 className="font-display text-2xl font-normal text-navy">
               {presetParty.name}
             </h2>
           </div>
           <p className="text-sm leading-relaxed text-gray-dark">
-            בואו נבדוק את הטיעונים החזקים ביותר של המחנה הנגדי מול העמדות
-            שסביר שהיא מייצגת עבורך.
+            {t.presetDescription}
           </p>
           <Button
             size="lg"
@@ -75,14 +80,14 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
             className="w-full"
             onClick={() => startWithParty(presetParty.id, presetParty.name)}
           >
-            התחילו את האתגר
+            {t.startChallenge}
           </Button>
           <button
             type="button"
             onClick={() => setShowFullChooser(true)}
             className="text-sm font-medium text-navy hover:underline cursor-pointer"
           >
-            בחרו דרך אחרת
+            {t.chooseAnotherWay}
           </button>
         </div>
       </div>
@@ -103,7 +108,7 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
           )}
         >
           <Users className="h-4 w-4" />
-          למי אתה מתכנן להצביע?
+          {t.methodParty}
         </button>
         <button
           type="button"
@@ -116,7 +121,7 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
           )}
         >
           <MessageCircleQuestion className="h-4 w-4" />
-          הצהרת עמדה מהירה
+          {t.methodQuick}
         </button>
       </div>
 
@@ -187,7 +192,7 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
             disabled={!allQuickAnswered}
             onClick={startWithQuickAnswers}
           >
-            התחילו את האתגר
+            {t.startChallenge}
           </Button>
         </div>
       )}

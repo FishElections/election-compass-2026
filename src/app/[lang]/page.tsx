@@ -1,8 +1,10 @@
-import Link from "next/link";
+"use client";
+
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import {
   Zap,
   ListChecks,
-  ChevronLeft,
+  ChevronRight,
   Lock,
   ScrollText,
   Brain,
@@ -12,18 +14,29 @@ import {
 import { InteractiveFlagBackdrop } from "@/components/InteractiveFlagBackdrop";
 import { CompassMark } from "@/components/CompassMark";
 import { getSiteUrl } from "@/utils/site";
-
-const websiteJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "מצפן בחירות 2026",
-  url: getSiteUrl(),
-  description:
-    "ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה הטובה ביותר.",
-  inLanguage: "he-IL",
-};
+import { ogLocaleFor } from "@/i18n/config";
+import { useDictionary } from "@/i18n/DictionaryProvider";
+import { cn } from "@/lib/utils";
 
 export default function HomePage() {
+  const { dict, locale, dir } = useDictionary();
+  const t = dict.home;
+  const gradientDir = dir === "rtl" ? "bg-gradient-to-l" : "bg-gradient-to-r";
+  const hoverNudge =
+    dir === "rtl" ? "group-hover:-translate-x-1" : "group-hover:translate-x-1";
+
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: dict.meta.siteName,
+    url: getSiteUrl(),
+    description: dict.meta.description,
+    // schema.org wants BCP-47 ("he-IL"); the registry stores the og:locale
+    // form ("he_IL") since that's what Open Graph needs — same value, so
+    // just swap the separator instead of storing it twice.
+    inLanguage: ogLocaleFor(locale).replace("_", "-"),
+  };
+
   return (
     <main className="flex-1">
       <script
@@ -38,12 +51,12 @@ export default function HomePage() {
           <InteractiveFlagBackdrop className="absolute -inset-y-16 inset-x-[-15%] opacity-[0.12]" />
         </div>
 
-        <div className="absolute left-3 top-3 z-20 flex -rotate-[8deg] flex-col overflow-hidden rounded shadow-md">
-          <span className="bg-gradient-to-l from-success to-emerald-light px-3 py-1 text-[10px] font-bold tracking-wide text-white">
-            100% אובייקטיבי
+        <div className="absolute start-3 top-3 z-20 flex -rotate-[8deg] flex-col overflow-hidden rounded shadow-md">
+          <span className={cn(gradientDir, "from-success to-emerald-light px-3 py-1 text-[10px] font-bold tracking-wide text-white")}>
+            {t.badgeObjective}
           </span>
           <span className="bg-white px-3 py-1 text-[10px] font-bold tracking-wide text-navy">
-            0% ממומן
+            {t.badgeFunded}
           </span>
         </div>
 
@@ -51,17 +64,17 @@ export default function HomePage() {
           <div>
             <div className="mb-2 flex items-center gap-1.5 text-xs font-semibold text-sapphire">
               <CompassMark animate className="h-4 w-4 text-sapphire" />
-              <span>כלי אזרחי בלתי תלוי · בחירות 2026</span>
+              <span>{t.kicker}</span>
             </div>
             <h1 className="font-display text-3xl font-normal leading-[1.15] text-navy">
-              למי הכי{" "}
+              {t.headingStart}{" "}
               <span className="text-gradient-sapphire-emerald font-bold">
-                מתאים לך
+                {t.headingHighlight}
               </span>{" "}
-              להצביע?
+              {t.headingEnd}
             </h1>
             <p className="mt-2 text-xs leading-relaxed text-gray-dark">
-              השוואה מבוססת נתונים, בלי הטיה ובלי פרסום.
+              {t.subtitleMobile}
             </p>
           </div>
 
@@ -72,13 +85,13 @@ export default function HomePage() {
                   <Zap className="h-4 w-4" />
                 </div>
                 <h2 className="font-display relative z-10 mt-2 text-xl font-normal">
-                  מסלול מהיר
+                  {t.fastTrack.title}
                 </h2>
                 <div className="relative z-10 mt-auto flex items-center justify-between pt-3 text-xs">
                   <span className="rounded-full bg-white/10 px-2 py-0.5 font-medium">
-                    כ־3 דק&apos;
+                    {t.fastTrack.durationShort}
                   </span>
-                  <ChevronLeft className="h-3.5 w-3.5" />
+                  <ChevronRight className="h-3.5 w-3.5 rtl:rotate-180" />
                 </div>
               </div>
             </Link>
@@ -89,13 +102,13 @@ export default function HomePage() {
                   <ListChecks className="h-4 w-4" />
                 </div>
                 <h2 className="font-display mt-2 text-xl font-normal text-navy">
-                  מסלול מקיף
+                  {t.comprehensiveTrack.title}
                 </h2>
                 <div className="mt-auto flex items-center justify-between pt-3 text-xs">
                   <span className="rounded-full bg-gray-light px-2 py-0.5 font-medium text-navy">
-                    כ־8 דק&apos;
+                    {t.comprehensiveTrack.durationShort}
                   </span>
-                  <ChevronLeft className="h-3.5 w-3.5 text-navy" />
+                  <ChevronRight className="h-3.5 w-3.5 text-navy rtl:rotate-180" />
                 </div>
               </div>
             </Link>
@@ -103,7 +116,7 @@ export default function HomePage() {
 
           <div>
             <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-dark">
-              עוד באתר
+              {t.moreOnSite}
             </p>
             <div className="grid grid-cols-4 gap-2">
               <Link
@@ -112,7 +125,7 @@ export default function HomePage() {
               >
                 <Vote className="h-5 w-5" />
                 <span className="text-[10px] font-bold text-navy">
-                  איך זה עובד
+                  {t.links.howItWorks.labelShort}
                 </span>
               </Link>
               <Link
@@ -121,7 +134,7 @@ export default function HomePage() {
               >
                 <ScrollText className="h-5 w-5" />
                 <span className="text-[10px] font-bold text-navy">
-                  מצעים
+                  {t.links.platforms.labelShort}
                 </span>
               </Link>
               <Link
@@ -130,7 +143,7 @@ export default function HomePage() {
               >
                 <Flame className="h-5 w-5" />
                 <span className="text-[10px] font-bold text-navy">
-                  נושאים חמים
+                  {t.links.hotTopics.labelShort}
                 </span>
               </Link>
               <Link
@@ -139,7 +152,7 @@ export default function HomePage() {
               >
                 <Brain className="h-5 w-5" />
                 <span className="text-[10px] font-bold text-navy">
-                  מפרק בועות
+                  {t.links.challenge.labelShort}
                 </span>
               </Link>
             </div>
@@ -147,7 +160,7 @@ export default function HomePage() {
 
           <div className="flex items-center justify-center gap-1.5 rounded-full bg-gray-light px-3 py-2 text-[10px] text-gray-dark">
             <Lock className="h-3 w-3 shrink-0 text-navy" />
-            <span>תשובות אנונימיות, לא נשמרות בשרת</span>
+            <span>{t.privacyNoteMobile}</span>
           </div>
         </div>
       </div>
@@ -162,30 +175,28 @@ export default function HomePage() {
               <div className="lg:col-span-7">
                 <div className="mb-5 flex items-center gap-2 text-sm font-semibold text-sapphire">
                   <CompassMark animate className="h-6 w-6 text-sapphire" />
-                  <span>כלי אזרחי בלתי תלוי · בחירות 2026</span>
+                  <span>{t.kicker}</span>
                 </div>
                 <h1 className="font-display text-4xl font-normal leading-[1.15] text-navy sm:text-6xl">
-                  למי הכי{" "}
+                  {t.headingStart}{" "}
                   <span className="text-gradient-sapphire-emerald font-bold">
-                    מתאים לך
+                    {t.headingHighlight}
                   </span>{" "}
-                  להצביע?
+                  {t.headingEnd}
                 </h1>
                 <p className="mt-6 max-w-xl text-base leading-relaxed text-gray-dark sm:text-lg">
-                  ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה
-                  הטובה ביותר. אמלק; השוואה מבוססת נתונים, בלי הטיה ובלי
-                  פרסום.
+                  {t.subtitleDesktop}
                 </p>
               </div>
 
               <div className="lg:col-span-5">
                 <div className="relative flex min-h-[190px] items-center overflow-hidden">
                   <div className="absolute left-1/2 top-1/2 flex w-[140%] -translate-x-1/2 -translate-y-1/2 -rotate-[8deg] flex-col gap-3">
-                    <div className="bg-gradient-to-l from-success to-emerald-light py-3 text-center text-lg font-bold tracking-wide text-white shadow-lg sm:text-xl">
-                      100% אובייקטיבי
+                    <div className={cn(gradientDir, "from-success to-emerald-light py-3 text-center text-lg font-bold tracking-wide text-white shadow-lg sm:text-xl")}>
+                      {t.badgeObjective}
                     </div>
                     <div className="bg-white py-3 text-center text-lg font-bold tracking-wide text-navy shadow-lg sm:text-xl">
-                      0% ממומן
+                      {t.badgeFunded}
                     </div>
                   </div>
                 </div>
@@ -199,19 +210,18 @@ export default function HomePage() {
                     <Zap className="h-6 w-6" />
                   </div>
                   <h2 className="font-display relative z-10 text-3xl font-normal">
-                    מסלול מהיר
+                    {t.fastTrack.title}
                   </h2>
                   <p className="relative z-10 mt-3 max-w-md flex-1 text-sm leading-relaxed text-white/75">
-                    20 שאלות מרכזיות שייתנו לכם תמונה מהירה וברורה. מתאים
-                    כשהזמן קצר.
+                    {t.fastTrack.description}
                   </p>
                   <div className="relative z-10 mt-8 flex items-center justify-between text-sm">
                     <span className="rounded-full bg-white/10 px-3 py-1 font-medium backdrop-blur-md">
-                      כ־3 דקות
+                      {t.fastTrack.duration}
                     </span>
                     <span className="flex items-center gap-1 font-semibold">
-                      התחילו כאן
-                      <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                      {t.fastTrack.cta}
+                      <ChevronRight className={cn("h-4 w-4 rtl:rotate-180 transition-transform", hoverNudge)} />
                     </span>
                   </div>
                 </div>
@@ -223,18 +233,18 @@ export default function HomePage() {
                     <ListChecks className="h-6 w-6" />
                   </div>
                   <h2 className="font-display text-3xl font-normal text-navy">
-                    מסלול מקיף
+                    {t.comprehensiveTrack.title}
                   </h2>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-gray-dark">
-                    58 שאלות על פני כל הנושאים, לתוצאה מדויקת ומעמיקה יותר.
+                    {t.comprehensiveTrack.description}
                   </p>
                   <div className="mt-8 flex items-center justify-between text-sm">
                     <span className="rounded-full bg-gray-light px-3 py-1 font-medium text-navy">
-                      כ־8 דקות
+                      {t.comprehensiveTrack.duration}
                     </span>
                     <span className="flex items-center gap-1 font-semibold text-navy">
-                      התחילו כאן
-                      <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                      {t.comprehensiveTrack.cta}
+                      <ChevronRight className={cn("h-4 w-4 rtl:rotate-180 transition-transform", hoverNudge)} />
                     </span>
                   </div>
                 </div>
@@ -246,7 +256,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 pb-20">
           <div className="mt-2">
             <p className="mb-4 text-sm font-bold uppercase tracking-wider text-gray-dark">
-              עוד באתר
+              {t.moreOnSite}
             </p>
             <div className="divide-y divide-gray overflow-hidden rounded-2xl border border-gray/80 bg-white">
               <Link
@@ -259,16 +269,15 @@ export default function HomePage() {
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-sapphire/10 text-sapphire">
                   <Vote className="h-7 w-7" />
                 </div>
-                <div className="flex-1 text-right">
+                <div className="flex-1 text-start">
                   <h3 className="font-display text-xl font-normal text-navy">
-                    איך הבחירות בישראל עובדות?
+                    {t.links.howItWorks.title}
                   </h3>
                   <p className="mt-1 text-sm text-gray-dark sm:text-base">
-                    המסע של פתק אחד — מנדטים, אחוז חסימה וקואליציה, מוסבר
-                    פשוט וב-5 דקות
+                    {t.links.howItWorks.description}
                   </p>
                 </div>
-                <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
+                <ChevronRight className={cn("h-5 w-5 shrink-0 text-gray-dark rtl:rotate-180 transition-transform", hoverNudge)} />
               </Link>
 
               <Link
@@ -281,15 +290,15 @@ export default function HomePage() {
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-success/10 text-success">
                   <ScrollText className="h-7 w-7" />
                 </div>
-                <div className="flex-1 text-right">
+                <div className="flex-1 text-start">
                   <h3 className="font-display text-xl font-normal text-navy">
-                    סיכומי מצעי המפלגות
+                    {t.links.platforms.title}
                   </h3>
                   <p className="mt-1 text-sm text-gray-dark sm:text-base">
-                    עמדות רשמיות, נושא אחרי נושא
+                    {t.links.platforms.description}
                   </p>
                 </div>
-                <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
+                <ChevronRight className={cn("h-5 w-5 shrink-0 text-gray-dark rtl:rotate-180 transition-transform", hoverNudge)} />
               </Link>
 
               <Link
@@ -302,16 +311,15 @@ export default function HomePage() {
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-coral/15 text-coral">
                   <Flame className="h-7 w-7" />
                 </div>
-                <div className="flex-1 text-right">
+                <div className="flex-1 text-start">
                   <h3 className="font-display text-xl font-normal text-navy">
-                    הנושאים החמים
+                    {t.links.hotTopics.title}
                   </h3>
                   <p className="mt-1 text-sm text-gray-dark sm:text-base">
-                    הסברים פשוטים לסוגיות הכי שנויות במחלוקת, בלי קשר
-                    למפלגות
+                    {t.links.hotTopics.description}
                   </p>
                 </div>
-                <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
+                <ChevronRight className={cn("h-5 w-5 shrink-0 text-gray-dark rtl:rotate-180 transition-transform", hoverNudge)} />
               </Link>
 
               <Link
@@ -324,23 +332,22 @@ export default function HomePage() {
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-amber/15 text-amber">
                   <Brain className="h-7 w-7" />
                 </div>
-                <div className="flex-1 text-right">
+                <div className="flex-1 text-start">
                   <h3 className="font-display text-xl font-normal text-navy">
-                    מפרק הבועות
+                    {t.links.challenge.title}
                   </h3>
                   <p className="mt-1 text-sm text-gray-dark sm:text-base">
-                    בחרתם כבר מפלגה? בחנו את העמדות שלכם מול הטיעונים
-                    החזקים ביותר של המחנה הנגדי
+                    {t.links.challenge.description}
                   </p>
                 </div>
-                <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
+                <ChevronRight className={cn("h-5 w-5 shrink-0 text-gray-dark rtl:rotate-180 transition-transform", hoverNudge)} />
               </Link>
             </div>
           </div>
 
           <div className="mt-8 flex items-center justify-center gap-2 rounded-full bg-gray-light px-5 py-3 text-sm text-gray-dark">
             <Lock className="h-4 w-4 shrink-0 text-navy" />
-            <span>התשובות שלכם אנונימיות לחלוטין ואינן נשמרות בשרת.</span>
+            <span>{t.privacyNoteDesktop}</span>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { questions, shortQuestions } from "@/data/questions";
+import { getQuestions, getShortQuestions } from "@/data/questions";
+import { Locale, defaultLocale } from "@/i18n/config";
 import {
   CategoryId,
   CategoryWeights,
@@ -21,9 +22,13 @@ interface QuizState {
   hasHydrated: boolean;
   /** true when rehydration found a quiz in progress worth offering to resume. */
   resumable: boolean;
-  startQuiz: (mode: QuizMode) => void;
-  resumeOrStart: (mode: QuizMode) => void;
+  startQuiz: (mode: QuizMode, locale: Locale) => void;
+  resumeOrStart: (mode: QuizMode, locale: Locale) => void;
   dismissResume: () => void;
+  /** Re-fetches activeQuestions' text in a new locale by id, without touching
+   *  currentIndex/answers. Used both for a mid-quiz language switch and to
+   *  correct rehydrated text (rebuilt in the default locale) to the active one. */
+  retext: (locale: Locale) => void;
   answerQuestion: (questionId: string, value: StanceValue) => void;
   goNext: () => void;
   goPrev: () => void;
@@ -33,25 +38,25 @@ interface QuizState {
   reset: () => void;
 }
 
-function questionsForMode(mode: QuizMode): Question[] {
-  return mode === "short" ? shortQuestions : questions;
+function questionsForMode(mode: QuizMode, locale: Locale): Question[] {
+  return mode === "short" ? getShortQuestions(locale) : getQuestions(locale);
 }
 
 export const useQuizStore = create<QuizState>()(
   persist(
     (set, get) => ({
       mode: "short",
-      activeQuestions: shortQuestions,
+      activeQuestions: getShortQuestions(defaultLocale),
       currentIndex: 0,
       answers: {},
       categoryWeights: {},
       hasHydrated: false,
       resumable: false,
 
-      startQuiz: (mode) =>
+      startQuiz: (mode, locale) =>
         set({
           mode,
-          activeQuestions: questionsForMode(mode),
+          activeQuestions: questionsForMode(mode, locale),
           currentIndex: 0,
           answers: {},
           categoryWeights: {},
@@ -63,15 +68,25 @@ export const useQuizStore = create<QuizState>()(
       // Entering /quiz should not wipe a quiz already in progress — that is the
       // whole point of persisting. Only rebuild from scratch when the track
       // changed or nothing was answered yet.
-      resumeOrStart: (mode) => {
+      resumeOrStart: (mode, locale) => {
         const state = get();
         const sameMode = state.mode === mode;
         const hasProgress = Object.keys(state.answers).length > 0;
         if (sameMode && hasProgress) {
-          set({ activeQuestions: questionsForMode(mode) });
+          set({ activeQuestions: questionsForMode(mode, locale) });
           return;
         }
-        get().startQuiz(mode);
+        get().startQuiz(mode, locale);
+      },
+
+      retext: (locale) => {
+        const { mode, activeQuestions } = get();
+        const freshById = new Map(
+          questionsForMode(mode, locale).map((q) => [q.id, q])
+        );
+        set({
+          activeQuestions: activeQuestions.map((q) => freshById.get(q.id) ?? q),
+        });
       },
 
       answerQuestion: (questionId, value) => {
@@ -126,10 +141,11 @@ export const useQuizStore = create<QuizState>()(
       name: "quiz-progress-v2",
       storage: createJSONStorage(() => localStorage),
       // Hydrating during render would mismatch the server HTML (which has no
-      // localStorage); QuizClient rehydrates in an effect instead.
+      // localStorage); useQuizHydration rehydrates in an effect instead.
       skipHydration: true,
       // activeQuestions is derived from `mode`, so it never goes to storage —
-      // persisting the whole question bank would bloat it for no reason.
+      // persisting the whole question bank would bloat it and freeze the text
+      // in one locale.
       partialize: (state) => ({
         mode: state.mode,
         currentIndex: state.currentIndex,
@@ -138,7 +154,11 @@ export const useQuizStore = create<QuizState>()(
       }),
       onRehydrateStorage: () => (state) => {
         if (!state) return;
-        const active = questionsForMode(state.mode);
+        // Rebuild the derived question list. Text is built in the default
+        // locale here (this callback has no access to the request locale);
+        // useQuizHydration calls retext(currentLocale) right after to swap the
+        // text to the active locale by id, leaving answers/currentIndex intact.
+        const active = questionsForMode(state.mode, defaultLocale);
         // A deploy may have removed or renamed questions since the answers were
         // saved. Drop ids that no longer exist so the calculator never scores
         // against a question that isn't in the run.

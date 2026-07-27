@@ -1,5 +1,8 @@
+"use client";
+
 import { Party } from "@/types";
 import { cn } from "@/lib/utils";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 interface BallotLetterBadgeProps {
   party: Party;
@@ -7,6 +10,8 @@ interface BallotLetterBadgeProps {
 }
 
 export function BallotLetterBadge({ party, className }: BallotLetterBadgeProps) {
+  const { dict } = useDictionary();
+  const t = dict.ballotLetterBadge;
   const confirmed = party.officialBallotLetter;
 
   if (confirmed) {
@@ -19,13 +24,13 @@ export function BallotLetterBadge({ party, className }: BallotLetterBadgeProps) 
           "inline-flex flex-col items-center gap-0.5 rounded-md border-2 border-navy bg-white px-4 py-2 shadow-ambient transition-transform hover:-translate-y-0.5",
           className
         )}
-        title={`אושר רשמית ב-${confirmed.confirmedAt}`}
+        title={t.confirmedTitleTemplate.replace("{date}", confirmed.confirmedAt)}
       >
         <span className="text-2xl font-black tracking-wider text-navy">
           {confirmed.letters}
         </span>
         <span className="text-[10px] font-medium text-gray-dark">
-          האות בפתק
+          {t.letterCaption}
         </span>
       </a>
     );
@@ -38,8 +43,10 @@ export function BallotLetterBadge({ party, className }: BallotLetterBadgeProps) 
         className
       )}
     >
-      <span className="text-sm font-medium">טרם אושרה אות רשמית</span>
-      <span className="text-xs">(כינוי נוכחי: {party.logo})</span>
+      <span className="text-sm font-medium">{t.notYetConfirmed}</span>
+      <span className="text-xs">
+        {t.currentNicknameTemplate.replace("{logo}", party.logo)}
+      </span>
     </div>
   );
 }

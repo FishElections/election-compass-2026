@@ -31,6 +31,17 @@
   --color-coral: #f97316;
 
   --color-gold: #c9a227;
+
+  /* The drawer is anchored to the reading-start edge (right in RTL, left in
+     LTR), so its offscreen slide position must flip with direction too. */
+  --drawer-offscreen-x: 100%;
+  /* Nav items enter sliding in from the reading-start edge. */
+  --nav-item-offset-x: 10px;
+}
+
+:dir(ltr) {
+  --drawer-offscreen-x: -100%;
+  --nav-item-offset-x: -10px;
 }
 
 @theme inline {
@@ -195,7 +206,7 @@ body {
 
 @keyframes drawer-slide-in {
   from {
-    transform: translateX(100%);
+    transform: translateX(var(--drawer-offscreen-x));
   }
   to {
     transform: translateX(0);
@@ -207,7 +218,7 @@ body {
     transform: translateX(0);
   }
   to {
-    transform: translateX(100%);
+    transform: translateX(var(--drawer-offscreen-x));
   }
 }
 
@@ -325,7 +336,7 @@ body {
 @keyframes nav-item-in {
   from {
     opacity: 0;
-    transform: translateX(10px);
+    transform: translateX(var(--nav-item-offset-x));
   }
   to {
     opacity: 1;

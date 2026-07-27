@@ -1,33 +1,43 @@
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { ChevronRight } from "lucide-react";
-import { parties } from "@/data/parties";
-import { categories } from "@/data/questions";
+import { ChevronLeft } from "lucide-react";
+import { getParties } from "@/data/parties";
+import { partiesCore } from "@/data/parties/core";
+import { getCategories } from "@/data/questions";
 import { getPartyCategoryAverages } from "@/utils/calculator";
 import { PartyLogo } from "@/components/PartyLogo";
 import { BallotLetterBadge } from "@/components/BallotLetterBadge";
+import { isLocale, dirFor } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { alternatesFor } from "@/i18n/metadata";
+import { cn } from "@/lib/utils";
 
 export function generateStaticParams() {
-  return parties.map((party) => ({ id: party.id }));
+  return partiesCore.map((party) => ({ id: party.id }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ lang: string; id: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
-  const party = parties.find((p) => p.id === id);
+  const { lang, id } = await params;
+  if (!isLocale(lang)) return {};
+  const party = getParties(lang).find((p) => p.id === id);
   if (!party) return {};
+  const dict = await getDictionary(lang);
+  const t = dict.partyProfile;
 
-  const title = `${party.name} - עמדות ומצע לבחירות 2026`;
-  const description = `${party.shortDescription} בדקו כמה אתם מתאימים ל${party.name} במצפן הבחירות.`;
+  const title = t.titleTemplate.replace("{party}", party.name);
+  const description = t.descriptionTemplate
+    .replace("{description}", party.shortDescription)
+    .replace("{party}", party.name);
 
   return {
     title,
     description,
-    alternates: { canonical: `/parties/${party.id}` },
+    alternates: alternatesFor(lang, `/parties/${party.id}`),
     openGraph: { title, description, type: "profile" },
     twitter: { card: "summary", title, description },
   };
@@ -36,11 +46,16 @@ export async function generateMetadata({
 export default async function PartyProfilePage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ lang: string; id: string }>;
 }) {
-  const { id } = await params;
-  const party = parties.find((p) => p.id === id);
+  const { lang, id } = await params;
+  if (!isLocale(lang)) notFound();
+  const party = getParties(lang).find((p) => p.id === id);
   if (!party) notFound();
+  const dict = await getDictionary(lang);
+  const t = dict.partyProfile;
+  const categories = getCategories(lang);
+  const dir = dirFor(lang);
 
   const averages = getPartyCategoryAverages(party.id);
 
@@ -52,11 +67,11 @@ export default async function PartyProfilePage({
             href="/"
             className="mb-6 inline-flex items-center gap-1 text-sm font-medium text-navy hover:underline"
           >
-            <ChevronRight className="h-4 w-4" />
-            חזרה לדף הבית
+            <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
+            {t.backToHome}
           </Link>
 
-          <div className="relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-navy to-navy-light p-8 text-center text-white shadow-ambient-lg sm:flex-row sm:text-right">
+          <div className="relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-navy to-navy-light p-8 text-center text-white shadow-ambient-lg sm:flex-row sm:text-start">
             <div className="bg-dot-grid-dark pointer-events-none absolute inset-0 opacity-50" />
             <div className="relative z-10">
               <PartyLogo party={party} size="lg" className="ring-4 ring-white/20" />
@@ -80,7 +95,7 @@ export default async function PartyProfilePage({
         </p>
 
         <h2 className="font-display mt-10 mb-4 text-xl font-normal text-navy">
-          מיקום כללי לפי קטגוריה
+          {t.categoryPositionHeading}
         </h2>
         <div className="flex flex-col gap-5 rounded-2xl border border-gray/80 bg-white p-6 shadow-ambient">
           {categories.map((category) => {
@@ -98,7 +113,10 @@ export default async function PartyProfilePage({
                 </div>
                 <div className="h-2.5 w-full rounded-full bg-gray">
                   <div
-                    className="h-2.5 rounded-full bg-gradient-to-l from-sapphire to-success transition-all duration-500"
+                    className={cn(
+                      "h-2.5 rounded-full from-sapphire to-success transition-all duration-500",
+                      dir === "rtl" ? "bg-gradient-to-l" : "bg-gradient-to-r"
+                    )}
                     style={{ width: `${percent}%` }}
                   />
                 </div>
@@ -108,7 +126,7 @@ export default async function PartyProfilePage({
         </div>
 
         <div className="mt-8 rounded-xl border border-sapphire/20 bg-sapphire/5 p-5 text-sm text-navy">
-          בקרוב: מצע מלא, רשימת חברי כנסת והיסטוריית המפלגה.
+          {t.comingSoon}
         </div>
       </div>
     </main>
