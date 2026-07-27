@@ -57,10 +57,36 @@
   --font-display: var(--font-secular-one), var(--font-heebo), sans-serif;
 }
 
+/* Height of the mobile bottom tab bar, including the iPhone home-indicator
+   inset. Pages subtract it from 100dvh (see the quiz) and the body reserves it
+   as padding so nothing ends up hidden underneath. 0 on desktop, where the bar
+   is replaced by the floating menu pill. */
+:root {
+  --mobile-nav-h: 0px;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --mobile-nav-h: calc(3.5rem + env(safe-area-inset-bottom));
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  padding-bottom: var(--mobile-nav-h);
+}
+
+/* Hover lifts and tints are mouse affordances. On touch they either never fire
+   or, worse, stick after a tap until the user taps elsewhere — so scope every
+   one of them to devices that actually have a pointer. Press feedback on touch
+   comes from the active: variants instead. */
+@media (hover: none) {
+  .hover\:-translate-y-0\.5:hover,
+  .hover\:-translate-y-1:hover {
+    transform: none;
+  }
 }
 
 * {

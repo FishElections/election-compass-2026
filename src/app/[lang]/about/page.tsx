@@ -41,7 +41,7 @@ export default function AboutPage() {
   return (
     <main className="flex-1">
       <div className="bg-dot-grid">
-        <div className="mx-auto max-w-2xl px-4 pb-8 pt-20 sm:pt-24">
+        <div className="mx-auto max-w-2xl px-4 pb-8 pt-8 lg:pt-20">
           <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-navy text-white shadow-ambient-lg">
             <Info className="h-7 w-7" />
           </div>

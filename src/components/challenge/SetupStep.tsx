@@ -96,7 +96,7 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
           type="button"
           onClick={() => setMethod("party")}
           className={cn(
-            "flex items-center gap-2 rounded-full border-2 px-4 py-2 text-sm font-semibold transition-colors cursor-pointer",
+            "flex items-center gap-2 rounded-full border-2 px-4 py-2 text-sm font-semibold transition-colors cursor-pointer active:scale-[0.97]",
             method === "party"
               ? "border-amber bg-amber text-white"
               : "border-gray bg-white text-navy hover:border-amber"
@@ -109,7 +109,7 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
           type="button"
           onClick={() => setMethod("quick")}
           className={cn(
-            "flex items-center gap-2 rounded-full border-2 px-4 py-2 text-sm font-semibold transition-colors cursor-pointer",
+            "flex items-center gap-2 rounded-full border-2 px-4 py-2 text-sm font-semibold transition-colors cursor-pointer active:scale-[0.97]",
             method === "quick"
               ? "border-amber bg-amber text-white"
               : "border-gray bg-white text-navy hover:border-amber"
@@ -127,7 +127,7 @@ export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
               key={party.id}
               type="button"
               onClick={() => startWithParty(party.id, party.name)}
-              className="flex flex-col items-center gap-2 rounded-xl border-2 border-gray bg-white p-4 shadow-ambient transition-all hover:-translate-y-0.5 hover:border-amber/60 hover:bg-amber-light/20 cursor-pointer"
+              className="flex flex-col items-center gap-2 rounded-xl border-2 border-gray bg-white p-4 shadow-ambient transition-all hover:-translate-y-0.5 hover:border-amber/60 hover:bg-amber-light/20 cursor-pointer active:scale-[0.97]"
             >
               <PartyLogo party={party} size="sm" />
               <span className="text-center text-sm font-medium text-navy">
