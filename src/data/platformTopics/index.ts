@@ -2,6 +2,7 @@ import { Locale } from "@/i18n/config";
 import { PlatformTopicKey } from "@/types";
 import { platformTopicsCore } from "./core";
 import { platformTopicLabelsHe } from "./he";
+import { platformTopicLabelsEn } from "./en";
 
 export interface PlatformTopicMeta {
   key: PlatformTopicKey;
@@ -11,6 +12,7 @@ export interface PlatformTopicMeta {
 
 const labelsByLocale: Record<Locale, typeof platformTopicLabelsHe> = {
   he: platformTopicLabelsHe,
+  en: platformTopicLabelsEn,
 };
 
 export function getPlatformTopics(locale: Locale): PlatformTopicMeta[] {

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Brain, Check, ChevronDown, ChevronLeft, Link2, RotateCcw, SlidersHorizontal } from "lucide-react";
+import { Brain, Check, ChevronDown, ChevronRight, Link2, RotateCcw, SlidersHorizontal } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
 import { getParties } from "@/data/parties";
 import { getCategories } from "@/data/questions";
@@ -108,7 +108,7 @@ export function ResultsClient() {
             <Link href="/quiz">
               <Button size="lg">
                 {t.sharedResult.cta}
-                <ChevronLeft className="h-4 w-4" />
+                <ChevronRight className="h-4 w-4 rtl:rotate-180" />
               </Button>
             </Link>
           </div>
@@ -198,7 +198,7 @@ export function ResultsClient() {
         </div>
 
         {weightedCategories.length > 0 && (
-          <div className="mb-8 flex flex-col items-center gap-3 rounded-2xl border border-sapphire/20 bg-sapphire/5 p-5 text-center sm:flex-row sm:text-right">
+          <div className="mb-8 flex flex-col items-center gap-3 rounded-2xl border border-sapphire/20 bg-sapphire/5 p-5 text-center sm:flex-row sm:text-start">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sapphire/10 text-sapphire">
               <SlidersHorizontal className="h-5 w-5" />
             </div>
@@ -228,7 +228,7 @@ export function ResultsClient() {
             <PartyResultCard result={topThree[0]} rank={1} />
           )}
           {topThree[0] && (
-            <div className="flex flex-col items-center gap-3 rounded-2xl border border-success/30 bg-success/5 p-5 text-center sm:flex-row sm:justify-between sm:text-right">
+            <div className="flex flex-col items-center gap-3 rounded-2xl border border-success/30 bg-success/5 p-5 text-center sm:flex-row sm:justify-between sm:text-start">
               <div className="flex-1">
                 <p className="font-bold text-navy">{t.share.heading}</p>
                 <p className="mt-0.5 text-sm text-gray-dark">
@@ -276,7 +276,7 @@ export function ResultsClient() {
               />
             </Button>
             {showAll && (
-              <div className="mt-4 flex flex-col gap-2 text-right">
+              <div className="mt-4 flex flex-col gap-2 text-start">
                 {rest.map((result, i) => (
                   <PartyResultRow
                     key={result.party.id}
@@ -323,7 +323,7 @@ export function ResultsClient() {
         </div>
 
         {topThree[0] && (
-          <div className="mt-14 flex flex-col items-center gap-4 rounded-2xl border border-amber/30 bg-amber-light/40 p-6 text-center sm:flex-row sm:text-right">
+          <div className="mt-14 flex flex-col items-center gap-4 rounded-2xl border border-amber/30 bg-amber-light/40 p-6 text-center sm:flex-row sm:text-start">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber text-white">
               <Brain className="h-6 w-6" />
             </div>
@@ -339,7 +339,7 @@ export function ResultsClient() {
             <Link href={`/challenge?party=${topThree[0].party.id}`}>
               <Button size="lg" variant="amber">
                 {t.challengeCta.cta}
-                <ChevronLeft className="h-4 w-4" />
+                <ChevronRight className="h-4 w-4 rtl:rotate-180" />
               </Button>
             </Link>
           </div>

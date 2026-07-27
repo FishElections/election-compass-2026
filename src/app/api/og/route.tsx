@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getParties } from "@/data/parties";
-import { defaultLocale } from "@/i18n/config";
+import { defaultLocale, isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 
 // The default next/og font has no Hebrew glyphs, so we pull Heebo from Google
@@ -31,8 +31,14 @@ async function loadHeebo(text: string, weight: number): Promise<ArrayBuffer> {
 // by pre-reversing: flip the letters of each Hebrew word and the word order,
 // while leaving numbers and Latin (e.g. "2026", the domain) untouched so they
 // stay readable. Rendered LTR, this yields correct right-to-left Hebrew.
+//
+// This workaround is Hebrew-specific and must NOT be reused as-is for Arabic:
+// Arabic needs contextual letter-shaping (a glyph's form depends on its
+// neighbors) on top of bidi reordering, not simple word/letter reversal — an
+// open research spike for whenever Arabic actually ships.
 const hasHebrew = (t: string) => /[֐-׿]/.test(t);
-function heb(text: string): string {
+function applyRtlWorkaround(text: string, locale: Locale): string {
+  if (locale !== "he") return text;
   return text
     .split(" ")
     .map((w) => (hasHebrew(w) ? [...w].reverse().join("") : w))
@@ -51,15 +57,15 @@ function hexToRgba(hex: string, alpha: number): string {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  // No ?lang= param yet — this route only ever serves the default locale
-  // until English ships (that PR adds the param + a per-locale bidi/font path).
-  const party = getParties(defaultLocale).find((p) => p.id === searchParams.get("p"));
+  const langParam = searchParams.get("lang");
+  const locale: Locale = langParam && isLocale(langParam) ? langParam : defaultLocale;
+  const party = getParties(locale).find((p) => p.id === searchParams.get("p"));
   const rawScore = Number(searchParams.get("s"));
   const score = Number.isFinite(rawScore)
     ? Math.max(0, Math.min(100, Math.round(rawScore)))
     : 0;
 
-  const dict = await getDictionary(defaultLocale);
+  const dict = await getDictionary(locale);
 
   const partyName = party?.name ?? dict.og.fallbackPartyName;
   const partyLogo = party?.logo ?? dict.og.fallbackPartyLogo;
@@ -80,11 +86,11 @@ export async function GET(request: Request) {
       : 82;
   const percentSize = Math.min(96, Math.round(nameSize * 0.62));
 
-  const brand = heb(dict.og.brand);
-  const kicker = heb(dict.og.kicker);
-  const matchLabel = heb(dict.og.matchLabel);
-  const nameText = heb(partyName);
-  const logoText = heb(partyLogo);
+  const brand = applyRtlWorkaround(dict.og.brand, locale);
+  const kicker = applyRtlWorkaround(dict.og.kicker, locale);
+  const matchLabel = applyRtlWorkaround(dict.og.matchLabel, locale);
+  const nameText = applyRtlWorkaround(partyName, locale);
+  const logoText = applyRtlWorkaround(partyLogo, locale);
 
   const glyphs =
     dict.og.brand +

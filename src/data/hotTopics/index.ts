@@ -2,14 +2,17 @@ import { Locale } from "@/i18n/config";
 import { Topic } from "@/types";
 import { topicsCore, topicCategories, categoryIcons } from "./core";
 import { topicsTextHe, categoryLabelsHe } from "./he";
+import { topicsTextEn, categoryLabelsEn } from "./en";
 
 export { topicCategories, categoryIcons };
 
 const topicsTextByLocale: Record<Locale, typeof topicsTextHe> = {
   he: topicsTextHe,
+  en: topicsTextEn,
 };
 const categoryLabelsByLocale: Record<Locale, Record<string, string>> = {
   he: categoryLabelsHe,
+  en: categoryLabelsEn,
 };
 
 export function getHotTopics(locale: Locale): Topic[] {

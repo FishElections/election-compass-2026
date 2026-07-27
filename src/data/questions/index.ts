@@ -2,14 +2,16 @@ import { Locale } from "@/i18n/config";
 import { Category, Question, QuestionMoreInfo } from "@/types";
 import { categoriesCore, questionsCore } from "./core";
 import { categoryLabelsHe, questionsTextHe } from "./he";
+import { categoryLabelsEn, questionsTextEn } from "./en";
 
 const categoryLabelsByLocale: Record<Locale, Record<string, string>> = {
   he: categoryLabelsHe,
+  en: categoryLabelsEn,
 };
 const questionsTextByLocale: Record<
   Locale,
   Record<string, { text: string; moreInfo: QuestionMoreInfo }>
-> = { he: questionsTextHe };
+> = { he: questionsTextHe, en: questionsTextEn };
 
 export function getCategories(locale: Locale): Category[] {
   const labels = categoryLabelsByLocale[locale];

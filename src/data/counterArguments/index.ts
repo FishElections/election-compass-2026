@@ -2,9 +2,11 @@ import { Locale } from "@/i18n/config";
 import { SteelmanArgument } from "@/types";
 import { counterArgumentsCore } from "./core";
 import { counterArgumentsTextHe } from "./he";
+import { counterArgumentsTextEn } from "./en";
 
 const textByLocale: Record<Locale, typeof counterArgumentsTextHe> = {
   he: counterArgumentsTextHe,
+  en: counterArgumentsTextEn,
 };
 
 export function getCounterArguments(locale: Locale): SteelmanArgument[] {

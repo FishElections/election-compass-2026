@@ -7,6 +7,7 @@ import { getSiteUrl } from "@/utils/site";
 import { isLocale, dirFor, ogLocaleFor } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { DictionaryProvider } from "@/i18n/DictionaryProvider";
+import { alternatesFor } from "@/i18n/metadata";
 import "../globals.css";
 
 const heebo = Heebo({
@@ -30,11 +31,6 @@ const secularOne = Secular_One({
 // when unset.
 const gaId = process.env.GA_ID;
 
-// Generic branded card from the same route /results uses for personalized
-// shares — /api/og with no query params falls back to the dictionary's own
-// fallback text, so every page gets a real preview image instead of none.
-const defaultOgImage = "/api/og";
-
 export async function generateMetadata({
   params,
 }: {
@@ -44,6 +40,10 @@ export async function generateMetadata({
   if (!isLocale(lang)) notFound();
   const dict = await getDictionary(lang);
   const { siteName, homeTitle, description } = dict.meta;
+  // Generic branded card from the same route /results uses for personalized
+  // shares — /api/og with no ?p=/?s= falls back to the dictionary's own
+  // fallback text, so every page gets a real preview image instead of none.
+  const defaultOgImage = `/api/og?lang=${lang}`;
 
   return {
     metadataBase: new URL(getSiteUrl()),
@@ -52,9 +52,7 @@ export async function generateMetadata({
       template: `%s | ${siteName}`,
     },
     description,
-    alternates: {
-      canonical: "/",
-    },
+    alternates: alternatesFor(lang, "/"),
     openGraph: {
       title: homeTitle,
       description,

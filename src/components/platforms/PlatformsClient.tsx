@@ -54,13 +54,13 @@ export function PlatformsClient() {
       <div className="mx-auto max-w-5xl px-4 pb-16">
         <div className="flex flex-col gap-4">
           <div className="relative">
-            <Search className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-dark" />
+            <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-dark" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t.searchPlaceholder}
-              className="w-full rounded-xl border-2 border-gray bg-white py-3 pr-11 pl-4 text-sm text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none"
+              className="w-full rounded-xl border-2 border-gray bg-white py-3 ps-11 pe-4 text-sm text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none"
             />
           </div>
 

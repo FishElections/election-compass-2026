@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { QuizClient } from "@/components/quiz/QuizClient";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { alternatesFor } from "@/i18n/metadata";
 
 export async function generateMetadata({
   params,
@@ -15,7 +16,7 @@ export async function generateMetadata({
   return {
     title: dict.quiz.pageTitle,
     description: dict.quiz.pageDescription,
-    alternates: { canonical: "/quiz" },
+    alternates: alternatesFor(lang, "/quiz"),
   };
 }
 

@@ -15,7 +15,7 @@ import { useDictionary } from "@/i18n/DictionaryProvider";
 export function CoalitionBlocks() {
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const celebrated = useRef(false);
-  const { dict, locale } = useDictionary();
+  const { dict, locale, dir } = useDictionary();
   const t = dict.guide.coalitionBlocks;
   const toyParties = getToyParties(locale);
 
@@ -59,15 +59,18 @@ export function CoalitionBlocks() {
 
       <div className="relative mt-2 h-3 overflow-hidden rounded-full bg-gray-light">
         <div
-          className="h-full rounded-full bg-gradient-to-l from-sapphire to-emerald-light transition-all duration-300"
+          className={cn(
+            "h-full rounded-full from-sapphire to-emerald-light transition-all duration-300",
+            dir === "rtl" ? "bg-gradient-to-l" : "bg-gradient-to-r"
+          )}
           style={{ width: `${Math.min(100, (sum / TOTAL_SEATS) * 100)}%` }}
         />
         <div
           className="absolute -bottom-0.5 -top-0.5 w-[3px] rounded bg-amber"
-          style={{ right: `${(MAGIC_NUMBER / TOTAL_SEATS) * 100}%` }}
+          style={{ insetInlineEnd: `${(MAGIC_NUMBER / TOTAL_SEATS) * 100}%` }}
         />
       </div>
-      <p className="mt-1 text-left text-xs font-bold text-amber">
+      <p className="mt-1 text-end text-xs font-bold text-amber">
         {t.target} {MAGIC_NUMBER} ▲
       </p>
 

@@ -41,7 +41,7 @@ export async function generateMetadata({
     .replace("{score}", String(rounded))
     .replace("{party}", party.name);
   const description = t.shareDescription;
-  const ogImage = `/api/og?p=${encodeURIComponent(party.id)}&s=${rounded}`;
+  const ogImage = `/api/og?p=${encodeURIComponent(party.id)}&s=${rounded}&lang=${lang}`;
 
   return {
     title,
