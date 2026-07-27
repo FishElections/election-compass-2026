@@ -41,7 +41,7 @@ export function PlatformsClient() {
   return (
     <main className="flex-1">
       <div className="bg-dot-grid">
-        <div className="mx-auto max-w-5xl px-4 pb-8 pt-8 text-center lg:pt-20">
+        <div className="mx-auto max-w-5xl px-4 pb-8 pt-16 text-center lg:pt-20">
           <h1 className="font-display text-3xl font-normal text-navy sm:text-4xl">
             {t.heading}
           </h1>

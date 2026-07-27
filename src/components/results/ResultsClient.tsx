@@ -191,7 +191,7 @@ export function ResultsClient() {
   return (
     <main className="flex-1">
       {/* pb-28 leaves room for the sticky mobile share bar docked at the bottom. */}
-      <div className="mx-auto max-w-4xl px-4 pb-28 pt-8 sm:py-16 lg:pb-16">
+      <div className="mx-auto max-w-4xl px-4 pb-28 pt-16 sm:py-16 lg:pb-16">
         <div className="mb-10 text-center">
           <p className="mb-2 text-xs font-bold uppercase tracking-wider text-sapphire">
             {t.analysisComplete}
