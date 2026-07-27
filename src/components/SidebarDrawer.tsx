@@ -72,9 +72,14 @@ export function SidebarDrawer() {
         </button>
       </Dialog.Trigger>
 
+      {/* Navy, not white: against the #f8fafc page a white bar with a hairline
+          border reads as part of the page and gets missed. Solid navy also
+          matches the drawer and the themeColor tinting the browser chrome, so
+          the app ends up framed top and bottom. Gold marks the current tab,
+          same "you are here" cue the drawer uses. */}
       <nav
         aria-label="ניווט ראשי"
-        className="fixed inset-x-0 bottom-0 z-40 flex h-[var(--mobile-nav-h)] items-stretch border-t border-gray bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 flex h-[var(--mobile-nav-h)] items-stretch bg-navy pb-[env(safe-area-inset-bottom)] shadow-[0_-6px_24px_-6px_rgba(11,19,43,0.45)] lg:hidden"
       >
         {tabItems.map((item) => {
           const isActive =
@@ -85,10 +90,13 @@ export function SidebarDrawer() {
               href={item.href}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "flex flex-1 flex-col items-center justify-center gap-0.5 text-[10px] font-bold transition-colors active:bg-gray-light",
-                isActive ? "text-sapphire" : "text-gray-dark"
+                "relative flex flex-1 flex-col items-center justify-center gap-0.5 text-[10px] font-bold transition-colors active:bg-white/10",
+                isActive ? "text-white" : "text-white/55"
               )}
             >
+              {isActive && (
+                <span className="absolute top-0 h-0.5 w-8 rounded-b-full bg-gold" />
+              )}
               <item.icon className="h-5 w-5" />
               {item.label}
             </Link>
@@ -97,7 +105,7 @@ export function SidebarDrawer() {
         <Dialog.Trigger asChild>
           <button
             type="button"
-            className="flex flex-1 cursor-pointer flex-col items-center justify-center gap-0.5 text-[10px] font-bold text-gray-dark transition-colors active:bg-gray-light"
+            className="flex flex-1 cursor-pointer flex-col items-center justify-center gap-0.5 text-[10px] font-bold text-white/55 transition-colors active:bg-white/10"
           >
             <Menu className="h-5 w-5" />
             עוד
