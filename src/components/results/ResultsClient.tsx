@@ -16,6 +16,7 @@ import { PartyResultRow } from "@/components/results/PartyResultRow";
 import { AnswerBreakdown } from "@/components/results/AnswerBreakdown";
 import { cn } from "@/lib/utils";
 import { useDictionary } from "@/i18n/DictionaryProvider";
+import { localizedPath } from "@/i18n/config";
 
 export function ResultsClient() {
   const router = useRouter();
@@ -139,7 +140,7 @@ export function ResultsClient() {
 
   function handleRestart() {
     reset();
-    router.push("/");
+    router.push(localizedPath("/", locale));
   }
 
   const topParty = topThree[0]?.party;

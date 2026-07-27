@@ -16,6 +16,7 @@ import { QuestionMoreInfo } from "@/components/quiz/QuestionMoreInfo";
 import { TopicPriorityStep } from "@/components/quiz/TopicPriorityStep";
 import { trackEvent } from "@/lib/analytics";
 import { useDictionary } from "@/i18n/DictionaryProvider";
+import { localizedPath } from "@/i18n/config";
 
 export function QuizClient() {
   const router = useRouter();
@@ -79,7 +80,7 @@ export function QuizClient() {
     if (mode === "long") {
       setShowPriorityStep(true);
     } else {
-      router.push("/results");
+      router.push(localizedPath("/results", locale));
     }
   }
 
@@ -102,13 +103,13 @@ export function QuizClient() {
   function handlePriorityContinue() {
     const weightedCount = Object.keys(categoryWeights).length;
     trackEvent("topic_priority_step", { skipped: false, weightedCount, mode });
-    router.push("/results");
+    router.push(localizedPath("/results", locale));
   }
 
   function handlePrioritySkip() {
     resetCategoryWeights();
     trackEvent("topic_priority_step", { skipped: true, weightedCount: 0, mode });
-    router.push("/results");
+    router.push(localizedPath("/results", locale));
   }
 
   if (resumable && storedMode === mode) {

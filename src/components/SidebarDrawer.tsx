@@ -13,6 +13,7 @@ import {
   Share2,
   Brain,
   Flame,
+  Globe,
   Vote,
 } from "lucide-react";
 import { CompassMark } from "@/components/CompassMark";
@@ -42,6 +43,9 @@ const tabItems = [
 export function SidebarDrawer() {
   const pathname = usePathname();
   const { dict, locale } = useDictionary();
+  // The language toggle flips to the next registered locale (the "other" one
+  // while there are two) and mirrors to the corner opposite the menu pill.
+  const otherLocale = locales.find((l) => l.code !== locale) ?? locales[0];
 
   function handleShare() {
     const url = window.location.origin;
@@ -66,6 +70,17 @@ export function SidebarDrawer() {
           {dict.nav.menuButton}
         </button>
       </Dialog.Trigger>
+
+      {/* Language toggle, docked in the corner opposite the menu pill (menu is
+          top-start, this is top-end) so the two never collide. */}
+      <Link
+        href={localizedPath(pathname, otherLocale.code)}
+        aria-label={dict.nav.switchLanguage}
+        className="fixed top-4 end-4 z-40 hidden items-center gap-1.5 rounded-full bg-white px-3.5 py-2.5 text-sm font-semibold text-navy shadow-ambient-lg ring-1 ring-navy/10 transition-all hover:-translate-y-0.5 hover:glow-sapphire cursor-pointer lg:flex"
+      >
+        <Globe className="h-4 w-4" />
+        {otherLocale.label}
+      </Link>
 
       {/* Navy, not white: against the #f8fafc page a white bar with a hairline
           border reads as part of the page and gets missed. Solid navy also
