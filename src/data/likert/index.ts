@@ -3,10 +3,12 @@ import { LikertOption } from "@/types";
 import { likertOptionsCore } from "./core";
 import { likertLabelsHe } from "./he";
 import { likertLabelsEn } from "./en";
+import { likertLabelsAr } from "./ar";
 
 const labelsByLocale: Record<Locale, typeof likertLabelsHe> = {
   he: likertLabelsHe,
   en: likertLabelsEn,
+  ar: likertLabelsAr,
 };
 
 export function getLikertOptions(locale: Locale): LikertOption[] {

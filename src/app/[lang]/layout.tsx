@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import Script from "next/script";
-import { Heebo, Rubik, Secular_One } from "next/font/google";
+import { Heebo, Rubik, Secular_One, Cairo } from "next/font/google";
 import { SidebarDrawer } from "@/components/SidebarDrawer";
 import { getSiteUrl } from "@/utils/site";
 import { isLocale, dirFor, ogLocaleFor } from "@/i18n/config";
@@ -24,6 +24,13 @@ const secularOne = Secular_One({
   variable: "--font-secular-one",
   subsets: ["hebrew", "latin"],
   weight: "400",
+});
+
+// Heebo/Rubik/Secular One have no Arabic glyphs; Cairo covers Arabic (+ Latin).
+// globals.css remaps --font-sans/--font-display to it under html[lang="ar"].
+const cairo = Cairo({
+  variable: "--font-cairo",
+  subsets: ["arabic", "latin"],
 });
 
 // Google Analytics measurement id (e.g. G-XXXXXXX). Read at request time so it
@@ -123,7 +130,7 @@ export default async function RootLayout({
     <html
       lang={lang}
       dir={dir}
-      className={`${heebo.variable} ${rubik.variable} ${secularOne.variable} h-full antialiased`}
+      className={`${heebo.variable} ${rubik.variable} ${secularOne.variable} ${cairo.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <DictionaryProvider dict={dict} locale={lang} dir={dir}>

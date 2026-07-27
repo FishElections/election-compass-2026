@@ -3,15 +3,17 @@ import { Category, Question, QuestionMoreInfo } from "@/types";
 import { categoriesCore, questionsCore } from "./core";
 import { categoryLabelsHe, questionsTextHe } from "./he";
 import { categoryLabelsEn, questionsTextEn } from "./en";
+import { categoryLabelsAr, questionsTextAr } from "./ar";
 
 const categoryLabelsByLocale: Record<Locale, Record<string, string>> = {
   he: categoryLabelsHe,
   en: categoryLabelsEn,
+  ar: categoryLabelsAr,
 };
 const questionsTextByLocale: Record<
   Locale,
   Record<string, { text: string; moreInfo: QuestionMoreInfo }>
-> = { he: questionsTextHe, en: questionsTextEn };
+> = { he: questionsTextHe, en: questionsTextEn, ar: questionsTextAr };
 
 export function getCategories(locale: Locale): Category[] {
   const labels = categoryLabelsByLocale[locale];

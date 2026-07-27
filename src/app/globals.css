@@ -68,6 +68,13 @@
   --font-display: var(--font-secular-one), var(--font-heebo), sans-serif;
 }
 
+/* The Hebrew/Latin font stack has no Arabic glyphs — remap both font roles to
+   Cairo for the Arabic locale so nothing renders as tofu boxes. */
+html[lang="ar"] {
+  --font-sans: var(--font-cairo), system-ui, sans-serif;
+  --font-display: var(--font-cairo), sans-serif;
+}
+
 /* Height of the mobile bottom tab bar, including the iPhone home-indicator
    inset. Pages subtract it from 100dvh (see the quiz) and the body reserves it
    as padding so nothing ends up hidden underneath. 0 on desktop, where the bar

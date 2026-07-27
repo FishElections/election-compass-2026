@@ -59,13 +59,17 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const langParam = searchParams.get("lang");
   const locale: Locale = langParam && isLocale(langParam) ? langParam : defaultLocale;
-  const party = getParties(locale).find((p) => p.id === searchParams.get("p"));
+  // satori does no Arabic letter-shaping and the card font has no Arabic glyphs,
+  // so Arabic shares fall back to the English card until a shaping-capable OG
+  // pipeline exists. Everything else on the site is fully Arabic.
+  const cardLocale: Locale = locale === "ar" ? "en" : locale;
+  const party = getParties(cardLocale).find((p) => p.id === searchParams.get("p"));
   const rawScore = Number(searchParams.get("s"));
   const score = Number.isFinite(rawScore)
     ? Math.max(0, Math.min(100, Math.round(rawScore)))
     : 0;
 
-  const dict = await getDictionary(locale);
+  const dict = await getDictionary(cardLocale);
 
   const partyName = party?.name ?? dict.og.fallbackPartyName;
   const partyLogo = party?.logo ?? dict.og.fallbackPartyLogo;
@@ -86,11 +90,11 @@ export async function GET(request: Request) {
       : 82;
   const percentSize = Math.min(96, Math.round(nameSize * 0.62));
 
-  const brand = applyRtlWorkaround(dict.og.brand, locale);
-  const kicker = applyRtlWorkaround(dict.og.kicker, locale);
-  const matchLabel = applyRtlWorkaround(dict.og.matchLabel, locale);
-  const nameText = applyRtlWorkaround(partyName, locale);
-  const logoText = applyRtlWorkaround(partyLogo, locale);
+  const brand = applyRtlWorkaround(dict.og.brand, cardLocale);
+  const kicker = applyRtlWorkaround(dict.og.kicker, cardLocale);
+  const matchLabel = applyRtlWorkaround(dict.og.matchLabel, cardLocale);
+  const nameText = applyRtlWorkaround(partyName, cardLocale);
+  const logoText = applyRtlWorkaround(partyLogo, cardLocale);
 
   const glyphs =
     dict.og.brand +

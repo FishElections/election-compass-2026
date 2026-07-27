@@ -24,6 +24,13 @@ import {
   whyVoteFactsTextEn,
   stationFactsTextEn,
 } from "./en";
+import {
+  toyPartyNamesAr,
+  demoSlipPartyNamesAr,
+  formationTimelineTextAr,
+  whyVoteFactsTextAr,
+  stationFactsTextAr,
+} from "./ar";
 
 export { VOTES_PER_SEAT_APPROX, THRESHOLD_PERCENT, MAGIC_NUMBER, TOTAL_SEATS };
 
@@ -58,22 +65,27 @@ export interface GuideFact {
 const toyPartyNamesByLocale: Record<Locale, typeof toyPartyNamesHe> = {
   he: toyPartyNamesHe,
   en: toyPartyNamesEn,
+  ar: toyPartyNamesAr,
 };
 const demoSlipPartyNamesByLocale: Record<Locale, typeof demoSlipPartyNamesHe> = {
   he: demoSlipPartyNamesHe,
   en: demoSlipPartyNamesEn,
+  ar: demoSlipPartyNamesAr,
 };
 const formationTimelineTextByLocale: Record<Locale, typeof formationTimelineTextHe> = {
   he: formationTimelineTextHe,
   en: formationTimelineTextEn,
+  ar: formationTimelineTextAr,
 };
 const whyVoteFactsTextByLocale: Record<Locale, typeof whyVoteFactsTextHe> = {
   he: whyVoteFactsTextHe,
   en: whyVoteFactsTextEn,
+  ar: whyVoteFactsTextAr,
 };
 const stationFactsTextByLocale: Record<Locale, typeof stationFactsTextHe> = {
   he: stationFactsTextHe,
   en: stationFactsTextEn,
+  ar: stationFactsTextAr,
 };
 
 export function getToyParties(locale: Locale): ToyParty[] {
