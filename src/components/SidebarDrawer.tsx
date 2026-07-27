@@ -21,7 +21,7 @@ import {
 import { CompassMark } from "@/components/CompassMark";
 import { cn } from "@/lib/utils";
 import { useDictionary } from "@/i18n/DictionaryProvider";
-import { locales, localizedPath } from "@/i18n/config";
+import { locales, localizedPath, pathWithoutLocale } from "@/i18n/config";
 
 const navItems = [
   { href: "/", icon: Home, key: "home" as const },
@@ -53,6 +53,10 @@ export function SidebarDrawer() {
   const langRef = useRef<HTMLDivElement>(null);
   const currentLocale = locales.find((l) => l.code === locale)!;
   const otherLocales = locales.filter((l) => l.code !== locale);
+  // The quiz is a one-screen mobile layout whose top row already holds the
+  // progress %, so the corner toggle would collide there — show it desktop-only
+  // on /quiz (language is chosen before starting anyway).
+  const onQuiz = pathWithoutLocale(pathname).startsWith("/quiz");
 
   useEffect(() => {
     if (!langOpen) return;
@@ -66,7 +70,7 @@ export function SidebarDrawer() {
   }, [langOpen]);
 
   function handleShare() {
-    const url = window.location.origin;
+    const url = `${window.location.origin}${localizedPath("/", locale)}`;
     if (navigator.share) {
       navigator.share({ title: dict.nav.brandName, url }).catch(() => {});
     } else if (navigator.clipboard) {
@@ -89,9 +93,17 @@ export function SidebarDrawer() {
         </button>
       </Dialog.Trigger>
 
-      {/* Language menu, docked in the corner opposite the menu pill (menu is
-          top-start, this is top-end). Click opens the other locales. */}
-      <div ref={langRef} className="fixed top-4 end-4 z-40 hidden lg:block">
+      {/* Language menu, docked in the top-end corner on every screen size
+          (on desktop it sits opposite the menu pill). Click opens the other
+          locales — this is the single language control, so the drawer no
+          longer carries its own. */}
+      <div
+        ref={langRef}
+        className={cn(
+          "fixed top-4 end-4 z-50",
+          onQuiz ? "hidden lg:block" : "block"
+        )}
+      >
         <button
           type="button"
           onClick={() => setLangOpen((v) => !v)}
@@ -195,25 +207,6 @@ export function SidebarDrawer() {
                 <X className="h-5 w-5" />
               </button>
             </Dialog.Close>
-          </div>
-
-          {/* Mobile only: on desktop the top-end language menu covers this. */}
-          <div className="flex gap-2 border-b border-white/10 px-4 py-3 lg:hidden">
-            {locales.map((l) => (
-              <Dialog.Close asChild key={l.code}>
-                <Link
-                  href={localizedPath(pathname, l.code)}
-                  className={cn(
-                    "flex-1 rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors cursor-pointer",
-                    l.code === locale
-                      ? "bg-sapphire text-white"
-                      : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
-                  )}
-                >
-                  {l.label}
-                </Link>
-              </Dialog.Close>
-            ))}
           </div>
 
           <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-4">
