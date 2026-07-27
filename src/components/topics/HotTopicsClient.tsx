@@ -49,7 +49,7 @@ export function HotTopicsClient() {
   return (
     <main className="flex-1">
       <div className="bg-navy">
-        <div className="mx-auto max-w-4xl px-4 pb-10 pt-8 text-center lg:pt-20">
+        <div className="mx-auto max-w-4xl px-4 pb-10 pt-16 text-center lg:pt-20">
           <h1 className="font-display text-3xl font-normal text-white sm:text-4xl">
             {t.heading}
           </h1>
