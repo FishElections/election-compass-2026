@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Script from "next/script";
 import { Heebo, Rubik, Secular_One } from "next/font/google";
 import { SidebarDrawer } from "@/components/SidebarDrawer";
 import { getSiteUrl } from "@/utils/site";
-import "./globals.css";
+import { isLocale, dirFor } from "@/i18n/config";
+import "../globals.css";
 
 const heebo = Heebo({
   variable: "--font-heebo",
@@ -70,15 +72,21 @@ export const metadata: Metadata = {
 // reads the real runtime env, so GA fires on every page.
 export const dynamic = "force-dynamic";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ lang: string }>;
 }>) {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  const dir = dirFor(lang);
+
   return (
     <html
-      lang="he"
-      dir="rtl"
+      lang={lang}
+      dir={dir}
       className={`${heebo.variable} ${rubik.variable} ${secularOne.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
