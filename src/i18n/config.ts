@@ -4,7 +4,7 @@
  * hardcoded as `locale === "he"` — so adding a locale (e.g. Arabic, also RTL)
  * is a one-line addition here plus its dictionary/data files, not a rewrite.
  */
-export type Locale = "he" | "en"; // later "ar" goes here — nothing else changes
+export type Locale = "he" | "en" | "ar";
 
 export interface LocaleConfig {
   code: Locale;
@@ -19,6 +19,7 @@ export interface LocaleConfig {
 export const locales: LocaleConfig[] = [
   { code: "he", dir: "rtl", label: "עברית", ogLocale: "he_IL", isDefault: true },
   { code: "en", dir: "ltr", label: "English", ogLocale: "en_US" },
+  { code: "ar", dir: "rtl", label: "العربية", ogLocale: "ar_AR" },
 ];
 
 export const defaultLocale: Locale = locales.find((l) => l.isDefault)!.code;

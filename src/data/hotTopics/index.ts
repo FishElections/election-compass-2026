@@ -3,16 +3,19 @@ import { Topic } from "@/types";
 import { topicsCore, topicCategories, categoryIcons } from "./core";
 import { topicsTextHe, categoryLabelsHe } from "./he";
 import { topicsTextEn, categoryLabelsEn } from "./en";
+import { topicsTextAr, categoryLabelsAr } from "./ar";
 
 export { topicCategories, categoryIcons };
 
 const topicsTextByLocale: Record<Locale, typeof topicsTextHe> = {
   he: topicsTextHe,
   en: topicsTextEn,
+  ar: topicsTextAr,
 };
 const categoryLabelsByLocale: Record<Locale, Record<string, string>> = {
   he: categoryLabelsHe,
   en: categoryLabelsEn,
+  ar: categoryLabelsAr,
 };
 
 export function getHotTopics(locale: Locale): Topic[] {

@@ -3,10 +3,12 @@ import { Party } from "@/types";
 import { partiesCore } from "./core";
 import { partiesTextHe } from "./he";
 import { partiesTextEn } from "./en";
+import { partiesTextAr } from "./ar";
 
 const partiesTextByLocale: Record<Locale, typeof partiesTextHe> = {
   he: partiesTextHe,
   en: partiesTextEn,
+  ar: partiesTextAr,
 };
 
 export function getParties(locale: Locale): Party[] {

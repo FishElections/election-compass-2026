@@ -3,10 +3,12 @@ import { SteelmanArgument } from "@/types";
 import { counterArgumentsCore } from "./core";
 import { counterArgumentsTextHe } from "./he";
 import { counterArgumentsTextEn } from "./en";
+import { counterArgumentsTextAr } from "./ar";
 
 const textByLocale: Record<Locale, typeof counterArgumentsTextHe> = {
   he: counterArgumentsTextHe,
   en: counterArgumentsTextEn,
+  ar: counterArgumentsTextAr,
 };
 
 export function getCounterArguments(locale: Locale): SteelmanArgument[] {
