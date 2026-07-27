@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Brain } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { parties } from "@/data/parties";
+import { getParties } from "@/data/parties";
 import { ChallengeCardResult, OpennessReaction } from "@/types";
 import { SetupStep, ChallengeDeckItem } from "@/components/challenge/SetupStep";
 import { ChallengeCard } from "@/components/challenge/ChallengeCard";
@@ -15,10 +15,10 @@ type Step = "setup" | "cards" | "summary";
 
 export function ChallengeClient() {
   const searchParams = useSearchParams();
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const t = dict.challenge.intro;
   const partyParam = searchParams.get("party");
-  const presetPartyId = parties.some((p) => p.id === partyParam)
+  const presetPartyId = getParties(locale).some((p) => p.id === partyParam)
     ? partyParam!
     : undefined;
 

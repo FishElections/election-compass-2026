@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { ChevronRight, SkipForward } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
-import { likertOptions } from "@/data/likert";
+import { getLikertOptions } from "@/data/likert";
 import { QuizMode, StanceValue } from "@/types";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
@@ -19,8 +19,9 @@ import { useDictionary } from "@/i18n/DictionaryProvider";
 export function QuizClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const t = dict.quiz;
+  const likertOptions = getLikertOptions(locale);
   const mode: QuizMode = searchParams.get("mode") === "long" ? "long" : "short";
   const [showPriorityStep, setShowPriorityStep] = useState(false);
 
@@ -40,11 +41,11 @@ export function QuizClient() {
   useEffect(() => {
     if (initializedMode.current !== mode) {
       initializedMode.current = mode;
-      startQuiz(mode);
+      startQuiz(mode, locale);
       setShowPriorityStep(false);
       trackEvent("quiz_start", { mode });
     }
-  }, [mode, startQuiz]);
+  }, [mode, locale, startQuiz]);
 
   if (activeQuestions.length === 0) return null;
 

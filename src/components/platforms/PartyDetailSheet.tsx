@@ -6,7 +6,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, X } from "lucide-react";
 import { Party, PlatformTopicKey } from "@/types";
-import { platformTopics } from "@/data/platformTopics";
+import { getPlatformTopics } from "@/data/platformTopics";
 import { PartyLogo } from "@/components/PartyLogo";
 import { BallotLetterBadge } from "@/components/BallotLetterBadge";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
@@ -26,8 +26,9 @@ interface PartyDetailSheetProps {
 
 export function PartyDetailSheet({ party, defaultTopicKey, onClose }: PartyDetailSheetProps) {
   const isDesktop = useMediaQuery("(min-width: 640px)");
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const labels = dict.platforms.partyDetailSheet;
+  const platformTopics = getPlatformTopics(locale);
 
   // שומר את המפלגה האחרונה גם אחרי ש-party הופך ל-null, כדי שיהיה מה להציג
   // בזמן אנימציית היציאה (במקום שהתוכן ייעלם מיידית לפני שהגיליון נסגר).

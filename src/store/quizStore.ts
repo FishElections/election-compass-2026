@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import { questions, shortQuestions } from "@/data/questions";
+import { getQuestions, getShortQuestions } from "@/data/questions";
+import { Locale } from "@/i18n/config";
 import {
   CategoryId,
   CategoryWeights,
@@ -16,7 +17,10 @@ interface QuizState {
   currentIndex: number;
   answers: UserAnswers;
   categoryWeights: CategoryWeights;
-  startQuiz: (mode: QuizMode) => void;
+  startQuiz: (mode: QuizMode, locale: Locale) => void;
+  /** Re-fetches activeQuestions' text in a new locale by id, without
+   *  touching currentIndex/answers — for a mid-quiz language switch. */
+  retext: (locale: Locale) => void;
   answerQuestion: (questionId: string, value: StanceValue) => void;
   goNext: () => void;
   goPrev: () => void;
@@ -28,19 +32,31 @@ interface QuizState {
 
 export const useQuizStore = create<QuizState>((set, get) => ({
   mode: "short",
-  activeQuestions: shortQuestions,
+  activeQuestions: getShortQuestions("he"),
   currentIndex: 0,
   answers: {},
   categoryWeights: {},
 
-  startQuiz: (mode) =>
+  startQuiz: (mode, locale) =>
     set({
       mode,
-      activeQuestions: mode === "short" ? shortQuestions : questions,
+      activeQuestions: mode === "short" ? getShortQuestions(locale) : getQuestions(locale),
       currentIndex: 0,
       answers: {},
       categoryWeights: {},
     }),
+
+  retext: (locale) => {
+    const { mode, activeQuestions } = get();
+    const freshById = new Map(
+      (mode === "short" ? getShortQuestions(locale) : getQuestions(locale)).map(
+        (q) => [q.id, q]
+      )
+    );
+    set({
+      activeQuestions: activeQuestions.map((q) => freshById.get(q.id) ?? q),
+    });
+  },
 
   answerQuestion: (questionId, value) => {
     set((state) => ({

@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import { parties } from "@/data/parties";
-import { platformTopics } from "@/data/platformTopics";
+import { getParties } from "@/data/parties";
+import { getPlatformTopics } from "@/data/platformTopics";
 import { PlatformTopicKey } from "@/types";
 import { PartyLogo } from "@/components/PartyLogo";
 import { PartyLogoGrid } from "@/components/platforms/PartyLogoGrid";
@@ -23,8 +23,10 @@ export function PlatformsClient() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<CategoryFilter>("all");
   const [activePartyId, setActivePartyId] = useState<string | null>(null);
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const t = dict.platforms;
+  const parties = useMemo(() => getParties(locale), [locale]);
+  const platformTopics = getPlatformTopics(locale);
 
   const activeParty = parties.find((p) => p.id === activePartyId) ?? null;
 
@@ -34,7 +36,7 @@ export function PlatformsClient() {
     return parties.filter(
       (party) => party.name.includes(q) || party.leader.includes(q)
     );
-  }, [query]);
+  }, [query, parties]);
 
   return (
     <main className="flex-1">

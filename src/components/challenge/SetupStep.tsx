@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { Users, MessageCircleQuestion } from "lucide-react";
-import { parties } from "@/data/parties";
-import { counterArguments } from "@/data/counterArguments";
-import { quickStanceLabels } from "@/data/quickStanceLabels";
-import { getPartySide, quickStanceTopicIds } from "@/utils/challenge";
+import { getParties } from "@/data/parties";
+import { getCounterArguments } from "@/data/counterArguments";
+import { getQuickStanceLabels, quickStanceTopicIds } from "@/data/quickStanceLabels";
+import { getPartySide } from "@/utils/challenge";
 import { StanceSide } from "@/types";
 import { PartyLogo } from "@/components/PartyLogo";
 import { Button } from "@/components/ui/button";
@@ -23,8 +23,11 @@ interface SetupStepProps {
 }
 
 export function SetupStep({ presetPartyId, onStart }: SetupStepProps) {
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const t = dict.challenge.setup;
+  const parties = getParties(locale);
+  const counterArguments = getCounterArguments(locale);
+  const quickStanceLabels = getQuickStanceLabels(locale);
   const presetParty = presetPartyId
     ? parties.find((p) => p.id === presetPartyId)
     : undefined;

@@ -156,13 +156,12 @@ export interface ChallengeCardResult {
   reaction: OpennessReaction;
 }
 
-/** קטגוריות עמוד "הנושאים החמים" - העמוד היחיד להסברה אזרחית באתר */
-export type TopicCategory =
-  | "ביטחון ומדיניות"
-  | "דת ומדינה"
-  | "משפט וממשל"
-  | "כלכלה ויוקר מחיה"
-  | "חברה וביטחון פנים";
+/**
+ * קטגוריות עמוד "הנושאים החמים" - העמוד היחיד להסברה אזרחית באתר.
+ * מזהה יציב ובלתי-תלוי-שפה; התווית המוצגת נגזרת דרך
+ * getCategoryLabels(locale) ב-src/data/hotTopics/index.ts.
+ */
+export type TopicCategory = "security" | "religion" | "law" | "economy" | "society";
 
 export interface IssueArgument {
   title: string;

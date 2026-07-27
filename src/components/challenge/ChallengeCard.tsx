@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Lightbulb, Scale, Shield } from "lucide-react";
-import { quickStanceLabels } from "@/data/quickStanceLabels";
+import { getQuickStanceLabels } from "@/data/quickStanceLabels";
 import { getArgumentByTopic } from "@/utils/challenge";
 import { OpennessReaction, StanceSide } from "@/types";
 import { Progress } from "@/components/ui/progress";
@@ -26,10 +26,10 @@ export function ChallengeCard({
   total,
   onReact,
 }: ChallengeCardProps) {
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const t = dict.challenge.card;
-  const argument = getArgumentByTopic(topicId);
-  const labels = quickStanceLabels[topicId];
+  const argument = getArgumentByTopic(topicId, locale);
+  const labels = getQuickStanceLabels(locale)[topicId];
 
   const reactionOptions: {
     reaction: OpennessReaction;

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import { categoryIcons, categorySlugs, hotTopics, topicCategories } from "@/data/hotTopics";
+import { categoryIcons, getCategoryLabels, getHotTopics, topicCategories } from "@/data/hotTopics";
 import { Topic, TopicCategory } from "@/types";
 import { TopicCard } from "@/components/topics/TopicCard";
 import { TopicShelf } from "@/components/topics/TopicShelf";
@@ -14,8 +14,10 @@ export function HotTopicsClient() {
   const [query, setQuery] = useState("");
   const [activeTopicId, setActiveTopicId] = useState<string | null>(null);
   const { openedIds, isOpened, markOpened } = useTopicProgress();
-  const { dict } = useDictionary();
+  const { dict, locale } = useDictionary();
   const t = dict.hotTopics;
+  const hotTopics = getHotTopics(locale);
+  const categoryLabels = getCategoryLabels(locale);
 
   const trimmedQuery = query.trim();
   const searchResults = useMemo(() => {
@@ -26,11 +28,11 @@ export function HotTopicsClient() {
         topic.hook.includes(trimmedQuery) ||
         topic.simpleExplanation.includes(trimmedQuery)
     );
-  }, [trimmedQuery]);
+  }, [trimmedQuery, hotTopics]);
 
   const activeTopic = useMemo(
     () => hotTopics.find((t) => t.id === activeTopicId) ?? null,
-    [activeTopicId]
+    [activeTopicId, hotTopics]
   );
 
   const total = hotTopics.length;
@@ -39,7 +41,7 @@ export function HotTopicsClient() {
 
   function scrollToAisle(category: TopicCategory) {
     document
-      .getElementById(`aisle-${categorySlugs[category]}`)
+      .getElementById(`aisle-${category}`)
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -90,7 +92,7 @@ export function HotTopicsClient() {
                   className="inline-flex items-center gap-1.5 rounded-full border-2 border-gray bg-white px-4 py-1.5 text-sm font-medium text-navy transition-colors hover:border-sapphire cursor-pointer"
                 >
                   <span aria-hidden>{categoryIcons[cat]}</span>
-                  {cat}
+                  {categoryLabels[cat]}
                 </button>
               ))}
             </div>
