@@ -4,7 +4,9 @@ import Script from "next/script";
 import { Heebo, Rubik, Secular_One } from "next/font/google";
 import { SidebarDrawer } from "@/components/SidebarDrawer";
 import { getSiteUrl } from "@/utils/site";
-import { isLocale, dirFor } from "@/i18n/config";
+import { isLocale, dirFor, ogLocaleFor } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { DictionaryProvider } from "@/i18n/DictionaryProvider";
 import "../globals.css";
 
 const heebo = Heebo({
@@ -28,41 +30,49 @@ const secularOne = Secular_One({
 // when unset.
 const gaId = process.env.GA_ID;
 
-const siteName = "מצפן בחירות 2026";
-const homeTitle = "בחירות 2026- מצאו את המפלגה המתאימה לכם ביותר";
-const description =
-  "ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה הטובה ביותר.";
-
 // Generic branded card from the same route /results uses for personalized
-// shares — /api/og with no query params falls back to "השאלון"/"מצפן" text,
-// so every page gets a real preview image instead of none at all.
+// shares — /api/og with no query params falls back to the dictionary's own
+// fallback text, so every page gets a real preview image instead of none.
 const defaultOgImage = "/api/og";
 
-export const metadata: Metadata = {
-  metadataBase: new URL(getSiteUrl()),
-  title: {
-    default: homeTitle,
-    template: `%s | ${siteName}`,
-  },
-  description,
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: homeTitle,
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  const dict = await getDictionary(lang);
+  const { siteName, homeTitle, description } = dict.meta;
+
+  return {
+    metadataBase: new URL(getSiteUrl()),
+    title: {
+      default: homeTitle,
+      template: `%s | ${siteName}`,
+    },
     description,
-    type: "website",
-    locale: "he_IL",
-    siteName,
-    images: [{ url: defaultOgImage, width: 1200, height: 630, alt: siteName }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: homeTitle,
-    description,
-    images: [defaultOgImage],
-  },
-};
+    alternates: {
+      canonical: "/",
+    },
+    openGraph: {
+      title: homeTitle,
+      description,
+      type: "website",
+      locale: ogLocaleFor(lang),
+      siteName,
+      images: [
+        { url: defaultOgImage, width: 1200, height: 630, alt: siteName },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: homeTitle,
+      description,
+      images: [defaultOgImage],
+    },
+  };
+}
 
 // Render every page per-request instead of prerendering it at build time.
 // SITE_URL and GA_ID are only present in the running container (docker run
@@ -82,6 +92,7 @@ export default async function RootLayout({
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const dir = dirFor(lang);
+  const dict = await getDictionary(lang);
 
   return (
     <html
@@ -90,8 +101,10 @@ export default async function RootLayout({
       className={`${heebo.variable} ${rubik.variable} ${secularOne.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <SidebarDrawer />
-        {children}
+        <DictionaryProvider dict={dict} locale={lang} dir={dir}>
+          <SidebarDrawer />
+          {children}
+        </DictionaryProvider>
         {gaId ? (
           <>
             <Script

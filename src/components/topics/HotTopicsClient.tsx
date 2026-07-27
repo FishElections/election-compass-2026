@@ -8,11 +8,14 @@ import { TopicCard } from "@/components/topics/TopicCard";
 import { TopicShelf } from "@/components/topics/TopicShelf";
 import { TopicDetailSheet } from "@/components/topics/TopicDetailSheet";
 import { useTopicProgress } from "@/hooks/useTopicProgress";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 export function HotTopicsClient() {
   const [query, setQuery] = useState("");
   const [activeTopicId, setActiveTopicId] = useState<string | null>(null);
   const { openedIds, isOpened, markOpened } = useTopicProgress();
+  const { dict } = useDictionary();
+  const t = dict.hotTopics;
 
   const trimmedQuery = query.trim();
   const searchResults = useMemo(() => {
@@ -45,12 +48,10 @@ export function HotTopicsClient() {
       <div className="bg-navy">
         <div className="mx-auto max-w-4xl px-4 pb-10 pt-20 text-center sm:pt-24">
           <h1 className="font-display text-3xl font-normal text-white sm:text-4xl">
-            🔥 הנושאים החמים
+            {t.heading}
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-white/70">
-            בואו נבין ביחד: על מה כולם רבים עכשיו? הסברים פשוטים ונטולי-צד
-            לסוגיות הכי שנויות במחלוקת במדינה - ולמי שרוצה להעמיק, גם מיפוי
-            של איפה כל מפלגה עומדת.
+            {t.subtitle}
           </p>
         </div>
       </div>
@@ -63,7 +64,7 @@ export function HotTopicsClient() {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="חפש נושא (למשל: שופטים, גיוס, שבת...)"
+              placeholder={t.searchPlaceholder}
               className="w-full rounded-xl border-2 border-gray bg-white py-3 pr-11 pl-4 text-sm text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none"
             />
           </div>
@@ -79,7 +80,7 @@ export function HotTopicsClient() {
                 }
                 className="rounded-full border-2 border-gray bg-white px-4 py-1.5 text-sm font-medium text-navy transition-colors hover:border-sapphire cursor-pointer"
               >
-                הכל
+                {t.allFilter}
               </button>
               {topicCategories.map((cat) => (
                 <button
@@ -106,12 +107,12 @@ export function HotTopicsClient() {
               />
             </div>
             <span className="whitespace-nowrap text-xs font-bold text-navy">
-              {openedCount}/{total} נושאים
+              {openedCount}/{total} {t.topicsCountSuffix}
             </span>
           </div>
           {allDone && (
             <p className="text-center text-sm font-semibold text-success">
-              עברתם על כל הנושאים החמים 🎉 כל הכבוד!
+              {t.allDone}
             </p>
           )}
         </div>
@@ -119,7 +120,7 @@ export function HotTopicsClient() {
         {trimmedQuery ? (
           searchResults && searchResults.length === 0 ? (
             <p className="mt-14 text-center text-gray-dark">
-              לא נמצאו נושאים התואמים את החיפוש.
+              {t.noResults}
             </p>
           ) : (
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">

@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { THRESHOLD_PERCENT } from "@/data/electionGuide";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 /**
  * דלת אחוז החסימה: מפלגה אחת (4.1%) נכנסת, אחת (2.9%) מוקפצת החוצה.
@@ -9,12 +10,16 @@ import { THRESHOLD_PERCENT } from "@/data/electionGuide";
  */
 export function ThresholdDoor() {
   const reduceMotion = useReducedMotion();
+  const { dict } = useDictionary();
 
   return (
     <div
       className="mx-auto mt-8 flex w-fit items-end justify-center gap-5"
       role="img"
-      aria-label={`איור: מפלגה עם 4.1% מהקולות עוברת בדלת שעליה שלט ${THRESHOLD_PERCENT}, ומפלגה עם 2.9% נשארת בחוץ`}
+      aria-label={dict.guide.thresholdDoorAlt.replace(
+        "{threshold}",
+        THRESHOLD_PERCENT
+      )}
     >
       <motion.div
         className="flex h-11 w-11 items-center justify-center rounded-xl bg-coral text-xs font-extrabold text-white"

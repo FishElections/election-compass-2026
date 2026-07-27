@@ -7,49 +7,15 @@ import { useQuizStore } from "@/store/quizStore";
 import { CategoryId, TopicWeight } from "@/types";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
-// TODO: pending dictionary extraction once he/en i18n infra lands (site is
-// currently Hebrew-only — see AGENTS.md / bilingual-feature skill).
-const STRINGS = {
-  eyebrow: "שלב אחרון, לגמרי אופציונלי",
-  heading: "יש נושאים שחשובים לכם יותר מאחרים - או פחות?",
-  description:
-    "סמנו אילו נושאים חשובים לכם יותר ואילו פחות, ואנחנו נשקלל את זה בחישוב ההתאמה. אפשר גם פשוט לדלג ולקבל תוצאה רגילה, ללא שקלול.",
-  skip: "דלג",
-  continue: "המשך לתוצאות",
+const weightActiveClasses: Record<TopicWeight, string> = {
+  0: "border-danger bg-danger text-white",
+  0.5: "border-coral bg-coral text-white",
+  1: "border-gray bg-gray-light text-navy",
+  1.5: "border-sapphire bg-sapphire text-white",
+  2: "border-amber bg-amber text-white",
 };
-
-const weightOptions: {
-  value: TopicWeight;
-  label: string;
-  activeClass: string;
-}[] = [
-  {
-    value: 0,
-    label: "לא חשוב בכלל",
-    activeClass: "border-danger bg-danger text-white",
-  },
-  {
-    value: 0.5,
-    label: "לא חשוב",
-    activeClass: "border-coral bg-coral text-white",
-  },
-  {
-    value: 1,
-    label: "רגיל",
-    activeClass: "border-gray bg-gray-light text-navy",
-  },
-  {
-    value: 1.5,
-    label: "חשוב לי",
-    activeClass: "border-sapphire bg-sapphire text-white",
-  },
-  {
-    value: 2,
-    label: "הכי קריטי לי",
-    activeClass: "border-amber bg-amber text-white",
-  },
-];
 
 interface TopicPriorityStepProps {
   onContinue: () => void;
@@ -61,6 +27,16 @@ export function TopicPriorityStep({
   onSkip,
 }: TopicPriorityStepProps) {
   const { categoryWeights, setCategoryWeight } = useQuizStore();
+  const { dict } = useDictionary();
+  const t = dict.quiz.priorityStep;
+
+  const weightOptions: { value: TopicWeight; label: string; activeClass: string }[] = [
+    { value: 0, label: t.weights.none, activeClass: weightActiveClasses[0] },
+    { value: 0.5, label: t.weights.notImportant, activeClass: weightActiveClasses[0.5] },
+    { value: 1, label: t.weights.normal, activeClass: weightActiveClasses[1] },
+    { value: 1.5, label: t.weights.important, activeClass: weightActiveClasses[1.5] },
+    { value: 2, label: t.weights.critical, activeClass: weightActiveClasses[2] },
+  ];
 
   function currentWeight(category: CategoryId): TopicWeight {
     return categoryWeights[category] ?? 1;
@@ -76,17 +52,17 @@ export function TopicPriorityStep({
         <div>
           <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-sapphire">
             <Sparkles className="h-4 w-4" />
-            <span>{STRINGS.eyebrow}</span>
+            <span>{t.eyebrow}</span>
           </div>
           <h1 className="font-display text-2xl font-normal leading-snug text-navy sm:text-3xl">
-            {STRINGS.heading}
+            {t.heading}
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-gray-dark">
-            {STRINGS.description}
+            {t.description}
           </p>
         </div>
         <Button variant="ghost" onClick={onSkip} className="shrink-0">
-          {STRINGS.skip}
+          {t.skip}
           <SkipForward className="h-4 w-4" />
         </Button>
       </div>
@@ -127,7 +103,7 @@ export function TopicPriorityStep({
 
       <div className="mt-8 flex justify-center">
         <Button size="lg" onClick={onContinue}>
-          {STRINGS.continue}
+          {t.continue}
         </Button>
       </div>
     </motion.div>

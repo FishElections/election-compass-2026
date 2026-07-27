@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 import { parties } from "@/data/parties";
+import { defaultLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
 // The default next/og font has no Hebrew glyphs, so we pull Heebo from Google
 // Fonts at render time. The IE11 User-Agent forces Google to serve a TTF
@@ -55,8 +57,12 @@ export async function GET(request: Request) {
     ? Math.max(0, Math.min(100, Math.round(rawScore)))
     : 0;
 
-  const partyName = party?.name ?? "השאלון";
-  const partyLogo = party?.logo ?? "מצפן";
+  // No ?lang= param yet — this route only ever serves the default locale
+  // until English ships (that PR adds the param + a per-locale bidi/font path).
+  const dict = await getDictionary(defaultLocale);
+
+  const partyName = party?.name ?? dict.og.fallbackPartyName;
+  const partyLogo = party?.logo ?? dict.og.fallbackPartyLogo;
   const partyColor = party?.color ?? "#2563eb";
 
   // The party name is the hero — scale it to fill the width without overflowing,
@@ -74,15 +80,17 @@ export async function GET(request: Request) {
       : 82;
   const percentSize = Math.min(96, Math.round(nameSize * 0.62));
 
-  const brand = heb("מצפן בחירות 2026");
-  const kicker = heb("המפלגה שהכי מתאימה לי");
-  const matchLabel = heb("התאמה");
+  const brand = heb(dict.og.brand);
+  const kicker = heb(dict.og.kicker);
+  const matchLabel = heb(dict.og.matchLabel);
   const nameText = heb(partyName);
   const logoText = heb(partyLogo);
 
   const glyphs =
-    "מצפן בחירות 2026 המפלגה שהכי מתאימה לי התאמה " +
-    "elections-il.com" +
+    dict.og.brand +
+    dict.og.kicker +
+    dict.og.matchLabel +
+    " elections-il.com" +
     partyName +
     partyLogo +
     "0123456789% ";

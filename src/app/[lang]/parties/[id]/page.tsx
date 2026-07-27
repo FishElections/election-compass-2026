@@ -7,6 +7,8 @@ import { categories } from "@/data/questions";
 import { getPartyCategoryAverages } from "@/utils/calculator";
 import { PartyLogo } from "@/components/PartyLogo";
 import { BallotLetterBadge } from "@/components/BallotLetterBadge";
+import { isLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
 export function generateStaticParams() {
   return parties.map((party) => ({ id: party.id }));
@@ -15,14 +17,18 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ lang: string; id: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
+  const { lang, id } = await params;
   const party = parties.find((p) => p.id === id);
-  if (!party) return {};
+  if (!party || !isLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  const t = dict.partyProfile;
 
-  const title = `${party.name} - עמדות ומצע לבחירות 2026`;
-  const description = `${party.shortDescription} בדקו כמה אתם מתאימים ל${party.name} במצפן הבחירות.`;
+  const title = t.titleTemplate.replace("{party}", party.name);
+  const description = t.descriptionTemplate
+    .replace("{description}", party.shortDescription)
+    .replace("{party}", party.name);
 
   return {
     title,
@@ -36,11 +42,13 @@ export async function generateMetadata({
 export default async function PartyProfilePage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ lang: string; id: string }>;
 }) {
-  const { id } = await params;
+  const { lang, id } = await params;
   const party = parties.find((p) => p.id === id);
-  if (!party) notFound();
+  if (!party || !isLocale(lang)) notFound();
+  const dict = await getDictionary(lang);
+  const t = dict.partyProfile;
 
   const averages = getPartyCategoryAverages(party.id);
 
@@ -53,7 +61,7 @@ export default async function PartyProfilePage({
             className="mb-6 inline-flex items-center gap-1 text-sm font-medium text-navy hover:underline"
           >
             <ChevronRight className="h-4 w-4" />
-            חזרה לדף הבית
+            {t.backToHome}
           </Link>
 
           <div className="relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-navy to-navy-light p-8 text-center text-white shadow-ambient-lg sm:flex-row sm:text-right">
@@ -80,7 +88,7 @@ export default async function PartyProfilePage({
         </p>
 
         <h2 className="font-display mt-10 mb-4 text-xl font-normal text-navy">
-          מיקום כללי לפי קטגוריה
+          {t.categoryPositionHeading}
         </h2>
         <div className="flex flex-col gap-5 rounded-2xl border border-gray/80 bg-white p-6 shadow-ambient">
           {categories.map((category) => {
@@ -108,7 +116,7 @@ export default async function PartyProfilePage({
         </div>
 
         <div className="mt-8 rounded-xl border border-sapphire/20 bg-sapphire/5 p-5 text-sm text-navy">
-          בקרוב: מצע מלא, רשימת חברי כנסת והיסטוריית המפלגה.
+          {t.comingSoon}
         </div>
       </div>
     </main>

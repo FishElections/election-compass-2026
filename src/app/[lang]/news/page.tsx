@@ -1,17 +1,37 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Newspaper } from "lucide-react";
+import { isLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
 // Placeholder page with no real content yet — kept out of the index until
 // actual news content ships, to avoid a thin/"coming soon" page in search.
-export const metadata: Metadata = {
-  title: "עדכוני בחירות",
-  description: "בקרוב: חדשות ועדכונים שוטפים על מערכת הבחירות לכנסת 2026.",
-  robots: { index: false, follow: true },
-  alternates: { canonical: "/news" },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  return {
+    title: dict.news.pageTitle,
+    description: dict.news.pageDescription,
+    robots: { index: false, follow: true },
+    alternates: { canonical: "/news" },
+  };
+}
 
-export default function NewsPage() {
+export default async function NewsPage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  if (!isLocale(lang)) return null;
+  const dict = await getDictionary(lang);
+  const t = dict.news;
+
   return (
     <main className="flex-1">
       <div className="bg-dot-grid flex flex-1 items-center justify-center">
@@ -20,16 +40,14 @@ export default function NewsPage() {
             <Newspaper className="h-7 w-7" />
           </div>
           <h1 className="font-display text-2xl font-normal text-navy">
-            עדכוני בחירות
+            {t.heading}
           </h1>
-          <p className="text-gray-dark">
-            בקרוב: חדשות ועדכונים שוטפים על מערכת הבחירות לכנסת 2026.
-          </p>
+          <p className="text-gray-dark">{t.body}</p>
           <Link
             href="/"
             className="font-medium text-sapphire hover:underline"
           >
-            חזרה לדף הבית
+            {t.backToHome}
           </Link>
         </div>
       </div>

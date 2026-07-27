@@ -14,17 +14,19 @@ import { PartyResultCard } from "@/components/results/PartyResultCard";
 import { PartyResultRow } from "@/components/results/PartyResultRow";
 import { AnswerBreakdown } from "@/components/results/AnswerBreakdown";
 import { cn } from "@/lib/utils";
-
-const weightLabels: Record<number, string> = {
-  2: "הכי קריטי",
-  1.5: "חשוב",
-  0.5: "לא חשוב",
-  0: "לא חשוב בכלל",
-};
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 export function ResultsClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { dict } = useDictionary();
+  const t = dict.results;
+  const weightLabels: Record<number, string> = {
+    2: t.weightLabels.critical,
+    1.5: t.weightLabels.important,
+    0.5: t.weightLabels.notImportant,
+    0: t.weightLabels.none,
+  };
   const { answers, activeQuestions, categoryWeights, reset, resetCategoryWeights } =
     useQuizStore();
   const [showAll, setShowAll] = useState(false);
@@ -89,18 +91,21 @@ export function ResultsClient() {
               {sharedParty.logo}
             </span>
             <p className="text-sm font-bold uppercase tracking-wider text-sapphire">
-              שיתפו איתך תוצאה
+              {t.sharedResult.kicker}
             </p>
             <h1 className="font-display text-2xl font-normal leading-snug text-navy">
-              קיבלו {shownScore}% התאמה ל{sharedParty.name}
+              {t.sharedResult.headingTemplate
+                .replace("{score}", String(shownScore))
+                .replace("{party}", sharedParty.name)}
             </h1>
             <p className="text-gray-dark">
-              רוצים לגלות לאיזו מפלגה <span className="font-bold">אתם</span> הכי
-              מתאימים? ענו על השאלון וקבלו את התוצאות שלכם.
+              {t.sharedResult.bodyStart}{" "}
+              <span className="font-bold">{t.sharedResult.bodyBoldYou}</span>{" "}
+              {t.sharedResult.bodyEnd}
             </p>
             <Link href="/quiz">
               <Button size="lg">
-                התחילו בשאלון
+                {t.sharedResult.cta}
                 <ChevronLeft className="h-4 w-4" />
               </Button>
             </Link>
@@ -112,13 +117,11 @@ export function ResultsClient() {
       <main className="flex-1">
         <div className="mx-auto flex max-w-md flex-col items-center gap-4 px-4 py-24 text-center">
           <h1 className="font-display text-2xl font-normal text-navy">
-            עדיין לא נמצאו תשובות
+            {t.noAnswers.heading}
           </h1>
-          <p className="text-gray-dark">
-            כדי לראות תוצאות, צריך קודם לענות על השאלון.
-          </p>
+          <p className="text-gray-dark">{t.noAnswers.body}</p>
           <Link href="/">
-            <Button>לדף הבית</Button>
+            <Button>{t.noAnswers.cta}</Button>
           </Link>
         </div>
       </main>
@@ -138,7 +141,9 @@ export function ResultsClient() {
           topParty.id
         )}&s=${topScore}`
       : "";
-  const shareText = `גיליתי שהמפלגה שהכי מתאימה לי היא ${topParty?.name} (${topScore}% התאמה)! 🚀\nבדקו גם אתם 👇`;
+  const shareText = t.share.shareTextTemplate
+    .replace("{party}", topParty?.name ?? "")
+    .replace("{score}", String(topScore));
 
   function shareWhatsApp() {
     trackEvent("share", { method: "whatsapp", party: topParty?.id, match: topScore });
@@ -156,7 +161,7 @@ export function ResultsClient() {
       if (navigator.share) {
         trackEvent("share", { method: "native", party: topParty?.id, match: topScore });
         await navigator.share({
-          title: "מצפן בחירות 2026",
+          title: t.share.nativeShareTitle,
           text: shareText,
           url: shareUrl,
         });
@@ -178,14 +183,15 @@ export function ResultsClient() {
       <div className="mx-auto max-w-4xl px-4 py-12 sm:py-16">
         <div className="mb-10 text-center">
           <p className="mb-2 text-xs font-bold uppercase tracking-wider text-sapphire">
-            הניתוח הושלם
+            {t.analysisComplete}
           </p>
           <h1 className="font-display text-3xl font-normal text-navy sm:text-4xl">
-            התוצאות שלכם מוכנות
+            {t.heading}
           </h1>
           <p className="mt-2 text-gray-dark">
-            ענית על {answeredCount} מתוך {activeQuestions.length} שאלות. אלו
-            שלוש המפלגות שהכי מתאימות לעמדות שלך.
+            {t.answeredSummaryTemplate
+              .replace("{answered}", String(answeredCount))
+              .replace("{total}", String(activeQuestions.length))}
           </p>
         </div>
 
@@ -195,7 +201,7 @@ export function ResultsClient() {
               <SlidersHorizontal className="h-5 w-5" />
             </div>
             <p className="flex-1 text-sm text-navy">
-              התוצאות שלך משוקללות לפי החשיבות שסימנת:{" "}
+              {t.weighting.prefix}{" "}
               {weightedCategories
                 .map(
                   (c) =>
@@ -210,7 +216,7 @@ export function ResultsClient() {
               onClick={resetCategoryWeights}
               className="shrink-0"
             >
-              אפס שקלול
+              {t.weighting.reset}
             </Button>
           </div>
         )}
@@ -222,15 +228,15 @@ export function ResultsClient() {
           {topThree[0] && (
             <div className="flex flex-col items-center gap-3 rounded-2xl border border-success/30 bg-success/5 p-5 text-center sm:flex-row sm:justify-between sm:text-right">
               <div className="flex-1">
-                <p className="font-bold text-navy">שתפו את התוצאה שלכם</p>
+                <p className="font-bold text-navy">{t.share.heading}</p>
                 <p className="mt-0.5 text-sm text-gray-dark">
-                  תנו לחברים לגלות לאיזו מפלגה הם מתאימים.
+                  {t.share.subtitle}
                 </p>
               </div>
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
                 <Button onClick={shareWhatsApp} variant="success">
                   <WhatsAppIcon className="h-4 w-4" />
-                  שתפו ב-WhatsApp
+                  {t.share.whatsapp}
                 </Button>
                 <Button onClick={handleCopyLink} variant="outline">
                   {copied ? (
@@ -238,7 +244,7 @@ export function ResultsClient() {
                   ) : (
                     <Link2 className="h-4 w-4" />
                   )}
-                  {copied ? "הקישור הועתק" : "העתקת קישור"}
+                  {copied ? t.share.copied : t.share.copyLink}
                 </Button>
               </div>
             </div>
@@ -259,7 +265,7 @@ export function ResultsClient() {
         {rest.length > 0 && (
           <div className="mt-8 text-center">
             <Button variant="outline" onClick={() => setShowAll((v) => !v)}>
-              {showAll ? "הסתר מפלגות נוספות" : "הצג את כל שאר המפלגות"}
+              {showAll ? t.showLess : t.showMore}
               <ChevronDown
                 className={cn(
                   "h-4 w-4 transition-transform",
@@ -283,7 +289,7 @@ export function ResultsClient() {
 
         <div className="mt-14">
           <h2 className="font-display mb-4 text-xl font-normal text-navy">
-            פירוט תשובות
+            {t.answerBreakdownHeading}
           </h2>
           {topThree.length > 1 && (
             <div className="mb-4 flex flex-wrap gap-2">
@@ -298,7 +304,7 @@ export function ResultsClient() {
                       : "border-gray bg-white text-navy hover:border-sapphire"
                   )}
                 >
-                  לעומת {r.party.name}
+                  {t.comparedToTemplate.replace("{party}", r.party.name)}
                 </button>
               ))}
             </div>
@@ -320,15 +326,17 @@ export function ResultsClient() {
               <Brain className="h-6 w-6" />
             </div>
             <div className="flex-1">
-              <h2 className="font-bold text-navy">מוכנים לאתגר את עצמכם?</h2>
+              <h2 className="font-bold text-navy">{t.challengeCta.heading}</h2>
               <p className="mt-1 text-sm text-gray-dark">
-                בדקו את {topThree[0].party.name} מול הטיעונים החזקים ביותר של
-                המחנה הנגדי, במפרק הבועות.
+                {t.challengeCta.bodyTemplate.replace(
+                  "{party}",
+                  topThree[0].party.name
+                )}
               </p>
             </div>
             <Link href={`/challenge?party=${topThree[0].party.id}`}>
               <Button size="lg" variant="amber">
-                למפרק הבועות
+                {t.challengeCta.cta}
                 <ChevronLeft className="h-4 w-4" />
               </Button>
             </Link>
@@ -338,7 +346,7 @@ export function ResultsClient() {
         <div className="mt-8 flex flex-col items-center gap-4 border-t border-gray pt-8">
           <Button onClick={handleRestart} variant="ghost" size="lg">
             <RotateCcw className="h-4 w-4" />
-            התחילו מחדש
+            {t.restart}
           </Button>
         </div>
       </div>

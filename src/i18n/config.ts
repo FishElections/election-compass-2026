@@ -11,11 +11,13 @@ export interface LocaleConfig {
   dir: "ltr" | "rtl";
   /** Switcher label, written in that locale's own script. */
   label: string;
+  /** BCP-47-ish locale tag for og:locale / Intl formatting, e.g. "he_IL". */
+  ogLocale: string;
   isDefault?: boolean;
 }
 
 export const locales: LocaleConfig[] = [
-  { code: "he", dir: "rtl", label: "עברית", isDefault: true },
+  { code: "he", dir: "rtl", label: "עברית", ogLocale: "he_IL", isDefault: true },
 ];
 
 export const defaultLocale: Locale = locales.find((l) => l.isDefault)!.code;
@@ -28,4 +30,8 @@ export function isLocale(value: string): value is Locale {
 
 export function dirFor(locale: Locale): "ltr" | "rtl" {
   return locales.find((l) => l.code === locale)!.dir;
+}
+
+export function ogLocaleFor(locale: Locale): string {
+  return locales.find((l) => l.code === locale)!.ogLocale;
 }

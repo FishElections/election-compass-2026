@@ -14,10 +14,13 @@ import { LikertButton } from "@/components/quiz/LikertButton";
 import { QuestionMoreInfo } from "@/components/quiz/QuestionMoreInfo";
 import { TopicPriorityStep } from "@/components/quiz/TopicPriorityStep";
 import { trackEvent } from "@/lib/analytics";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 export function QuizClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { dict } = useDictionary();
+  const t = dict.quiz;
   const mode: QuizMode = searchParams.get("mode") === "long" ? "long" : "short";
   const [showPriorityStep, setShowPriorityStep] = useState(false);
 
@@ -108,7 +111,9 @@ export function QuizClient() {
         <div className="mb-8">
           <div className="mb-3 flex items-center justify-between text-sm font-medium text-gray-dark">
             <span>
-              שאלה {currentIndex + 1} מתוך {total}
+              {t.questionOfTotal
+                .replace("{current}", String(currentIndex + 1))
+                .replace("{total}", String(total))}
             </span>
             <span>{Math.round(progressPercent)}%</span>
           </div>
@@ -159,10 +164,10 @@ export function QuizClient() {
             disabled={currentIndex === 0}
           >
             <ChevronRight className="h-4 w-4" />
-            שאלה קודמת
+            {t.previousQuestion}
           </Button>
           <Button variant="ghost" onClick={handleSkip}>
-            דלג על שאלה
+            {t.skipQuestion}
             <SkipForward className="h-4 w-4" />
           </Button>
         </div>

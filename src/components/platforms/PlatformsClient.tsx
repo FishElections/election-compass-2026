@@ -15,6 +15,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 type CategoryFilter = "all" | PlatformTopicKey;
 
@@ -22,6 +23,8 @@ export function PlatformsClient() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<CategoryFilter>("all");
   const [activePartyId, setActivePartyId] = useState<string | null>(null);
+  const { dict } = useDictionary();
+  const t = dict.platforms;
 
   const activeParty = parties.find((p) => p.id === activePartyId) ?? null;
 
@@ -38,10 +41,10 @@ export function PlatformsClient() {
       <div className="bg-dot-grid">
         <div className="mx-auto max-w-5xl px-4 pb-8 pt-20 text-center sm:pt-24">
           <h1 className="font-display text-3xl font-normal text-navy sm:text-4xl">
-            סיכומי מצעי המפלגות לבחירות 2026
+            {t.heading}
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-gray-dark">
-            סקירה ניטרלית, תמציתית ומקיפה של עמדות המפלגות בנושאי הליבה.
+            {t.subtitle}
           </p>
         </div>
       </div>
@@ -54,7 +57,7 @@ export function PlatformsClient() {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="חפש לפי שם מפלגה או מנהיג"
+              placeholder={t.searchPlaceholder}
               className="w-full rounded-xl border-2 border-gray bg-white py-3 pr-11 pl-4 text-sm text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none"
             />
           </div>
@@ -70,7 +73,7 @@ export function PlatformsClient() {
                   : "border-gray bg-white text-navy hover:border-sapphire"
               )}
             >
-              הכל
+              {t.allFilter}
             </button>
             {platformTopics.map((topic) => (
               <button
@@ -92,7 +95,7 @@ export function PlatformsClient() {
 
         {filteredParties.length === 0 ? (
           <p className="mt-14 text-center text-gray-dark">
-            לא נמצאו מפלגות התואמות את החיפוש.
+            {t.noResults}
           </p>
         ) : (
           <div className="mt-10 sm:hidden">
