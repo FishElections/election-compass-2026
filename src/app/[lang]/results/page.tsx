@@ -63,12 +63,9 @@ export async function generateMetadata({
 }
 
 export default function ResultsPage() {
-  // The email opt-in only renders once a Google Sheet webhook is configured,
-  // so submissions never dead-end. Read at request time (force-dynamic).
-  const subscribeEnabled = Boolean(process.env.SHEET_WEBHOOK_URL);
   return (
     <Suspense fallback={null}>
-      <ResultsClient subscribeEnabled={subscribeEnabled} />
+      <ResultsClient />
     </Suspense>
   );
 }
