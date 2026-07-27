@@ -9,12 +9,13 @@ import { TopicShelf } from "@/components/topics/TopicShelf";
 import { TopicDetailSheet } from "@/components/topics/TopicDetailSheet";
 import { useTopicProgress } from "@/hooks/useTopicProgress";
 import { useDictionary } from "@/i18n/DictionaryProvider";
+import { cn } from "@/lib/utils";
 
 export function HotTopicsClient() {
   const [query, setQuery] = useState("");
   const [activeTopicId, setActiveTopicId] = useState<string | null>(null);
   const { openedIds, isOpened, markOpened } = useTopicProgress();
-  const { dict, locale } = useDictionary();
+  const { dict, locale, dir } = useDictionary();
   const t = dict.hotTopics;
   const hotTopics = getHotTopics(locale);
   const categoryLabels = getCategoryLabels(locale);
@@ -61,13 +62,13 @@ export function HotTopicsClient() {
       <div className="mx-auto max-w-6xl px-4 pb-16 pt-8">
         <div id="topics-top" className="flex scroll-mt-24 flex-col gap-4">
           <div className="relative">
-            <Search className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-dark" />
+            <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-dark" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t.searchPlaceholder}
-              className="w-full rounded-xl border-2 border-gray bg-white py-3 pr-11 pl-4 text-sm text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none"
+              className="w-full rounded-xl border-2 border-gray bg-white py-3 ps-11 pe-4 text-sm text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none"
             />
           </div>
 
@@ -104,7 +105,10 @@ export function HotTopicsClient() {
             </span>
             <div className="h-2 flex-1 overflow-hidden rounded-full bg-gray">
               <div
-                className="h-full rounded-full bg-gradient-to-l from-sapphire to-gold transition-all duration-500"
+                className={cn(
+                  "h-full rounded-full from-sapphire to-gold transition-all duration-500",
+                  dir === "rtl" ? "bg-gradient-to-l" : "bg-gradient-to-r"
+                )}
                 style={{ width: `${total ? (openedCount / total) * 100 : 0}%` }}
               />
             </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { RotateCcw, Home, Sparkles } from "lucide-react";
 import { getQuickStanceLabels } from "@/data/quickStanceLabels";
 import {
@@ -76,7 +76,7 @@ export function SummaryScreen({ results, onRestart }: SummaryScreenProps) {
         </p>
       </div>
 
-      <div className="mt-6 rounded-2xl border border-amber/30 bg-amber-light/40 p-6 text-right">
+      <div className="mt-6 rounded-2xl border border-amber/30 bg-amber-light/40 p-6 text-start">
         <h3 className="mb-3 flex items-center gap-2 font-bold text-navy">
           <Sparkles className="h-4 w-4 text-amber" />
           {t.worthRemembering}

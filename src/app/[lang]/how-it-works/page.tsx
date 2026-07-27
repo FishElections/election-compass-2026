@@ -1,12 +1,24 @@
 import type { Metadata } from "next";
 import { GuideClient } from "@/components/guide/GuideClient";
+import { isLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { alternatesFor } from "@/i18n/metadata";
 
-export const metadata: Metadata = {
-  title: "איך הבחירות בישראל עובדות? המדריך הפשוט",
-  description:
-    "המסע של פתק אחד: מהקלפי ועד הממשלה. מנדטים, אחוז החסימה, קואליציה ואופוזיציה - מוסבר פשוט, ציורי וב-5 דקות. בלי ז'רגון ובלי פוליטיקה.",
-  alternates: { canonical: "/how-it-works" },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  const { title, description } = dict.home.links.howItWorks;
+  return {
+    title,
+    description,
+    alternates: alternatesFor(lang, "/how-it-works"),
+  };
+}
 
 export default function HowItWorksPage() {
   return <GuideClient />;

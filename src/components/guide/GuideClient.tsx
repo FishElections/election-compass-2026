@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { motion } from "framer-motion";
-import { ChevronDown, ChevronLeft } from "lucide-react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -193,7 +193,7 @@ export function GuideClient() {
             <Link href="/quiz?mode=short" onClick={() => trackEvent("guide_cta_quiz")}>
               <Button size="lg">
                 {t.closing.cta}
-                <ChevronLeft className="h-4 w-4" />
+                <ChevronRight className="h-4 w-4 rtl:rotate-180" />
               </Button>
             </Link>
           </div>

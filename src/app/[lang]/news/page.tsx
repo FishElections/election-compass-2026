@@ -1,8 +1,9 @@
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import type { Metadata } from "next";
 import { Newspaper } from "lucide-react";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { alternatesFor } from "@/i18n/metadata";
 
 // Placeholder page with no real content yet — kept out of the index until
 // actual news content ships, to avoid a thin/"coming soon" page in search.
@@ -18,7 +19,7 @@ export async function generateMetadata({
     title: dict.news.pageTitle,
     description: dict.news.pageDescription,
     robots: { index: false, follow: true },
-    alternates: { canonical: "/news" },
+    alternates: alternatesFor(lang, "/news"),
   };
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Topic } from "@/types";
 import { categoryIcons, getCategoryLabels } from "@/data/hotTopics";
 import { getStanceBreakdown } from "@/lib/topicStance";
@@ -22,12 +22,12 @@ export function TopicCard({ topic, done, onOpen }: TopicCardProps) {
     <button
       type="button"
       onClick={onOpen}
-      className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-gray/80 bg-white text-right shadow-ambient transition-all duration-200 hover:-translate-y-0.5 hover:shadow-ambient-lg cursor-pointer"
+      className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-gray/80 bg-white text-start shadow-ambient transition-all duration-200 hover:-translate-y-0.5 hover:shadow-ambient-lg cursor-pointer"
     >
       {done && (
         <span
           aria-hidden
-          className="absolute right-0 top-0 flex h-8 w-8 items-center justify-center rounded-bl-2xl bg-success text-sm font-bold text-white"
+          className="absolute end-0 top-0 flex h-8 w-8 items-center justify-center rounded-bl-2xl bg-success text-sm font-bold text-white"
         >
           ✓
         </span>
@@ -62,7 +62,7 @@ export function TopicCard({ topic, done, onOpen }: TopicCardProps) {
         </span>
         <span className="inline-flex shrink-0 items-center gap-1 text-xs font-bold text-sapphire">
           {done ? t.reopen : t.open}
-          <ChevronLeft className="h-3.5 w-3.5" />
+          <ChevronRight className="h-3.5 w-3.5 rtl:rotate-180" />
         </span>
       </div>
     </button>

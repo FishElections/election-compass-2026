@@ -10,7 +10,13 @@ import { useDictionary } from "@/i18n/DictionaryProvider";
  */
 export function ThresholdDoor() {
   const reduceMotion = useReducedMotion();
-  const { dict } = useDictionary();
+  const { dict, dir } = useDictionary();
+  // Flex order stays [rejected pill, door, accepted pill] in the markup, but
+  // `dir` mirrors which physical side (left/right) each one lands on — so
+  // the x-offsets (always physical) must flip sign to keep telling the same
+  // story (rejected bounces off the door, accepted moves through it) instead
+  // of visually reversing which party looks like it got in.
+  const sign = dir === "rtl" ? -1 : 1;
 
   return (
     <div
@@ -23,7 +29,7 @@ export function ThresholdDoor() {
     >
       <motion.div
         className="flex h-11 w-11 items-center justify-center rounded-xl bg-coral text-xs font-extrabold text-white"
-        animate={reduceMotion ? undefined : { x: [52, 6, 58, 58] }}
+        animate={reduceMotion ? undefined : { x: [52 * sign, 6 * sign, 58 * sign, 58 * sign] }}
         transition={
           reduceMotion
             ? undefined
@@ -42,7 +48,7 @@ export function ThresholdDoor() {
 
       <motion.div
         className="flex h-11 w-11 items-center justify-center rounded-xl bg-success text-xs font-extrabold text-white"
-        animate={reduceMotion ? undefined : { x: [46, -14, -14] }}
+        animate={reduceMotion ? undefined : { x: [46 * sign, -14 * sign, -14 * sign] }}
         transition={
           reduceMotion
             ? undefined

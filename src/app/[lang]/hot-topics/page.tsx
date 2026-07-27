@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { HotTopicsClient } from "@/components/topics/HotTopicsClient";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { alternatesFor } from "@/i18n/metadata";
 
 export async function generateMetadata({
   params,
@@ -14,7 +15,7 @@ export async function generateMetadata({
   return {
     title: dict.hotTopics.pageTitle,
     description: dict.hotTopics.pageDescription,
-    alternates: { canonical: "/hot-topics" },
+    alternates: alternatesFor(lang, "/hot-topics"),
   };
 }
 

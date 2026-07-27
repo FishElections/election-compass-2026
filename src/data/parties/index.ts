@@ -2,9 +2,11 @@ import { Locale } from "@/i18n/config";
 import { Party } from "@/types";
 import { partiesCore } from "./core";
 import { partiesTextHe } from "./he";
+import { partiesTextEn } from "./en";
 
 const partiesTextByLocale: Record<Locale, typeof partiesTextHe> = {
   he: partiesTextHe,
+  en: partiesTextEn,
 };
 
 export function getParties(locale: Locale): Party[] {

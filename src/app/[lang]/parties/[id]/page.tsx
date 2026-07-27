@@ -1,15 +1,17 @@
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { ChevronRight } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { getParties } from "@/data/parties";
 import { partiesCore } from "@/data/parties/core";
 import { getCategories } from "@/data/questions";
 import { getPartyCategoryAverages } from "@/utils/calculator";
 import { PartyLogo } from "@/components/PartyLogo";
 import { BallotLetterBadge } from "@/components/BallotLetterBadge";
-import { isLocale } from "@/i18n/config";
+import { isLocale, dirFor } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { alternatesFor } from "@/i18n/metadata";
+import { cn } from "@/lib/utils";
 
 export function generateStaticParams() {
   return partiesCore.map((party) => ({ id: party.id }));
@@ -35,7 +37,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: `/parties/${party.id}` },
+    alternates: alternatesFor(lang, `/parties/${party.id}`),
     openGraph: { title, description, type: "profile" },
     twitter: { card: "summary", title, description },
   };
@@ -53,6 +55,7 @@ export default async function PartyProfilePage({
   const dict = await getDictionary(lang);
   const t = dict.partyProfile;
   const categories = getCategories(lang);
+  const dir = dirFor(lang);
 
   const averages = getPartyCategoryAverages(party.id);
 
@@ -64,11 +67,11 @@ export default async function PartyProfilePage({
             href="/"
             className="mb-6 inline-flex items-center gap-1 text-sm font-medium text-navy hover:underline"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
             {t.backToHome}
           </Link>
 
-          <div className="relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-navy to-navy-light p-8 text-center text-white shadow-ambient-lg sm:flex-row sm:text-right">
+          <div className="relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-navy to-navy-light p-8 text-center text-white shadow-ambient-lg sm:flex-row sm:text-start">
             <div className="bg-dot-grid-dark pointer-events-none absolute inset-0 opacity-50" />
             <div className="relative z-10">
               <PartyLogo party={party} size="lg" className="ring-4 ring-white/20" />
@@ -110,7 +113,10 @@ export default async function PartyProfilePage({
                 </div>
                 <div className="h-2.5 w-full rounded-full bg-gray">
                   <div
-                    className="h-2.5 rounded-full bg-gradient-to-l from-sapphire to-success transition-all duration-500"
+                    className={cn(
+                      "h-2.5 rounded-full from-sapphire to-success transition-all duration-500",
+                      dir === "rtl" ? "bg-gradient-to-l" : "bg-gradient-to-r"
+                    )}
                     style={{ width: `${percent}%` }}
                   />
                 </div>

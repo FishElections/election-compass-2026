@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   BookOpen,
   Check,
-  ChevronLeft,
+  ChevronRight,
   HelpCircle,
   Key,
   Shield,
@@ -63,7 +63,7 @@ function PartyGroup({ label, ids, tone }: PartyGroupProps) {
               <Link
                 key={id}
                 href={`/parties/${id}`}
-                className="flex items-center gap-2 rounded-full border border-gray/60 bg-white py-1 pl-3 pr-1.5 text-sm font-medium text-navy transition-colors hover:border-sapphire"
+                className="flex items-center gap-2 rounded-full border border-gray/60 bg-white py-1 ps-1.5 pe-3 text-sm font-medium text-navy transition-colors hover:border-sapphire"
               >
                 <PartyLogo party={party} size="sm" />
                 {party.name}
@@ -202,7 +202,7 @@ function SheetInner({ topic, breakdown, done, onMarkDone }: SheetInnerProps) {
                 className="inline-flex items-center gap-1 text-sm font-semibold text-sapphire hover:underline"
               >
                 {t.relatedQuestionCta}
-                <ChevronLeft className="h-4 w-4" />
+                <ChevronRight className="h-4 w-4 rtl:rotate-180" />
               </Link>
             )}
           </div>
@@ -250,8 +250,11 @@ interface TopicDetailSheetProps {
 
 export function TopicDetailSheet({ topic, isOpened, onMarkDone, onClose }: TopicDetailSheetProps) {
   const isDesktop = useMediaQuery("(min-width: 640px)");
-  const { dict, locale } = useDictionary();
+  const { dict, locale, dir } = useDictionary();
   const categoryLabels = getCategoryLabels(locale);
+  // The panel is anchored to the reading-start edge (right in RTL, left in
+  // LTR) — it must also slide in/out from that same edge.
+  const offscreenX = dir === "rtl" ? "100%" : "-100%";
 
   // שומר את הנושא האחרון גם אחרי ש-topic הופך ל-null, כדי שיהיה מה להציג
   // בזמן אנימציית היציאה (במקום שהתוכן ייעלם מיידית לפני שהגיליון נסגר).
@@ -282,10 +285,10 @@ export function TopicDetailSheet({ topic, isOpened, onMarkDone, onClose }: Topic
             </Dialog.Overlay>
             <Dialog.Content asChild forceMount aria-describedby={undefined}>
               <motion.div
-                className="fixed inset-x-0 bottom-0 z-50 flex h-[85vh] flex-col rounded-t-3xl bg-background shadow-2xl focus:outline-none sm:inset-y-0 sm:left-auto sm:right-0 sm:h-full sm:w-[440px] sm:rounded-none"
-                initial={isDesktop ? { x: "100%" } : { y: "100%" }}
+                className="fixed inset-x-0 bottom-0 z-50 flex h-[85vh] flex-col rounded-t-3xl bg-background shadow-2xl focus:outline-none sm:inset-y-0 sm:end-auto sm:start-0 sm:h-full sm:w-[440px] sm:rounded-none"
+                initial={isDesktop ? { x: offscreenX } : { y: "100%" }}
                 animate={isDesktop ? { x: 0 } : { y: 0 }}
-                exit={isDesktop ? { x: "100%" } : { y: "100%" }}
+                exit={isDesktop ? { x: offscreenX } : { y: "100%" }}
                 transition={{ type: "spring", damping: 32, stiffness: 320 }}
               >
                 <div className="mx-auto mt-2.5 h-1.5 w-10 shrink-0 rounded-full bg-gray sm:hidden" />

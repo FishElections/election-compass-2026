@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ChallengeClient } from "@/components/challenge/ChallengeClient";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { alternatesFor } from "@/i18n/metadata";
 
 export async function generateMetadata({
   params,
@@ -15,7 +16,7 @@ export async function generateMetadata({
   return {
     title: dict.challenge.pageTitle,
     description: dict.challenge.pageDescription,
-    alternates: { canonical: "/challenge" },
+    alternates: alternatesFor(lang, "/challenge"),
   };
 }
 

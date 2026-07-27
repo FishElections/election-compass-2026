@@ -27,12 +27,13 @@ export function PartyResultCard({
     return (
       <div className="notch-card bg-grain animate-pop-in relative overflow-hidden bg-gradient-to-br from-navy to-navy-light p-8 text-white shadow-ambient-lg">
         <div className="bg-dot-grid-dark pointer-events-none absolute inset-0 opacity-50" />
+        {/* Decorative corner watermark, not tied to reading direction — stays put in both locales. */}
         <CompassMark
           animate
           className="pointer-events-none absolute -left-6 -top-6 h-32 w-32 text-white/10"
         />
         <ConfettiBurst />
-        <div className="relative z-10 flex flex-col items-center gap-6 text-center sm:flex-row sm:text-right">
+        <div className="relative z-10 flex flex-col items-center gap-6 text-center sm:flex-row sm:text-start">
           <span className="absolute -top-2 right-1/2 translate-x-1/2 rounded-full bg-gold px-3 py-1 text-xs font-bold text-navy shadow sm:static sm:translate-x-0">
             #1 · {rankLabel[1]}
           </span>

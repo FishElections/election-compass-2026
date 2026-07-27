@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import {
   Zap,
   ListChecks,
-  ChevronLeft,
+  ChevronRight,
   Lock,
   ScrollText,
   Brain,
@@ -16,10 +16,14 @@ import { CompassMark } from "@/components/CompassMark";
 import { getSiteUrl } from "@/utils/site";
 import { ogLocaleFor } from "@/i18n/config";
 import { useDictionary } from "@/i18n/DictionaryProvider";
+import { cn } from "@/lib/utils";
 
 export default function HomePage() {
-  const { dict, locale } = useDictionary();
+  const { dict, locale, dir } = useDictionary();
   const t = dict.home;
+  const gradientDir = dir === "rtl" ? "bg-gradient-to-l" : "bg-gradient-to-r";
+  const hoverNudge =
+    dir === "rtl" ? "group-hover:-translate-x-1" : "group-hover:translate-x-1";
 
   const websiteJsonLd = {
     "@context": "https://schema.org",
@@ -43,8 +47,8 @@ export default function HomePage() {
       <div className="relative flex h-dvh flex-col overflow-hidden px-4 pb-3 pt-14 lg:hidden">
         <InteractiveFlagBackdrop className="pointer-events-none absolute -inset-y-16 inset-x-[-15%] opacity-[0.12]" />
 
-        <div className="absolute left-3 top-3 z-20 flex -rotate-[8deg] flex-col overflow-hidden rounded shadow-md">
-          <span className="bg-gradient-to-l from-success to-emerald-light px-3 py-1 text-[10px] font-bold tracking-wide text-white">
+        <div className="absolute start-3 top-3 z-20 flex -rotate-[8deg] flex-col overflow-hidden rounded shadow-md">
+          <span className={cn(gradientDir, "from-success to-emerald-light px-3 py-1 text-[10px] font-bold tracking-wide text-white")}>
             {t.badgeObjective}
           </span>
           <span className="bg-white px-3 py-1 text-[10px] font-bold tracking-wide text-navy">
@@ -83,7 +87,7 @@ export default function HomePage() {
                   <span className="rounded-full bg-white/10 px-2 py-0.5 font-medium">
                     {t.fastTrack.durationShort}
                   </span>
-                  <ChevronLeft className="h-3.5 w-3.5" />
+                  <ChevronRight className="h-3.5 w-3.5 rtl:rotate-180" />
                 </div>
               </div>
             </Link>
@@ -100,7 +104,7 @@ export default function HomePage() {
                   <span className="rounded-full bg-gray-light px-2 py-0.5 font-medium text-navy">
                     {t.comprehensiveTrack.durationShort}
                   </span>
-                  <ChevronLeft className="h-3.5 w-3.5 text-navy" />
+                  <ChevronRight className="h-3.5 w-3.5 text-navy rtl:rotate-180" />
                 </div>
               </div>
             </Link>
@@ -184,7 +188,7 @@ export default function HomePage() {
               <div className="lg:col-span-5">
                 <div className="relative flex min-h-[190px] items-center overflow-hidden">
                   <div className="absolute left-1/2 top-1/2 flex w-[140%] -translate-x-1/2 -translate-y-1/2 -rotate-[8deg] flex-col gap-3">
-                    <div className="bg-gradient-to-l from-success to-emerald-light py-3 text-center text-lg font-bold tracking-wide text-white shadow-lg sm:text-xl">
+                    <div className={cn(gradientDir, "from-success to-emerald-light py-3 text-center text-lg font-bold tracking-wide text-white shadow-lg sm:text-xl")}>
                       {t.badgeObjective}
                     </div>
                     <div className="bg-white py-3 text-center text-lg font-bold tracking-wide text-navy shadow-lg sm:text-xl">
@@ -213,7 +217,7 @@ export default function HomePage() {
                     </span>
                     <span className="flex items-center gap-1 font-semibold">
                       {t.fastTrack.cta}
-                      <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                      <ChevronRight className={cn("h-4 w-4 rtl:rotate-180 transition-transform", hoverNudge)} />
                     </span>
                   </div>
                 </div>
@@ -236,7 +240,7 @@ export default function HomePage() {
                     </span>
                     <span className="flex items-center gap-1 font-semibold text-navy">
                       {t.comprehensiveTrack.cta}
-                      <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                      <ChevronRight className={cn("h-4 w-4 rtl:rotate-180 transition-transform", hoverNudge)} />
                     </span>
                   </div>
                 </div>
@@ -261,7 +265,7 @@ export default function HomePage() {
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-sapphire/10 text-sapphire">
                   <Vote className="h-7 w-7" />
                 </div>
-                <div className="flex-1 text-right">
+                <div className="flex-1 text-start">
                   <h3 className="font-display text-xl font-normal text-navy">
                     {t.links.howItWorks.title}
                   </h3>
@@ -269,7 +273,7 @@ export default function HomePage() {
                     {t.links.howItWorks.description}
                   </p>
                 </div>
-                <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
+                <ChevronRight className={cn("h-5 w-5 shrink-0 text-gray-dark rtl:rotate-180 transition-transform", hoverNudge)} />
               </Link>
 
               <Link
@@ -282,7 +286,7 @@ export default function HomePage() {
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-success/10 text-success">
                   <ScrollText className="h-7 w-7" />
                 </div>
-                <div className="flex-1 text-right">
+                <div className="flex-1 text-start">
                   <h3 className="font-display text-xl font-normal text-navy">
                     {t.links.platforms.title}
                   </h3>
@@ -290,7 +294,7 @@ export default function HomePage() {
                     {t.links.platforms.description}
                   </p>
                 </div>
-                <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
+                <ChevronRight className={cn("h-5 w-5 shrink-0 text-gray-dark rtl:rotate-180 transition-transform", hoverNudge)} />
               </Link>
 
               <Link
@@ -303,7 +307,7 @@ export default function HomePage() {
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-coral/15 text-coral">
                   <Flame className="h-7 w-7" />
                 </div>
-                <div className="flex-1 text-right">
+                <div className="flex-1 text-start">
                   <h3 className="font-display text-xl font-normal text-navy">
                     {t.links.hotTopics.title}
                   </h3>
@@ -311,7 +315,7 @@ export default function HomePage() {
                     {t.links.hotTopics.description}
                   </p>
                 </div>
-                <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
+                <ChevronRight className={cn("h-5 w-5 shrink-0 text-gray-dark rtl:rotate-180 transition-transform", hoverNudge)} />
               </Link>
 
               <Link
@@ -324,7 +328,7 @@ export default function HomePage() {
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-amber/15 text-amber">
                   <Brain className="h-7 w-7" />
                 </div>
-                <div className="flex-1 text-right">
+                <div className="flex-1 text-start">
                   <h3 className="font-display text-xl font-normal text-navy">
                     {t.links.challenge.title}
                   </h3>
@@ -332,7 +336,7 @@ export default function HomePage() {
                     {t.links.challenge.description}
                   </p>
                 </div>
-                <ChevronLeft className="h-5 w-5 shrink-0 text-gray-dark transition-transform group-hover:-translate-x-1" />
+                <ChevronRight className={cn("h-5 w-5 shrink-0 text-gray-dark rtl:rotate-180 transition-transform", hoverNudge)} />
               </Link>
             </div>
           </div>

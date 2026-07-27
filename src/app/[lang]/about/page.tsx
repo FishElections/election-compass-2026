@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Info, Lock, Calculator, Users, Mail } from "lucide-react";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { alternatesFor } from "@/i18n/metadata";
 
 // lucide-react dropped brand icons, so inline the official LinkedIn glyph.
 function LinkedinIcon({ className }: { className?: string }) {
@@ -17,15 +18,16 @@ function LinkedinIcon({ className }: { className?: string }) {
   );
 }
 
+// Names come from dict.about.builders.names (same order) since a person's
+// name is translated/transliterated text, not locale-invariant like the
+// rest of this static bio data.
 const builders = [
   {
-    name: "אוהד בר אלי",
     photo: "/team/ohad.jpg",
     linkedin: "https://www.linkedin.com/in/ohad-bar-eli-26181215b",
     email: "ohadoo20@gmail.com",
   },
   {
-    name: "איתי אילת",
     photo: "/team/itay.jpg",
     linkedin: "https://www.linkedin.com/in/itayeylath/",
     email: "itay.ey@gmail.com",
@@ -43,7 +45,7 @@ export async function generateMetadata({
   return {
     title: dict.about.pageTitle,
     description: dict.about.pageDescription,
-    alternates: { canonical: "/about" },
+    alternates: alternatesFor(lang, "/about"),
   };
 }
 
@@ -110,7 +112,7 @@ export default async function AboutPage({
         </h2>
         <p className="leading-relaxed text-gray-dark">{t.builders.intro}</p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          {builders.map((b) => (
+          {builders.map((b, i) => (
             <div
               key={b.email}
               className="flex flex-col items-center rounded-2xl border border-sapphire/15 bg-white p-6 text-center shadow-ambient-lg"
@@ -118,13 +120,13 @@ export default async function AboutPage({
               {/* eslint-disable-next-line @next/next/no-img-element -- small static asset from public/, next/image's overhead isn't worth it here */}
               <img
                 src={b.photo}
-                alt={b.name}
+                alt={t.builders.names[i]}
                 width={96}
                 height={96}
                 className="h-24 w-24 rounded-full object-cover shadow-sm ring-4 ring-sapphire/10"
               />
               <h3 className="font-display mt-4 text-lg font-normal text-navy">
-                {b.name}
+                {t.builders.names[i]}
               </h3>
               <a
                 href={b.linkedin}
