@@ -1,6 +1,7 @@
 import { Topic, TopicCategory } from "@/types";
 import { categorySlugs } from "@/data/hotTopics";
 import { TopicCard } from "@/components/topics/TopicCard";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 interface TopicShelfProps {
   category: TopicCategory;
@@ -17,6 +18,7 @@ export function TopicShelf({
   isOpened,
   onOpenTopic,
 }: TopicShelfProps) {
+  const { dict } = useDictionary();
   if (topics.length === 0) return null;
 
   return (
@@ -26,7 +28,9 @@ export function TopicShelf({
           {icon}
         </span>
         <h2 className="font-display text-lg font-normal text-navy">{category}</h2>
-        <span className="text-xs text-gray-dark">{topics.length} נושאים</span>
+        <span className="text-xs text-gray-dark">
+          {topics.length} {dict.hotTopics.topicsCountSuffix}
+        </span>
       </div>
       <div className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
         {topics.map((topic) => (

@@ -9,11 +9,14 @@ import { ChallengeCardResult, OpennessReaction } from "@/types";
 import { SetupStep, ChallengeDeckItem } from "@/components/challenge/SetupStep";
 import { ChallengeCard } from "@/components/challenge/ChallengeCard";
 import { SummaryScreen } from "@/components/challenge/SummaryScreen";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 type Step = "setup" | "cards" | "summary";
 
 export function ChallengeClient() {
   const searchParams = useSearchParams();
+  const { dict } = useDictionary();
+  const t = dict.challenge.intro;
   const partyParam = searchParams.get("party");
   const presetPartyId = parties.some((p) => p.id === partyParam)
     ? partyParam!
@@ -65,11 +68,10 @@ export function ChallengeClient() {
               <Brain className="h-7 w-7" />
             </div>
             <h1 className="font-display text-3xl font-normal text-navy sm:text-4xl">
-              מפרק הבועות: אתגר נקודות העיוורון
+              {t.heading}
             </h1>
             <p className="mx-auto mt-3 max-w-xl text-gray-dark">
-              בדקו את הפתיחות המחשבתית שלכם מול הטיעונים החזקים ביותר של
-              המחנה הנגדי, בלי לחץ ובלי שיפוטיות.
+              {t.subtitle}
             </p>
           </div>
         </div>

@@ -1,16 +1,18 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 /** קלפי מצוירת עם פתק שנופל פנימה בלופ עדין. */
 export function BallotHero() {
   const reduceMotion = useReducedMotion();
+  const { dict } = useDictionary();
 
   return (
     <div
       className="relative mx-auto mt-9 h-[150px] w-[190px]"
       role="img"
-      aria-label="איור של קלפי הצבעה עם פתק שנכנס אליה"
+      aria-label={dict.guide.ballotHeroAlt}
     >
       <motion.div
         className="absolute right-[62px] z-0 flex h-[46px] w-[66px] items-center justify-center rounded-md border-2 border-navy bg-white text-2xl font-black text-navy"

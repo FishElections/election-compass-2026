@@ -6,6 +6,7 @@ import { ConfettiBurst } from "@/components/ConfettiBurst";
 import { MAGIC_NUMBER, TOTAL_SEATS, toyParties } from "@/data/electionGuide";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 /**
  * צעצוע הקואליציה: מקישים על מפלגות דמיוניות ומנסים להגיע ל-61.
@@ -14,6 +15,8 @@ import { cn } from "@/lib/utils";
 export function CoalitionBlocks() {
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const celebrated = useRef(false);
+  const { dict } = useDictionary();
+  const t = dict.guide.coalitionBlocks;
 
   const sum = toyParties
     .filter((p) => picked.has(p.name))
@@ -42,7 +45,7 @@ export function CoalitionBlocks() {
   return (
     <div className="relative mt-6 rounded-2xl border border-gray/80 bg-white p-5 shadow-ambient sm:p-6">
       <div className="flex items-center justify-between font-extrabold text-navy">
-        <span>הקואליציה שלכם</span>
+        <span>{t.yourCoalition}</span>
         <span
           className={cn(
             "text-3xl transition-colors",
@@ -64,7 +67,7 @@ export function CoalitionBlocks() {
         />
       </div>
       <p className="mt-1 text-left text-xs font-bold text-amber">
-        היעד: {MAGIC_NUMBER} ▲
+        {t.target} {MAGIC_NUMBER} ▲
       </p>
 
       <div className="mt-4 flex flex-wrap gap-2.5">
@@ -97,7 +100,7 @@ export function CoalitionBlocks() {
             <span className="absolute inset-x-0 top-1/2">
               <ConfettiBurst key={sum >= MAGIC_NUMBER ? "win" : "no"} />
             </span>
-            🎉 יש ממשלה! ({sum} מנדטים)
+            🎉 {t.hasGovernment} ({sum} {t.seatsSuffix})
           </>
         )}
       </div>
@@ -108,7 +111,7 @@ export function CoalitionBlocks() {
         className="mx-auto flex cursor-pointer items-center gap-1 text-[13px] text-gray-dark underline hover:text-navy"
       >
         <RotateCcw className="h-3 w-3" />
-        התחילו מחדש
+        {t.restart}
       </button>
     </div>
   );

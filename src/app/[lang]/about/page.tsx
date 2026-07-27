@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Info, Lock, Calculator, Users, Mail } from "lucide-react";
+import { isLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
 // lucide-react dropped brand icons, so inline the official LinkedIn glyph.
 function LinkedinIcon({ className }: { className?: string }) {
@@ -30,14 +32,31 @@ const builders = [
   },
 ];
 
-export const metadata: Metadata = {
-  title: "מי אנחנו ואיך מחושבת ההתאמה",
-  description:
-    "מצפן בחירות 2026 הוא כלי חינמי ובלתי תלוי לבדיקת התאמה למפלגות. גלו איך מחושב אחוז ההתאמה, מה זה מדד המרחק ומדד הכיוון, ומי עומד מאחורי הפרויקט.",
-  alternates: { canonical: "/about" },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  return {
+    title: dict.about.pageTitle,
+    description: dict.about.pageDescription,
+    alternates: { canonical: "/about" },
+  };
+}
 
-export default function AboutPage() {
+export default async function AboutPage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  if (!isLocale(lang)) return null;
+  const dict = await getDictionary(lang);
+  const t = dict.about;
+
   return (
     <main className="flex-1">
       <div className="bg-dot-grid">
@@ -46,76 +65,50 @@ export default function AboutPage() {
             <Info className="h-7 w-7" />
           </div>
           <h1 className="font-display text-3xl font-normal text-navy sm:text-4xl">
-            אודות מצפן בחירות 2026
+            {t.heading}
           </h1>
         </div>
       </div>
 
       <div className="mx-auto max-w-2xl px-4 pb-16">
-        <p className="leading-relaxed text-gray-dark">
-          מצפן בחירות 2026 הוא כלי חינמי ובלתי תלוי שנועד לעזור לכם להבין
-          אילו מפלגות מייצגות את העמדות שלכם בצורה הטובה ביותר, על סמך
-          תשובותיכם לשאלון עמדות במגוון נושאי ליבה.
-        </p>
+        <p className="leading-relaxed text-gray-dark">{t.intro}</p>
 
         <h2 className="font-display mt-10 mb-3 flex items-center gap-2 text-xl font-normal text-navy">
           <Calculator className="h-5 w-5 text-sapphire" />
-          איך מחושבת ההתאמה?
+          {t.howCalculated.heading}
         </h2>
         <p className="leading-relaxed text-gray-dark">
-          לכל שאלה שעניתם עליה, אנו משווים בין העמדה שלכם לעמדת כל מפלגה, בסולם
-          שנע בין 2- (נגד מאוד) ל-2+ (בעד מאוד). אחוז ההתאמה הסופי הוא ממוצע של
-          שני מדדים משלימים, שכל אחד מהם תופס היבט אחר של &quot;התאמה&quot;:
+          {t.howCalculated.intro}
         </p>
         <div
           className="mt-4 overflow-x-auto rounded-xl border border-sapphire/20 bg-sapphire/5 p-4 text-center text-sm font-medium text-navy"
           dir="ltr"
         >
-          Score(%) = 0.5 × DistanceScore + 0.5 × DirectionScore
+          {t.howCalculated.formula}
         </div>
         <p className="mt-4 leading-relaxed text-gray-dark">
-          <strong>מדד המרחק</strong>{" "}
-          בודק כמה קרובות העמדות בפועל, מספר מול
-          מספר: DistanceScore = (1 − Σ(wᵢ × |Uᵢ − Pᵢ|) / Σ(wᵢ × 4)) × 100,
-          כאשר U היא עמדתכם, P היא עמדת המפלגה, ו-w הוא משקל השאלה.
+          <strong>{t.howCalculated.distanceLabel}</strong>{" "}
+          {t.howCalculated.distanceBody}
         </p>
         <p className="mt-4 leading-relaxed text-gray-dark">
-          <strong>מדד הכיוון</strong>{" "}
-          בודק דבר אחר: האם הכיוון הכללי של
-          העמדות שלכם תואם את כיוון המפלגה על פני כל השאלות יחד, גם אם
-          העוצמה שונה (למשל: אתם &quot;בעד&quot; והמפלגה &quot;בעד
-          מאוד&quot; באותו נושא בדיוק). בלי המדד הזה, מפלגה שנוקטת עמדות
-          מתונות באופן עקבי הייתה זוכה ליתרון לא-מוצדק במדד המרחק לבדו, גם
-          מול מי שבבירור מתאים אידאולוגית למפלגה אחרת שנוקטת עמדות נחרצות
-          יותר.
+          <strong>{t.howCalculated.directionLabel}</strong>{" "}
+          {t.howCalculated.directionBody}
         </p>
         <p className="mt-4 leading-relaxed text-gray-dark">
-          המפלגות מדורגות מהגבוהה להתאמה הנמוכה ביותר. משקל השאלה (w) מורכב
-          משני מרכיבים: במסלול המקיף תוכלו לסמן נושאים שחשובים לכם יותר, וזה
-          מייצר משקל גבוה יותר לשאלות בקטגוריה הזו. בנוסף, לכל שאלה יש
-          &quot;משקל קיטוב&quot; מובנה, שנגזר ממידת המחלוקת בין המפלגות עליה
-          בפועל: שאלה שבה המפלגות מפוזרות על פני כל הסולם (נושא שנוי במחלוקת
-          אמיתי) משפיעה יותר על התוצאה משאלה שבה כמעט כל המפלגות מסכימות, כדי
-          שההתאמה תשקף בעיקר את מה שבאמת מבדיל בין המפלגות.
+          {t.howCalculated.weightingBody}
         </p>
 
         <h2 className="font-display mt-10 mb-3 flex items-center gap-2 text-xl font-normal text-navy">
           <Lock className="h-5 w-5 text-success" />
-          פרטיות
+          {t.privacy.heading}
         </h2>
-        <p className="leading-relaxed text-gray-dark">
-          התשובות שלכם אנונימיות לחלוטין ואינן נשמרות בשרת. כל החישוב מתבצע
-          בדפדפן שלכם בלבד, וברגע שתסגרו את הדף התשובות נמחקות.
-        </p>
+        <p className="leading-relaxed text-gray-dark">{t.privacy.body}</p>
 
         <h2 className="font-display mt-10 mb-3 flex items-center gap-2 text-xl font-normal text-navy">
           <Users className="h-5 w-5 text-amber" />
-          מי בנה את זה
+          {t.builders.heading}
         </h2>
-        <p className="leading-relaxed text-gray-dark">
-          מצפן בחירות 2026 נבנה בהתנדבות על ידי שני יזמים עצמאיים, מתוך אמונה
-          בכלי חינמי, שקוף ובלתי תלוי לבוחר הישראלי.
-        </p>
+        <p className="leading-relaxed text-gray-dark">{t.builders.intro}</p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           {builders.map((b) => (
             <div
@@ -154,10 +147,7 @@ export default function AboutPage() {
             </div>
           ))}
         </div>
-        <p className="mt-4 leading-relaxed text-gray-dark">
-          ותודה מכל הלב לטובה בני, בת זוגתי (של אוהד), שבזכות האמונה שלה
-          בפרויקט הזה הוא קם ונולד.
-        </p>
+        <p className="mt-4 leading-relaxed text-gray-dark">{t.builders.thanks}</p>
       </div>
     </main>
   );

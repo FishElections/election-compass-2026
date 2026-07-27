@@ -16,11 +16,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-const labels = {
-  close: "סגור",
-  fullProfileCta: "לצפייה בפרופיל המלא",
-};
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 interface PartyDetailSheetProps {
   party: Party | null;
@@ -30,6 +26,8 @@ interface PartyDetailSheetProps {
 
 export function PartyDetailSheet({ party, defaultTopicKey, onClose }: PartyDetailSheetProps) {
   const isDesktop = useMediaQuery("(min-width: 640px)");
+  const { dict } = useDictionary();
+  const labels = dict.platforms.partyDetailSheet;
 
   // שומר את המפלגה האחרונה גם אחרי ש-party הופך ל-null, כדי שיהיה מה להציג
   // בזמן אנימציית היציאה (במקום שהתוכן ייעלם מיידית לפני שהגיליון נסגר).

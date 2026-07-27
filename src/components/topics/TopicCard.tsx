@@ -4,6 +4,7 @@ import { ChevronLeft } from "lucide-react";
 import { Topic } from "@/types";
 import { categoryIcons } from "@/data/hotTopics";
 import { getStanceBreakdown } from "@/lib/topicStance";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 interface TopicCardProps {
   topic: Topic;
@@ -13,6 +14,8 @@ interface TopicCardProps {
 
 export function TopicCard({ topic, done, onOpen }: TopicCardProps) {
   const breakdown = getStanceBreakdown(topic);
+  const { dict } = useDictionary();
+  const t = dict.hotTopics.card;
 
   return (
     <button
@@ -54,10 +57,10 @@ export function TopicCard({ topic, done, onOpen }: TopicCardProps) {
 
       <div className="flex items-center justify-between gap-2 border-t border-gray/60 px-5 py-3">
         <span className="text-xs font-medium text-gray-dark">
-          {breakdown ? breakdown.label : "אין עדיין מיפוי מפלגתי"}
+          {breakdown ? breakdown.label : t.noPartyMapping}
         </span>
         <span className="inline-flex shrink-0 items-center gap-1 text-xs font-bold text-sapphire">
-          {done ? "לפתוח שוב" : "בואו נבין"}
+          {done ? t.reopen : t.open}
           <ChevronLeft className="h-3.5 w-3.5" />
         </span>
       </div>

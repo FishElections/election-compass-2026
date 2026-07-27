@@ -2,14 +2,23 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import { parties } from "@/data/parties";
 import { ResultsClient } from "@/components/results/ResultsClient";
+import { isLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
 type ResultsSearchParams = { p?: string; s?: string };
 
 export async function generateMetadata({
+  params,
   searchParams,
 }: {
+  params: Promise<{ lang: string }>;
   searchParams: Promise<ResultsSearchParams>;
 }): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  const t = dict.results;
+
   const { p, s } = await searchParams;
   const party = parties.find((x) => x.id === p);
   const score = Number(s);
@@ -21,15 +30,17 @@ export async function generateMetadata({
 
   if (!party || !Number.isFinite(score)) {
     return {
-      title: "התוצאות שלי",
-      description: "ענו על השאלון וגלו לאיזו מפלגה אתם הכי מתאימים.",
+      title: t.pageTitle,
+      description: t.pageDescription,
       robots,
     };
   }
 
   const rounded = Math.max(0, Math.min(100, Math.round(score)));
-  const title = `🎯 קיבלתי ${rounded}% התאמה ל${party.name}`;
-  const description = "עשיתי את מצפן הבחירות 2026. מה איתכם? גלו גם אתם 👇";
+  const title = t.shareTitleTemplate
+    .replace("{score}", String(rounded))
+    .replace("{party}", party.name);
+  const description = t.shareDescription;
   const ogImage = `/api/og?p=${encodeURIComponent(party.id)}&s=${rounded}`;
 
   return {

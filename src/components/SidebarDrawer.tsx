@@ -17,32 +17,26 @@ import {
 } from "lucide-react";
 import { CompassMark } from "@/components/CompassMark";
 import { cn } from "@/lib/utils";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 const navItems = [
-  { href: "/", label: "דף הבית", icon: Home },
-  { href: "/quiz", label: "התחל שאלון", icon: FileText },
-  { href: "/how-it-works", label: "איך הבחירות עובדות?", icon: Vote },
-  {
-    href: "/hot-topics",
-    label: "הנושאים החמים",
-    icon: Flame,
-  },
-  { href: "/platforms", label: "סיכומי מצעי המפלגות", icon: ScrollText },
-  {
-    href: "/challenge",
-    label: "מפרק הבועות (דע את היריב)",
-    icon: Brain,
-  },
-  { href: "/about", label: "אודות והסבר על האלגוריתם", icon: Info },
+  { href: "/", icon: Home, key: "home" as const },
+  { href: "/quiz", icon: FileText, key: "startQuiz" as const },
+  { href: "/how-it-works", icon: Vote, key: "howItWorks" as const },
+  { href: "/hot-topics", icon: Flame, key: "hotTopics" as const },
+  { href: "/platforms", icon: ScrollText, key: "platforms" as const },
+  { href: "/challenge", icon: Brain, key: "challenge" as const },
+  { href: "/about", icon: Info, key: "about" as const },
 ];
 
 export function SidebarDrawer() {
   const pathname = usePathname();
+  const { dict } = useDictionary();
 
   function handleShare() {
     const url = window.location.origin;
     if (navigator.share) {
-      navigator.share({ title: "מצפן בחירות 2026", url }).catch(() => {});
+      navigator.share({ title: dict.nav.brandName, url }).catch(() => {});
     } else if (navigator.clipboard) {
       navigator.clipboard.writeText(url);
     }
@@ -56,7 +50,7 @@ export function SidebarDrawer() {
           className="fixed top-4 right-4 z-40 flex items-center gap-2 rounded-full bg-navy px-4 py-2.5 text-sm font-semibold text-white shadow-ambient-lg transition-all hover:-translate-y-0.5 hover:glow-sapphire cursor-pointer"
         >
           <Menu className="h-4 w-4" />
-          תפריט
+          {dict.nav.menuButton}
         </button>
       </Dialog.Trigger>
       <Dialog.Portal>
@@ -71,14 +65,14 @@ export function SidebarDrawer() {
                 <CompassMark animate className="h-6 w-6" />
               </div>
               <Dialog.Title asChild>
-                <span className="font-bold text-white">מצפן בחירות 2026</span>
+                <span className="font-bold text-white">{dict.nav.brandName}</span>
               </Dialog.Title>
             </div>
             <Dialog.Close asChild>
               <button
                 type="button"
                 className="flex h-9 w-9 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white cursor-pointer"
-                aria-label="סגור תפריט"
+                aria-label={dict.nav.closeMenu}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -104,7 +98,7 @@ export function SidebarDrawer() {
                       <span className="absolute right-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-full bg-gold" />
                     )}
                     <item.icon className="h-5 w-5 shrink-0" />
-                    {item.label}
+                    {dict.nav[item.key]}
                   </Link>
                 </Dialog.Close>
               );
@@ -118,10 +112,10 @@ export function SidebarDrawer() {
               className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-white/15 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:border-sapphire hover:bg-white/5 cursor-pointer"
             >
               <Share2 className="h-4 w-4" />
-              שתפו את האתר
+              {dict.nav.shareSite}
             </button>
             <p className="mt-3 text-center text-xs text-white/40">
-              v1.0 · בחירות 2026
+              {dict.nav.version}
             </p>
           </div>
         </Dialog.Content>
