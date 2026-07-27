@@ -394,7 +394,7 @@
     },
     "privacy": {
       "heading": "Privacy",
-      "body": "Your answers are completely anonymous and are never saved on a server. The entire calculation happens in your browser alone, and the moment you close the page, the answers are deleted."
+      "body": "The entire calculation happens in your browser alone, and the moment you close the page, the answers are deleted."
     },
     "builders": {
       "heading": "Who built this",
