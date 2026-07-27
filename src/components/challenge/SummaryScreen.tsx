@@ -13,6 +13,7 @@ import { ChallengeCardResult, StanceSide } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Gauge } from "@/components/Gauge";
 import { useDictionary } from "@/i18n/DictionaryProvider";
+import { localizedPath } from "@/i18n/config";
 
 interface SummaryScreenProps {
   results: ChallengeCardResult[];
@@ -43,7 +44,7 @@ export function SummaryScreen({ results, onRestart }: SummaryScreenProps) {
     .filter((t): t is { topic: string; title: string } => t !== null);
 
   function share(target: "whatsapp" | "x") {
-    const url = window.location.origin;
+    const url = `${window.location.origin}${localizedPath("/", locale)}`;
     const text = t.shareTextTemplate
       .replace("{score}", String(score))
       .replace("{emoji}", tier.emoji)

@@ -147,7 +147,7 @@ export function ResultsClient() {
   const topScore = topThree[0]?.matchPercentage ?? 0;
   const shareUrl =
     typeof window !== "undefined" && topParty
-      ? `${window.location.origin}/results?p=${encodeURIComponent(
+      ? `${window.location.origin}${localizedPath("/results", locale)}?p=${encodeURIComponent(
           topParty.id
         )}&s=${topScore}`
       : "";
