@@ -42,13 +42,57 @@ for (const s of partyStances) {
 // 1 = identical stance, 0 = opposite extreme (distance 4).
 const closeness = (user: number, party: number) => 1 - Math.abs(user - party) / 4;
 
+// The four intuitive macro-topics shown in the summary square, each grouping
+// the finer categories that belong to it.
+export type MacroKey = "economy" | "social" | "security" | "governance";
+
+export const MACRO_GROUPS: Record<MacroKey, CategoryId[]> = {
+  economy: ["economy", "infrastructure"],
+  social: ["society", "religion_state"],
+  security: ["security"],
+  governance: ["judiciary", "governance"],
+};
+
+function leanFromPosition(pos: number): Lean {
+  if (pos < 0.42) return "left";
+  if (pos > 0.58) return "right";
+  return "center";
+}
+
+// Closeness-weighted average of party axis positions over a set of answered
+// questions (optionally limited to some categories). null when none answered.
+function axisPosition(
+  answered: [string, number][],
+  parties: Party[],
+  cats?: CategoryId[]
+): number | null {
+  let sum = 0;
+  let weight = 0;
+  for (const [qid, u] of answered) {
+    if (cats && !cats.includes(categoryOf[qid])) continue;
+    for (const p of parties) {
+      if (p.spectrumCategory === "sectoral") continue;
+      const s = stanceOf[p.id]?.[qid];
+      if (s === undefined) continue;
+      const c = closeness(u, s);
+      sum +=
+        c *
+        SPECTRUM_AXIS[p.spectrumCategory as Exclude<SpectrumCategory, "sectoral">];
+      weight += c;
+    }
+  }
+  return weight > 0 ? sum / weight : null;
+}
+
 export interface PoliticalProfile {
   /** Per-category lean, derived from which spectrum group the answers align with. */
   leans: { category: CategoryId; lean: Lean }[];
   /** Categories where the user agrees most strongly with their top party. */
   topReasons: CategoryId[];
-  /** The user's overall spot on the 0 (left) → 1 (right) axis, for the visual. */
+  /** The user's overall spot on the 0 (left) → 1 (right) axis. */
   overallPosition: number;
+  /** Per macro-topic position (0→1) + lean, for the topic square. */
+  macros: { key: MacroKey; position: number; lean: Lean }[];
 }
 
 export function computePoliticalProfile(
@@ -124,21 +168,16 @@ export function computePoliticalProfile(
     if (topReasons.length === 0 && perCat.length) topReasons = [perCat[0].category];
   }
 
-  // Overall position: across every answered question, a closeness-weighted
-  // average of the party axis positions — where the answers sit among the parties.
-  let posSum = 0;
-  let posWeight = 0;
-  for (const [qid, u] of answered) {
-    for (const p of parties) {
-      if (p.spectrumCategory === "sectoral") continue;
-      const s = stanceOf[p.id]?.[qid];
-      if (s === undefined) continue;
-      const c = closeness(u, s);
-      posSum += c * SPECTRUM_AXIS[p.spectrumCategory as Exclude<SpectrumCategory, "sectoral">];
-      posWeight += c;
-    }
-  }
-  const overallPosition = posWeight > 0 ? posSum / posWeight : 0.5;
+  const overallPosition = axisPosition(answered, parties) ?? 0.5;
 
-  return { leans, topReasons, overallPosition };
+  const macros = (Object.keys(MACRO_GROUPS) as MacroKey[])
+    .map((key) => {
+      const position = axisPosition(answered, parties, MACRO_GROUPS[key]);
+      return position === null
+        ? null
+        : { key, position, lean: leanFromPosition(position) };
+    })
+    .filter((m): m is { key: MacroKey; position: number; lean: Lean } => m !== null);
+
+  return { leans, topReasons, overallPosition, macros };
 }
