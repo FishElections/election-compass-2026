@@ -324,43 +324,50 @@ export function QuizClient() {
           dragElastic={0.12}
           dragDirectionLock
           onDragEnd={handleDragEnd}
-          className="flex min-h-0 flex-1 touch-pan-y flex-col justify-center py-3 lg:block lg:py-0"
+          className="flex min-h-0 flex-1 touch-pan-y flex-col overflow-y-auto overscroll-contain py-3 lg:block lg:overflow-visible lg:py-0"
         >
           <motion.div
             key={currentQuestion.id}
             initial={{ opacity: 0, x: enterX, y: reduce ? 0 : 6 }}
             animate={{ opacity: 1, x: 0, y: 0 }}
             transition={{ duration: reduce ? 0 : 0.22, ease: "easeOut" }}
+            className="flex min-h-0 flex-1 flex-col lg:block"
           >
-            <div className="mb-3 lg:mb-5">
-              <CategoryBadge category={currentQuestion.category} />
-            </div>
-            <h1 className="font-display mb-4 text-[clamp(1.15rem,5.2vw,1.6rem)] font-normal leading-snug text-navy lg:mb-8 lg:text-3xl">
-              {currentQuestion.text}
-            </h1>
+            {/* my-auto (not justify-center on the scrolling element itself) centers
+                the question when it fits, but falls back to 0 instead of clipping
+                the top when the "more info" accordion opens and pushes content
+                past the viewport — see the mobile can't-scroll bug this fixed. */}
+            <div className="my-auto lg:contents">
+              <div className="mb-3 lg:mb-5">
+                <CategoryBadge category={currentQuestion.category} />
+              </div>
+              <h1 className="font-display mb-4 text-[clamp(1.15rem,5.2vw,1.6rem)] font-normal leading-snug text-navy lg:mb-8 lg:text-3xl">
+                {currentQuestion.text}
+              </h1>
 
-            <div
-              className={cn(
-                "flex flex-col gap-2 lg:gap-3",
-                locked && "pointer-events-none"
-              )}
-            >
-              {likertOptions.map((option) => (
-                <LikertButton
-                  key={option.value}
-                  value={option.value}
-                  label={option.label}
-                  selected={selectedValue === option.value}
-                  confirmed={pending === option.value}
-                  onClick={() => handleAnswer(option.value)}
-                />
-              ))}
-            </div>
+              <div
+                className={cn(
+                  "flex flex-col gap-2 lg:gap-3",
+                  locked && "pointer-events-none"
+                )}
+              >
+                {likertOptions.map((option) => (
+                  <LikertButton
+                    key={option.value}
+                    value={option.value}
+                    label={option.label}
+                    selected={selectedValue === option.value}
+                    confirmed={pending === option.value}
+                    onClick={() => handleAnswer(option.value)}
+                  />
+                ))}
+              </div>
 
-            <QuestionMoreInfo
-              questionId={currentQuestion.id}
-              moreInfo={currentQuestion.moreInfo}
-            />
+              <QuestionMoreInfo
+                questionId={currentQuestion.id}
+                moreInfo={currentQuestion.moreInfo}
+              />
+            </div>
           </motion.div>
         </motion.div>
 
