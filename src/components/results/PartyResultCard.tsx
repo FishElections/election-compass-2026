@@ -51,7 +51,7 @@ export function PartyResultCard({
               {result.party.shortDescription}
             </p>
           </div>
-          <div className="shrink-0 rounded-2xl bg-white/10 p-4 backdrop-blur-md">
+          <div className="shrink-0 rounded-2xl bg-white/10 p-4 lg:backdrop-blur-md">
             <Gauge
               percentage={result.matchPercentage}
               size={120}

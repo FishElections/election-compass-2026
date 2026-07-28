@@ -184,9 +184,11 @@ export function SidebarDrawer() {
       </nav>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-40 bg-navy-dark/60 backdrop-blur-[2px] data-[state=open]:animate-overlay-in data-[state=closed]:animate-overlay-out" />
+        {/* הטשטוש רק מ-lg ומעלה: בנייד טשטוש מסך-מלא נטען מחדש לאורך כל
+            אנימציית הפתיחה, וב-2px מעל כיסוי 60% הוא בקושי נראה. */}
+        <Dialog.Overlay className="fixed inset-0 z-40 bg-navy-dark/60 lg:backdrop-blur-[2px] data-[state=open]:animate-overlay-in data-[state=closed]:animate-overlay-out" />
         <Dialog.Content
-          className="fixed inset-y-0 start-0 z-50 flex h-full w-[85vw] max-w-sm flex-col bg-navy/95 text-white shadow-2xl backdrop-blur-lg focus:outline-none data-[state=open]:animate-drawer-in data-[state=closed]:animate-drawer-out"
+          className="fixed inset-y-0 start-0 z-50 flex h-full w-[85vw] max-w-sm flex-col bg-navy/95 text-white shadow-2xl lg:backdrop-blur-lg focus:outline-none data-[state=open]:animate-drawer-in data-[state=closed]:animate-drawer-out"
           aria-describedby={undefined}
         >
           <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">

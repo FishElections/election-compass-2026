@@ -1,3 +1,5 @@
+import { FlagArt } from "@/components/FlagArt";
+
 interface WavingFlagProps {
   className?: string;
 }
@@ -58,18 +60,7 @@ export function WavingFlag({ className }: WavingFlagProps) {
         </mask>
 
         <g id="flag-art" filter="url(#flag-wave)">
-          <rect x="0" y="0" width="660" height="480" fill="white" />
-          <rect x="0" y="45" width="660" height="75" fill="var(--color-sapphire)" />
-          <rect x="0" y="360" width="660" height="75" fill="var(--color-sapphire)" />
-          <g
-            transform="translate(330,240) scale(75)"
-            fill="none"
-            stroke="var(--color-sapphire)"
-            strokeWidth="0.11"
-          >
-            <path d="M 0,-1 L 0.866,0.5 L -0.866,0.5 Z" />
-            <path d="M 0,1 L -0.866,-0.5 L 0.866,-0.5 Z" />
-          </g>
+          <FlagArt />
         </g>
 
         {Array.from({ length: BAND_COUNT }).map((_, i) => (
