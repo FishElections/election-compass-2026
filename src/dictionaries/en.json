@@ -327,6 +327,12 @@
         "right": "Right",
         "you": "You",
         "sectoralNote": "Sectoral parties (Haredi / Arab-sector) aren’t placed on the left–right axis"
+      },
+      "macro": {
+        "economy": "Economy",
+        "social": "Society & religion",
+        "security": "Security & foreign",
+        "governance": "Governance & justice"
       }
     }
   },
