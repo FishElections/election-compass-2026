@@ -7,6 +7,14 @@ import { getCounterArguments } from "@/data/counterArguments";
 import { quickStanceTopicIds, getQuickStanceLabels } from "@/data/quickStanceLabels";
 import { getLikertOptions } from "@/data/likert";
 import { getPlatformTopics } from "@/data/platformTopics";
+import { getFilterLabels } from "@/data/filters";
+import {
+  blocOptions,
+  exclusionReasons,
+  partyNoteIds,
+  partySectors,
+  sizeOptions,
+} from "@/data/filters/core";
 import {
   getToyParties,
   getDemoSlips,
@@ -55,6 +63,17 @@ for (const { code } of locales) {
     });
     test("every likert option has a label", () => {
       expect(getLikertOptions(code)).toHaveLength(5);
+    });
+    test("every filter option has a label", () => {
+      const labels = getFilterLabels(code);
+      for (const sector of partySectors) expect(labels.sectors[sector]).toBeTruthy();
+      for (const option of blocOptions) expect(labels.bloc[option]).toBeTruthy();
+      for (const option of sizeOptions) expect(labels.size[option]).toBeTruthy();
+      for (const reason of exclusionReasons) {
+        expect(labels.exclusionReasons[reason]).toBeTruthy();
+      }
+      for (const note of partyNoteIds) expect(labels.notes[note]).toBeTruthy();
+      expect(labels.pollSource.channel13).toBeTruthy();
     });
     test("every platform topic has a label", () => {
       const topics = getPlatformTopics(code);

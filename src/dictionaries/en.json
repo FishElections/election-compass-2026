@@ -199,6 +199,32 @@
       "continue": "Continue to question {question}",
       "restart": "Start over"
     },
+    "filterStep": {
+      "eyebrow": "One last narrowing",
+      "heading": "Who is actually on the table for you?",
+      "description": "So far we checked what you believe. Now let's narrow it down to what you'd actually consider. Match percentages won't change - a party you filter out just moves to a hidden list you can always open.",
+      "skip": "Skip",
+      "continue": "Show results",
+      "bloc": {
+        "question": "Do you care what the party recommends for prime minister?",
+        "hint": "Parties that haven't declared a bloc are never filtered out by this question."
+      },
+      "size": {
+        "question": "Do you have a preference about party size?",
+        "hint": "A soft preference: it breaks ties between close parties, but never overrides a real gap in match.",
+        "thresholdLabel": "Also hide parties polling below the electoral threshold",
+        "thresholdSource": "Threshold checked against {source}, {date}",
+        "thresholdStale": "The polling data hasn't been updated recently, so the threshold filter is disabled."
+      },
+      "nationality": {
+        "question": "Does the community a party represents matter to you?",
+        "hint": "Tick whatever you wouldn't consider. Ticking nothing is fine too."
+      },
+      "religiousCharacter": {
+        "question": "And the party's religious character?",
+        "hint": "Every party falls under exactly one of these, including non-religious."
+      }
+    },
     "calculating": "Calculating your match…"
   },
   "results": {
@@ -263,7 +289,26 @@
       "bodyTemplate": "Test {party} against the strongest arguments from the other side, in the Bubble Breaker.",
       "cta": "Go to Bubble Breaker"
     },
-    "restart": "Start over"
+    "restart": "Start over",
+    "filters": {
+      "banner": {
+        "prefix": "You filtered:",
+        "sectorsPrefix": "sectors",
+        "edit": "Edit",
+        "reset": "Clear filters"
+      },
+      "hidden": {
+        "heading": "Hidden by your choices ({count})",
+        "hide": "Hide again",
+        "note": "They're still here, with their original match score. Clearing the filters brings them back into the list."
+      },
+      "topExcluded": {
+        "heading": "Your highest match didn't pass your filters",
+        "body": "{party} scored {score}% - the highest match in the quiz - but it doesn't meet the conditions you set. Worth knowing."
+      },
+      "droppedAsEmpty": "The filters you chose ruled out every party, so we dropped them and showed all the results.",
+      "pollSource": "Seat projections: {source}, {date}"
+    }
   },
   "platforms": {
     "pageTitle": "Party Platforms for the 2026 Elections, in Brief",

@@ -60,6 +60,52 @@ export interface OfficialBallotLetter {
   source: string;
 }
 
+/**
+ * המגזר שהמפלגה מייצגת, בשני צירים בלתי-תלויים.
+ *
+ * שני הצירים הם *חלוקה מלאה*: לכל מפלגה יש בדיוק ערך אחד בכל ציר, ואין
+ * קטגוריה שיורית של "כל השאר". זה לא ניואנס - זו הייתה תקלה אמיתית בגרסה
+ * קודמת, שבה קטגוריה בשם "יהודית-ציונית" הוגדרה על החיתוך של שני הצירים.
+ * התוצאה: משתמש שסינן "מפלגה יהודית" נשאר עם ש"ס ויהדות התורה ברשימה, כי
+ * הן יהודיות אך לא ציוניות. קטגוריה שמערבבת צירים לא עונה נכון על אף אחת
+ * מהשאלות שהיא לכאורה שואלת.
+ *
+ * הפרדת הצירים גם הופכת את הכלי לסימטרי: משתמש ב-/ar מקבל הבחנה בין רע"ם
+ * (איסלאמית) לחד"ש-תע"ל ובל"ד (לא-דתיות) בדיוק כפי שמשתמש ב-/he מקבל
+ * הבחנה בין חרדית לדתית-לאומית - במקום שהמפלגות הערביות יוצגו כגוש אחד
+ * בלתי-מובחן בזמן שהמפלגות היהודיות מפורטות.
+ */
+
+/** ציר לאומי. כל מפלגה היא בדיוק אחד מהשניים. */
+export type NationalSector = "arab" | "jewish";
+
+/** ציר האופי הדתי. "non-religious" = הדת אינה ציר מרכזי במצע. */
+export type ReligiousCharacter =
+  | "haredi"
+  | "religious-zionist"
+  | "islamist"
+  | "non-religious";
+
+export type PartySector = NationalSector | ReligiousCharacter;
+
+/**
+ * שיוך הגוש כפי שהוא נספר בסקרים הישראליים. שלוש קטגוריות ולא שתיים:
+ * המפלגות הערביות נספרות בנפרד משני הגושים, ולכן "לא ממליצה על נתניהו"
+ * ו"שייכת לגוש המתנגד" אינם אותו דבר.
+ *
+ * זוהי הצהרה פומבית שמשתנה בין מערכות בחירות - ולכן מחייבת מקור ותאריך,
+ * באותו סטנדרט של officialBallotLetter ושל party_stances.
+ */
+export type BlocStance = "pro-netanyahu" | "anti-netanyahu" | "unaligned";
+
+export interface PartyBlocDeclaration {
+  stance: BlocStance;
+  /** תאריך הבדיקה האחרונה, בפורמט YYYY-MM-DD */
+  asOf: string;
+  /** קישור למקור פומבי שמאמת את השיוך */
+  source: string;
+}
+
 export interface Party {
   id: string;
   name: string;
@@ -78,6 +124,10 @@ export interface Party {
   officialBallotLetter?: OfficialBallotLetter;
   /** נשמר לשימוש עתידי; לא מאוכלס בפועל כדי להימנע משימוש בדימויים לא מורשים של אנשים אמיתיים. */
   leaderSketchUrl?: string;
+  /** המגזרים שהמפלגה מייצגת. ראו PartySector. */
+  sectors: PartySector[];
+  /** שיוך הגוש, כשמתועד. חסר = לא משויך, והמפלגה לעולם לא נפסלת בגללו. */
+  bloc?: PartyBlocDeclaration;
   platform: PlatformTopic[];
 }
 
@@ -124,10 +174,47 @@ export type QuizMode = "short" | "long";
 
 export type UserAnswers = Record<string, StanceValue | undefined>;
 
+/** למה מפלגה הוסתרה. משמש גם כמזהה התווית המוצגת על השורה המוסתרת. */
+export type ExclusionReason = "sector" | "bloc" | "threshold";
+
+/** תגית מידע בלבד - לא משפיעה על דירוג ולא מסתירה. */
+export type PartyNoteId = "below-threshold" | "near-threshold" | "large" | "small";
+
+/** "any" = בלי סינון. ברירת המחדל בכל שדה היא לא לסנן כלום. */
+export interface QuizFilters {
+  /** מגזרים שהמשתמש לא מוכן להצביע להם */
+  excludedSectors: PartySector[];
+  /**
+   * "pro" = רק מפלגות שימליצו על נתניהו.
+   * "anti" = רק מפלגות שלא ימליצו עליו - כולל המפלגות הערביות, שאינן
+   * בגוש המתנגד אך ודאי אינן ממליצות עליו.
+   */
+  blocPreference: "pro" | "anti" | "any";
+  /** העדפה רכה: שוברת שוויון בלבד, לעולם לא פוסלת. ראו calculator.ts. */
+  sizePreference: "large" | "small" | "any";
+  /** הסתרת מפלגות שאינן עוברות את אחוז החסימה בסקרים */
+  hideBelowThreshold: boolean;
+}
+
+export const emptyFilters: QuizFilters = {
+  excludedSectors: [],
+  blocPreference: "any",
+  sizePreference: "any",
+  hideBelowThreshold: false,
+};
+
 export interface PartyResult {
   party: Party;
+  /**
+   * התאמה אידאולוגית בלבד. המסננים לעולם לא נוגעים במספר הזה - ברגע שגודל
+   * בסקרים או מגזר נכנסים לתוכו, "83% התאמה" מפסיק להיות מדיד.
+   */
   matchPercentage: number;
   answeredCount: number;
+  /** ריק = המפלגה עברה את הסינון */
+  excludedBy: ExclusionReason[];
+  /** תגיות תצוגה בלבד */
+  notes: PartyNoteId[];
 }
 
 export interface SteelmanArgument {

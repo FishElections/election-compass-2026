@@ -15,6 +15,7 @@ import { CategoryBadge } from "@/components/quiz/CategoryBadge";
 import { LikertButton } from "@/components/quiz/LikertButton";
 import { QuestionMoreInfo } from "@/components/quiz/QuestionMoreInfo";
 import { TopicPriorityStep } from "@/components/quiz/TopicPriorityStep";
+import { FilterStep } from "@/components/quiz/FilterStep";
 import { trackEvent } from "@/lib/analytics";
 import { useDictionary } from "@/i18n/DictionaryProvider";
 import { localizedPath } from "@/i18n/config";
@@ -46,6 +47,10 @@ export function QuizClient() {
   const reduce = useReducedMotion();
   const mode: QuizMode = searchParams.get("mode") === "long" ? "long" : "short";
   const [showPriorityStep, setShowPriorityStep] = useState(false);
+  // ?step=filters opens straight on the filter step (from the results "edit"
+  // button), without touching answers.
+  const editingFilters = searchParams.get("step") === "filters";
+  const [showFilterStep, setShowFilterStep] = useState(editingFilters);
   // The option just tapped, shown highlighted during the confirmation window.
   const [pending, setPending] = useState<StanceValue | null>(null);
   // 1 when moving forward, -1 when going back — drives the slide-in direction.
@@ -64,11 +69,13 @@ export function QuizClient() {
     startQuiz,
     resumeOrStart,
     dismissResume,
+    filters,
     answerQuestion,
     goNext,
     goPrev,
     skip,
     resetCategoryWeights,
+    resetFilters,
   } = useQuizStore();
 
   const hasHydrated = useQuizHydration(locale);
@@ -122,10 +129,12 @@ export function QuizClient() {
   }
 
   function finishQuiz() {
+    // The long track gets topic weighting first; both tracks then reach the
+    // filter step — the final narrowing before results.
     if (mode === "long") {
       setShowPriorityStep(true);
     } else {
-      goToResults();
+      setShowFilterStep(true);
     }
   }
 
@@ -173,12 +182,34 @@ export function QuizClient() {
   function handlePriorityContinue() {
     const weightedCount = Object.keys(categoryWeights).length;
     trackEvent("topic_priority_step", { skipped: false, weightedCount, mode });
-    goToResults();
+    setShowPriorityStep(false);
+    setShowFilterStep(true);
   }
 
   function handlePrioritySkip() {
     resetCategoryWeights();
     trackEvent("topic_priority_step", { skipped: true, weightedCount: 0, mode });
+    setShowPriorityStep(false);
+    setShowFilterStep(true);
+  }
+
+  function handleFilterContinue() {
+    // Counts only — which sectors were excluded is the most sensitive thing the
+    // site collects and never leaves the device. See docs/analytics.md.
+    trackEvent("quiz_filters", {
+      skipped: false,
+      sectorCount: filters.excludedSectors.length,
+      bloc: filters.blocPreference !== "any",
+      size: filters.sizePreference !== "any",
+      threshold: filters.hideBelowThreshold,
+      mode,
+    });
+    goToResults();
+  }
+
+  function handleFilterSkip() {
+    resetFilters();
+    trackEvent("quiz_filters", { skipped: true, mode });
     goToResults();
   }
 
@@ -195,7 +226,9 @@ export function QuizClient() {
     );
   }
 
-  if (resumable && storedMode === mode) {
+  // When arriving to edit filters from the results page the quiz is already
+  // done — a mid-way "resume?" prompt would just be a roadblock.
+  if (resumable && storedMode === mode && !editingFilters) {
     return (
       <main className="flex-1">
         <div className="mx-auto flex max-w-md flex-col items-center gap-5 px-4 py-20 text-center">
@@ -241,6 +274,19 @@ export function QuizClient() {
           <TopicPriorityStep
             onContinue={handlePriorityContinue}
             onSkip={handlePrioritySkip}
+          />
+        </div>
+      </main>
+    );
+  }
+
+  if (showFilterStep) {
+    return (
+      <main className="flex-1">
+        <div className="mx-auto flex max-w-2xl flex-col px-4 pb-10 pt-8 sm:py-16">
+          <FilterStep
+            onContinue={handleFilterContinue}
+            onSkip={handleFilterSkip}
           />
         </div>
       </main>

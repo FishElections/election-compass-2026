@@ -28,6 +28,8 @@ export function getParties(locale: Locale): Party[] {
       logoImageUrl: p.logoImageUrl,
       officialBallotLetter: p.officialBallotLetter,
       leaderSketchUrl: p.leaderSketchUrl,
+      sectors: p.sectors,
+      bloc: p.bloc,
       platform: p.platform.map((topic) => {
         const topicText = t.platform.find((pt) => pt.topicKey === topic.topicKey);
         if (!topicText) {
