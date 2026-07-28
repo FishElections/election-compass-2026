@@ -50,7 +50,7 @@ export function PartyDetailSheet({ party, defaultTopicKey, onClose }: PartyDetai
           <Dialog.Portal forceMount>
             <Dialog.Overlay asChild forceMount>
               <motion.div
-                className="fixed inset-0 z-40 bg-navy-dark/60 backdrop-blur-[2px]"
+                className="fixed inset-0 z-40 bg-navy-dark/60 lg:backdrop-blur-[2px]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}

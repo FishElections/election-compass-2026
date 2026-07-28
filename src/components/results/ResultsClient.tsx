@@ -364,9 +364,12 @@ export function ResultsClient() {
 
       {/* Sharing is what actually spreads this tool, and on a phone the share
           block sits over a screen down the page. Keep it docked just above the
-          tab bar the whole way down. */}
+          tab bar the whole way down.
+          No backdrop-blur: the bar is fixed over scrolling content, so the
+          browser re-resolves the blur every scroll frame — and at a 95% opaque
+          background it isn't visible anyway. */}
       {topThree[0] && (
-        <div className="fixed inset-x-0 bottom-[var(--mobile-nav-h)] z-30 flex gap-2 border-t border-gray bg-background/95 px-4 py-2.5 backdrop-blur-md lg:hidden">
+        <div className="fixed inset-x-0 bottom-[var(--mobile-nav-h)] z-30 flex gap-2 border-t border-gray bg-background/95 px-4 py-2.5 lg:hidden">
           <Button onClick={shareWhatsApp} variant="success" className="flex-1">
             <WhatsAppIcon className="h-4 w-4" />
             {t.share.whatsapp}

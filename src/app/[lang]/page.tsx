@@ -12,6 +12,7 @@ import {
   Vote,
 } from "lucide-react";
 import { InteractiveFlagBackdrop } from "@/components/InteractiveFlagBackdrop";
+import { StaticFlagBackdrop } from "@/components/StaticFlagBackdrop";
 import { CompassMark } from "@/components/CompassMark";
 import { JsonLd } from "@/components/JsonLd";
 import { getSiteUrl } from "@/utils/site";
@@ -68,8 +69,10 @@ export default function HomePage() {
           so landscape — where the content is taller than the screen — stays
           scrollable instead of cutting the headline off with no way to reach it. */}
       <div className="relative flex min-h-dvh flex-col px-4 pb-3 pt-6 lg:hidden">
+        {/* בנייד גרסה סטטית של אותו רקע: הנפנוף והפילטר של WavingFlag רצו
+            ללא הפסקה ולא נראים באטימות הזו — ראו StaticFlagBackdrop. */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <InteractiveFlagBackdrop className="absolute -inset-y-16 inset-x-[-15%] opacity-[0.12]" />
+          <StaticFlagBackdrop className="absolute -inset-y-16 inset-x-[-15%] opacity-[0.12]" />
         </div>
 
         <div className="absolute start-3 top-3 z-20 flex -rotate-[8deg] flex-col overflow-hidden rounded shadow-md">
