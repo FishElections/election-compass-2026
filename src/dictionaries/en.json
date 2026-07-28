@@ -211,7 +211,7 @@
       },
       "size": {
         "question": "Do you have a preference about party size?",
-        "hint": "A soft preference: it breaks ties between close parties, but never overrides a real gap in match.",
+        "hint": "A soft but noticeable preference: it can move a party whose match is within about 15 points, but it won't override a genuinely large gap.",
         "thresholdLabel": "Also hide parties polling below the electoral threshold",
         "thresholdSource": "Threshold checked against {source}, {date}",
         "thresholdStale": "The polling data hasn't been updated recently, so the threshold filter is disabled."
@@ -307,7 +307,8 @@
         "body": "{party} scored {score}% - the highest match in the quiz - but it doesn't meet the conditions you set. Worth knowing."
       },
       "droppedAsEmpty": "The filters you chose ruled out every party, so we dropped them and showed all the results.",
-      "pollSource": "Seat projections: {source}, {date}"
+      "pollSource": "Seat projections: {source}, {date}",
+      "droppedByPreference": "Rank lowered by the size preference you set"
     }
   },
   "platforms": {

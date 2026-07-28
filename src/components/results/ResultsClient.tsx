@@ -385,6 +385,7 @@ export function ResultsClient() {
                         ? filterLabels.notes[result.notes[0]]
                         : undefined
                     }
+                    preferenceDropLabel={t.filters.droppedByPreference}
                   />
                 ))}
               </div>

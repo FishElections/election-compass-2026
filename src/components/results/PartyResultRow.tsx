@@ -1,3 +1,4 @@
+import { ArrowDown } from "lucide-react";
 import { PartyResult } from "@/types";
 import { PartyLogo } from "@/components/PartyLogo";
 
@@ -5,17 +6,28 @@ export function PartyResultRow({
   result,
   rank,
   noteLabel,
+  preferenceDropLabel,
 }: {
   result: PartyResult;
   /** מושמט ברשימת המוסתרות: מספר דירוג למפלגה שסוננה החוצה הוא חסר משמעות. */
   rank?: number;
   noteLabel?: string;
+  /** מוצג רק כש-result.droppedByPreference - ראו PartyResult.droppedByPreference. */
+  preferenceDropLabel?: string;
 }) {
   return (
     <div className="flex items-center gap-4 rounded-xl border border-gray/80 bg-white px-4 py-3 shadow-ambient transition-all hover:-translate-y-0.5 hover:border-sapphire/40">
       {rank !== undefined && (
-        <span className="w-6 shrink-0 text-center text-sm font-bold text-gray-dark">
+        <span className="flex w-6 shrink-0 flex-col items-center gap-0.5 text-center text-sm font-bold text-gray-dark">
           {rank}
+          {result.droppedByPreference && preferenceDropLabel && (
+            <span title={preferenceDropLabel}>
+              <ArrowDown
+                className="h-3 w-3 shrink-0"
+                aria-label={preferenceDropLabel}
+              />
+            </span>
+          )}
         </span>
       )}
       <PartyLogo party={result.party} size="sm" />
