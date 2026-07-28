@@ -23,7 +23,7 @@ export function QuestionMoreInfo({
   return (
     <Accordion key={questionId} type="single" collapsible className="mt-2">
       <AccordionItem value="more-info" className="border-none">
-        <AccordionTrigger className="rounded-xl border-2 border-gray/80 bg-white px-4 py-3 text-sm font-semibold text-navy no-underline hover:border-amber/50 hover:bg-amber-light/20 hover:no-underline [&[data-state=open]]:border-amber/50 [&[data-state=open]]:bg-amber-light/20">
+        <AccordionTrigger className="rounded-xl border-2 border-amber/30 bg-amber-light/10 px-4 py-3 text-sm font-semibold text-navy no-underline hover:border-amber/50 hover:bg-amber-light/20 hover:no-underline [&[data-state=open]]:border-amber/50 [&[data-state=open]]:bg-amber-light/20">
           <span className="flex items-center gap-2">
             <Lightbulb className="h-4 w-4 shrink-0 text-amber" />
             {t.trigger}
