@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowDown } from "lucide-react";
 import { PartyResult } from "@/types";
 import { PartyLogo } from "@/components/PartyLogo";
 import { Gauge } from "@/components/Gauge";
@@ -34,6 +35,9 @@ export function PartyResultCard({
         />
         <ConfettiBurst />
         <div className="relative z-10 flex flex-col items-center gap-6 text-center sm:flex-row sm:text-start">
+          {/* droppedByPreference אינו יכול להיות true עבור #1 בפועל -
+              במיקום הראשון הסופי אין "מיקום גרוע יותר" להשוות אליו - ולכן
+              אין כאן אינדיקציה, רק בכרטיסי #2/#3 ובשורות הרשימה. */}
           <span className="absolute -top-2 right-1/2 translate-x-1/2 rounded-full bg-gold px-3 py-1 text-xs font-bold text-navy shadow sm:static sm:translate-x-0">
             #1 · {rankLabel[1]}
           </span>
@@ -71,8 +75,16 @@ export function PartyResultCard({
         "relative flex flex-col items-center rounded-2xl border border-gray/80 bg-white p-6 text-center shadow-ambient"
       )}
     >
-      <span className="absolute -top-3 right-1/2 translate-x-1/2 rounded-full bg-navy-light px-3 py-1 text-xs font-bold text-white shadow">
+      <span className="absolute -top-3 right-1/2 flex translate-x-1/2 items-center gap-1 rounded-full bg-navy-light px-3 py-1 text-xs font-bold text-white shadow">
         #{rank} · {rankLabel[rank] ?? ""}
+        {result.droppedByPreference && (
+          <span title={t.filters.droppedByPreference}>
+            <ArrowDown
+              className="h-3.5 w-3.5 shrink-0"
+              aria-label={t.filters.droppedByPreference}
+            />
+          </span>
+        )}
       </span>
 
       <div className="mt-3">

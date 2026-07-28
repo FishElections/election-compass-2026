@@ -142,11 +142,14 @@ function calculatePartyMatch(
 
 /**
  * מעל הפרש כזה בין שתי מפלגות, ההעדפה הרכה (גודל) לא מתערבת. הרעיון:
- * "רציתי מפלגה גדולה" הוא שיקול אמיתי, אבל הוא לא אמור להקפיץ מפלגה עם
- * 61% מעל מפלגה עם 84%. הוא כן אמור לסדר נכון בין 78% ל-77%. הגבול הזה
- * הוא ההבדל בין שובר-שוויון לבין זיהום של ציון ההתאמה.
+ * "רציתי מפלגה גדולה" הוא שיקול אמיתי שצריך השפעה מורגשת - הוא כן אמור
+ * להזיז מפלגה עם 84% מעל מפלגה עם 78% (פער של 6), אבל הוא עדיין לא אמור
+ * להקפיץ מפלגה עם 61% מעל מפלגה עם 84% (פער של 23). הגבול הזה, ולא 0
+ * ולא אינסוף, הוא ההבדל בין שובר-שוויון משמעותי לבין זיהום של ציון
+ * ההתאמה - 15 נקודות נבחר במפורש (במקום ברירת מחדל שמרנית יותר) לבקשת
+ * המשתמש, כדי שההעדפה תורגש בפועל בטבלת התוצאות ולא תישאר תיאורטית.
  */
-const TIE_BREAK_MARGIN = 2;
+export const TIE_BREAK_MARGIN = 15;
 
 /** אילו מסננים הופעלו בפועל, לצורך התצוגה במסך התוצאות. */
 export interface FilterOutcome {
@@ -256,10 +259,42 @@ export function calculateWithFilters(
   }
 
   return {
-    results: sortResults(filtered, locale, filters),
+    results: markPreferenceDrops(sortResults(filtered, locale, filters), locale, filters),
     droppedAsEmpty: false,
     pollDataFresh,
   };
+}
+
+/**
+ * מסמנת מפלגה שירדה למקום גרוע יותר בגלל ההעדפה הרכה לגודל, בהשוואה
+ * למקום שהייתה מקבלת לפי אחוז ההתאמה בלבד. עם TIE_BREAK_MARGIN רחב
+ * ההעדפה יכולה להזיז מפלגה כמה מקומות, ובלי הסבר זה נראה כמו טעות
+ * בחישוב במקום כתוצאה מכוונת מהעדפה שהמשתמש עצמו קבע.
+ *
+ * "המקום לפי אחוז ההתאמה בלבד" מחושב מחדש כאן (sortResults עם
+ * filters=undefined) ולא נשמר מוקדם יותר, כדי שלא ייסחף מהמיון הסופי -
+ * ההשוואה חייבת להיות בין שני סדרים בלתי-תלויים על אותה קבוצת מפלגות.
+ */
+function markPreferenceDrops(
+  results: PartyResult[],
+  locale: Locale,
+  filters: QuizFilters
+): PartyResult[] {
+  if (filters.sizePreference === "any") return results;
+
+  const passing = results.filter((r) => r.excludedBy.length === 0);
+  const idealRank = new Map(
+    sortResults(passing, locale, undefined).map((r, i) => [r.party.id, i])
+  );
+  const finalRank = new Map(passing.map((r, i) => [r.party.id, i]));
+
+  return results.map((r) => {
+    const ideal = idealRank.get(r.party.id);
+    const final = finalRank.get(r.party.id);
+    return ideal !== undefined && final !== undefined && final > ideal
+      ? { ...r, droppedByPreference: true }
+      : r;
+  });
 }
 
 function sortResults(
@@ -276,7 +311,7 @@ function sortResults(
    *
    * מפתח מספרי הוא תמיד עקבי, והבונוס החסום ל-TIE_BREAK_MARGIN שומר על אותה
    * התנהגות מובטחת: ההעדפה יכולה להפוך סדר רק בין מפלגות שההפרש ביניהן
-   * אינו עולה על 2 נקודות.
+   * אינו עולה על TIE_BREAK_MARGIN נקודות.
    */
   const sortKey = (r: PartyResult): number =>
     r.matchPercentage +
