@@ -52,7 +52,11 @@ export function PlatformsClient() {
       </div>
 
       <div className="mx-auto max-w-5xl px-4 pb-16">
-        <div className="flex flex-col gap-4">
+        {/* חיפוש וסינון מוצגים רק מ-sm ומעלה: במסך טלפון שתי השורות האלה
+            תופסות גובה משמעותי לפני שרואים מפלגה אחת, והרשימה קצרה מספיק
+            כדי לגלול אותה. אותו breakpoint שבו רשת הלוגואים מתחלפת בכרטיסים,
+            כך שבנייד query נשאר "" ו-category נשאר "all". */}
+        <div className="hidden flex-col gap-4 sm:flex">
           <div className="relative">
             <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-dark" />
             {/* text-base (16px), not text-sm — a sub-16px input triggers Safari's
@@ -98,12 +102,15 @@ export function PlatformsClient() {
           </div>
         </div>
 
+        {/* mt-4 ולא mt-10: המרווח הזה הפריד את הרשת משורת הפילטרים, ובלעדיה
+            הוא הותיר חלל ריק מתחת לכותרת. הבלוק ממילא sm:hidden, כך שזה
+            משפיע רק על הנייד. */}
         {filteredParties.length === 0 ? (
           <p className="mt-14 text-center text-gray-dark">
             {t.noResults}
           </p>
         ) : (
-          <div className="mt-10 sm:hidden">
+          <div className="mt-4 sm:hidden">
             <PartyLogoGrid
               parties={filteredParties}
               onSelect={(party) => setActivePartyId(party.id)}
