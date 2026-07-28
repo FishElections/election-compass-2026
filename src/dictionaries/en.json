@@ -224,7 +224,8 @@
         "question": "And the party's religious character?",
         "hint": "Every party falls under exactly one of these, including non-religious."
       }
-    }
+    },
+    "calculating": "Calculating your match…"
   },
   "results": {
     "pageTitle": "My Results",
@@ -463,5 +464,10 @@
     "letterCaption": "Ballot letter",
     "notYetConfirmed": "Ballot letter not yet confirmed",
     "currentNicknameTemplate": "(current nickname: {logo})"
+  },
+  "install": {
+    "title": "Quick access? Add to your home screen",
+    "button": "Install",
+    "dismiss": "Not now"
   }
 }

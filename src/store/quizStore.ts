@@ -99,14 +99,12 @@ export const useQuizStore = create<QuizState>()(
         });
       },
 
+      // Records the answer only — advancing is the caller's job, so the UI can
+      // show a brief "selected" confirmation before moving on (see QuizClient).
       answerQuestion: (questionId, value) => {
         set((state) => ({
           answers: { ...state.answers, [questionId]: value },
         }));
-        const { currentIndex, activeQuestions } = get();
-        if (currentIndex < activeQuestions.length - 1) {
-          set({ currentIndex: currentIndex + 1 });
-        }
       },
 
       goNext: () => {

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Script from "next/script";
 import { Heebo, Rubik, Secular_One, Cairo } from "next/font/google";
 import { SidebarDrawer } from "@/components/SidebarDrawer";
+import { InstallPrompt } from "@/components/InstallPrompt";
 import { getSiteUrl } from "@/utils/site";
 import { isLocale, dirFor, ogLocaleFor } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -145,6 +146,7 @@ export default async function RootLayout({
         <DictionaryProvider dict={dict} locale={lang} dir={dir}>
           <SidebarDrawer />
           {children}
+          <InstallPrompt />
         </DictionaryProvider>
         {gaId ? (
           <>

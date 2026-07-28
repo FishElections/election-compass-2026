@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, type PanInfo } from "framer-motion";
 import { ChevronLeft, RotateCcw, SkipForward } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
 import { useQuizHydration } from "@/hooks/useQuizHydration";
@@ -10,6 +10,7 @@ import { getLikertOptions } from "@/data/likert";
 import { QuizMode, StanceValue } from "@/types";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
+import { CompassMark } from "@/components/CompassMark";
 import { CategoryBadge } from "@/components/quiz/CategoryBadge";
 import { LikertButton } from "@/components/quiz/LikertButton";
 import { QuestionMoreInfo } from "@/components/quiz/QuestionMoreInfo";
@@ -18,19 +19,45 @@ import { FilterStep } from "@/components/quiz/FilterStep";
 import { trackEvent } from "@/lib/analytics";
 import { useDictionary } from "@/i18n/DictionaryProvider";
 import { localizedPath } from "@/i18n/config";
+import { cn } from "@/lib/utils";
+
+// How long the chosen option stays highlighted (✓ + pulse) before advancing,
+// and how long the "calculating" screen shows before the results page.
+const CONFIRM_MS = 340;
+const CALC_MS = 900;
+
+// Subtle tap confirmation on supporting devices (Android/Chrome); iOS Safari
+// has no Vibration API, so this is a no-op there.
+function haptic() {
+  if (typeof navigator !== "undefined" && "vibrate" in navigator) {
+    try {
+      navigator.vibrate(10);
+    } catch {
+      /* ignore */
+    }
+  }
+}
 
 export function QuizClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { dict, locale } = useDictionary();
+  const { dict, locale, dir } = useDictionary();
   const t = dict.quiz;
   const likertOptions = getLikertOptions(locale);
+  const reduce = useReducedMotion();
   const mode: QuizMode = searchParams.get("mode") === "long" ? "long" : "short";
   const [showPriorityStep, setShowPriorityStep] = useState(false);
-  // ?step=filters נפתח ישירות על שלב המסננים, בלי לגעת בתשובות. זה מה
-  // שכפתור "ערכו" במסך התוצאות מקשר אליו.
+  // ?step=filters opens straight on the filter step (from the results "edit"
+  // button), without touching answers.
   const editingFilters = searchParams.get("step") === "filters";
   const [showFilterStep, setShowFilterStep] = useState(editingFilters);
+  // The option just tapped, shown highlighted during the confirmation window.
+  const [pending, setPending] = useState<StanceValue | null>(null);
+  // 1 when moving forward, -1 when going back — drives the slide-in direction.
+  const [navDir, setNavDir] = useState<1 | -1>(1);
+  // True while the "calculating your match" screen shows before /results.
+  const [finishing, setFinishing] = useState(false);
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const {
     mode: storedMode,
@@ -38,12 +65,13 @@ export function QuizClient() {
     currentIndex,
     answers,
     categoryWeights,
-    filters,
     resumable,
     startQuiz,
     resumeOrStart,
     dismissResume,
+    filters,
     answerQuestion,
+    goNext,
     goPrev,
     skip,
     resetCategoryWeights,
@@ -73,6 +101,14 @@ export function QuizClient() {
     }
   }, [mode, locale, hasHydrated, startQuiz, resumeOrStart]);
 
+  // Never leave a pending advance timer running after unmount.
+  useEffect(
+    () => () => {
+      if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    },
+    []
+  );
+
   if (!hasHydrated) return null;
   if (activeQuestions.length === 0) return null;
 
@@ -82,10 +118,19 @@ export function QuizClient() {
   const progressPercent = ((currentIndex + 1) / total) * 100;
   const answeredCount = Object.keys(answers).length;
   const selectedValue = currentQuestion ? answers[currentQuestion.id] : undefined;
+  const locked = pending !== null || finishing;
+
+  function goToResults() {
+    setFinishing(true);
+    advanceTimer.current = setTimeout(
+      () => router.push(localizedPath("/results", locale)),
+      reduce ? 0 : CALC_MS
+    );
+  }
 
   function finishQuiz() {
-    // המסלול הארוך מקבל קודם את שקלול הנושאים; שני המסלולים מגיעים לשלב
-    // המסננים, שהוא הצמצום האחרון לפני התוצאות.
+    // The long track gets topic weighting first; both tracks then reach the
+    // filter step — the final narrowing before results.
     if (mode === "long") {
       setShowPriorityStep(true);
     } else {
@@ -93,24 +138,45 @@ export function QuizClient() {
     }
   }
 
-  function goToResults() {
-    router.push(localizedPath("/results", locale));
-  }
-
   function handleAnswer(value: StanceValue) {
-    if (!currentQuestion) return;
-    answerQuestion(currentQuestion.id, value);
-    if (isLast) {
-      finishQuiz();
-    }
+    if (!currentQuestion || locked) return;
+    answerQuestion(currentQuestion.id, value); // record now; advance after a beat
+    setPending(value);
+    haptic();
+    advanceTimer.current = setTimeout(
+      () => {
+        setPending(null);
+        setNavDir(1);
+        if (isLast) finishQuiz();
+        else goNext();
+      },
+      reduce ? 120 : CONFIRM_MS
+    );
   }
 
   function handleSkip() {
-    if (isLast) {
-      finishQuiz();
-    } else {
-      skip();
-    }
+    if (locked) return;
+    setNavDir(1);
+    if (isLast) finishQuiz();
+    else skip();
+  }
+
+  function handlePrev() {
+    if (locked || currentIndex === 0) return;
+    setNavDir(-1);
+    goPrev();
+  }
+
+  function handleDragEnd(_e: unknown, info: PanInfo) {
+    if (locked) return;
+    const threshold = 70;
+    const off = info.offset.x;
+    if (Math.abs(off) < threshold) return;
+    // Forward = flick the card against the reading direction (LTR: swipe left,
+    // RTL: swipe right). Forward without answering = skip; the other way = back.
+    const forward = dir === "rtl" ? off > 0 : off < 0;
+    if (forward) handleSkip();
+    else handlePrev();
   }
 
   function handlePriorityContinue() {
@@ -128,8 +194,8 @@ export function QuizClient() {
   }
 
   function handleFilterContinue() {
-    // מדווחים ספירות בלבד. אילו מגזרים נפסלו הוא הנתון הרגיש ביותר שהאתר
-    // אוסף, והוא לא יוצא מהמכשיר. ראו docs/analytics.md.
+    // Counts only — which sectors were excluded is the most sensitive thing the
+    // site collects and never leaves the device. See docs/analytics.md.
     trackEvent("quiz_filters", {
       skipped: false,
       sectorCount: filters.excludedSectors.length,
@@ -147,8 +213,21 @@ export function QuizClient() {
     goToResults();
   }
 
-  // כשמגיעים לערוך מסננים מתוך התוצאות, השאלון כבר הושלם - הצעת "להמשיך
-  // מאיפה שהפסקת" באמצע היא רק חסימה בדרך.
+  if (finishing) {
+    return (
+      <main className="flex-1">
+        <div className="mx-auto flex min-h-[60vh] max-w-md flex-col items-center justify-center gap-5 px-4 text-center">
+          <CompassMark animate className="h-14 w-14 text-sapphire" />
+          <p className="font-display text-xl font-normal text-navy">
+            {t.calculating}
+          </p>
+        </div>
+      </main>
+    );
+  }
+
+  // When arriving to edit filters from the results page the quiz is already
+  // done — a mid-way "resume?" prompt would just be a roadblock.
   if (resumable && storedMode === mode && !editingFilters) {
     return (
       <main className="flex-1">
@@ -216,6 +295,8 @@ export function QuizClient() {
 
   if (!currentQuestion) return null;
 
+  const enterX = reduce ? 0 : navDir * (dir === "rtl" ? -24 : 24);
+
   return (
     <main className="flex-1">
       {/* One screen, no scrolling: on a phone the question, all five options and
@@ -235,44 +316,64 @@ export function QuizClient() {
           <Progress value={progressPercent} />
         </div>
 
+        {/* Outer layer owns layout + swipe; inner keyed layer slides each
+            question in from the direction of travel. */}
         <motion.div
-          key={currentQuestion.id}
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
-          className="flex min-h-0 flex-1 flex-col justify-center py-3 lg:block lg:py-0"
+          drag={locked ? false : "x"}
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.12}
+          dragDirectionLock
+          onDragEnd={handleDragEnd}
+          className="flex min-h-0 flex-1 touch-pan-y flex-col justify-center py-3 lg:block lg:py-0"
         >
-          <div className="mb-3 lg:mb-5">
-            <CategoryBadge category={currentQuestion.category} />
-          </div>
-          <h1 className="font-display mb-4 text-[clamp(1.15rem,5.2vw,1.6rem)] font-normal leading-snug text-navy lg:mb-8 lg:text-3xl">
-            {currentQuestion.text}
-          </h1>
+          <motion.div
+            key={currentQuestion.id}
+            initial={{ opacity: 0, x: enterX, y: reduce ? 0 : 6 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            transition={{ duration: reduce ? 0 : 0.22, ease: "easeOut" }}
+          >
+            <div className="mb-3 lg:mb-5">
+              <CategoryBadge category={currentQuestion.category} />
+            </div>
+            <h1 className="font-display mb-4 text-[clamp(1.15rem,5.2vw,1.6rem)] font-normal leading-snug text-navy lg:mb-8 lg:text-3xl">
+              {currentQuestion.text}
+            </h1>
 
-          <div className="flex flex-col gap-2 lg:gap-3">
-            {likertOptions.map((option) => (
-              <LikertButton
-                key={option.value}
-                value={option.value}
-                label={option.label}
-                selected={selectedValue === option.value}
-                onClick={() => handleAnswer(option.value)}
-              />
-            ))}
-          </div>
+            <div
+              className={cn(
+                "flex flex-col gap-2 lg:gap-3",
+                locked && "pointer-events-none"
+              )}
+            >
+              {likertOptions.map((option) => (
+                <LikertButton
+                  key={option.value}
+                  value={option.value}
+                  label={option.label}
+                  selected={selectedValue === option.value}
+                  confirmed={pending === option.value}
+                  onClick={() => handleAnswer(option.value)}
+                />
+              ))}
+            </div>
 
-          <QuestionMoreInfo
-            questionId={currentQuestion.id}
-            moreInfo={currentQuestion.moreInfo}
-          />
+            <QuestionMoreInfo
+              questionId={currentQuestion.id}
+              moreInfo={currentQuestion.moreInfo}
+            />
+          </motion.div>
         </motion.div>
 
         <div className="flex shrink-0 items-center justify-between border-t border-gray pt-1.5 lg:mt-10 lg:pt-6">
-          <Button variant="ghost" onClick={goPrev} disabled={currentIndex === 0}>
+          <Button
+            variant="ghost"
+            onClick={handlePrev}
+            disabled={currentIndex === 0 || locked}
+          >
             <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
             {t.previousQuestion}
           </Button>
-          <Button variant="ghost" onClick={handleSkip}>
+          <Button variant="ghost" onClick={handleSkip} disabled={locked}>
             {t.skipQuestion}
             <SkipForward className="h-4 w-4 rtl:rotate-180" />
           </Button>
