@@ -309,6 +309,31 @@
       "droppedAsEmpty": "The filters you chose ruled out every party, so we dropped them and showed all the results.",
       "pollSource": "Seat projections: {source}, {date}",
       "droppedByPreference": "Rank lowered by the size preference you set"
+    },
+    "summary": {
+      "title": "What your answers show",
+      "lean": {
+        "left": "lean left",
+        "center": "centrist",
+        "right": "lean right",
+        "mixed": "mixed views"
+      },
+      "topMatch": "Your strongest match is {party} — mainly on {topics}.",
+      "topicsJoin": ", ",
+      "disclaimer": "Left/right here is inferred by comparing your answers to the parties’ positions, not a self-label.",
+      "spectrum": {
+        "left": "Left",
+        "center": "Center",
+        "right": "Right",
+        "you": "You",
+        "sectoralNote": "Sectoral parties (Haredi / Arab-sector) aren’t placed on the left–right axis"
+      },
+      "macro": {
+        "economy": "Economy",
+        "social": "Society & religion",
+        "security": "Security & foreign",
+        "governance": "Governance & justice"
+      }
     }
   },
   "platforms": {

@@ -14,6 +14,7 @@ import { calculateWithFilters } from "@/utils/calculator";
 import { trackEvent } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { PartyResultCard } from "@/components/results/PartyResultCard";
+import { PoliticalSummary } from "@/components/results/PoliticalSummary";
 import { PartyResultRow } from "@/components/results/PartyResultRow";
 import { AnswerBreakdown } from "@/components/results/AnswerBreakdown";
 import { cn } from "@/lib/utils";
@@ -325,8 +326,10 @@ export function ResultsClient() {
               <PartyResultCard result={topThree[0]} rank={1} />
             </motion.div>
           )}
+          {/* Desktop-only: on phones the sticky bottom share bar covers this, so
+              showing both duplicated the share UI. */}
           {topThree[0] && (
-            <div className="flex flex-col items-center gap-3 rounded-2xl border border-success/30 bg-success/5 p-5 text-center sm:flex-row sm:justify-between sm:text-start">
+            <div className="hidden flex-col items-center gap-3 rounded-2xl border border-success/30 bg-success/5 p-5 text-center sm:flex-row sm:justify-between sm:text-start lg:flex">
               <div className="flex-1">
                 <p className="font-bold text-navy">{t.share.heading}</p>
                 <p className="mt-0.5 text-sm text-gray-dark">
@@ -361,6 +364,15 @@ export function ResultsClient() {
             </div>
           )}
         </div>
+
+        {topThree[0] && (
+          <PoliticalSummary
+            answers={answers}
+            parties={parties}
+            topPartyId={topParty?.id}
+            topPartyName={topParty?.name}
+          />
+        )}
 
         {rest.length > 0 && (
           <div className="mt-8 text-center">
