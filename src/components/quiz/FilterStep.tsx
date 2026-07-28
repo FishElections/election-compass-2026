@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, Filter, SkipForward } from "lucide-react";
+import { Check, EyeOff, Filter, SkipForward } from "lucide-react";
 import { currentPoll, isPollSnapshotFresh } from "@/data/polls";
 import {
   blocOptions,
@@ -62,7 +62,7 @@ export function FilterStep({ onContinue, onSkip }: FilterStepProps) {
         {/* שני צירים נפרדים ולא רשימה אחת מעורבבת: "יהודית" ו"חרדית" אינן
             אפשרויות מתחרות באותה שאלה - ש"ס היא שתיהן. */}
         <FilterCard question={t.nationality.question} hint={t.nationality.hint}>
-          <ExcludeRow
+          <SectorChips
             sectors={nationalSectors}
             excluded={filters.excludedSectors}
             labels={labels.sectors}
@@ -74,7 +74,7 @@ export function FilterStep({ onContinue, onSkip }: FilterStepProps) {
           question={t.religiousCharacter.question}
           hint={t.religiousCharacter.hint}
         >
-          <ExcludeRow
+          <SectorChips
             sectors={religiousCharacters}
             excluded={filters.excludedSectors}
             labels={labels.sectors}
@@ -157,7 +157,14 @@ function FilterCard({
   );
 }
 
-function ExcludeRow({
+/**
+ * מציג את הצ'יפים כ"נבחרים" כברירת מחדל (כולם כלולים) ולא כ"נקיים" עד
+ * שמסמנים החוצה - זה מה שהופך את "לסמנו את מי שלא תרצו" למובן בלי הסבר
+ * נוסף. הניסוח הקודם ("האם X משנה לכם?" + צ'יפים ריקים שהופכים אדומים
+ * כשמסמנים) לא התחבר לניסוח השאלה. aria-pressed עוקב אחרי המשמעות
+ * הוויזואלית: "לחוץ" = כלול, בדיוק כמו הכפתורים הנבחרים ב-ChoiceRow.
+ */
+function SectorChips({
   sectors,
   excluded,
   labels,
@@ -171,21 +178,25 @@ function ExcludeRow({
   return (
     <div className="flex flex-wrap gap-2">
       {sectors.map((sector) => {
-        const active = excluded.includes(sector);
+        const included = !excluded.includes(sector);
         return (
           <button
             key={sector}
             type="button"
-            aria-pressed={active}
+            aria-pressed={included}
             onClick={() => onToggle(sector)}
             className={cn(
               "flex items-center gap-1.5 rounded-full border-2 px-4 py-2 text-sm font-medium transition-colors cursor-pointer active:scale-[0.97]",
-              active
-                ? "border-danger bg-danger text-white"
-                : "border-gray bg-white text-navy hover:border-sapphire"
+              included
+                ? "border-sapphire bg-sapphire text-white"
+                : "border-gray bg-gray-light text-gray-dark"
             )}
           >
-            {active && <Check className="h-3.5 w-3.5" />}
+            {included ? (
+              <Check className="h-3.5 w-3.5" />
+            ) : (
+              <EyeOff className="h-3.5 w-3.5" />
+            )}
             {labels[sector]}
           </button>
         );

@@ -217,12 +217,12 @@
         "thresholdStale": "The polling data hasn't been updated recently, so the threshold filter is disabled."
       },
       "nationality": {
-        "question": "Does the community a party represents matter to you?",
-        "hint": "Tick whatever you wouldn't consider. Ticking nothing is fine too."
+        "question": "Which national groups are you willing to consider voting for?",
+        "hint": "All are checked by default. Uncheck whichever you wouldn't consider."
       },
       "religiousCharacter": {
-        "question": "And the party's religious character?",
-        "hint": "Every party falls under exactly one of these, including non-religious."
+        "question": "And which religious character?",
+        "hint": "Same idea: all checked by default — uncheck whichever isn't relevant to you."
       }
     },
     "calculating": "Calculating your match…"
