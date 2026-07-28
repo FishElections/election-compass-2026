@@ -3,12 +3,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Brain, Check, ChevronDown, ChevronRight, Link2, RotateCcw, SlidersHorizontal } from "lucide-react";
+import { AlertTriangle, Brain, Check, ChevronDown, ChevronRight, EyeOff, Filter, Link2, RotateCcw, SlidersHorizontal } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
 import { useQuizHydration } from "@/hooks/useQuizHydration";
 import { getParties } from "@/data/parties";
 import { getCategories } from "@/data/questions";
-import { calculateAllMatches } from "@/utils/calculator";
+import { getFilterLabels } from "@/data/filters";
+import { calculateWithFilters } from "@/utils/calculator";
 import { trackEvent } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { PartyResultCard } from "@/components/results/PartyResultCard";
@@ -31,12 +32,21 @@ export function ResultsClient() {
     0.5: t.weightLabels.notImportant,
     0: t.weightLabels.none,
   };
-  const { answers, activeQuestions, categoryWeights, reset, resetCategoryWeights } =
-    useQuizStore();
+  const {
+    answers,
+    activeQuestions,
+    categoryWeights,
+    filters,
+    reset,
+    resetCategoryWeights,
+    resetFilters,
+  } = useQuizStore();
+  const filterLabels = getFilterLabels(locale);
   // Results are the page people reload and reopen from a share link, so they
   // have to read the saved quiz back too — not just /quiz.
   const hasHydrated = useQuizHydration(locale);
   const [showAll, setShowAll] = useState(false);
+  const [showExcluded, setShowExcluded] = useState(false);
   const [copied, setCopied] = useState(false);
 
   // When someone opens a shared link (…/results?p=…&s=…) without having taken
@@ -49,12 +59,39 @@ export function ResultsClient() {
     (c) => categoryWeights[c.id] !== undefined && categoryWeights[c.id] !== 1
   );
 
-  const results = useMemo(
-    () => calculateAllMatches(parties, answers, categoryWeights, locale),
-    [parties, answers, categoryWeights, locale]
+  const { results, droppedAsEmpty } = useMemo(
+    () => calculateWithFilters(parties, answers, categoryWeights, locale, filters),
+    [parties, answers, categoryWeights, locale, filters]
   );
-  const topThree = results.slice(0, 3);
-  const rest = results.slice(3);
+
+  // התוצאות המדורגות הן רק אלה שעברו את הסינון. מה שנפסל לא נעלם - הוא
+  // יורד לאזור נפרד שתמיד אפשר לפתוח, עם אחוז ההתאמה המקורי שלו.
+  const passing = results.filter((r) => r.excludedBy.length === 0);
+  const excluded = results.filter((r) => r.excludedBy.length > 0);
+  const topThree = passing.slice(0, 3);
+  const rest = passing.slice(3);
+
+  // ההתאמה הגבוהה ביותר בשאלון, בלי קשר לסינון. אם היא נפסלה - אומרים את
+  // זה בפירוש במקום להשמיט אותה בשקט.
+  const bestOverall = results.reduce<(typeof results)[number] | undefined>(
+    (best, r) => (!best || r.matchPercentage > best.matchPercentage ? r : best),
+    undefined
+  );
+  const topMatchExcluded =
+    bestOverall && bestOverall.excludedBy.length > 0 ? bestOverall : undefined;
+
+  const activeFilterLabels = [
+    ...filters.excludedSectors.map((s) => filterLabels.sectors[s]),
+    ...(filters.blocPreference !== "any"
+      ? [filterLabels.bloc[filters.blocPreference]]
+      : []),
+    ...(filters.hideBelowThreshold
+      ? [filterLabels.exclusionReasons.threshold]
+      : []),
+    ...(filters.sizePreference !== "any"
+      ? [filterLabels.size[filters.sizePreference]]
+      : []),
+  ];
 
   const [selectedPartyId, setSelectedPartyId] = useState(
     topThree[0]?.party.id
@@ -232,6 +269,50 @@ export function ResultsClient() {
           </div>
         )}
 
+        {droppedAsEmpty && (
+          <div className="mb-8 flex items-start gap-3 rounded-2xl border border-amber/30 bg-amber-light/40 p-5">
+            <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber" />
+            <p className="flex-1 text-sm text-navy">{t.filters.droppedAsEmpty}</p>
+          </div>
+        )}
+
+        {!droppedAsEmpty && activeFilterLabels.length > 0 && (
+          <div className="mb-8 flex flex-col items-center gap-3 rounded-2xl border border-sapphire/20 bg-sapphire/5 p-5 text-center sm:flex-row sm:text-start">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sapphire/10 text-sapphire">
+              <Filter className="h-5 w-5" />
+            </div>
+            <p className="flex-1 text-sm text-navy">
+              {t.filters.banner.prefix} {activeFilterLabels.join(" · ")}
+            </p>
+            <div className="flex shrink-0 gap-1">
+              <Link href="/quiz?step=filters">
+                <Button variant="ghost" size="sm">
+                  {t.filters.banner.edit}
+                </Button>
+              </Link>
+              <Button variant="ghost" size="sm" onClick={resetFilters}>
+                {t.filters.banner.reset}
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {topMatchExcluded && (
+          <div className="mb-8 flex flex-col items-center gap-3 rounded-2xl border border-coral/30 bg-coral/5 p-5 text-center sm:flex-row sm:text-start">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-coral/10 text-coral">
+              <EyeOff className="h-5 w-5" />
+            </div>
+            <div className="flex-1">
+              <p className="font-bold text-navy">{t.filters.topExcluded.heading}</p>
+              <p className="mt-1 text-sm text-gray-dark">
+                {t.filters.topExcluded.body
+                  .replace("{party}", topMatchExcluded.party.name)
+                  .replace("{score}", String(topMatchExcluded.matchPercentage))}
+              </p>
+            </div>
+          </div>
+        )}
+
         <div className="flex flex-col gap-6 pt-4">
           {topThree[0] && (
             <PartyResultCard result={topThree[0]} rank={1} />
@@ -291,7 +372,66 @@ export function ResultsClient() {
                     key={result.party.id}
                     result={result}
                     rank={i + 4}
+                    noteLabel={
+                      result.notes[0]
+                        ? filterLabels.notes[result.notes[0]]
+                        : undefined
+                    }
                   />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {excluded.length > 0 && (
+          <div className="mt-8 rounded-2xl border border-gray/80 bg-gray-light/40 p-5">
+            <button
+              type="button"
+              onClick={() => setShowExcluded((v) => !v)}
+              aria-expanded={showExcluded}
+              className="flex w-full items-center gap-3 text-start cursor-pointer"
+            >
+              <EyeOff className="h-4 w-4 shrink-0 text-gray-dark" />
+              <span className="flex-1 text-sm font-semibold text-navy">
+                {t.filters.hidden.heading.replace(
+                  "{count}",
+                  String(excluded.length)
+                )}
+              </span>
+              <ChevronDown
+                className={cn(
+                  "h-4 w-4 shrink-0 text-gray-dark transition-transform",
+                  showExcluded && "rotate-180"
+                )}
+              />
+            </button>
+            {showExcluded && (
+              <div className="mt-4 flex flex-col gap-2">
+                <p className="text-xs leading-relaxed text-gray-dark">
+                  {t.filters.hidden.note}
+                </p>
+                {excluded.map((result) => (
+                  <div key={result.party.id} className="flex flex-col gap-1.5">
+                    <PartyResultRow
+                      result={result}
+                      noteLabel={
+                        result.notes[0]
+                          ? filterLabels.notes[result.notes[0]]
+                          : undefined
+                      }
+                    />
+                    <div className="flex flex-wrap gap-1.5 ps-14">
+                      {result.excludedBy.map((reason) => (
+                        <span
+                          key={reason}
+                          className="rounded-full bg-danger/10 px-2.5 py-0.5 text-xs font-medium text-danger"
+                        >
+                          {filterLabels.exclusionReasons[reason]}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             )}

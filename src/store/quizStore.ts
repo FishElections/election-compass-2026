@@ -2,14 +2,18 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { getQuestions, getShortQuestions } from "@/data/questions";
 import { Locale, defaultLocale } from "@/i18n/config";
+import { partySectors } from "@/data/filters/core";
 import {
   CategoryId,
   CategoryWeights,
+  PartySector,
   Question,
+  QuizFilters,
   QuizMode,
   StanceValue,
   TopicWeight,
   UserAnswers,
+  emptyFilters,
 } from "@/types";
 
 interface QuizState {
@@ -18,6 +22,7 @@ interface QuizState {
   currentIndex: number;
   answers: UserAnswers;
   categoryWeights: CategoryWeights;
+  filters: QuizFilters;
   /** false until the persisted state has been read back on the client. */
   hasHydrated: boolean;
   /** true when rehydration found a quiz in progress worth offering to resume. */
@@ -35,6 +40,9 @@ interface QuizState {
   skip: () => void;
   setCategoryWeight: (category: CategoryId, weight: TopicWeight) => void;
   resetCategoryWeights: () => void;
+  toggleExcludedSector: (sector: PartySector) => void;
+  setFilter: <K extends keyof QuizFilters>(key: K, value: QuizFilters[K]) => void;
+  resetFilters: () => void;
   reset: () => void;
 }
 
@@ -50,6 +58,7 @@ export const useQuizStore = create<QuizState>()(
       currentIndex: 0,
       answers: {},
       categoryWeights: {},
+      filters: emptyFilters,
       hasHydrated: false,
       resumable: false,
 
@@ -60,6 +69,7 @@ export const useQuizStore = create<QuizState>()(
           currentIndex: 0,
           answers: {},
           categoryWeights: {},
+          filters: emptyFilters,
           resumable: false,
         }),
 
@@ -127,11 +137,28 @@ export const useQuizStore = create<QuizState>()(
 
       resetCategoryWeights: () => set({ categoryWeights: {} }),
 
+      toggleExcludedSector: (sector) =>
+        set((state) => {
+          const current = state.filters.excludedSectors;
+          const next = current.includes(sector)
+            ? current.filter((s) => s !== sector)
+            : [...current, sector];
+          return { filters: { ...state.filters, excludedSectors: next } };
+        }),
+
+      setFilter: (key, value) =>
+        set((state) => ({ filters: { ...state.filters, [key]: value } })),
+
+      resetFilters: () => set({ filters: emptyFilters }),
+
       reset: () =>
         set({
           currentIndex: 0,
           answers: {},
           categoryWeights: {},
+          // תשובות הסינון הן הנתון הרגיש ביותר שנשמר - הן נמחקות יחד עם
+          // התשובות ולא שורדות "התחלה מחדש".
+          filters: emptyFilters,
         }),
     }),
     {
@@ -151,6 +178,7 @@ export const useQuizStore = create<QuizState>()(
         currentIndex: state.currentIndex,
         answers: state.answers,
         categoryWeights: state.categoryWeights,
+        filters: state.filters,
       }),
       onRehydrateStorage: () => (state) => {
         if (!state) return;
@@ -169,6 +197,18 @@ export const useQuizStore = create<QuizState>()(
         }
         state.activeQuestions = active;
         state.answers = answers;
+        // מצב שנשמר לפני שהמסננים קיימו כלל אין בו filters, ומיזוג ה-persist
+        // שטחי - ולכן צריך למלא ידנית. בנוסף, בדיוק כמו עם מזהי שאלות
+        // שנמחקו בין דיפלויים, מסננים על מגזר שכבר לא קיים נזרקים כדי
+        // שהמחשבון לא יסנן לפי מזהה שאיננו.
+        const knownSectors = new Set<string>(partySectors);
+        state.filters = {
+          ...emptyFilters,
+          ...state.filters,
+          excludedSectors: (state.filters?.excludedSectors ?? []).filter((s) =>
+            knownSectors.has(s)
+          ),
+        };
         state.currentIndex = Math.min(
           Math.max(state.currentIndex, 0),
           Math.max(active.length - 1, 0)

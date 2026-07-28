@@ -8,6 +8,13 @@ custom events go through the tiny `trackEvent(name, params)` helper in
 Nothing personally identifying is ever sent to GA (no emails, no answers text —
 only anonymous aggregates like which party came out on top).
 
+**The results filters are deliberately reported as counts only.** `quiz_filters`
+sends *how many* sectors were filtered out and *whether* the bloc/size/threshold
+filters were used — never *which* sector or *which* bloc. Those answers are the
+closest thing this site holds to a declaration of political identity, and they
+stay on the device. This costs us genuinely interesting data; it is still the
+right call for a public tool. Filter answers likewise never enter the share URL.
+
 ## Events
 
 | Event | Fires when | Parameters |
@@ -17,6 +24,7 @@ only anonymous aggregates like which party came out on top).
 | `quiz_resume` | user resumes a saved quiz | `mode`, `answered` |
 | `quiz_complete` | results are shown | `top_party` (id of the #1 match), `match` (%), `answered` |
 | `topic_priority_step` | the optional weighting step | `skipped`, `weightedCount`, `mode` |
+| `quiz_filters` | the optional results-filter step | `skipped`, `sectorCount`, `bloc` (bool), `size` (bool), `threshold` (bool), `mode` |
 | `share` | a result is shared | `method`: `whatsapp`\|`native`\|`copy`, `party`, `match` |
 | `guide_view` | the how-it-works guide opens | — |
 | `guide_station` | a guide station scrolls into view | `station` (index) |

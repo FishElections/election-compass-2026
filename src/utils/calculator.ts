@@ -1,11 +1,15 @@
 import { partyStances } from "@/data/party_stances";
 import { categoriesCore, questionsCore } from "@/data/questions/core";
+import { isBelowThreshold, isPollSnapshotFresh, noteFor } from "@/data/polls";
 import { Locale } from "@/i18n/config";
 import {
   CategoryId,
   CategoryWeights,
+  ExclusionReason,
   Party,
+  PartyNoteId,
   PartyResult,
+  QuizFilters,
   UserAnswers,
 } from "@/types";
 
@@ -79,7 +83,7 @@ function calculatePartyMatch(
   );
 
   if (answeredQuestionIds.length === 0) {
-    return { party, matchPercentage: 0, answeredCount: 0 };
+    return { party, matchPercentage: 0, answeredCount: 0, excludedBy: [], notes: [] };
   }
 
   let totalDistance = 0;
@@ -130,22 +134,171 @@ function calculatePartyMatch(
     party,
     matchPercentage: Math.round(score),
     answeredCount: answeredQuestionIds.length,
+    // הסינון הוא שכבה נפרדת שרצה אחרי החישוב, ב-calculateAllMatches.
+    excludedBy: [],
+    notes: [],
   };
+}
+
+/**
+ * מעל הפרש כזה בין שתי מפלגות, ההעדפה הרכה (גודל) לא מתערבת. הרעיון:
+ * "רציתי מפלגה גדולה" הוא שיקול אמיתי, אבל הוא לא אמור להקפיץ מפלגה עם
+ * 61% מעל מפלגה עם 84%. הוא כן אמור לסדר נכון בין 78% ל-77%. הגבול הזה
+ * הוא ההבדל בין שובר-שוויון לבין זיהום של ציון ההתאמה.
+ */
+const TIE_BREAK_MARGIN = 2;
+
+/** אילו מסננים הופעלו בפועל, לצורך התצוגה במסך התוצאות. */
+export interface FilterOutcome {
+  results: PartyResult[];
+  /**
+   * true כשהסינון פסל *את כל* המפלגות ולכן בוטל. מסך תוצאות ריק הוא באג
+   * מבחינת המשתמש - עדיף להחזיר את הרשימה המלאה ולהסביר. באותה רוח של
+   * הנסיגה הקיימת כשכל הקטגוריות סומנו "לא חשוב בכלל".
+   */
+  droppedAsEmpty: boolean;
+  /** false כשנתוני הסקרים ישנים מדי ולכן מסנן אחוז החסימה לא הופעל. */
+  pollDataFresh: boolean;
+}
+
+function exclusionsFor(
+  party: Party,
+  filters: QuizFilters,
+  pollDataFresh: boolean
+): ExclusionReason[] {
+  const reasons: ExclusionReason[] = [];
+
+  if (party.sectors.some((s) => filters.excludedSectors.includes(s))) {
+    reasons.push("sector");
+  }
+
+  // מפלגה בלי שיוך גוש מתועד לעולם לא נפסלת בגללו - היעדר מקור אינו עדות.
+  const stance = party.bloc?.stance;
+  if (stance) {
+    // "anti" מקבל גם את המפלגות שאינן משויכות לאף גוש: הן אינן בגוש
+    // המתנגד, אך ודאי אינן ממליצות על נתניהו, וזו השאלה שנשאלה.
+    const wantsPro = filters.blocPreference === "pro";
+    const wantsAnti = filters.blocPreference === "anti";
+    if (wantsPro && stance !== "pro-netanyahu") reasons.push("bloc");
+    if (wantsAnti && stance === "pro-netanyahu") reasons.push("bloc");
+  }
+
+  if (filters.hideBelowThreshold && pollDataFresh && isBelowThreshold(party.id)) {
+    reasons.push("threshold");
+  }
+
+  return reasons;
+}
+
+/**
+ * ההעדפה הרכה: +1 למפלגה שתואמת את מה שהמשתמש ביקש, 0 אחרת. הערך משמש
+ * *רק* בתוך מרווח TIE_BREAK_MARGIN ולעולם לא נכנס ל-matchPercentage.
+ */
+function preferenceRank(party: Party, filters: QuizFilters): number {
+  if (filters.sizePreference === "any") return 0;
+  const note = noteFor(party.id);
+  if (filters.sizePreference === "large") return note === "large" ? 1 : 0;
+  return note === "small" || note === "near-threshold" ? 1 : 0;
+}
+
+function notesFor(party: Party): PartyNoteId[] {
+  const note = noteFor(party.id);
+  return note ? [note] : [];
 }
 
 export function calculateAllMatches(
   parties: Party[],
   answers: UserAnswers,
   categoryWeights: CategoryWeights | undefined,
-  locale: Locale
+  locale: Locale,
+  filters?: QuizFilters,
+  now?: Date
 ): PartyResult[] {
-  return parties
-    .map((party) => calculatePartyMatch(party, answers, categoryWeights))
-    .sort(
-      (a, b) =>
-        b.matchPercentage - a.matchPercentage ||
-        a.party.name.localeCompare(b.party.name, locale)
-    );
+  return calculateWithFilters(parties, answers, categoryWeights, locale, filters, now)
+    .results;
+}
+
+export function calculateWithFilters(
+  parties: Party[],
+  answers: UserAnswers,
+  categoryWeights: CategoryWeights | undefined,
+  locale: Locale,
+  filters?: QuizFilters,
+  now?: Date
+): FilterOutcome {
+  const pollDataFresh = isPollSnapshotFresh(now);
+
+  const scored = parties.map((party) => ({
+    ...calculatePartyMatch(party, answers, categoryWeights),
+    notes: notesFor(party),
+  }));
+
+  if (!filters) {
+    return { results: sortResults(scored, locale, undefined), droppedAsEmpty: false, pollDataFresh };
+  }
+
+  const filtered = scored.map((result) => ({
+    ...result,
+    excludedBy: exclusionsFor(result.party, filters, pollDataFresh),
+  }));
+
+  // כל המפלגות נפסלו: מבטלים את הסינון ומסמנים, במקום להציג מסך ריק.
+  if (filtered.every((r) => r.excludedBy.length > 0)) {
+    return {
+      results: sortResults(
+        filtered.map((r) => ({ ...r, excludedBy: [] })),
+        locale,
+        undefined
+      ),
+      droppedAsEmpty: true,
+      pollDataFresh,
+    };
+  }
+
+  return {
+    results: sortResults(filtered, locale, filters),
+    droppedAsEmpty: false,
+    pollDataFresh,
+  };
+}
+
+function sortResults(
+  results: PartyResult[],
+  locale: Locale,
+  filters: QuizFilters | undefined
+): PartyResult[] {
+  /**
+   * ההעדפה הרכה מיושמת כמפתח מיון (אחוז + בונוס חסום), ולא כהשוואה מותנית
+   * בתוך ה-comparator. זה לא ניואנס סגנוני: comparator שמפעיל כלל "רק אם
+   * ההפרש קטן מ-2" אינו יחס סדר תקין - עם 80, 79 ו-77 הוא יכול לקבוע
+   * שהראשון לפני השני, השני לפני השלישי, והשלישי לפני הראשון. Array.sort
+   * מול יחס כזה מחזיר תוצאה שתלויה באלגוריתם המיון.
+   *
+   * מפתח מספרי הוא תמיד עקבי, והבונוס החסום ל-TIE_BREAK_MARGIN שומר על אותה
+   * התנהגות מובטחת: ההעדפה יכולה להפוך סדר רק בין מפלגות שההפרש ביניהן
+   * אינו עולה על 2 נקודות.
+   */
+  const sortKey = (r: PartyResult): number =>
+    r.matchPercentage +
+    (filters ? preferenceRank(r.party, filters) * TIE_BREAK_MARGIN : 0);
+
+  return [...results].sort((a, b) => {
+    // מי שעבר את הסינון תמיד לפני מי שנפסל, בלי קשר לאחוז.
+    const aExcluded = a.excludedBy.length > 0 ? 1 : 0;
+    const bExcluded = b.excludedBy.length > 0 ? 1 : 0;
+    if (aExcluded !== bExcluded) return aExcluded - bExcluded;
+
+    const byKey = sortKey(b) - sortKey(a);
+    if (byKey !== 0) return byKey;
+
+    // שוויון במפתח: המפלגה שתואמת את ההעדפה קודמת, ורק אז סדר אלפביתי.
+    if (filters) {
+      const byRank =
+        preferenceRank(b.party, filters) - preferenceRank(a.party, filters);
+      if (byRank !== 0) return byRank;
+    }
+    return a.party.name.localeCompare(b.party.name, locale);
+  });
 }
 
 export function getPartyStance(partyId: string, questionId: string): number {
