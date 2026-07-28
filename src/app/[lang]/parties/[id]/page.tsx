@@ -7,6 +7,60 @@ import { categories } from "@/data/questions";
 import { getPartyCategoryAverages } from "@/utils/calculator";
 import { PartyLogo } from "@/components/PartyLogo";
 import { BallotLetterBadge } from "@/components/BallotLetterBadge";
+import { JsonLd } from "@/components/JsonLd";
+import { getSiteUrl } from "@/utils/site";
+import type { Party } from "@/types";
+
+// ProfilePage wrapping a PoliticalParty, not a bare PoliticalParty: this is our
+// profile *about* the party, not the party's own site. Claiming otherwise is
+// the kind of misrepresentation Google penalises, and it would compete with the
+// parties' real pages for their own brand queries.
+function partyJsonLd(party: Party) {
+  const siteUrl = getSiteUrl();
+  const url = `${siteUrl}/parties/${party.id}`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfilePage",
+        "@id": `${url}#profile`,
+        url,
+        inLanguage: "he-IL",
+        isPartOf: { "@id": `${siteUrl}/#website` },
+        mainEntity: { "@id": `${url}#party` },
+      },
+      {
+        "@type": "PoliticalParty",
+        "@id": `${url}#party`,
+        name: party.name,
+        description: party.shortDescription,
+        // `leader` is a plain string in our data (no per-politician page), so
+        // it becomes a bare Person node rather than a linkable @id.
+        leader: { "@type": "Person", name: party.leader },
+        ...(party.logoImageUrl
+          ? { logo: `${siteUrl}${party.logoImageUrl}` }
+          : {}),
+      },
+      // Breadcrumbs are one of the few rich results Google still shows broadly,
+      // and they replace the raw URL under the title in the SERP.
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumbs`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "דף הבית", item: siteUrl },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "מפלגות",
+            item: `${siteUrl}/platforms`,
+          },
+          { "@type": "ListItem", position: 3, name: party.name, item: url },
+        ],
+      },
+    ],
+  };
+}
 
 export function generateStaticParams() {
   return parties.map((party) => ({ id: party.id }));
@@ -46,6 +100,7 @@ export default async function PartyProfilePage({
 
   return (
     <main className="flex-1">
+      <JsonLd data={partyJsonLd(party)} />
       <div className="bg-dot-grid">
         <div className="mx-auto max-w-3xl px-4 pb-8 pt-8 lg:pt-20">
           <Link

@@ -28,8 +28,14 @@ const secularOne = Secular_One({
 // when unset.
 const gaId = process.env.GA_ID;
 
+// Google Search Console ownership token (the `content` value of the
+// google-site-verification meta tag GSC hands out). Read at request time like
+// GA_ID so verifying the property doesn't need a rebuild. Omitted when unset,
+// which is what GSC expects before the property is claimed.
+const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION;
+
 const siteName = "מצפן בחירות 2026";
-const homeTitle = "בחירות 2026- מצאו את המפלגה המתאימה לכם ביותר";
+const homeTitle = "מצפן בחירות 2026- מצאו את המפלגה המתאימה לכם ביותר";
 const description =
   "ענו על השאלון וגלו אילו מפלגות מייצגות את העמדות שלכם בצורה הטובה ביותר.";
 
@@ -62,6 +68,9 @@ export const metadata: Metadata = {
     description,
     images: [defaultOgImage],
   },
+  verification: googleSiteVerification
+    ? { google: googleSiteVerification }
+    : undefined,
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
