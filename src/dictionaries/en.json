@@ -320,7 +320,14 @@
       },
       "topMatch": "Your strongest match is {party} — mainly on {topics}.",
       "topicsJoin": ", ",
-      "disclaimer": "Left/right here is inferred by comparing your answers to the parties’ positions, not a self-label."
+      "disclaimer": "Left/right here is inferred by comparing your answers to the parties’ positions, not a self-label.",
+      "spectrum": {
+        "left": "Left",
+        "center": "Center",
+        "right": "Right",
+        "you": "You",
+        "sectoralNote": "Sectoral parties (Haredi / Arab-sector) aren’t placed on the left–right axis"
+      }
     }
   },
   "platforms": {

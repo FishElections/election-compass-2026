@@ -19,6 +19,17 @@ const SPECTRUM_GROUP: Record<
   "far-right": "right",
 };
 
+// Position of each spectrum bucket on a 0 (left) → 1 (right) axis. Shared with
+// the spectrum visual so party markers and the "you" marker use one scale.
+export const SPECTRUM_AXIS: Record<Exclude<SpectrumCategory, "sectoral">, number> = {
+  left: 0.06,
+  "center-left": 0.28,
+  center: 0.5,
+  "center-right": 0.68,
+  right: 0.84,
+  "far-right": 0.95,
+};
+
 const categoryOf: Record<string, CategoryId> = {};
 for (const q of questionsCore) categoryOf[q.id] = q.category;
 
@@ -36,6 +47,8 @@ export interface PoliticalProfile {
   leans: { category: CategoryId; lean: Lean }[];
   /** Categories where the user agrees most strongly with their top party. */
   topReasons: CategoryId[];
+  /** The user's overall spot on the 0 (left) → 1 (right) axis, for the visual. */
+  overallPosition: number;
 }
 
 export function computePoliticalProfile(
@@ -111,5 +124,21 @@ export function computePoliticalProfile(
     if (topReasons.length === 0 && perCat.length) topReasons = [perCat[0].category];
   }
 
-  return { leans, topReasons };
+  // Overall position: across every answered question, a closeness-weighted
+  // average of the party axis positions — where the answers sit among the parties.
+  let posSum = 0;
+  let posWeight = 0;
+  for (const [qid, u] of answered) {
+    for (const p of parties) {
+      if (p.spectrumCategory === "sectoral") continue;
+      const s = stanceOf[p.id]?.[qid];
+      if (s === undefined) continue;
+      const c = closeness(u, s);
+      posSum += c * SPECTRUM_AXIS[p.spectrumCategory as Exclude<SpectrumCategory, "sectoral">];
+      posWeight += c;
+    }
+  }
+  const overallPosition = posWeight > 0 ? posSum / posWeight : 0.5;
+
+  return { leans, topReasons, overallPosition };
 }
