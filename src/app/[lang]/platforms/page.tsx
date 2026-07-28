@@ -1,12 +1,23 @@
 import type { Metadata } from "next";
 import { PlatformsClient } from "@/components/platforms/PlatformsClient";
+import { isLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { alternatesFor } from "@/i18n/metadata";
 
-export const metadata: Metadata = {
-  title: "מצעי המפלגות לבחירות 2026 בקצרה",
-  description:
-    "סיכום עמדות המפלגות המתמודדות בבחירות 2026, נושא אחרי נושא: ביטחון, כלכלה, מערכת המשפט, דת ומדינה וחברה.",
-  alternates: { canonical: "/platforms" },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  return {
+    title: dict.platforms.pageTitle,
+    description: dict.platforms.pageDescription,
+    alternates: alternatesFor(lang, "/platforms"),
+  };
+}
 
 export default function PlatformsPage() {
   return <PlatformsClient />;

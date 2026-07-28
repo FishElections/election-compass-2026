@@ -1,6 +1,6 @@
-import { parties } from "@/data/parties";
 import { partyStances } from "@/data/party_stances";
-import { categories, questions } from "@/data/questions";
+import { categoriesCore, questionsCore } from "@/data/questions/core";
+import { Locale } from "@/i18n/config";
 import {
   CategoryId,
   CategoryWeights,
@@ -18,7 +18,7 @@ for (const stance of partyStances) {
 }
 
 const questionCategoryLookup: Record<string, CategoryId> = {};
-for (const question of questions) {
+for (const question of questionsCore) {
   questionCategoryLookup[question.id] = question.category;
 }
 
@@ -134,15 +134,17 @@ function calculatePartyMatch(
 }
 
 export function calculateAllMatches(
+  parties: Party[],
   answers: UserAnswers,
-  categoryWeights?: CategoryWeights
+  categoryWeights: CategoryWeights | undefined,
+  locale: Locale
 ): PartyResult[] {
   return parties
     .map((party) => calculatePartyMatch(party, answers, categoryWeights))
     .sort(
       (a, b) =>
         b.matchPercentage - a.matchPercentage ||
-        a.party.name.localeCompare(b.party.name, "he")
+        a.party.name.localeCompare(b.party.name, locale)
     );
 }
 
@@ -154,16 +156,16 @@ export function getPartyCategoryAverages(
   partyId: string
 ): Record<CategoryId, number> {
   const sums: Record<string, { total: number; count: number }> = {};
-  for (const category of categories) {
+  for (const category of categoriesCore) {
     sums[category.id] = { total: 0, count: 0 };
   }
-  for (const question of questions) {
+  for (const question of questionsCore) {
     const value = getPartyStance(partyId, question.id);
     sums[question.category].total += value;
     sums[question.category].count += 1;
   }
   const averages = {} as Record<CategoryId, number>;
-  for (const category of categories) {
+  for (const category of categoriesCore) {
     const { total, count } = sums[category.id];
     averages[category.id] = count > 0 ? total / count : 0;
   }

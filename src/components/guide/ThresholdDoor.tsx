@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { THRESHOLD_PERCENT } from "@/data/electionGuide";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 /**
  * דלת אחוז החסימה: מפלגה אחת (4.1%) נכנסת, אחת (2.9%) מוקפצת החוצה.
@@ -9,16 +10,26 @@ import { THRESHOLD_PERCENT } from "@/data/electionGuide";
  */
 export function ThresholdDoor() {
   const reduceMotion = useReducedMotion();
+  const { dict, dir } = useDictionary();
+  // Flex order stays [rejected pill, door, accepted pill] in the markup, but
+  // `dir` mirrors which physical side (left/right) each one lands on — so
+  // the x-offsets (always physical) must flip sign to keep telling the same
+  // story (rejected bounces off the door, accepted moves through it) instead
+  // of visually reversing which party looks like it got in.
+  const sign = dir === "rtl" ? -1 : 1;
 
   return (
     <div
       className="mx-auto mt-8 flex w-fit items-end justify-center gap-5"
       role="img"
-      aria-label={`איור: מפלגה עם 4.1% מהקולות עוברת בדלת שעליה שלט ${THRESHOLD_PERCENT}, ומפלגה עם 2.9% נשארת בחוץ`}
+      aria-label={dict.guide.thresholdDoorAlt.replace(
+        "{threshold}",
+        THRESHOLD_PERCENT
+      )}
     >
       <motion.div
         className="flex h-11 w-11 items-center justify-center rounded-xl bg-coral text-xs font-extrabold text-white"
-        animate={reduceMotion ? undefined : { x: [52, 6, 58, 58] }}
+        animate={reduceMotion ? undefined : { x: [52 * sign, 6 * sign, 58 * sign, 58 * sign] }}
         transition={
           reduceMotion
             ? undefined
@@ -37,7 +48,7 @@ export function ThresholdDoor() {
 
       <motion.div
         className="flex h-11 w-11 items-center justify-center rounded-xl bg-success text-xs font-extrabold text-white"
-        animate={reduceMotion ? undefined : { x: [46, -14, -14] }}
+        animate={reduceMotion ? undefined : { x: [46 * sign, -14 * sign, -14 * sign] }}
         transition={
           reduceMotion
             ? undefined

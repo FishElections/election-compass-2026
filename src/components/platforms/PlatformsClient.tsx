@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
-import { parties } from "@/data/parties";
-import { platformTopics } from "@/data/platformTopics";
+import { getParties } from "@/data/parties";
+import { getPlatformTopics } from "@/data/platformTopics";
 import { PlatformTopicKey } from "@/types";
 import { PartyLogo } from "@/components/PartyLogo";
 import { PartyLogoGrid } from "@/components/platforms/PartyLogoGrid";
@@ -15,6 +15,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 type CategoryFilter = "all" | PlatformTopicKey;
 
@@ -22,6 +23,10 @@ export function PlatformsClient() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<CategoryFilter>("all");
   const [activePartyId, setActivePartyId] = useState<string | null>(null);
+  const { dict, locale } = useDictionary();
+  const t = dict.platforms;
+  const parties = useMemo(() => getParties(locale), [locale]);
+  const platformTopics = getPlatformTopics(locale);
 
   const activeParty = parties.find((p) => p.id === activePartyId) ?? null;
 
@@ -31,17 +36,17 @@ export function PlatformsClient() {
     return parties.filter(
       (party) => party.name.includes(q) || party.leader.includes(q)
     );
-  }, [query]);
+  }, [query, parties]);
 
   return (
     <main className="flex-1">
       <div className="bg-dot-grid">
-        <div className="mx-auto max-w-5xl px-4 pb-8 pt-8 text-center lg:pt-20">
+        <div className="mx-auto max-w-5xl px-4 pb-8 pt-16 text-center lg:pt-20">
           <h1 className="font-display text-3xl font-normal text-navy sm:text-4xl">
-            סיכומי מצעי המפלגות לבחירות 2026
+            {t.heading}
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-gray-dark">
-            סקירה ניטרלית, תמציתית ומקיפה של עמדות המפלגות בנושאי הליבה.
+            {t.subtitle}
           </p>
         </div>
       </div>
@@ -49,16 +54,16 @@ export function PlatformsClient() {
       <div className="mx-auto max-w-5xl px-4 pb-16">
         <div className="flex flex-col gap-4">
           <div className="relative">
-            <Search className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-dark" />
-            {/* text-base (16px) ולא text-sm במכוון: כל שדה קלט מתחת ל-16px גורם
-                ל-Safari ב-iOS לזום אוטומטי על העמוד בפוקוס, והוא לא חוזר. */}
+            <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-dark" />
+            {/* text-base (16px), not text-sm — a sub-16px input triggers Safari's
+                auto-zoom on iOS; shrink to text-sm only from sm: up. */}
             <input
               type="search"
               enterKeyHint="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="חפש לפי שם מפלגה או מנהיג"
-              className="w-full rounded-xl border-2 border-gray bg-white py-3 pr-11 pl-4 text-base text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none sm:text-sm"
+              placeholder={t.searchPlaceholder}
+              className="w-full rounded-xl border-2 border-gray bg-white py-3 ps-11 pe-4 text-base text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none sm:text-sm"
             />
           </div>
 
@@ -73,7 +78,7 @@ export function PlatformsClient() {
                   : "border-gray bg-white text-navy hover:border-sapphire"
               )}
             >
-              הכל
+              {t.allFilter}
             </button>
             {platformTopics.map((topic) => (
               <button
@@ -95,7 +100,7 @@ export function PlatformsClient() {
 
         {filteredParties.length === 0 ? (
           <p className="mt-14 text-center text-gray-dark">
-            לא נמצאו מפלגות התואמות את החיפוש.
+            {t.noResults}
           </p>
         ) : (
           <div className="mt-10 sm:hidden">

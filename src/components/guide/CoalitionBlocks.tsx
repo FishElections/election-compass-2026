@@ -3,9 +3,10 @@
 import { useRef, useState } from "react";
 import { RotateCcw } from "lucide-react";
 import { ConfettiBurst } from "@/components/ConfettiBurst";
-import { MAGIC_NUMBER, TOTAL_SEATS, toyParties } from "@/data/electionGuide";
+import { MAGIC_NUMBER, TOTAL_SEATS, getToyParties } from "@/data/electionGuide";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 /**
  * צעצוע הקואליציה: מקישים על מפלגות דמיוניות ומנסים להגיע ל-61.
@@ -14,22 +15,25 @@ import { cn } from "@/lib/utils";
 export function CoalitionBlocks() {
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const celebrated = useRef(false);
+  const { dict, locale, dir } = useDictionary();
+  const t = dict.guide.coalitionBlocks;
+  const toyParties = getToyParties(locale);
 
   const sum = toyParties
-    .filter((p) => picked.has(p.name))
+    .filter((p) => picked.has(p.id))
     .reduce((acc, p) => acc + p.seats, 0);
   const hasGovernment = sum >= MAGIC_NUMBER;
 
-  function toggle(name: string) {
+  function toggle(id: string) {
     setPicked((prev) => {
       const next = new Set(prev);
-      if (next.has(name)) {
-        next.delete(name);
+      if (next.has(id)) {
+        next.delete(id);
       } else {
-        next.add(name);
+        next.add(id);
       }
       const nextSum = toyParties
-        .filter((p) => next.has(p.name))
+        .filter((p) => next.has(p.id))
         .reduce((acc, p) => acc + p.seats, 0);
       if (nextSum >= MAGIC_NUMBER && !celebrated.current) {
         celebrated.current = true;
@@ -42,7 +46,7 @@ export function CoalitionBlocks() {
   return (
     <div className="relative mt-6 rounded-2xl border border-gray/80 bg-white p-5 shadow-ambient sm:p-6">
       <div className="flex items-center justify-between font-extrabold text-navy">
-        <span>הקואליציה שלכם</span>
+        <span>{t.yourCoalition}</span>
         <span
           className={cn(
             "text-3xl transition-colors",
@@ -55,27 +59,30 @@ export function CoalitionBlocks() {
 
       <div className="relative mt-2 h-3 overflow-hidden rounded-full bg-gray-light">
         <div
-          className="h-full rounded-full bg-gradient-to-l from-sapphire to-emerald-light transition-all duration-300"
+          className={cn(
+            "h-full rounded-full from-sapphire to-emerald-light transition-all duration-300",
+            dir === "rtl" ? "bg-gradient-to-l" : "bg-gradient-to-r"
+          )}
           style={{ width: `${Math.min(100, (sum / TOTAL_SEATS) * 100)}%` }}
         />
         <div
           className="absolute -bottom-0.5 -top-0.5 w-[3px] rounded bg-amber"
-          style={{ right: `${(MAGIC_NUMBER / TOTAL_SEATS) * 100}%` }}
+          style={{ insetInlineEnd: `${(MAGIC_NUMBER / TOTAL_SEATS) * 100}%` }}
         />
       </div>
-      <p className="mt-1 text-left text-xs font-bold text-amber">
-        היעד: {MAGIC_NUMBER} ▲
+      <p className="mt-1 text-end text-xs font-bold text-amber">
+        {t.target} {MAGIC_NUMBER} ▲
       </p>
 
       <div className="mt-4 flex flex-wrap gap-2.5">
         {toyParties.map((party) => {
-          const isPicked = picked.has(party.name);
+          const isPicked = picked.has(party.id);
           return (
             <button
-              key={party.name}
+              key={party.id}
               type="button"
               aria-pressed={isPicked}
-              onClick={() => toggle(party.name)}
+              onClick={() => toggle(party.id)}
               className={cn(
                 "cursor-pointer rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-white transition-all hover:-translate-y-0.5",
                 isPicked && "scale-95 opacity-40 hover:translate-y-0"
@@ -97,7 +104,7 @@ export function CoalitionBlocks() {
             <span className="absolute inset-x-0 top-1/2">
               <ConfettiBurst key={sum >= MAGIC_NUMBER ? "win" : "no"} />
             </span>
-            🎉 יש ממשלה! ({sum} מנדטים)
+            🎉 {t.hasGovernment} ({sum} {t.seatsSuffix})
           </>
         )}
       </div>
@@ -108,7 +115,7 @@ export function CoalitionBlocks() {
         className="mx-auto flex cursor-pointer items-center gap-1 text-[13px] text-gray-dark underline hover:text-navy"
       >
         <RotateCcw className="h-3 w-3" />
-        התחילו מחדש
+        {t.restart}
       </button>
     </div>
   );

@@ -2,11 +2,12 @@
 
 import { motion } from "framer-motion";
 import { Lightbulb, Scale, Shield } from "lucide-react";
-import { quickStanceLabels } from "@/data/quickStanceLabels";
+import { getQuickStanceLabels } from "@/data/quickStanceLabels";
 import { getArgumentByTopic } from "@/utils/challenge";
 import { OpennessReaction, StanceSide } from "@/types";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 interface ChallengeCardProps {
   topicId: string;
@@ -17,32 +18,6 @@ interface ChallengeCardProps {
   onReact: (reaction: OpennessReaction) => void;
 }
 
-const reactionOptions: {
-  reaction: OpennessReaction;
-  icon: typeof Lightbulb;
-  label: string;
-  iconClass: string;
-}[] = [
-  {
-    reaction: 1,
-    icon: Lightbulb,
-    label: "נקודה למחשבה / מעורר ספק בריא",
-    iconClass: "text-success",
-  },
-  {
-    reaction: 0.5,
-    icon: Scale,
-    label: "מכיר את הטיעון, אך מעדיף את השיקול שלי",
-    iconClass: "text-sapphire",
-  },
-  {
-    reaction: 0,
-    icon: Shield,
-    label: "טיעון לא משכנע / נשאר איתן בעמדתי",
-    iconClass: "text-gray-dark",
-  },
-];
-
 export function ChallengeCard({
   topicId,
   userSide,
@@ -51,8 +26,37 @@ export function ChallengeCard({
   total,
   onReact,
 }: ChallengeCardProps) {
-  const argument = getArgumentByTopic(topicId);
-  const labels = quickStanceLabels[topicId];
+  const { dict, locale } = useDictionary();
+  const t = dict.challenge.card;
+  const argument = getArgumentByTopic(topicId, locale);
+  const labels = getQuickStanceLabels(locale)[topicId];
+
+  const reactionOptions: {
+    reaction: OpennessReaction;
+    icon: typeof Lightbulb;
+    label: string;
+    iconClass: string;
+  }[] = [
+    {
+      reaction: 1,
+      icon: Lightbulb,
+      label: t.reactions.thoughtProvoking,
+      iconClass: "text-success",
+    },
+    {
+      reaction: 0.5,
+      icon: Scale,
+      label: t.reactions.acknowledgeButPrefer,
+      iconClass: "text-sapphire",
+    },
+    {
+      reaction: 0,
+      icon: Shield,
+      label: t.reactions.notConvincing,
+      iconClass: "text-gray-dark",
+    },
+  ];
+
   if (!argument || !labels) return null;
 
   const oppositeSide: StanceSide = userSide === "pro" ? "con" : "pro";
@@ -72,7 +76,9 @@ export function ChallengeCard({
       <div className="mb-6">
         <div className="mb-2 flex items-center justify-between text-sm font-medium text-gray-dark">
           <span>
-            כרטיס {index + 1} מתוך {total}
+            {t.cardOfTotalTemplate
+              .replace("{current}", String(index + 1))
+              .replace("{total}", String(total))}
           </span>
           <span>{labels.topic}</span>
         </div>
@@ -89,14 +95,16 @@ export function ChallengeCard({
       >
         <div className="mb-5 rounded-xl bg-gray-light px-4 py-3 text-sm">
           <span className="font-semibold text-navy">
-            {sourceLabel ? `העמדה של ${sourceLabel}: ` : "העמדה שלך: "}
+            {sourceLabel
+              ? `${t.partyPositionTemplate.replace("{party}", sourceLabel)} `
+              : `${t.yourPositionTemplate} `}
           </span>
           <span className="text-foreground">{userPositionLabel}</span>
         </div>
 
         <div className="rounded-xl border border-amber/30 bg-amber-light/30 p-5">
           <p className="mb-2 text-xs font-bold uppercase tracking-wide text-amber">
-            טיעון המחנה הנגדי
+            {t.opponentArgument}
           </p>
           <h2 className="font-display mb-3 text-lg font-normal text-navy sm:text-xl">
             {oppositeTitle}
@@ -105,7 +113,7 @@ export function ChallengeCard({
         </div>
 
         <p className="mt-8 mb-3 text-sm font-semibold text-navy">
-          איך הטיעון הזה מרגיש לך?
+          {t.howDoesItFeel}
         </p>
         <div className="flex flex-col gap-2">
           {reactionOptions.map((option) => (
@@ -113,7 +121,7 @@ export function ChallengeCard({
               key={option.reaction}
               type="button"
               onClick={() => onReact(option.reaction)}
-              className="flex items-center gap-3 rounded-xl border-2 border-gray px-4 py-3 text-right text-sm font-medium text-foreground transition-all hover:-translate-y-0.5 hover:border-navy hover:bg-gray-light cursor-pointer active:scale-[0.98]"
+              className="flex items-center gap-3 rounded-xl border-2 border-gray px-4 py-3 text-start text-sm font-medium text-foreground transition-all hover:-translate-y-0.5 hover:border-navy hover:bg-gray-light cursor-pointer active:scale-[0.98]"
             >
               <option.icon className={cn("h-5 w-5 shrink-0", option.iconClass)} />
               {option.label}

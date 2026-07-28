@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { StanceValue } from "@/types";
 import { cn } from "@/lib/utils";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 const accentBar: Record<StanceValue, string> = {
   2: "bg-success",
@@ -55,16 +56,19 @@ interface LikertButtonProps {
 
 export function LikertButton({ value, label, selected, onClick }: LikertButtonProps) {
   const dots = intensityDots[value];
+  const { dir } = useDictionary();
+  // The hover nudge points toward the reading direction: left in RTL, right in LTR.
+  const hoverNudgeX = dir === "rtl" ? -3 : 3;
 
   return (
     <motion.button
       type="button"
       onClick={onClick}
-      whileHover={{ x: -3 }}
+      whileHover={{ x: hoverNudgeX }}
       whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 400, damping: 22 }}
       className={cn(
-        "relative flex min-h-[52px] w-full items-center justify-between overflow-hidden rounded-xl border-2 border-gray/80 bg-white px-5 text-right text-base font-semibold text-foreground cursor-pointer sm:min-h-0",
+        "relative flex min-h-[52px] w-full items-center justify-between overflow-hidden rounded-xl border-2 border-gray/80 bg-white px-5 text-start text-base font-semibold text-foreground cursor-pointer sm:min-h-0",
         intensityPadding[value],
         selected ? selectedStyles[value] : cn("border-gray/80", hoverStyles[value])
       )}
@@ -72,7 +76,7 @@ export function LikertButton({ value, label, selected, onClick }: LikertButtonPr
     >
       <span
         className={cn(
-          "absolute inset-y-0 right-0 w-1.5 rounded-s-full transition-opacity",
+          "absolute inset-y-0 start-0 w-1.5 rounded-s-full transition-opacity",
           accentBar[value],
           selected ? "opacity-100" : "opacity-0"
         )}

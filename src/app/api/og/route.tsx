@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
-import { parties } from "@/data/parties";
+import { getParties } from "@/data/parties";
+import { defaultLocale, isLocale, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
 // The default next/og font has no Hebrew glyphs, so we pull Heebo from Google
 // Fonts at render time. The IE11 User-Agent forces Google to serve a TTF
@@ -29,8 +31,14 @@ async function loadHeebo(text: string, weight: number): Promise<ArrayBuffer> {
 // by pre-reversing: flip the letters of each Hebrew word and the word order,
 // while leaving numbers and Latin (e.g. "2026", the domain) untouched so they
 // stay readable. Rendered LTR, this yields correct right-to-left Hebrew.
+//
+// This workaround is Hebrew-specific and must NOT be reused as-is for Arabic:
+// Arabic needs contextual letter-shaping (a glyph's form depends on its
+// neighbors) on top of bidi reordering, not simple word/letter reversal — an
+// open research spike for whenever Arabic actually ships.
 const hasHebrew = (t: string) => /[֐-׿]/.test(t);
-function heb(text: string): string {
+function applyRtlWorkaround(text: string, locale: Locale): string {
+  if (locale !== "he") return text;
   return text
     .split(" ")
     .map((w) => (hasHebrew(w) ? [...w].reverse().join("") : w))
@@ -49,14 +57,22 @@ function hexToRgba(hex: string, alpha: number): string {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const party = parties.find((p) => p.id === searchParams.get("p"));
+  const langParam = searchParams.get("lang");
+  const locale: Locale = langParam && isLocale(langParam) ? langParam : defaultLocale;
+  // satori does no Arabic letter-shaping and the card font has no Arabic glyphs,
+  // so Arabic shares fall back to the English card until a shaping-capable OG
+  // pipeline exists. Everything else on the site is fully Arabic.
+  const cardLocale: Locale = locale === "ar" ? "en" : locale;
+  const party = getParties(cardLocale).find((p) => p.id === searchParams.get("p"));
   const rawScore = Number(searchParams.get("s"));
   const score = Number.isFinite(rawScore)
     ? Math.max(0, Math.min(100, Math.round(rawScore)))
     : 0;
 
-  const partyName = party?.name ?? "השאלון";
-  const partyLogo = party?.logo ?? "מצפן";
+  const dict = await getDictionary(cardLocale);
+
+  const partyName = party?.name ?? dict.og.fallbackPartyName;
+  const partyLogo = party?.logo ?? dict.og.fallbackPartyLogo;
   const partyColor = party?.color ?? "#2563eb";
 
   // The party name is the hero — scale it to fill the width without overflowing,
@@ -74,15 +90,17 @@ export async function GET(request: Request) {
       : 82;
   const percentSize = Math.min(96, Math.round(nameSize * 0.62));
 
-  const brand = heb("מצפן בחירות 2026");
-  const kicker = heb("המפלגה שהכי מתאימה לי");
-  const matchLabel = heb("התאמה");
-  const nameText = heb(partyName);
-  const logoText = heb(partyLogo);
+  const brand = applyRtlWorkaround(dict.og.brand, cardLocale);
+  const kicker = applyRtlWorkaround(dict.og.kicker, cardLocale);
+  const matchLabel = applyRtlWorkaround(dict.og.matchLabel, cardLocale);
+  const nameText = applyRtlWorkaround(partyName, cardLocale);
+  const logoText = applyRtlWorkaround(partyLogo, cardLocale);
 
   const glyphs =
-    "מצפן בחירות 2026 המפלגה שהכי מתאימה לי התאמה " +
-    "elections-il.com" +
+    dict.og.brand +
+    dict.og.kicker +
+    dict.og.matchLabel +
+    " elections-il.com" +
     partyName +
     partyLogo +
     "0123456789% ";

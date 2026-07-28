@@ -4,18 +4,21 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Brain } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { parties } from "@/data/parties";
+import { getParties } from "@/data/parties";
 import { ChallengeCardResult, OpennessReaction } from "@/types";
 import { SetupStep, ChallengeDeckItem } from "@/components/challenge/SetupStep";
 import { ChallengeCard } from "@/components/challenge/ChallengeCard";
 import { SummaryScreen } from "@/components/challenge/SummaryScreen";
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 type Step = "setup" | "cards" | "summary";
 
 export function ChallengeClient() {
   const searchParams = useSearchParams();
+  const { dict, locale } = useDictionary();
+  const t = dict.challenge.intro;
   const partyParam = searchParams.get("party");
-  const presetPartyId = parties.some((p) => p.id === partyParam)
+  const presetPartyId = getParties(locale).some((p) => p.id === partyParam)
     ? partyParam!
     : undefined;
 
@@ -60,16 +63,15 @@ export function ChallengeClient() {
     <main className="flex-1">
       {step === "setup" && (
         <div className="bg-dot-grid">
-          <div className="mx-auto max-w-3xl px-4 pb-2 pt-8 text-center lg:pt-20">
+          <div className="mx-auto max-w-3xl px-4 pb-2 pt-16 text-center lg:pt-20">
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-amber/15 text-amber">
               <Brain className="h-7 w-7" />
             </div>
             <h1 className="font-display text-3xl font-normal text-navy sm:text-4xl">
-              מפרק הבועות: אתגר נקודות העיוורון
+              {t.heading}
             </h1>
             <p className="mx-auto mt-3 max-w-xl text-gray-dark">
-              בדקו את הפתיחות המחשבתית שלכם מול הטיעונים החזקים ביותר של
-              המחנה הנגדי, בלי לחץ ובלי שיפוטיות.
+              {t.subtitle}
             </p>
           </div>
         </div>
@@ -78,7 +80,7 @@ export function ChallengeClient() {
       <div
         className={cn(
           "mx-auto max-w-3xl px-4 pb-16",
-          step === "setup" ? "pt-10" : "pt-8 lg:pt-20"
+          step === "setup" ? "pt-16" : "pt-16 lg:pt-20"
         )}
       >
         {step === "setup" && (

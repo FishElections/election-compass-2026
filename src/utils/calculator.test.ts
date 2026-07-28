@@ -1,8 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { parties } from "@/data/parties";
-import { categories, questions } from "@/data/questions";
+import { getParties } from "@/data/parties";
+import { getCategories, getQuestions } from "@/data/questions";
 import { CategoryWeights, StanceValue, TopicWeight, UserAnswers } from "@/types";
 import { calculateAllMatches, getPartyStance } from "./calculator";
+
+const parties = getParties("he");
+const categories = getCategories("he");
+const questions = getQuestions("he");
 
 function mirrorParty(partyId: string): UserAnswers {
   const answers: UserAnswers = {};
@@ -17,7 +21,7 @@ function scoreFor(
   answers: UserAnswers,
   weights?: CategoryWeights
 ): number {
-  const result = calculateAllMatches(answers, weights).find(
+  const result = calculateAllMatches(parties, answers, weights, "he").find(
     (r) => r.party.id === partyId
   );
   if (!result) throw new Error(`party ${partyId} not found in results`);
@@ -63,8 +67,8 @@ describe("category importance weighting", () => {
     const allZero: CategoryWeights = {};
     for (const c of categories) allZero[c.id] = 0;
 
-    const weightedResults = calculateAllMatches(userAnswers, allZero);
-    const unweightedResults = calculateAllMatches(userAnswers, undefined);
+    const weightedResults = calculateAllMatches(parties, userAnswers, allZero, "he");
+    const unweightedResults = calculateAllMatches(parties, userAnswers, undefined, "he");
 
     for (const r of weightedResults) {
       expect(Number.isFinite(r.matchPercentage)).toBe(true);

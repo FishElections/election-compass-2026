@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, X } from "lucide-react";
+import { ChevronRight, X } from "lucide-react";
 import { Party, PlatformTopicKey } from "@/types";
-import { platformTopics } from "@/data/platformTopics";
+import { getPlatformTopics } from "@/data/platformTopics";
 import { PartyLogo } from "@/components/PartyLogo";
 import { BallotLetterBadge } from "@/components/BallotLetterBadge";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
@@ -16,11 +16,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-const labels = {
-  close: "סגור",
-  fullProfileCta: "לצפייה בפרופיל המלא",
-};
+import { useDictionary } from "@/i18n/DictionaryProvider";
 
 interface PartyDetailSheetProps {
   party: Party | null;
@@ -30,6 +26,13 @@ interface PartyDetailSheetProps {
 
 export function PartyDetailSheet({ party, defaultTopicKey, onClose }: PartyDetailSheetProps) {
   const isDesktop = useMediaQuery("(min-width: 640px)");
+  const { dict, locale, dir } = useDictionary();
+  const labels = dict.platforms.partyDetailSheet;
+  const platformTopics = getPlatformTopics(locale);
+  // The panel is anchored to the reading-start edge (right in RTL, left in
+  // LTR) — it must also slide in/out from that same edge, so the offscreen
+  // x position flips with direction instead of always being "100%".
+  const offscreenX = dir === "rtl" ? "100%" : "-100%";
 
   // שומר את המפלגה האחרונה גם אחרי ש-party הופך ל-null, כדי שיהיה מה להציג
   // בזמן אנימציית היציאה (במקום שהתוכן ייעלם מיידית לפני שהגיליון נסגר).
@@ -56,10 +59,10 @@ export function PartyDetailSheet({ party, defaultTopicKey, onClose }: PartyDetai
             </Dialog.Overlay>
             <Dialog.Content asChild forceMount aria-describedby={undefined}>
               <motion.div
-                className="fixed inset-x-0 bottom-0 z-50 flex h-[85dvh] flex-col rounded-t-3xl bg-background shadow-2xl focus:outline-none sm:inset-y-0 sm:left-auto sm:right-0 sm:h-full sm:w-[440px] sm:rounded-none"
-                initial={isDesktop ? { x: "100%" } : { y: "100%" }}
+                className="fixed inset-x-0 bottom-0 z-50 flex h-[85dvh] flex-col rounded-t-3xl bg-background shadow-2xl focus:outline-none sm:inset-y-0 sm:end-auto sm:start-0 sm:h-full sm:w-[440px] sm:rounded-none"
+                initial={isDesktop ? { x: offscreenX } : { y: "100%" }}
                 animate={isDesktop ? { x: 0 } : { y: 0 }}
-                exit={isDesktop ? { x: "100%" } : { y: "100%" }}
+                exit={isDesktop ? { x: offscreenX } : { y: "100%" }}
                 transition={{ type: "spring", damping: 32, stiffness: 320 }}
               >
                 <div className="mx-auto mt-2.5 h-1.5 w-10 shrink-0 rounded-full bg-gray sm:hidden" />
@@ -139,7 +142,7 @@ export function PartyDetailSheet({ party, defaultTopicKey, onClose }: PartyDetai
                     className="flex items-center justify-center gap-1.5 rounded-xl bg-sapphire px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-sapphire-light"
                   >
                     {labels.fullProfileCta}
-                    <ChevronLeft className="h-4 w-4" />
+                    <ChevronRight className="h-4 w-4 rtl:rotate-180" />
                   </Link>
                 </div>
               </motion.div>

@@ -1,13 +1,24 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { ChallengeClient } from "@/components/challenge/ChallengeClient";
+import { isLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { alternatesFor } from "@/i18n/metadata";
 
-export const metadata: Metadata = {
-  title: "מפרק בועות",
-  description:
-    "בחרתם כבר מפלגה? בחנו את העמדות שלכם מול הטיעונים החזקים ביותר של המחנה הנגדי.",
-  alternates: { canonical: "/challenge" },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  return {
+    title: dict.challenge.pageTitle,
+    description: dict.challenge.pageDescription,
+    alternates: alternatesFor(lang, "/challenge"),
+  };
+}
 
 export default function ChallengePage() {
   return (
