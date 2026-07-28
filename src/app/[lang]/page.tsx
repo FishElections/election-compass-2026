@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { InteractiveFlagBackdrop } from "@/components/InteractiveFlagBackdrop";
 import { CompassMark } from "@/components/CompassMark";
+import { JsonLd } from "@/components/JsonLd";
 import { getSiteUrl } from "@/utils/site";
 import { ogLocaleFor } from "@/i18n/config";
 import { useDictionary } from "@/i18n/DictionaryProvider";
@@ -25,24 +26,44 @@ export default function HomePage() {
   const hoverNudge =
     dir === "rtl" ? "group-hover:-translate-x-1" : "group-hover:translate-x-1";
 
-  const websiteJsonLd = {
+  // WebSite + Organization emitted as one @graph rather than two separate script
+  // tags, so the `publisher` reference below resolves to the same node instead of
+  // duplicating the organization. The @id values are the stable identifiers
+  // Google uses to tie the two together.
+  const homeJsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: dict.meta.siteName,
-    url: getSiteUrl(),
-    description: dict.meta.description,
-    // schema.org wants BCP-47 ("he-IL"); the registry stores the og:locale
-    // form ("he_IL") since that's what Open Graph needs — same value, so
-    // just swap the separator instead of storing it twice.
-    inLanguage: ogLocaleFor(locale).replace("_", "-"),
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${getSiteUrl()}/#website`,
+        name: dict.meta.siteName,
+        url: getSiteUrl(),
+        description: dict.meta.description,
+        // schema.org wants BCP-47 ("he-IL"); the registry stores the og:locale
+        // form ("he_IL") since that's what Open Graph needs — same value, so
+        // just swap the separator instead of storing it twice.
+        inLanguage: ogLocaleFor(locale).replace("_", "-"),
+        publisher: { "@id": `${getSiteUrl()}/#organization` },
+      },
+      {
+        "@type": "Organization",
+        "@id": `${getSiteUrl()}/#organization`,
+        name: dict.meta.siteName,
+        url: getSiteUrl(),
+        description: dict.meta.description,
+        logo: {
+          "@type": "ImageObject",
+          url: `${getSiteUrl()}/icon-512.png`,
+          width: 512,
+          height: 512,
+        },
+      },
+    ],
   };
 
   return (
     <main className="flex-1">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-      />
+      <JsonLd data={homeJsonLd} />
       {/* Mobile: fits one viewport in portrait, but min-h (not h) + no clipping
           so landscape — where the content is taller than the screen — stays
           scrollable instead of cutting the headline off with no way to reach it. */}

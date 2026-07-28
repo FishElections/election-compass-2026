@@ -8,10 +8,78 @@ import { getCategories } from "@/data/questions";
 import { getPartyCategoryAverages } from "@/utils/calculator";
 import { PartyLogo } from "@/components/PartyLogo";
 import { BallotLetterBadge } from "@/components/BallotLetterBadge";
-import { isLocale, dirFor } from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionaries";
+import { JsonLd } from "@/components/JsonLd";
+import { getSiteUrl } from "@/utils/site";
+import type { Party } from "@/types";
+import {
+  isLocale,
+  dirFor,
+  ogLocaleFor,
+  localizedPath,
+  type Locale,
+} from "@/i18n/config";
+import { getDictionary, type Dictionary } from "@/i18n/dictionaries";
 import { alternatesFor } from "@/i18n/metadata";
 import { cn } from "@/lib/utils";
+
+// ProfilePage wrapping a PoliticalParty, not a bare PoliticalParty: this is our
+// profile *about* the party, not the party's own site. Claiming otherwise is
+// the kind of misrepresentation Google penalises, and it would compete with the
+// parties' real pages for their own brand queries.
+function partyJsonLd(party: Party, lang: Locale, dict: Dictionary) {
+  const siteUrl = getSiteUrl();
+  // Locale-aware URLs: the /en profile must point at /en/parties/… , not the
+  // Hebrew path, or every locale's structured data claims the same canonical.
+  const url = `${siteUrl}${localizedPath(`/parties/${party.id}`, lang)}`;
+  const homeUrl = `${siteUrl}${localizedPath("/", lang)}`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfilePage",
+        "@id": `${url}#profile`,
+        url,
+        inLanguage: ogLocaleFor(lang).replace("_", "-"),
+        isPartOf: { "@id": `${siteUrl}/#website` },
+        mainEntity: { "@id": `${url}#party` },
+      },
+      {
+        "@type": "PoliticalParty",
+        "@id": `${url}#party`,
+        name: party.name,
+        description: party.shortDescription,
+        // `leader` is a plain string in our data (no per-politician page), so
+        // it becomes a bare Person node rather than a linkable @id.
+        leader: { "@type": "Person", name: party.leader },
+        ...(party.logoImageUrl
+          ? { logo: `${siteUrl}${party.logoImageUrl}` }
+          : {}),
+      },
+      // Breadcrumbs are one of the few rich results Google still shows broadly,
+      // and they replace the raw URL under the title in the SERP.
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumbs`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: dict.nav.home,
+            item: homeUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: dict.nav.platforms,
+            item: `${siteUrl}${localizedPath("/platforms", lang)}`,
+          },
+          { "@type": "ListItem", position: 3, name: party.name, item: url },
+        ],
+      },
+    ],
+  };
+}
 
 export function generateStaticParams() {
   return partiesCore.map((party) => ({ id: party.id }));
@@ -61,6 +129,7 @@ export default async function PartyProfilePage({
 
   return (
     <main className="flex-1">
+      <JsonLd data={partyJsonLd(party, lang, dict)} />
       <div className="bg-dot-grid">
         <div className="mx-auto max-w-3xl px-4 pb-8 pt-8 lg:pt-20">
           <Link

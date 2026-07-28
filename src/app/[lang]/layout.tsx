@@ -38,6 +38,12 @@ const cairo = Cairo({
 // when unset.
 const gaId = process.env.GA_ID;
 
+// Google Search Console ownership token (the `content` value of the
+// google-site-verification meta tag GSC hands out). Read at request time like
+// GA_ID so verifying the property doesn't need a rebuild. Omitted when unset,
+// which is what GSC expects before the property is claimed.
+const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION;
+
 export async function generateMetadata({
   params,
 }: {
@@ -76,6 +82,9 @@ export async function generateMetadata({
       description,
       images: [defaultOgImage],
     },
+    verification: googleSiteVerification
+      ? { google: googleSiteVerification }
+      : undefined,
     manifest: "/manifest.webmanifest",
     appleWebApp: {
       capable: true,
