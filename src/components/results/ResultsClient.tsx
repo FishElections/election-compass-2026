@@ -14,6 +14,7 @@ import { calculateWithFilters } from "@/utils/calculator";
 import { trackEvent } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { PartyResultCard } from "@/components/results/PartyResultCard";
+import { PoliticalSummary } from "@/components/results/PoliticalSummary";
 import { PartyResultRow } from "@/components/results/PartyResultRow";
 import { AnswerBreakdown } from "@/components/results/AnswerBreakdown";
 import { cn } from "@/lib/utils";
@@ -363,6 +364,15 @@ export function ResultsClient() {
             </div>
           )}
         </div>
+
+        {topThree[0] && (
+          <PoliticalSummary
+            answers={answers}
+            parties={parties}
+            topPartyId={topParty?.id}
+            topPartyName={topParty?.name}
+          />
+        )}
 
         {rest.length > 0 && (
           <div className="mt-8 text-center">
