@@ -14,6 +14,7 @@ import { CategoryBadge } from "@/components/quiz/CategoryBadge";
 import { LikertButton } from "@/components/quiz/LikertButton";
 import { QuestionMoreInfo } from "@/components/quiz/QuestionMoreInfo";
 import { TopicPriorityStep } from "@/components/quiz/TopicPriorityStep";
+import { FilterStep } from "@/components/quiz/FilterStep";
 import { trackEvent } from "@/lib/analytics";
 import { useDictionary } from "@/i18n/DictionaryProvider";
 import { localizedPath } from "@/i18n/config";
@@ -26,6 +27,10 @@ export function QuizClient() {
   const likertOptions = getLikertOptions(locale);
   const mode: QuizMode = searchParams.get("mode") === "long" ? "long" : "short";
   const [showPriorityStep, setShowPriorityStep] = useState(false);
+  // ?step=filters נפתח ישירות על שלב המסננים, בלי לגעת בתשובות. זה מה
+  // שכפתור "ערכו" במסך התוצאות מקשר אליו.
+  const editingFilters = searchParams.get("step") === "filters";
+  const [showFilterStep, setShowFilterStep] = useState(editingFilters);
 
   const {
     mode: storedMode,
@@ -33,6 +38,7 @@ export function QuizClient() {
     currentIndex,
     answers,
     categoryWeights,
+    filters,
     resumable,
     startQuiz,
     resumeOrStart,
@@ -41,6 +47,7 @@ export function QuizClient() {
     goPrev,
     skip,
     resetCategoryWeights,
+    resetFilters,
   } = useQuizStore();
 
   const hasHydrated = useQuizHydration(locale);
@@ -77,11 +84,17 @@ export function QuizClient() {
   const selectedValue = currentQuestion ? answers[currentQuestion.id] : undefined;
 
   function finishQuiz() {
+    // המסלול הארוך מקבל קודם את שקלול הנושאים; שני המסלולים מגיעים לשלב
+    // המסננים, שהוא הצמצום האחרון לפני התוצאות.
     if (mode === "long") {
       setShowPriorityStep(true);
     } else {
-      router.push(localizedPath("/results", locale));
+      setShowFilterStep(true);
     }
+  }
+
+  function goToResults() {
+    router.push(localizedPath("/results", locale));
   }
 
   function handleAnswer(value: StanceValue) {
@@ -103,16 +116,40 @@ export function QuizClient() {
   function handlePriorityContinue() {
     const weightedCount = Object.keys(categoryWeights).length;
     trackEvent("topic_priority_step", { skipped: false, weightedCount, mode });
-    router.push(localizedPath("/results", locale));
+    setShowPriorityStep(false);
+    setShowFilterStep(true);
   }
 
   function handlePrioritySkip() {
     resetCategoryWeights();
     trackEvent("topic_priority_step", { skipped: true, weightedCount: 0, mode });
-    router.push(localizedPath("/results", locale));
+    setShowPriorityStep(false);
+    setShowFilterStep(true);
   }
 
-  if (resumable && storedMode === mode) {
+  function handleFilterContinue() {
+    // מדווחים ספירות בלבד. אילו מגזרים נפסלו הוא הנתון הרגיש ביותר שהאתר
+    // אוסף, והוא לא יוצא מהמכשיר. ראו docs/analytics.md.
+    trackEvent("quiz_filters", {
+      skipped: false,
+      sectorCount: filters.excludedSectors.length,
+      bloc: filters.blocPreference !== "any",
+      size: filters.sizePreference !== "any",
+      threshold: filters.hideBelowThreshold,
+      mode,
+    });
+    goToResults();
+  }
+
+  function handleFilterSkip() {
+    resetFilters();
+    trackEvent("quiz_filters", { skipped: true, mode });
+    goToResults();
+  }
+
+  // כשמגיעים לערוך מסננים מתוך התוצאות, השאלון כבר הושלם - הצעת "להמשיך
+  // מאיפה שהפסקת" באמצע היא רק חסימה בדרך.
+  if (resumable && storedMode === mode && !editingFilters) {
     return (
       <main className="flex-1">
         <div className="mx-auto flex max-w-md flex-col items-center gap-5 px-4 py-20 text-center">
@@ -158,6 +195,19 @@ export function QuizClient() {
           <TopicPriorityStep
             onContinue={handlePriorityContinue}
             onSkip={handlePrioritySkip}
+          />
+        </div>
+      </main>
+    );
+  }
+
+  if (showFilterStep) {
+    return (
+      <main className="flex-1">
+        <div className="mx-auto flex max-w-2xl flex-col px-4 pb-10 pt-8 sm:py-16">
+          <FilterStep
+            onContinue={handleFilterContinue}
+            onSkip={handleFilterSkip}
           />
         </div>
       </main>
