@@ -12,7 +12,7 @@
   --color-white: #ffffff;
   --color-gray-light: #f1f2f6;
   --color-gray: #e2e5ec;
-  --color-gray-dark: #64748b;
+  --color-gray-dark: #57647a;
 
   /* Electric sapphire, primary interactive accent */
   --color-sapphire: #2563eb;
@@ -388,8 +388,27 @@ body {
   animation: flag-idle-drift 9s ease-in-out infinite;
 }
 
+/* Smooth in-page scrolling between states (turned off under reduced-motion). */
+html {
+  scroll-behavior: smooth;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .waving-flag-band {
     animation: none !important;
+  }
+  /* Honor the OS "reduce motion" setting everywhere: collapse animations and
+     transitions to near-instant and drop smooth scrolling. Framer-motion
+     components read the same preference via useReducedMotion(). */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html {
+    scroll-behavior: auto !important;
   }
 }

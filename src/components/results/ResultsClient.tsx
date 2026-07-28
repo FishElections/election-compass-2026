@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Brain, Check, ChevronDown, ChevronRight, Link2, RotateCcw, SlidersHorizontal } from "lucide-react";
@@ -22,6 +23,7 @@ export function ResultsClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { dict, locale } = useDictionary();
+  const reduce = useReducedMotion();
   const t = dict.results;
   const parties = useMemo(() => getParties(locale), [locale]);
   const categories = useMemo(() => getCategories(locale), [locale]);
@@ -234,7 +236,13 @@ export function ResultsClient() {
 
         <div className="flex flex-col gap-6 pt-4">
           {topThree[0] && (
-            <PartyResultCard result={topThree[0]} rank={1} />
+            <motion.div
+              initial={reduce ? false : { scale: 0.94, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 260, damping: 18, delay: 0.05 }}
+            >
+              <PartyResultCard result={topThree[0]} rank={1} />
+            </motion.div>
           )}
           {topThree[0] && (
             <div className="flex flex-col items-center gap-3 rounded-2xl border border-success/30 bg-success/5 p-5 text-center sm:flex-row sm:justify-between sm:text-start">

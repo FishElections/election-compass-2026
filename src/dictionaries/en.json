@@ -198,7 +198,8 @@
       "body": "We saved your progress — you've answered {answered} of {total} questions.",
       "continue": "Continue to question {question}",
       "restart": "Start over"
-    }
+    },
+    "calculating": "Calculating your match…"
   },
   "results": {
     "pageTitle": "My Results",
@@ -418,5 +419,10 @@
     "letterCaption": "Ballot letter",
     "notYetConfirmed": "Ballot letter not yet confirmed",
     "currentNicknameTemplate": "(current nickname: {logo})"
+  },
+  "install": {
+    "title": "Quick access? Add to your home screen",
+    "button": "Install",
+    "dismiss": "Not now"
   }
 }

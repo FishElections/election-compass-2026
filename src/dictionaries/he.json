@@ -198,7 +198,8 @@
       "body": "שמרנו את ההתקדמות שלכם — עניתם על {answered} מתוך {total} שאלות.",
       "continue": "המשיכו לשאלה {question}",
       "restart": "להתחיל מחדש"
-    }
+    },
+    "calculating": "מחשבים את ההתאמה שלך…"
   },
   "results": {
     "pageTitle": "התוצאות שלי",
@@ -418,5 +419,10 @@
     "letterCaption": "האות בפתק",
     "notYetConfirmed": "טרם אושרה אות רשמית",
     "currentNicknameTemplate": "(כינוי נוכחי: {logo})"
+  },
+  "install": {
+    "title": "גישה מהירה? הוסיפו למסך הבית",
+    "button": "התקנה",
+    "dismiss": "לא עכשיו"
   }
 }

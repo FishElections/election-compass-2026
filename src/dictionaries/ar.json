@@ -198,7 +198,8 @@
       "body": "حفظنا تقدّمك — لقد أجبت عن {answered} من {total} أسئلة.",
       "continue": "المتابعة إلى السؤال {question}",
       "restart": "ابدأ من جديد"
-    }
+    },
+    "calculating": "نحسب مدى تطابقك…"
   },
   "results": {
     "pageTitle": "نتائجي",
@@ -418,5 +419,10 @@
     "letterCaption": "حرف القائمة",
     "notYetConfirmed": "لم يتم تأكيد حرف القائمة بعد",
     "currentNicknameTemplate": "(الاسم الحالي: {logo})"
+  },
+  "install": {
+    "title": "وصول سريع؟ أضِف إلى الشاشة الرئيسية",
+    "button": "تثبيت",
+    "dismiss": "ليس الآن"
   }
 }
