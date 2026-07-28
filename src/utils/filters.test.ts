@@ -4,7 +4,12 @@ import { getQuestions } from "@/data/questions";
 import { currentPoll, THRESHOLD_SEATS } from "@/data/polls";
 import { partySectors } from "@/data/filters/core";
 import { QuizFilters, StanceValue, UserAnswers, emptyFilters } from "@/types";
-import { calculateAllMatches, calculateWithFilters, getPartyStance } from "./calculator";
+import {
+  calculateAllMatches,
+  calculateWithFilters,
+  getPartyStance,
+  TIE_BREAK_MARGIN,
+} from "./calculator";
 
 const parties = getParties("he");
 const questions = getQuestions("he");
@@ -165,13 +170,13 @@ describe("electoral threshold", () => {
 });
 
 describe("soft size preference is a tie-break only", () => {
-  it("never reorders parties separated by more than 2 points", () => {
+  it(`never reorders parties separated by more than ${TIE_BREAK_MARGIN} points`, () => {
     for (const preference of ["large", "small"] as const) {
       const { results } = withFilters({ sizePreference: preference });
       for (let i = 0; i < results.length - 1; i++) {
         const gap = results[i].matchPercentage - results[i + 1].matchPercentage;
-        // סדר יורד תמיד, למעט היפוך בתוך מרווח שובר-השוויון (2 נקודות).
-        expect(gap).toBeGreaterThanOrEqual(-2);
+        // סדר יורד תמיד, למעט היפוך בתוך מרווח שובר-השוויון.
+        expect(gap).toBeGreaterThanOrEqual(-TIE_BREAK_MARGIN);
       }
     }
   });
@@ -183,7 +188,9 @@ describe("soft size preference is a tie-break only", () => {
       for (let i = 0; i < passing.length - 1; i++) {
         const a = passing[i];
         const b = passing[i + 1];
-        if (Math.abs(a.matchPercentage - b.matchPercentage) > 2) continue;
+        if (Math.abs(a.matchPercentage - b.matchPercentage) > TIE_BREAK_MARGIN) {
+          continue;
+        }
         const prefers = (id: string) =>
           preference === "large"
             ? currentPoll.seats[id] >= 12
@@ -191,7 +198,7 @@ describe("soft size preference is a tie-break only", () => {
               currentPoll.seats[id] <= 8;
         // בתוך המרווח, מפלגה שאינה מועדפת לעולם לא מקדימה מפלגה מועדפת.
         if (!prefers(a.party.id) && prefers(b.party.id)) {
-          expect(b.matchPercentage).toBeLessThan(a.matchPercentage - 2);
+          expect(b.matchPercentage).toBeLessThan(a.matchPercentage - TIE_BREAK_MARGIN);
         }
       }
     }
@@ -210,6 +217,43 @@ describe("soft size preference is a tie-break only", () => {
         { ...emptyFilters, sizePreference: "large" }, FRESH_NOW
       ).results.map((r) => r.party.id);
       expect(again).toEqual(baseline);
+    }
+  });
+});
+
+describe("droppedByPreference", () => {
+  it("is undefined for every party when no size preference is set", () => {
+    const { results } = withFilters({});
+    for (const r of results) expect(r.droppedByPreference).toBeUndefined();
+  });
+
+  it("is never true for the final #1 — there's no worse rank to compare against", () => {
+    for (const preference of ["large", "small"] as const) {
+      const { results } = withFilters({ sizePreference: preference });
+      const passing = results.filter((r) => r.excludedBy.length === 0);
+      expect(passing[0]?.droppedByPreference).toBeFalsy();
+    }
+  });
+
+  it("marks a party that fell below a lower-scoring, preferred party", () => {
+    // תרחיש אמיתי: משתמש שמשקף בדיוק את הליכוד (100%, "גדולה") מעדיף
+    // מפלגה "קטנה". שתי מפלגות עם 91% (קטנות) עולות מעליו.
+    const { results } = withFilters({ sizePreference: "small" });
+    const likud = results.find((r) => r.party.id === "likud")!;
+    const above = results.filter(
+      (r) => r.excludedBy.length === 0 && r.matchPercentage < likud.matchPercentage
+    );
+    expect(above.length).toBeGreaterThan(0);
+    expect(likud.droppedByPreference).toBe(true);
+  });
+
+  it("is only ever set for parties that passed filtering", () => {
+    const { results } = withFilters({
+      sizePreference: "large",
+      excludedSectors: ["haredi"],
+    });
+    for (const r of results) {
+      if (r.excludedBy.length > 0) expect(r.droppedByPreference).toBeUndefined();
     }
   });
 });

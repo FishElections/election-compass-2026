@@ -215,6 +215,15 @@ export interface PartyResult {
   excludedBy: ExclusionReason[];
   /** תגיות תצוגה בלבד */
   notes: PartyNoteId[];
+  /**
+   * true כשההעדפה הרכה לגודל (sizePreference) הזיזה את המפלגה למקום גרוע
+   * יותר מהמקום שהייתה מקבלת לפי אחוז ההתאמה בלבד. עם מרווח שובר-שוויון
+   * רחב (ראו TIE_BREAK_MARGIN), מפלגה עם התאמה גבוהה יכולה לרדת מספר
+   * מקומות בגלל העדפה שהמשתמש קבע - ובלי הסימון הזה זה נראה כמו טעות
+   * בחישוב ולא כמו תוצאה מכוונת. undefined כשאין העדפת גודל פעילה, וכן
+   * כשהמפלגה נפסלה על ידי סינון קשיח (excludedBy לא ריק).
+   */
+  droppedByPreference?: boolean;
 }
 
 export interface SteelmanArgument {
