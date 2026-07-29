@@ -519,7 +519,7 @@ export const partyStances: PartyStance[] = [
   { partyId: "hademocratim", questionId: "eco-9", stanceValue: 2 },
   { partyId: "hademocratim", questionId: "eco-10", stanceValue: 2 },
   { partyId: "hademocratim", questionId: "eco-11", stanceValue: 2 },
-  { partyId: "hademocratim", questionId: "eco-12", stanceValue: -1 },
+  { partyId: "hademocratim", questionId: "eco-12", stanceValue: 1 },
   { partyId: "hademocratim", questionId: "inf-1", stanceValue: 2 },
   { partyId: "hademocratim", questionId: "inf-2", stanceValue: 2 },
   { partyId: "hademocratim", questionId: "inf-3", stanceValue: -1 },
