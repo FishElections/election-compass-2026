@@ -759,9 +759,9 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
   },
   "balad": {
     "name": "Balad",
-    "leader": "Azmi Bishara",
+    "leader": "Sami Abou Shehadeh",
     "spectrum": "Arab nationalist",
-    "shortDescription": "An Arab nationalist party led by Azmi Bishara, working to define Israel as a \"state of all its citizens\" and for full civil equality for the Arab public, while consistently opposing the occupation and settlements.",
+    "shortDescription": "An Arab nationalist party led by Sami Abou Shehadeh, working to define Israel as a \"state of all its citizens\" and for full civil equality for the Arab public, while consistently opposing the occupation and settlements.",
     "platform": [
       {
         "topicKey": "security",

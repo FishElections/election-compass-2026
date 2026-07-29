@@ -16,7 +16,7 @@ import { PartyStance } from "@/types";
  * בתרחיש (ישר!, ביחד, בית ציוני) הערכים נגזרו מהפרופיל המוצהר של
  * מנהיגיהן. שאלת gov-2 (חטופים) הוסרה ביולי 2026 לאחר שכל החטופים הושבו.
  *
- * הרחבת יולי 2026 (ב'): נוספו בל"ד (בראשות עזמי בשארה) וכחול לבן (בראשות
+ * הרחבת יולי 2026 (ב'): נוספו בל"ד (בראשות סאמי אבו שחאדה) וכחול לבן (בראשות
  * בני גנץ) לתרחיש. עמדות בל"ד נגזרו מהפרופיל הלאומי-הערבי המוכר של המפלגה
  * (בדומה לחד"ש-תע"ל, אך לאומי יותר ופחות "רשימה משותפת"); עמדות כחול לבן
  * נגזרו מהפרופיל הממלכתי-ביטחוני המוכר של מנהיגיה (בכירי צבא לשעבר,
@@ -519,7 +519,7 @@ export const partyStances: PartyStance[] = [
   { partyId: "hademocratim", questionId: "eco-9", stanceValue: 2 },
   { partyId: "hademocratim", questionId: "eco-10", stanceValue: 2 },
   { partyId: "hademocratim", questionId: "eco-11", stanceValue: 2 },
-  { partyId: "hademocratim", questionId: "eco-12", stanceValue: -1 },
+  { partyId: "hademocratim", questionId: "eco-12", stanceValue: 1 },
   { partyId: "hademocratim", questionId: "inf-1", stanceValue: 2 },
   { partyId: "hademocratim", questionId: "inf-2", stanceValue: 2 },
   { partyId: "hademocratim", questionId: "inf-3", stanceValue: -1 },
