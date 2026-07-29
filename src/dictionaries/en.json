@@ -313,14 +313,16 @@
     "summary": {
       "title": "What your answers show",
       "lean": {
+        "strongLeft": "clearly left",
         "left": "lean left",
         "center": "centrist",
         "right": "lean right",
+        "strongRight": "clearly right",
         "mixed": "mixed views"
       },
       "topMatch": "Your strongest match is {party} — mainly on {topics}.",
       "topicsJoin": ", ",
-      "disclaimer": "Left/right here is inferred by comparing your answers to the parties’ positions, not a self-label.",
+      "disclaimer": "Each topic's left/right lean is derived only from your own answers and each question's known ideological direction — not by comparing you to any party, and not a self-label.",
       "spectrum": {
         "left": "Left",
         "center": "Center",
