@@ -478,6 +478,11 @@
         "Ohad Bar-Eli",
         "Itay Eylath"
       ]
+    },
+    "feedback": {
+      "heading": "Got feedback?",
+      "body": "We'd love to hear what's working well and what could be better.",
+      "cta": "Email us"
     }
   },
   "news": {

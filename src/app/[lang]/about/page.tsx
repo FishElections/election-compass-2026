@@ -4,6 +4,7 @@ import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { alternatesFor } from "@/i18n/metadata";
 import { LinkedinLink } from "@/components/about/LinkedinLink";
+import { FEEDBACK_EMAIL } from "@/lib/constants";
 
 // Names come from dict.about.builders.names (same order) since a person's
 // name is translated/transliterated text, not locale-invariant like the
@@ -130,6 +131,19 @@ export default async function AboutPage({
           ))}
         </div>
         <p className="mt-4 leading-relaxed text-gray-dark">{t.builders.thanks}</p>
+
+        <h2 className="font-display mt-10 mb-3 flex items-center gap-2 text-xl font-normal text-navy">
+          <Mail className="h-5 w-5 text-sapphire" />
+          {t.feedback.heading}
+        </h2>
+        <p className="leading-relaxed text-gray-dark">{t.feedback.body}</p>
+        <a
+          href={`mailto:${FEEDBACK_EMAIL}`}
+          className="mt-3 inline-flex items-center gap-1.5 rounded-xl border-2 border-sapphire/20 px-4 py-2.5 text-sm font-medium text-navy transition-colors hover:border-sapphire hover:bg-sapphire/5"
+        >
+          <Mail className="h-4 w-4" />
+          {t.feedback.cta}
+        </a>
       </div>
     </main>
   );
