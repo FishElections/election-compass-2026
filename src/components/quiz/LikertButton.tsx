@@ -4,29 +4,13 @@ import { StanceValue } from "@/types";
 import { cn } from "@/lib/utils";
 import { useDictionary } from "@/i18n/DictionaryProvider";
 
-const accentBar: Record<StanceValue, string> = {
-  2: "bg-success",
-  1: "bg-success",
-  0: "bg-sapphire",
-  [-1]: "bg-danger",
-  [-2]: "bg-danger",
-};
-
-const hoverStyles: Record<StanceValue, string> = {
-  2: "hover:border-success/60 hover:bg-success-light/40",
-  1: "hover:border-success/60 hover:bg-success-light/30",
-  0: "hover:border-sapphire/50 hover:bg-sapphire/5",
-  [-1]: "hover:border-danger/50 hover:bg-danger-light/30",
-  [-2]: "hover:border-danger/60 hover:bg-danger-light/40",
-};
-
-const selectedStyles: Record<StanceValue, string> = {
-  2: "border-success bg-success-light/50 text-success shadow-ambient",
-  1: "border-success bg-success-light/30 text-success shadow-ambient",
-  0: "border-sapphire bg-sapphire/5 text-sapphire shadow-ambient",
-  [-1]: "border-danger bg-danger-light/30 text-danger shadow-ambient",
-  [-2]: "border-danger bg-danger-light/50 text-danger shadow-ambient",
-};
+/* All five options share one accent color regardless of where they sit on the
+   scale — agree and disagree must look equally "neutral" so the color itself
+   doesn't nudge respondents toward one answer as the "right" one. Strength of
+   opinion is still conveyed by the dots and padding, just not by hue. */
+const accentBar = "bg-sapphire";
+const hoverStyle = "hover:border-sapphire/50 hover:bg-sapphire/5";
+const selectedStyle = "border-sapphire bg-sapphire/5 text-sapphire shadow-ambient";
 
 /* Extremes read as "louder" opinions, so they get a touch more
    presence than the middle of the scale, like a real survey dial.
@@ -87,14 +71,14 @@ export function LikertButton({
       className={cn(
         "relative flex min-h-[52px] w-full items-center justify-between overflow-hidden rounded-xl border-2 border-gray/80 bg-white px-5 text-start text-base font-semibold text-foreground cursor-pointer sm:min-h-0",
         intensityPadding[value],
-        active ? selectedStyles[value] : cn("border-gray/80", hoverStyles[value])
+        active ? selectedStyle : cn("border-gray/80", hoverStyle)
       )}
       aria-pressed={active}
     >
       <span
         className={cn(
           "absolute inset-y-0 start-0 w-1.5 rounded-s-full transition-opacity",
-          accentBar[value],
+          accentBar,
           active ? "opacity-100" : "opacity-0"
         )}
       />
@@ -106,7 +90,7 @@ export function LikertButton({
           transition={{ type: "spring", stiffness: 500, damping: 18 }}
           className={cn(
             "flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-white",
-            accentBar[value]
+            accentBar
           )}
           aria-hidden
         >
@@ -119,7 +103,7 @@ export function LikertButton({
               key={i}
               className={cn(
                 "h-1.5 w-1.5 rounded-full transition-colors",
-                selected ? accentBar[value] : "bg-gray"
+                selected ? accentBar : "bg-gray"
               )}
             />
           ))}
