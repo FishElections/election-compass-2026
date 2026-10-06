@@ -17,6 +17,7 @@ import {
   Globe,
   ChevronDown,
   Vote,
+  Dices,
 } from "lucide-react";
 import { CompassMark } from "@/components/CompassMark";
 import { cn } from "@/lib/utils";
@@ -29,6 +30,7 @@ const navItems = [
   { href: "/how-it-works", icon: Vote, key: "howItWorks" as const },
   { href: "/hot-topics", icon: Flame, key: "hotTopics" as const },
   { href: "/platforms", icon: ScrollText, key: "platforms" as const },
+  { href: "/simulator", icon: Dices, key: "simulator" as const },
   { href: "/challenge", icon: Brain, key: "challenge" as const },
   { href: "/about", icon: Info, key: "about" as const },
 ];

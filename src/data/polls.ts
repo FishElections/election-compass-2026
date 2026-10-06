@@ -38,6 +38,29 @@ export interface PollSnapshot {
 /** אחוז החסימה הוא 3.25%, שהם 4 מנדטים ב-120. */
 export const THRESHOLD_SEATS = 4;
 
+/** אחוז החסימה עצמו, כשבר מכלל הקולות הכשרים. */
+export const THRESHOLD_PERCENT = 3.25;
+
+/**
+ * גודל המדגם וטעות הדגימה של הסקר. אלה הקלט של סימולטור אחוז החסימה:
+ * טעות הדגימה של *כל מפלגה* נגזרת מ-n דרך שגיאת התקן של שיעור
+ * (sqrt(p(1-p)/n)), ולא מהמספר הכללי 3.5% - מפלגה קטנה סמוכה לחסימה
+ * רגישה לרעש אחרת מגוש גדול, וזה בדיוק מה שהסימולטור בא להראות.
+ */
+export const SAMPLE_SIZE = 988;
+export const MARGIN_OF_ERROR_PERCENT = 3.5;
+
+/**
+ * השיעור הממשי (באחוזים) של מפלגות שלא עברו את החסימה בסקר. seats=0
+ * מאבד את המידע הזה, ובלעדיו אי אפשר לסמלץ "כמה הן רחוקות מהקו" - לכן
+ * הוא נשמר כאן במפורש, מצוטט מאותו פרסום. מפלגות שעברו את החסימה לא
+ * מופיעות כאן: השיעור שלהן נגזר מהמנדטים (ראו voteShareFor).
+ */
+const belowThresholdPercent: Record<string, number> = {
+  balad: 1.9,
+  "kachol-lavan": 1.0,
+};
+
 /** מעל הגיל הזה הנתונים לא משמשים לסינון. */
 export const STALE_AFTER_DAYS = 30;
 
@@ -102,4 +125,51 @@ export function isPollSnapshotFresh(now: Date = new Date()): boolean {
   const updated = new Date(`${currentPoll.updatedAt}T00:00:00Z`);
   const ageDays = (now.getTime() - updated.getTime()) / 86_400_000;
   return ageDays <= STALE_AFTER_DAYS;
+}
+
+/** סכום השיעורים של המפלגות שלא עברו את החסימה - הקול ה"מבוזבז" בסקר. */
+const wastedPercent = Object.values(belowThresholdPercent).reduce(
+  (sum, pct) => sum + pct,
+  0
+);
+
+export interface PollVoteShare {
+  partyId: string;
+  /** שיעור הקולות באחוזים (0-100). */
+  percent: number;
+  /** האם המפלגה עברה את החסימה בסקר כפי שפורסם. */
+  crossedInPoll: boolean;
+}
+
+/**
+ * שחזור שיעור הקולות של כל מפלגה מתוך הסקר, כקלט לסימולציה.
+ *
+ * למפלגה שעברה את החסימה אין לנו את האחוז המדויק שפורסם, רק מנדטים - אז
+ * השיעור נגזר: (מנדטים / 120) * (אחוז הקולות שלא בוזבז). זה עקבי-פנימית:
+ * הסכום של כל השיעורים (עוברים + לא-עוברים) יוצא 100% בדיוק, והמפלגה
+ * שקיבלה 4 מנדטים נוחתת ממש על קו ה-3.25% - מה שהופך אותה למועמדת
+ * המובהקת ליפול מתחת לחסימה ברעש דגימה, וזה הלב של התצוגה.
+ *
+ * זהו שחזור, לא ציטוט: לכן כל ממשק שמשתמש בו חייב להציג מקור ותאריך,
+ * ולהבהיר שהסימולציה היא הדגמה ולא תחזית. ראו ההערה בראש הקובץ.
+ */
+export function getPollVoteShares(): PollVoteShare[] {
+  const survivorFactor = (100 - wastedPercent) / 100;
+  return Object.entries(currentPoll.seats).map(([partyId, seats]) => {
+    const below = belowThresholdPercent[partyId];
+    if (seats < THRESHOLD_SEATS) {
+      // מפלגה מתחת לחסימה: משתמשים באחוז שפורסם במפורש. אם חסר (לא אמור
+      // לקרות), נופלים לאומדן זהיר של מחצית סף החסימה כדי לא לרסק.
+      return {
+        partyId,
+        percent: below ?? THRESHOLD_PERCENT / 2,
+        crossedInPoll: false,
+      };
+    }
+    return {
+      partyId,
+      percent: (seats / 120) * 100 * survivorFactor,
+      crossedInPoll: true,
+    };
+  });
 }
