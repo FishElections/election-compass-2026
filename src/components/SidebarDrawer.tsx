@@ -17,6 +17,7 @@ import {
   Globe,
   ChevronDown,
   Vote,
+  Dices,
 } from "lucide-react";
 import { CompassMark } from "@/components/CompassMark";
 import { cn } from "@/lib/utils";
@@ -25,6 +26,7 @@ import { locales, localizedPath, pathWithoutLocale } from "@/i18n/config";
 
 const navItems = [
   { href: "/", icon: Home, key: "home" as const },
+  { href: "/simulator", icon: Dices, key: "simulator" as const },
   { href: "/quiz", icon: FileText, key: "startQuiz" as const },
   { href: "/how-it-works", icon: Vote, key: "howItWorks" as const },
   { href: "/hot-topics", icon: Flame, key: "hotTopics" as const },

@@ -24,7 +24,8 @@
     "tabPlatforms": "Parties",
     "tabMore": "More",
     "primaryNav": "Primary navigation",
-    "switchLanguage": "Switch language"
+    "switchLanguage": "Switch language",
+    "simulator": "Threshold Simulator"
   },
   "home": {
     "badgeObjective": "100% objective",
@@ -502,5 +503,58 @@
     "title": "Quick access? Add to your home screen",
     "button": "Install",
     "dismiss": "Not now"
+  },
+  "simulator": {
+    "pageTitle": "Threshold Simulator",
+    "pageDescription": "What happens to the Knesset when a party on the edge slips below the electoral threshold? A Monte Carlo simulation on a real poll, showing how much sampling error alone can decide.",
+    "heading": "Threshold Simulator",
+    "subtitle": "One party dropping below 3.25% can flip the whole map. How close to the line is it really?",
+    "intro": "We took a real seat poll and simulated thousands of \"elections\" in which every party drifts randomly within the poll's margin of error. The result shows how much a party hovering right around the electoral threshold — and the balance between the blocs — rides on sampling luck alone.",
+    "pollMeta": "{source} · {date} · sample {sample}, margin ±{moe}%",
+    "headlineLead": "No bloc is locked in.",
+    "headlinePivot": "{party} sits right on the line — a {pct} chance of clearing the threshold. If it falls, its votes are redistributed and the balance between the blocs shifts.",
+    "knessetHeading": "How the Knesset splits on average",
+    "knessetSubtitle": "The expected split of all 120 seats across every simulation.",
+    "knessetAriaLabel": "Horseshoe of {seats} Knesset seats, colored by the expected seat split between parties",
+    "knessetCaption": "Average split across the simulations. {majority} seats are needed for a majority.",
+    "blocHeading": "The blocs and the race to a majority",
+    "blocSubtitle": "For each bloc: its expected seats, likely range, and the chance of reaching {majority} on its own.",
+    "averageSeats": "expected seats",
+    "rangeLabel": "Likely range:",
+    "majorityChance": "Majority odds:",
+    "blocs": {
+      "pro-netanyahu": "Pro-Netanyahu bloc",
+      "anti-netanyahu": "Anti-Netanyahu bloc",
+      "unaligned": "Arab parties"
+    },
+    "thresholdHeading": "On the bubble",
+    "thresholdSubtitle": "Each party near the {threshold} threshold, and its odds of crossing. Force a party in or out to see how it changes everything.",
+    "crossChance": "to cross",
+    "polledAt": "Polled at",
+    "outInThisPoll": "Out in this poll",
+    "forceAuto": "Auto",
+    "forceIn": "Force in",
+    "forceOut": "Force out",
+    "runAgain": "Run again",
+    "resetScenario": "Reset scenario",
+    "runsNote": "Based on {runs} simulations per calculation.",
+    "methodHeading": "How it works (and its limits)",
+    "methodPoints": [
+      "Each party starts from its polled vote share, and in every run it drifts randomly by the standard error derived from the sample size — a small party near the threshold is more sensitive to noise than a large bloc.",
+      "A party that drops below 3.25% of the vote loses its seats, and they are redistributed among the parties that cleared the bar — using the D'Hondt (Bader-Ofer) method, as in a real election.",
+      "The probabilities are frequencies over thousands of runs, not a forecast. Sampling error is only one source of uncertainty; there are also pollster bias and last-minute shifts.",
+      "Bloc assignments reflect each party's declared stance as of the poll date, and ignore surplus-vote agreements."
+    ],
+    "disclaimer": "This is a statistical illustration for understanding, not an election forecast. The numbers reconstruct a single public poll — don't treat them as a basis for how to vote.",
+    "share": {
+      "heading": "Share the simulator",
+      "subtitle": "One party on the line changes the whole picture — let friends play with the scenarios.",
+      "whatsapp": "Share on WhatsApp",
+      "copyLink": "Copy link",
+      "copied": "Link copied",
+      "text": "One party falls below the electoral threshold, and the whole pic changes.\nTry out the different scenarios yourself 🧐",
+      "ogTitle": "One party falls below the electoral threshold, and the whole pic changes.",
+      "ogDescription": "Try out the different scenarios yourself 🧐"
+    }
   }
 }

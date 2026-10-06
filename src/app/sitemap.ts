@@ -39,6 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ["/how-it-works", "monthly", 0.7],
     ["/platforms", "weekly", 0.8],
     ["/hot-topics", "weekly", 0.7],
+    ["/simulator", "weekly", 0.7],
     ["/challenge", "monthly", 0.6],
     ["/about", "monthly", 0.5],
   ];
