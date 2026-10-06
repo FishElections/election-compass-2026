@@ -1,0 +1,7 @@
+# Code owners for election-compass-2026.
+#
+# Every pull request requires an approving review from one of the owners
+# below before it can be merged into a protected branch (see the branch
+# protection rule on `main`). Only Itay and Ohad can approve & merge;
+# anyone can open a PR (typically from a fork).
+*  @itayeylath @ohadoo20
