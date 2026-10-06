@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { RotateCcw, ExternalLink, Check, Link2 } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { RotateCcw, ExternalLink, Check, Link2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { getParties } from "@/data/parties";
@@ -21,6 +21,7 @@ import {
   type SimPartyInput,
 } from "@/utils/thresholdSimulation";
 import { trackEvent } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 import { useDictionary } from "@/i18n/DictionaryProvider";
 import { localizedPath } from "@/i18n/config";
 import { KnessetSeats, type KnessetSeatDatum } from "./KnessetSeats";
@@ -88,14 +89,60 @@ export function SimulatorClient() {
       .filter((s) => partyById.has(s.partyId));
   }, [partyById]);
 
+  // שתי שכבות: ה"pending" מתעדכן מיד בלחיצה (כדי שהכפתור יידלק והמשתמש
+  // ירגיש שנרשם קלט), וה"committed" הוא מה שהסימולציה בפועל רצה עליו, ומתעדכן
+  // רק אחרי השהיה קצרה עם ספינר. בלי זה החישוב מיידי והתוצאה "קופצת" בלי
+  // שהמשתמש מספיק להבין שמשהו השתנה.
   const [forceStates, setForceStates] = useState<Record<string, ForceState>>({});
   const [seed, setSeed] = useState(INITIAL_SEED);
+  const [committedForce, setCommittedForce] = useState<Record<string, ForceState>>({});
+  const [committedSeed, setCommittedSeed] = useState(INITIAL_SEED);
+  const [isSimulating, setIsSimulating] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  const commitTimer = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (commitTimer.current !== null) window.clearTimeout(commitTimer.current);
+    },
+    []
+  );
+
+  // חתימה של מצב הכפייה שמתעלמת מ-"auto" (שקול לאין-ערך), כדי שטוגל שחוזר
+  // למצב הקיים לא יפעיל חישוב (וספינר) מיותרים.
+  const forceSignature = (m: Record<string, ForceState>) =>
+    Object.entries(m)
+      .filter(([, v]) => v !== "auto")
+      .map(([k, v]) => `${k}:${v}`)
+      .sort()
+      .join(",");
+
+  // מעדכן מיד את הקלט ה-pending (הכפתור נדלק), ואז - אם באמת השתנה משהו -
+  // מראה ספינר לרגע לפני ש"מגיש" את הקלט לסימולציה. לחיצה נוספת תוך כדי
+  // מאפסת את הטיימר (debounce), כך שרצף לחיצות מחשב רק את המצב הסופי.
+  function scheduleCommit(nextForce: Record<string, ForceState>, nextSeed: number) {
+    setForceStates(nextForce);
+    setSeed(nextSeed);
+    if (
+      nextSeed === committedSeed &&
+      forceSignature(nextForce) === forceSignature(committedForce)
+    ) {
+      return;
+    }
+    setIsSimulating(true);
+    if (commitTimer.current !== null) window.clearTimeout(commitTimer.current);
+    commitTimer.current = window.setTimeout(() => {
+      setCommittedForce(nextForce);
+      setCommittedSeed(nextSeed);
+      setIsSimulating(false);
+      commitTimer.current = null;
+    }, 550);
+  }
 
   const result = useMemo(() => {
     const forcedIn = new Set<string>();
     const forcedOut = new Set<string>();
-    for (const [id, state] of Object.entries(forceStates)) {
+    for (const [id, state] of Object.entries(committedForce)) {
       if (state === "in") forcedIn.add(id);
       if (state === "out") forcedOut.add(id);
     }
@@ -112,9 +159,9 @@ export function SimulatorClient() {
       majoritySeats: MAGIC_NUMBER,
       forcedIn,
       forcedOut,
-      random: mulberry32(seed),
+      random: mulberry32(committedSeed),
     });
-  }, [simInputs, forceStates, seed]);
+  }, [simInputs, committedForce, committedSeed]);
 
   // --- פורמטים תלויי-שפה (Intl) ---
   const percentFmt = useMemo(
@@ -201,19 +248,20 @@ export function SimulatorClient() {
   }, [result]);
 
   function setForce(partyId: string, next: ForceState) {
-    setForceStates((prev) => ({ ...prev, [partyId]: next }));
+    scheduleCommit({ ...forceStates, [partyId]: next }, seed);
     trackEvent("simulator_force_toggle", { party: partyId, state: next });
   }
 
   function reshuffle() {
-    // תלוי-זמן, אבל רק כאן (אחרי mount) כדי לא לשבור הידרציה.
-    setSeed(Math.floor(Date.now() % 2147483647));
+    // הגדלת ה-seed ב-1 נותנת רצף אקראי שונה לגמרי (mulberry32 הוא hash-based),
+    // והיא טהורה ודטרמיניסטית - בלי Date.now, כך שהריצה הראשונה (SSR) נשמרת
+    // יציבה ואין אי-התאמת הידרציה.
+    scheduleCommit(forceStates, seed + 1);
     trackEvent("simulator_run", {});
   }
 
   function resetAll() {
-    setForceStates({});
-    setSeed(INITIAL_SEED);
+    scheduleCommit({}, INITIAL_SEED);
   }
 
   // השיתוף תמיד מצביע על עמוד הסימולטור הנקי (בלי תרחיש פרטי) - הקישור
@@ -328,28 +376,48 @@ export function SimulatorClient() {
         <section className="mt-8">
           <h2 className="text-xl font-extrabold text-navy">{t.knessetHeading}</h2>
           <p className="mt-1 text-sm text-gray-dark">{t.knessetSubtitle}</p>
-          <figure className="mt-5 flex flex-col items-center rounded-2xl border border-gray/80 bg-white p-5 shadow-ambient">
-            <KnessetSeats
-              seats={seatData}
-              ariaLabel={t.knessetAriaLabel.replace("{seats}", formatNumber(TOTAL_SEATS))}
-            />
-            <figcaption className="mt-2 text-xs text-gray-dark">
-              {t.knessetCaption.replace("{majority}", formatNumber(MAGIC_NUMBER))}
-            </figcaption>
-            {/* מקרא המנדטים */}
-            <ul className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1.5">
-              {legend.map(({ party, seats }) => (
-                <li key={party.id} className="flex items-center gap-1.5 text-xs">
-                  <span
-                    className="inline-block h-2.5 w-2.5 rounded-full"
-                    style={{ backgroundColor: party.color }}
-                    aria-hidden
-                  />
-                  <span className="font-semibold text-navy">{party.name}</span>
-                  <span className="tabular-nums text-gray-dark">{formatNumber(seats)}</span>
-                </li>
-              ))}
-            </ul>
+          <figure className="relative mt-5 flex flex-col items-center rounded-2xl border border-gray/80 bg-white p-5 shadow-ambient">
+            <div
+              className={cn(
+                "flex flex-col items-center transition-opacity duration-300",
+                isSimulating && "opacity-30"
+              )}
+            >
+              <KnessetSeats
+                seats={seatData}
+                ariaLabel={t.knessetAriaLabel.replace("{seats}", formatNumber(TOTAL_SEATS))}
+              />
+              <figcaption className="mt-2 text-xs text-gray-dark">
+                {t.knessetCaption.replace("{majority}", formatNumber(MAGIC_NUMBER))}
+              </figcaption>
+              {/* מקרא המנדטים */}
+              <ul className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1.5">
+                {legend.map(({ party, seats }) => (
+                  <li key={party.id} className="flex items-center gap-1.5 text-xs">
+                    <span
+                      className="inline-block h-2.5 w-2.5 rounded-full"
+                      style={{ backgroundColor: party.color }}
+                      aria-hidden
+                    />
+                    <span className="font-semibold text-navy">{party.name}</span>
+                    <span className="tabular-nums text-gray-dark">{formatNumber(seats)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* ספינר מעל הפרסה בזמן חישוב - נותן למשתמש זמן לקלוט שהתוצאה משתנה. */}
+            {isSimulating && (
+              <div
+                className="absolute inset-0 flex flex-col items-center justify-center gap-2"
+                role="status"
+                aria-live="polite"
+              >
+                <Loader2 className="h-8 w-8 animate-spin text-sapphire" />
+                <span className="text-sm font-semibold text-navy">
+                  {t.simulating}
+                </span>
+              </div>
+            )}
           </figure>
         </section>
 
@@ -359,7 +427,12 @@ export function SimulatorClient() {
           <p className="mt-1 text-sm text-gray-dark">
             {t.blocSubtitle.replace("{majority}", formatNumber(MAGIC_NUMBER))}
           </p>
-          <div className="mt-5 grid gap-4 sm:grid-cols-3">
+          <div
+            className={cn(
+              "mt-5 grid gap-4 transition-opacity duration-300 sm:grid-cols-3",
+              isSimulating && "opacity-30"
+            )}
+          >
             {blocsOrdered.map((bloc) => (
               <BlocBar
                 key={bloc.stance}
@@ -402,6 +475,7 @@ export function SimulatorClient() {
                   crossedInPoll={input?.crossedInPoll ?? true}
                   force={forceStates[p.partyId] ?? "auto"}
                   onForceChange={(next) => setForce(p.partyId, next)}
+                  simulating={isSimulating}
                   labels={{
                     crossChance: t.crossChance,
                     polledAt: t.polledAt,
@@ -423,10 +497,15 @@ export function SimulatorClient() {
           <button
             type="button"
             onClick={reshuffle}
-            className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white shadow-ambient transition-all hover:-translate-y-0.5 hover:glow-sapphire"
+            disabled={isSimulating}
+            className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white shadow-ambient transition-all hover:-translate-y-0.5 hover:glow-sapphire disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
           >
-            <RotateCcw className="h-4 w-4" />
-            {t.runAgain}
+            {isSimulating ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <RotateCcw className="h-4 w-4" />
+            )}
+            {isSimulating ? t.simulating : t.runAgain}
           </button>
           {hasForced && (
             <button
