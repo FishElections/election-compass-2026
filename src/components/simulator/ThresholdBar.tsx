@@ -16,6 +16,9 @@ interface ThresholdBarProps {
   crossedInPoll: boolean;
   force: ForceState;
   onForceChange: (next: ForceState) => void;
+  /** בזמן חישוב: מעמעמים את הנתון (אחוז + פס) כדי שהמשתמש יראה שהוא מתעדכן,
+   *  בלי לגעת בבקרת הכפייה שהוא עדיין יכול ללחוץ עליה. */
+  simulating: boolean;
   labels: {
     crossChance: string;
     polledAt: string;
@@ -44,6 +47,7 @@ export function ThresholdBar({
   crossedInPoll,
   force,
   onForceChange,
+  simulating,
   labels,
   formatPercent,
   formatShare,
@@ -59,7 +63,12 @@ export function ThresholdBar({
 
   return (
     <div className="rounded-2xl border border-gray/80 bg-white p-4 shadow-ambient">
-      <div className="flex items-center gap-3">
+      <div
+        className={cn(
+          "flex items-center gap-3 transition-opacity duration-300",
+          simulating && "opacity-30"
+        )}
+      >
         <PartyLogo party={party} size="sm" />
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline justify-between gap-2">
@@ -79,7 +88,12 @@ export function ThresholdBar({
         </div>
       </div>
 
-      <div className="mt-3 flex items-center gap-3">
+      <div
+        className={cn(
+          "mt-3 flex items-center gap-3 transition-opacity duration-300",
+          simulating && "opacity-30"
+        )}
+      >
         <div className="relative h-2.5 flex-1 overflow-hidden rounded-full bg-gray-light">
           <div
             className="h-full rounded-full transition-all duration-500"
