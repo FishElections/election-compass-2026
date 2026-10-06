@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { RotateCcw, ExternalLink } from "lucide-react";
+import { RotateCcw, ExternalLink, Check, Link2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { getParties } from "@/data/parties";
 import {
   getPollVoteShares,
@@ -20,6 +22,7 @@ import {
 } from "@/utils/thresholdSimulation";
 import { trackEvent } from "@/lib/analytics";
 import { useDictionary } from "@/i18n/DictionaryProvider";
+import { localizedPath } from "@/i18n/config";
 import { KnessetSeats, type KnessetSeatDatum } from "./KnessetSeats";
 import { ThresholdBar, type ForceState } from "./ThresholdBar";
 import { BlocBar } from "./BlocBar";
@@ -87,6 +90,7 @@ export function SimulatorClient() {
 
   const [forceStates, setForceStates] = useState<Record<string, ForceState>>({});
   const [seed, setSeed] = useState(INITIAL_SEED);
+  const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {
     const forcedIn = new Set<string>();
@@ -212,6 +216,46 @@ export function SimulatorClient() {
     setSeed(INITIAL_SEED);
   }
 
+  // השיתוף תמיד מצביע על עמוד הסימולטור הנקי (בלי תרחיש פרטי) - הקישור
+  // היפה שמקבל תצוגה-מקדימה עם התמונה והטקסט לפי השפה (ראו generateMetadata).
+  const shareUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}${localizedPath("/simulator", locale)}`
+      : "";
+  const shareText = t.share.text;
+
+  function shareWhatsApp() {
+    trackEvent("share", { method: "whatsapp", feature: "simulator" });
+    window.open(
+      `https://wa.me/?text=${encodeURIComponent(`${shareText}\n${shareUrl}`)}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  }
+
+  async function handleShare() {
+    if (typeof navigator === "undefined") return;
+    try {
+      if (navigator.share) {
+        trackEvent("share", { method: "native", feature: "simulator" });
+        await navigator.share({
+          title: t.share.ogTitle,
+          text: shareText,
+          url: shareUrl,
+        });
+        return;
+      }
+      if (navigator.clipboard) {
+        trackEvent("share", { method: "copy", feature: "simulator" });
+        await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 2000);
+      }
+    } catch {
+      // המשתמש ביטל את השיתוף
+    }
+  }
+
   const hasForced = Object.values(forceStates).some((s) => s !== "auto");
   const pivotPartyName = pivotParty
     ? partyById.get(pivotParty.partyId)?.name ?? ""
@@ -256,6 +300,28 @@ export function SimulatorClient() {
                 .replace("{pct}", formatPercent(pivotParty.crossProbability))}
             </p>
           )}
+        </section>
+
+        {/* Share */}
+        <section className="mt-5 flex flex-col items-center gap-3 rounded-2xl border border-success/30 bg-success/5 p-5 text-center sm:flex-row sm:justify-between sm:text-start">
+          <div className="flex-1">
+            <p className="font-bold text-navy">{t.share.heading}</p>
+            <p className="mt-0.5 text-sm text-gray-dark">{t.share.subtitle}</p>
+          </div>
+          <div className="flex w-full shrink-0 flex-col gap-2 sm:w-auto sm:flex-row">
+            <Button onClick={shareWhatsApp} variant="success">
+              <WhatsAppIcon className="h-4 w-4" />
+              {t.share.whatsapp}
+            </Button>
+            <Button onClick={handleShare} variant="outline">
+              {copied ? (
+                <Check className="h-4 w-4" />
+              ) : (
+                <Link2 className="h-4 w-4" />
+              )}
+              {copied ? t.share.copied : t.share.copyLink}
+            </Button>
+          </div>
         </section>
 
         {/* Knesset outcome */}

@@ -545,6 +545,16 @@
       "The probabilities are frequencies over thousands of runs, not a forecast. Sampling error is only one source of uncertainty; there are also pollster bias and last-minute shifts.",
       "Bloc assignments reflect each party's declared stance as of the poll date, and ignore surplus-vote agreements."
     ],
-    "disclaimer": "This is a statistical illustration for understanding, not an election forecast. The numbers reconstruct a single public poll — don't treat them as a basis for how to vote."
+    "disclaimer": "This is a statistical illustration for understanding, not an election forecast. The numbers reconstruct a single public poll — don't treat them as a basis for how to vote.",
+    "share": {
+      "heading": "Share the simulator",
+      "subtitle": "One party on the line changes the whole picture — let friends play with the scenarios.",
+      "whatsapp": "Share on WhatsApp",
+      "copyLink": "Copy link",
+      "copied": "Link copied",
+      "text": "One party falls below the electoral threshold, and the whole pic changes.\nTry out the different scenarios yourself 🧐",
+      "ogTitle": "One party falls below the electoral threshold, and the whole pic changes.",
+      "ogDescription": "Try out the different scenarios yourself 🧐"
+    }
   }
 }

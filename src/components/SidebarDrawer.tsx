@@ -26,11 +26,11 @@ import { locales, localizedPath, pathWithoutLocale } from "@/i18n/config";
 
 const navItems = [
   { href: "/", icon: Home, key: "home" as const },
+  { href: "/simulator", icon: Dices, key: "simulator" as const },
   { href: "/quiz", icon: FileText, key: "startQuiz" as const },
   { href: "/how-it-works", icon: Vote, key: "howItWorks" as const },
   { href: "/hot-topics", icon: Flame, key: "hotTopics" as const },
   { href: "/platforms", icon: ScrollText, key: "platforms" as const },
-  { href: "/simulator", icon: Dices, key: "simulator" as const },
   { href: "/challenge", icon: Brain, key: "challenge" as const },
   { href: "/about", icon: Info, key: "about" as const },
 ];
