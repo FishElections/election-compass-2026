@@ -10,11 +10,6 @@
 
 התשובות אנונימיות לחלוטין ואינן נשמרות בשרת.
 
-## פותח על ידי
-
-- **אוהד בר אלי** - [ohadoo20@gmail.com](mailto:ohadoo20@gmail.com)
-- **איתי אילת** - [itay.ey@gmail.com](mailto:itay.ey@gmail.com)
-
 ## טכנולוגיה
 
 Next.js (App Router) + TypeScript + Tailwind CSS, עם Zustand לניהול מצב השאלון.
