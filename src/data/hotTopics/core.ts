@@ -18,8 +18,6 @@ export const topicsCore: TopicCore[] = [
         "hademocratim",
         "raam",
         "hadash-taal",
-        "beit-tzioni",
-        "balad",
         "kachol-lavan"
       ],
       "oppose": [
@@ -28,7 +26,9 @@ export const topicsCore: TopicCore[] = [
         "yisrael-beiteinu",
         "shas",
         "yahadut-hatorah",
-        "religious-zionism"
+        "religious-zionism",
+        "amcha-yisrael",
+        "hamiluimnikim"
       ],
       "splitOrNeutral": []
     },
@@ -42,12 +42,12 @@ export const topicsCore: TopicCore[] = [
         "yashar",
         "beyachad",
         "hademocratim",
-        "beit-tzioni",
         "kachol-lavan"
       ],
       "oppose": [
         "otzma-yehudit",
-        "religious-zionism"
+        "religious-zionism",
+        "amcha-yisrael"
       ],
       "splitOrNeutral": [
         "likud",
@@ -56,7 +56,7 @@ export const topicsCore: TopicCore[] = [
         "yahadut-hatorah",
         "raam",
         "hadash-taal",
-        "balad"
+        "hamiluimnikim"
       ]
     },
     "relatedQuestionId": "sec-7"
@@ -70,10 +70,9 @@ export const topicsCore: TopicCore[] = [
         "beyachad",
         "yisrael-beiteinu",
         "hademocratim",
-        "hadash-taal",
-        "beit-tzioni",
-        "balad",
-        "kachol-lavan"
+        "kachol-lavan",
+        "amcha-yisrael",
+        "hamiluimnikim"
       ],
       "oppose": [
         "likud",
@@ -83,7 +82,9 @@ export const topicsCore: TopicCore[] = [
         "raam",
         "religious-zionism"
       ],
-      "splitOrNeutral": []
+      "splitOrNeutral": [
+        "hadash-taal"
+      ]
     },
     "relatedQuestionId": "rel-5"
   },
@@ -96,9 +97,9 @@ export const topicsCore: TopicCore[] = [
         "yisrael-beiteinu",
         "hademocratim",
         "hadash-taal",
-        "beit-tzioni",
-        "balad",
-        "kachol-lavan"
+        "kachol-lavan",
+        "hamiluimnikim",
+        "beyachad"
       ],
       "oppose": [
         "likud",
@@ -106,11 +107,10 @@ export const topicsCore: TopicCore[] = [
         "shas",
         "yahadut-hatorah",
         "raam",
-        "religious-zionism"
+        "religious-zionism",
+        "amcha-yisrael"
       ],
-      "splitOrNeutral": [
-        "beyachad"
-      ]
+      "splitOrNeutral": []
     },
     "relatedQuestionId": "rel-4"
   },
@@ -143,11 +143,11 @@ export const topicsCore: TopicCore[] = [
         "yisrael-beiteinu",
         "hademocratim",
         "hadash-taal",
-        "beit-tzioni",
-        "balad",
-        "kachol-lavan"
+        "kachol-lavan",
+        "hamiluimnikim"
       ],
       "splitOrNeutral": [
+        "amcha-yisrael",
         "raam"
       ]
     },
@@ -167,9 +167,9 @@ export const topicsCore: TopicCore[] = [
         "yisrael-beiteinu",
         "hademocratim",
         "hadash-taal",
-        "beit-tzioni",
-        "balad",
-        "kachol-lavan"
+        "kachol-lavan",
+        "amcha-yisrael",
+        "hamiluimnikim"
       ],
       "oppose": [
         "likud",
@@ -194,19 +194,19 @@ export const topicsCore: TopicCore[] = [
         "yahadut-hatorah",
         "raam",
         "hadash-taal",
-        "beit-tzioni",
-        "balad",
-        "kachol-lavan"
+        "kachol-lavan",
+        "hamiluimnikim",
+        "beyachad"
       ],
       "oppose": [
         "likud",
-        "beyachad",
         "otzma-yehudit",
         "religious-zionism"
       ],
       "splitOrNeutral": [
         "yashar",
-        "yisrael-beiteinu"
+        "yisrael-beiteinu",
+        "amcha-yisrael"
       ]
     },
     "relatedQuestionId": "eco-6"
@@ -221,19 +221,19 @@ export const topicsCore: TopicCore[] = [
         "shas",
         "yahadut-hatorah",
         "raam",
-        "hadash-taal",
-        "beit-tzioni",
-        "balad"
+        "hadash-taal"
       ],
       "oppose": [
         "likud",
         "beyachad",
         "yisrael-beiteinu",
-        "religious-zionism"
+        "religious-zionism",
+        "amcha-yisrael"
       ],
       "splitOrNeutral": [
         "otzma-yehudit",
-        "kachol-lavan"
+        "kachol-lavan",
+        "hamiluimnikim"
       ]
     },
     "relatedQuestionId": "eco-10"
@@ -253,13 +253,13 @@ export const topicsCore: TopicCore[] = [
         "yahadut-hatorah",
         "raam",
         "religious-zionism",
-        "beit-tzioni",
-        "kachol-lavan"
+        "kachol-lavan",
+        "amcha-yisrael",
+        "hamiluimnikim"
       ],
       "oppose": [],
       "splitOrNeutral": [
-        "hadash-taal",
-        "balad"
+        "hadash-taal"
       ]
     },
     "relatedQuestionId": "soc-5"
@@ -279,13 +279,13 @@ export const topicsCore: TopicCore[] = [
         "yahadut-hatorah",
         "hadash-taal",
         "religious-zionism",
-        "beit-tzioni",
-        "kachol-lavan"
+        "kachol-lavan",
+        "amcha-yisrael",
+        "hamiluimnikim"
       ],
       "oppose": [],
       "splitOrNeutral": [
-        "raam",
-        "balad"
+        "raam"
       ]
     },
     "relatedQuestionId": "eco-5"

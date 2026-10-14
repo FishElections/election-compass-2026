@@ -5,7 +5,7 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
     "name": "Yashar!",
     "leader": "Gadi Eisenkot",
     "spectrum": "Centrist / statist",
-    "shortDescription": "A statist party led by former IDF Chief of Staff Gadi Eisenkot, emphasizing public trust, responsible management, and restoring personal and national security.",
+    "shortDescription": "A statist party led by former IDF Chief of Staff Gadi Eisenkot, emphasizing public trust, responsible management, and restoring personal and national security. In September 2026 it absorbed Hili Tropper's Zionist Home party; Tropper is No. 6 on the slate.",
     "platform": [
       {
         "topicKey": "security",
@@ -32,12 +32,12 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
       {
         "topicKey": "justice",
         "topicName": "Judiciary & Governance",
-        "summary": "Preserving rule-of-law institutions alongside agreed, measured reforms.",
+        "summary": "Repeal of the new judicial selection law, and Basic Laws to settle relations between the branches.",
         "bulletPoints": [
-          "Opposing unilateral changes to the judiciary",
-          "Strengthening good governance and public trust",
-          "Fighting government corruption",
-          "Broad dialogue before any constitutional change"
+          "A state commission of inquiry into October 7 as the government's first decision",
+          "Repealing the law politicizing the Judicial Selection Committee",
+          "Opposition to an override clause",
+          "A Basic Law: The Judiciary and a Basic Law: Legislation, based on an expert panel's recommendations"
         ]
       },
       {
@@ -45,7 +45,7 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
         "topicName": "Religion & State",
         "summary": "Statism and mutual respect among all parts of Israeli society.",
         "bulletPoints": [
-          "Promoting significant, gradual conscription for the Haredi public",
+          "A \"no compromise\" draft law for all citizens, exempting only about 3% of each cohort",
           "Preserving the status quo on core religious matters",
           "Respecting the diversity of lifestyles in the public sphere",
           "Strengthening shared Israeli identity"
@@ -68,7 +68,7 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
     "name": "Likud",
     "leader": "Benjamin Netanyahu",
     "spectrum": "National right",
-    "shortDescription": "A national-liberal party emphasizing security, a free-market economy, and strengthening Israeli sovereignty.",
+    "shortDescription": "A national-liberal party emphasizing security, a free-market economy, and strengthening Israeli sovereignty. In 2026 it runs on a joint slate with Gideon Sa'ar's New Hope.",
     "platform": [
       {
         "topicKey": "security",
@@ -131,61 +131,61 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
     "name": "Beyachad",
     "leader": "Naftali Bennett / Yair Lapid",
     "spectrum": "Center to center-right",
-    "shortDescription": "A joint list of former Prime Minister Naftali Bennett and former Yesh Atid chair Yair Lapid, led by Bennett, emphasizing executive competence, economic entrepreneurship, and healing the rifts in Israeli society.",
+    "shortDescription": "A joint list of former Prime Minister Naftali Bennett and Yesh Atid chair Yair Lapid, led by Bennett, emphasizing executive competence, economic entrepreneurship, and healing the rifts in Israeli society. This time Bennett rules out a government with Ra'am (\"October 7 changes a lot of things\").",
     "platform": [
       {
         "topicKey": "security",
         "topicName": "Security & Foreign Policy",
-        "summary": "An assertive security policy alongside stable, professional government management.",
+        "summary": "From a passive posture to initiative and decisive action, alongside ending diplomatic isolation.",
         "bulletPoints": [
-          "Continuing determined fighting until the war's goals are achieved",
-          "Strengthening the defense industries and military innovation",
-          "Full support for fighters and reservist families",
-          "Rebuilding the regional deterrence framework"
+          "Learning from the failures of how the war was run, and moving from containment to initiative and decisive action",
+          "Reinforcing and rewarding reservists and their families",
+          "Opposing a Palestinian state and handing over territory; support for lawful settlement",
+          "Regional alliances and a national public-diplomacy body to end diplomatic isolation"
         ]
       },
       {
         "topicKey": "economy",
         "topicName": "Economy & Cost of Living",
-        "summary": "An innovative market economy supporting entrepreneurship, high-tech, and easing the cost of living.",
+        "summary": "Taking on cartels and the cost of living, with priority for those who serve and work.",
         "bulletPoints": [
-          "Reducing bureaucracy and regulation on businesses",
-          "Tax incentives for high-tech companies and startups",
-          "Housing-market reform to lower prices",
-          "Supporting small and medium businesses"
+          "Cutting food prices by 30% within three years and breaking up food cartels",
+          "More housing supply and affordable housing for young couples and reservists",
+          "The \"Servers Law\": housing, daycare and property-tax benefits for those who serve and work, and an end to allowances that encourage draft evasion",
+          "Less red tape for small businesses, and automatic compensation in national emergencies"
         ]
       },
       {
         "topicKey": "justice",
         "topicName": "Judiciary & Governance",
-        "summary": "Governmental stability alongside agreed reforms to state institutions.",
+        "summary": "A constitution built on the Declaration of Independence, and repeal of the new judicial selection law.",
         "bulletPoints": [
-          "Opposing dramatic, unilateral changes",
-          "Improving the efficiency of the justice system",
-          "Strengthening good governance",
-          "Encouraging broad consensus on any constitutional change"
+          "A state commission of inquiry into October 7 at the first cabinet meeting",
+          "A constitution opening with the Declaration of Independence, and a Basic Law: Legislation",
+          "Repealing the new judicial selection law and keeping politics out of the judiciary",
+          "An 8-year term limit for prime ministers and closing seven ministries"
         ]
       },
       {
         "topicKey": "religionAndState",
         "topicName": "Religion & State",
-        "summary": "A pragmatic balance between preserving tradition and openness and personal choice.",
+        "summary": "\"A Jewish state that isn't afraid of its citizens\": service for all and less religious bureaucracy.",
         "bulletPoints": [
-          "Promoting an agreed conscription framework for the Haredi public",
-          "Preserving the character of Shabbat with local flexibility",
-          "Supporting expanded marriage options",
-          "Respecting Israel's religious-secular mosaic"
+          "Military or civilian service for everyone, with no exemptions, quotas or targets",
+          "Public funding only for institutions that teach 100% of the core curriculum",
+          "A full civil track for registering a union at the Interior Ministry",
+          "Shabbat public transport decided by each local authority, and recognition of international kashrut certification"
         ]
       },
       {
         "topicKey": "society",
         "topicName": "Society & Education",
-        "summary": "Healing social rifts through unifying, pragmatic leadership.",
+        "summary": "Equal rights, personal security, and investment in education and health.",
         "bulletPoints": [
-          "Strengthening technological education and excellence",
-          "Investment in the periphery and development towns",
-          "Promoting the integration of Haredim and Arabs into the workforce",
-          "Encouraging meaningful service for all young people"
+          "Declaring organized crime a national security threat, with the Shin Bet and the IDF",
+          "LGBTQ equality in a Basic Law, and civil union registration with full rights",
+          "50% women in senior posts and a fight against violence toward women",
+          "A \"Frontline Communities Law\" to rebuild the north and south"
         ]
       }
     ]
@@ -444,9 +444,9 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
   },
   "yahadut-hatorah": {
     "name": "United Torah Judaism",
-    "leader": "Yitzhak Goldknopf / Moshe Gafni",
+    "leader": "Yaakov Asher",
     "spectrum": "Haredi-Ashkenazi",
-    "shortDescription": "A Haredi-Ashkenazi party emphasizing preservation of a Torah-observant way of life and funding for Torah study institutions.",
+    "shortDescription": "A Haredi-Ashkenazi party emphasizing preservation of a Torah-observant way of life and funding for Torah study institutions. In 2026 it is headed by Degel HaTorah's Yaakov Asher, after Moshe Gafni and Uri Maklev were left off the slate.",
     "platform": [
       {
         "topicKey": "security",
@@ -569,10 +569,10 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
     ]
   },
   "hadash-taal": {
-    "name": "Hadash-Ta'al",
-    "leader": "Ayman Odeh / Ahmad Tibi",
-    "spectrum": "Arab-Jewish front",
-    "shortDescription": "A joint Arab-Jewish list promoting full civil equality and a political solution based on negotiation.",
+    "name": "Joint List",
+    "leader": "Yousef Jabareen / Ahmad Tibi",
+    "spectrum": "Joint Arab-Jewish list",
+    "shortDescription": "The Joint List of Hadash, Ta'al and Balad, headed by Hadash chair Yousef Jabareen with Ahmad Tibi second, promoting full civil equality, an end to the occupation and a negotiated political settlement. The Central Elections Committee disqualified the list; the Supreme Court overturned the ban on October 2, 2026.",
     "platform": [
       {
         "topicKey": "security",
@@ -588,12 +588,12 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
       {
         "topicKey": "economy",
         "topicName": "Economy & Cost of Living",
-        "summary": "A socialist economy seeking full economic equality among all citizens.",
+        "summary": "\"Investing in life, not in wars\": cutting military spending in favor of welfare, housing and education.",
         "bulletPoints": [
-          "High progressive taxation on capital",
-          "Strengthening workers' rights and labor unions",
-          "Massive public investment in welfare",
-          "Reducing privatization of public services"
+          "A minimum wage of at least 70% of the average wage (about NIS 56 an hour)",
+          "Public housing for everyone without a home, and rent control",
+          "A 30% tax on capital gains, no income tax up to the average wage, and 10% VAT",
+          "Free education from birth through graduate degrees"
         ]
       },
       {
@@ -625,17 +625,17 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
         "bulletPoints": [
           "Fighting institutional racism and discrimination",
           "Budgetary equality between Jewish and Arab communities",
-          "Promoting gender and LGBTQ equality",
+          "Promoting gender equality",
           "Strengthening class solidarity"
         ]
       }
     ]
   },
   "religious-zionism": {
-    "name": "Religious Zionism",
-    "leader": "Bezalel Smotrich",
+    "name": "Religious Zionism–Zehut",
+    "leader": "Bezalel Smotrich / Moshe Feiglin",
     "spectrum": "Ideological right",
-    "shortDescription": "A national-religious party led by Finance Minister Bezalel Smotrich, promoting full sovereignty over the Land of Israel and strengthening the state's Jewish character.",
+    "shortDescription": "A national-religious slate led by Finance Minister Bezalel Smotrich, running together with Moshe Feiglin's Zehut. It promotes full sovereignty over the Land of Israel and strengthening the state's Jewish character.",
     "platform": [
       {
         "topicKey": "security",
@@ -690,132 +690,6 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
           "Strengthening religious-national and yeshiva education",
           "Priority for national-priority communities",
           "Promoting traditional values in the public sphere"
-        ]
-      }
-    ]
-  },
-  "beit-tzioni": {
-    "name": "Zionist Home",
-    "leader": "Chili Tropper / Yoaz Hendel",
-    "spectrum": "Zionist-statist center",
-    "shortDescription": "Zionist Home is a party formed around the reservist community and bereaved families, led by Chili Tropper and Yoaz Hendel, working to strengthen national solidarity and support for fighters.",
-    "platform": [
-      {
-        "topicKey": "security",
-        "topicName": "Security & Foreign Policy",
-        "summary": "Security based on equality of burden and full support for fighters and their families.",
-        "bulletPoints": [
-          "Full equality in the burden of military service",
-          "Increasing compensation and support for reservists",
-          "Comprehensive care for the wounded and bereaved families",
-          "Strengthening long-term IDF readiness"
-        ]
-      },
-      {
-        "topicKey": "economy",
-        "topicName": "Economy & Cost of Living",
-        "summary": "Economic support focused on those who serve, reservists, and the middle class.",
-        "bulletPoints": [
-          "Fair economic compensation for reservists and their businesses",
-          "Tax relief for the families of those serving",
-          "Investment in affordable housing for discharged soldiers",
-          "Supporting quality employment in the periphery"
-        ]
-      },
-      {
-        "topicKey": "justice",
-        "topicName": "Judiciary & Governance",
-        "summary": "Preserving the independence of state institutions as a condition for public trust.",
-        "bulletPoints": [
-          "Opposing unilateral changes to the judiciary",
-          "Strengthening good governance and public oversight",
-          "Fighting corruption and conflicts of interest",
-          "Rebuilding trust between the public and institutions"
-        ]
-      },
-      {
-        "topicKey": "religionAndState",
-        "topicName": "Religion & State",
-        "summary": "Statism and equality of burden as central values in religion-state relations.",
-        "bulletPoints": [
-          "Promoting equal, mandatory conscription for the Haredi public",
-          "Preserving the state's character while respecting personal choice",
-          "Opposing religious coercion in the public sphere",
-          "Supporting measured religious pluralism"
-        ]
-      },
-      {
-        "topicKey": "society",
-        "topicName": "Society & Education",
-        "summary": "National solidarity and care for the generation that bore the brunt of the war.",
-        "bulletPoints": [
-          "Emotional and economic support for fighters and their families",
-          "Strengthening reservists' standing in legislation",
-          "Promoting unifying dialogue between sectors of society",
-          "Investment in education and the future of the younger generation"
-        ]
-      }
-    ]
-  },
-  "balad": {
-    "name": "Balad",
-    "leader": "Sami Abou Shehadeh",
-    "spectrum": "Arab nationalist",
-    "shortDescription": "An Arab nationalist party led by Sami Abou Shehadeh, working to define Israel as a \"state of all its citizens\" and for full civil equality for the Arab public, while consistently opposing the occupation and settlements.",
-    "platform": [
-      {
-        "topicKey": "security",
-        "topicName": "Security & Foreign Policy",
-        "summary": "Consistent opposition to the occupation and settlements, and promoting a full political solution to the Israeli-Palestinian conflict.",
-        "bulletPoints": [
-          "Ending the occupation and evacuating settlements in the West Bank",
-          "An independent Palestinian state alongside Israel",
-          "Preferring dialogue and political negotiation over military action",
-          "Opposing military escalation and expanded Israeli involvement in the Gaza Strip"
-        ]
-      },
-      {
-        "topicKey": "economy",
-        "topicName": "Economy & Cost of Living",
-        "summary": "An egalitarian economy reducing gaps between the center and the Arab periphery, with extensive public investment.",
-        "bulletPoints": [
-          "Higher progressive taxation on wealth holders",
-          "Massive investment in affordable housing and infrastructure in Arab communities",
-          "A significant increase in the minimum wage and welfare benefits",
-          "Ending coalition funds allocated by political agreements"
-        ]
-      },
-      {
-        "topicKey": "justice",
-        "topicName": "Judiciary & Governance",
-        "summary": "Strengthening judicial review as protection against legislation that harms minorities.",
-        "bulletPoints": [
-          "Firm opposition to any move that weakens the Supreme Court",
-          "Fully preserving the ability to judicially review harmful legislation",
-          "Expanding standing to petition the Supreme Court, not narrowing it",
-          "Full independence for the Attorney General"
-        ]
-      },
-      {
-        "topicKey": "religionAndState",
-        "topicName": "Religion & State",
-        "summary": "Full separation of religion and state and full civil equality for all citizens, Jews and Arabs alike.",
-        "bulletPoints": [
-          "Complete separation of religion and state in all institutions of government",
-          "Ending dedicated funding for religious institutions and yeshivas from the state budget",
-          "Opposing any exclusive religious-national definition of the state",
-          "Full equality in civil rights regardless of religion or nationality"
-        ]
-      },
-      {
-        "topicKey": "society",
-        "topicName": "Society & Education",
-        "summary": "Full civil equality for Arab society and reducing budgetary gaps relative to the Jewish center.",
-        "bulletPoints": [
-          "Significantly reducing budget gaps between Jewish and Arab authorities",
-          "Investment in education, employment, and infrastructure in Arab society",
-          "Opposing increased police enforcement as the sole solution to crime",
-          "Promoting adequate representation for women and minorities in institutions of government"
         ]
       }
     ]
@@ -879,6 +753,132 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
           "Promoting adequate representation for women in public service",
           "Investment in public education and the periphery",
           "Strengthening public trust in state institutions"
+        ]
+      }
+    ]
+  },
+  "amcha-yisrael": {
+    "name": "Amcha Yisrael",
+    "leader": "Ofer Winter",
+    "spectrum": "Nationalist right",
+    "shortDescription": "A new right-wing party led by Brig. Gen. (res.) Ofer Winter, with Yoseph Haddad at No. 2. It rejects a Palestinian state, makes Haredi conscription a condition for joining a government, and says it will recommend Netanyahu.",
+    "platform": [
+      {
+        "topicKey": "security",
+        "topicName": "Security & Foreign Policy",
+        "summary": "Military \"decisive victory\" over Hamas and Hezbollah, no Palestinian state, and sovereignty over Areas B and C.",
+        "bulletPoints": [
+          "Outright opposition to a Palestinian state",
+          "Applying sovereignty to Areas B and C, with Palestinian cities self-governing",
+          "Destroying Hamas and encouraging voluntary emigration from Gaza, including support for settlement there",
+          "Moving from \"containment\" to decisive action in Lebanon as well"
+        ]
+      },
+      {
+        "topicKey": "economy",
+        "topicName": "Economy & Cost of Living",
+        "summary": "Economic benefits tied to service, and higher pay for soldiers.",
+        "bulletPoints": [
+          "Doubling conscript pay",
+          "State benefits for those who served, withheld from those who didn't",
+          "Economic support for reservists and their families",
+          "Rebuilding northern and southern communities"
+        ]
+      },
+      {
+        "topicKey": "justice",
+        "topicName": "Judiciary & Governance",
+        "summary": "A commission of inquiry with state-commission powers, and an appeals court above the High Court.",
+        "bulletPoints": [
+          "An October 7 inquiry with the full powers of a state commission, its chair chosen by the Knesset in a secret ballot",
+          "A new supreme appellate instance over High Court rulings",
+          "Splitting the attorney general's role into an independent prosecutor general and a government legal adviser",
+          "Narrowing the reasonableness doctrine and removing the Bar Association from the Judicial Selection Committee"
+        ]
+      },
+      {
+        "topicKey": "religionAndState",
+        "topicName": "Religion & State",
+        "summary": "Haredi conscription is a red line for joining a government.",
+        "bulletPoints": [
+          "\"You serve, you get; you don't serve, you don't get\"",
+          "Dozens of dedicated Haredi companies",
+          "No government entry without a draft law",
+          "Preserving the state's Jewish character"
+        ]
+      },
+      {
+        "topicKey": "society",
+        "topicName": "Society & Education",
+        "summary": "An \"inclusive\" right that also reaches out to Arabs and Druze who serve, alongside Israeli public diplomacy abroad.",
+        "bulletPoints": [
+          "High-school outreach to Haredi and Arab teens on service options",
+          "Bringing people who served, from every community, into leadership",
+          "Strengthening Israeli public diplomacy",
+          "Bereaved families and reservists on the slate"
+        ]
+      }
+    ]
+  },
+  "hamiluimnikim": {
+    "name": "The Reservists and the Economic Party",
+    "leader": "Yoaz Hendel / Yaron Zelekha",
+    "spectrum": "Zionist center-right",
+    "shortDescription": "A joint slate of Yoaz Hendel's Reservists and Prof. Yaron Zelekha's Economic Party, with Einat Wilf at No. 3. It calls for universal service and a Zionist unity government without Haredi and Arab parties, and has not committed in advance to either candidate for prime minister.",
+    "platform": [
+      {
+        "topicKey": "security",
+        "topicName": "Security & Foreign Policy",
+        "summary": "An offensive security doctrine that takes the fight to enemy territory, and a sharp rise in the defense budget.",
+        "bulletPoints": [
+          "Full military control of Gaza with no withdrawal",
+          "Peace conditional on Palestinian recognition of Israel as the Jewish nation-state",
+          "Dismantling UNRWA",
+          "A defense budget of about 7% of GDP"
+        ]
+      },
+      {
+        "topicKey": "economy",
+        "topicName": "Economy & Cost of Living",
+        "summary": "Breaking monopolies and opening the market to imports to lower the cost of living.",
+        "bulletPoints": [
+          "Abolishing tariffs and import quotas",
+          "Breaking up monopolies, cartels and exclusivity deals",
+          "Cutting VAT toward 12%",
+          "Priority in housing, taxes, daycare and public-sector jobs for those who served"
+        ]
+      },
+      {
+        "topicKey": "justice",
+        "topicName": "Judiciary & Governance",
+        "summary": "A state commission of inquiry, a Basic Law: Legislation, and judicial reform.",
+        "bulletPoints": [
+          "A state commission of inquiry into October 7, appointed by the Supreme Court",
+          "A Basic Law: Legislation as the first step",
+          "Overriding High Court rulings only with a supermajority of more than 72 MKs",
+          "Splitting the attorney general's role, and an eight-year term limit for prime ministers"
+        ]
+      },
+      {
+        "topicKey": "religionAndState",
+        "topicName": "Religion & State",
+        "summary": "Service for all, and an end to the Chief Rabbinate's monopoly.",
+        "bulletPoints": [
+          "Military or national service for every young man and woman, with no blanket exemptions",
+          "No budgets or benefits for those who don't serve",
+          "Privatizing kashrut and breaking the Rabbinate monopoly",
+          "Individual and community choice in religious services"
+        ]
+      },
+      {
+        "topicKey": "society",
+        "topicName": "Society & Education",
+        "summary": "A \"Zionist government\" built on the people who serve.",
+        "bulletPoints": [
+          "A unity government of Zionist parties only, without Haredi or Arab parties",
+          "Party membership limited to those who did military or national service",
+          "Support for reservists and their families",
+          "Holding up a \"mirror\" to politics on the burden of service"
         ]
       }
     ]

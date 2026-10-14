@@ -32,13 +32,18 @@ export const partiesCore: PartyCore[] = [
     "id": "yashar",
     "color": "#334155",
     "spectrumCategory": "center",
-    "logo": "יש",
+    "logo": "דרך",
     "logoImageUrl": "/party_logos/yashar.png",
+    "officialBallotLetter": {
+      "letters": "דרך",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
     "sectors": ["jewish", "non-religious"],
     "bloc": {
       "stance": "anti-netanyahu",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
+      "asOf": "2026-10-11",
+      "source": "https://www.haaretz.com/israel-news/elections/2026-10-11/ty-article/israel-election-poll-eisenkot-bloc-continues-slump-as-coalition-gains-ground/000001a1-2c63-d7a5-a7b1-be7397560000"
     },
     "platform": [
       {
@@ -64,11 +69,16 @@ export const partiesCore: PartyCore[] = [
     "spectrumCategory": "right",
     "logo": "מחל",
     "logoImageUrl": "/party_logos/likud.png",
+    "officialBallotLetter": {
+      "letters": "מחל",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
     "sectors": ["jewish", "non-religious"],
     "bloc": {
       "stance": "pro-netanyahu",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
+      "asOf": "2026-10-11",
+      "source": "https://www.haaretz.com/israel-news/elections/2026-10-11/ty-article/israel-election-poll-eisenkot-bloc-continues-slump-as-coalition-gains-ground/000001a1-2c63-d7a5-a7b1-be7397560000"
     },
     "platform": [
       {
@@ -92,13 +102,18 @@ export const partiesCore: PartyCore[] = [
     "id": "beyachad",
     "color": "#0284c7",
     "spectrumCategory": "center",
-    "logo": "יח",
+    "logo": "רק",
     "logoImageUrl": "/party_logos/beyachad.png",
+    "officialBallotLetter": {
+      "letters": "רק",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
     "sectors": ["jewish", "non-religious"],
     "bloc": {
       "stance": "anti-netanyahu",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
+      "asOf": "2026-10-11",
+      "source": "https://www.haaretz.com/israel-news/elections/2026-10-11/ty-article/israel-election-poll-eisenkot-bloc-continues-slump-as-coalition-gains-ground/000001a1-2c63-d7a5-a7b1-be7397560000"
     },
     "platform": [
       {
@@ -122,13 +137,18 @@ export const partiesCore: PartyCore[] = [
     "id": "otzma-yehudit",
     "color": "#b91c1c",
     "spectrumCategory": "far-right",
-    "logo": "ע",
+    "logo": "ב",
     "logoImageUrl": "/party_logos/otzma-yehudit.png",
+    "officialBallotLetter": {
+      "letters": "ב",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
     "sectors": ["jewish", "religious-zionist"],
     "bloc": {
       "stance": "pro-netanyahu",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
+      "asOf": "2026-10-11",
+      "source": "https://www.haaretz.com/israel-news/elections/2026-10-11/ty-article/israel-election-poll-eisenkot-bloc-continues-slump-as-coalition-gains-ground/000001a1-2c63-d7a5-a7b1-be7397560000"
     },
     "platform": [
       {
@@ -154,11 +174,16 @@ export const partiesCore: PartyCore[] = [
     "spectrumCategory": "right",
     "logo": "ל",
     "logoImageUrl": "/party_logos/yisrael-beiteinu.png",
+    "officialBallotLetter": {
+      "letters": "ל",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
     "sectors": ["jewish", "non-religious"],
     "bloc": {
       "stance": "anti-netanyahu",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
+      "asOf": "2026-10-11",
+      "source": "https://www.haaretz.com/israel-news/elections/2026-10-11/ty-article/israel-election-poll-eisenkot-bloc-continues-slump-as-coalition-gains-ground/000001a1-2c63-d7a5-a7b1-be7397560000"
     },
     "platform": [
       {
@@ -182,13 +207,18 @@ export const partiesCore: PartyCore[] = [
     "id": "hademocratim",
     "color": "#15803d",
     "spectrumCategory": "center-left",
-    "logo": "ד",
+    "logo": "אמת",
     "logoImageUrl": "/party_logos/hademocratim.png",
+    "officialBallotLetter": {
+      "letters": "אמת",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
     "sectors": ["jewish", "non-religious"],
     "bloc": {
       "stance": "anti-netanyahu",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
+      "asOf": "2026-10-11",
+      "source": "https://www.haaretz.com/israel-news/elections/2026-10-11/ty-article/israel-election-poll-eisenkot-bloc-continues-slump-as-coalition-gains-ground/000001a1-2c63-d7a5-a7b1-be7397560000"
     },
     "platform": [
       {
@@ -214,11 +244,16 @@ export const partiesCore: PartyCore[] = [
     "spectrumCategory": "sectoral",
     "logo": "שס",
     "logoImageUrl": "/party_logos/shas.png",
+    "officialBallotLetter": {
+      "letters": "שס",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
     "sectors": ["jewish", "haredi"],
     "bloc": {
       "stance": "pro-netanyahu",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
+      "asOf": "2026-10-11",
+      "source": "https://www.haaretz.com/israel-news/elections/2026-10-11/ty-article/israel-election-poll-eisenkot-bloc-continues-slump-as-coalition-gains-ground/000001a1-2c63-d7a5-a7b1-be7397560000"
     },
     "platform": [
       {
@@ -244,11 +279,16 @@ export const partiesCore: PartyCore[] = [
     "spectrumCategory": "sectoral",
     "logo": "ג",
     "logoImageUrl": "/party_logos/yahadut-hatorah.png",
+    "officialBallotLetter": {
+      "letters": "ג",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
     "sectors": ["jewish", "haredi"],
     "bloc": {
       "stance": "pro-netanyahu",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
+      "asOf": "2026-10-11",
+      "source": "https://www.haaretz.com/israel-news/elections/2026-10-11/ty-article/israel-election-poll-eisenkot-bloc-continues-slump-as-coalition-gains-ground/000001a1-2c63-d7a5-a7b1-be7397560000"
     },
     "platform": [
       {
@@ -272,12 +312,17 @@ export const partiesCore: PartyCore[] = [
     "id": "raam",
     "color": "#0f766e",
     "spectrumCategory": "sectoral",
-    "logo": "ר",
+    "logo": "עם",
+    "officialBallotLetter": {
+      "letters": "עם",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
     "sectors": ["arab", "islamist"],
     "bloc": {
       "stance": "unaligned",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
+      "asOf": "2026-10-11",
+      "source": "https://www.haaretz.com/israel-news/elections/2026-10-11/ty-article/israel-election-poll-eisenkot-bloc-continues-slump-as-coalition-gains-ground/000001a1-2c63-d7a5-a7b1-be7397560000"
     },
     "platform": [
       {
@@ -301,13 +346,17 @@ export const partiesCore: PartyCore[] = [
     "id": "hadash-taal",
     "color": "#a16207",
     "spectrumCategory": "sectoral",
-    "logo": "ום",
-    "logoImageUrl": "/party_logos/hadash-taal.png",
+    "logo": "ודם",
+    "officialBallotLetter": {
+      "letters": "ודם",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
     "sectors": ["arab", "non-religious"],
     "bloc": {
       "stance": "unaligned",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
+      "asOf": "2026-10-11",
+      "source": "https://www.haaretz.com/israel-news/elections/2026-10-11/ty-article/israel-election-poll-eisenkot-bloc-continues-slump-as-coalition-gains-ground/000001a1-2c63-d7a5-a7b1-be7397560000"
     },
     "platform": [
       {
@@ -331,71 +380,18 @@ export const partiesCore: PartyCore[] = [
     "id": "religious-zionism",
     "color": "#ea580c",
     "spectrumCategory": "far-right",
-    "logo": "צ",
+    "logo": "ט",
     "logoImageUrl": "/party_logos/religious-zionism.png",
+    "officialBallotLetter": {
+      "letters": "ט",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
     "sectors": ["jewish", "religious-zionist"],
     "bloc": {
       "stance": "pro-netanyahu",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
-    },
-    "platform": [
-      {
-        "topicKey": "security"
-      },
-      {
-        "topicKey": "economy"
-      },
-      {
-        "topicKey": "justice"
-      },
-      {
-        "topicKey": "religionAndState"
-      },
-      {
-        "topicKey": "society"
-      }
-    ]
-  },
-  {
-    "id": "beit-tzioni",
-    "color": "#3f6212",
-    "spectrumCategory": "center",
-    "logo": "בצ",
-    "sectors": ["jewish", "non-religious"],
-    "bloc": {
-      "stance": "anti-netanyahu",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
-    },
-    "platform": [
-      {
-        "topicKey": "security"
-      },
-      {
-        "topicKey": "economy"
-      },
-      {
-        "topicKey": "justice"
-      },
-      {
-        "topicKey": "religionAndState"
-      },
-      {
-        "topicKey": "society"
-      }
-    ]
-  },
-  {
-    "id": "balad",
-    "color": "#1c1917",
-    "spectrumCategory": "sectoral",
-    "logo": "בל",
-    "sectors": ["arab", "non-religious"],
-    "bloc": {
-      "stance": "unaligned",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
+      "asOf": "2026-10-11",
+      "source": "https://www.haaretz.com/israel-news/elections/2026-10-11/ty-article/israel-election-poll-eisenkot-bloc-continues-slump-as-coalition-gains-ground/000001a1-2c63-d7a5-a7b1-be7397560000"
     },
     "platform": [
       {
@@ -419,13 +415,86 @@ export const partiesCore: PartyCore[] = [
     "id": "kachol-lavan",
     "color": "#1d4ed8",
     "spectrumCategory": "center",
-    "logo": "כל",
+    "logo": "כן",
     "logoImageUrl": "/party_logos/kachol-lavan.png",
+    "officialBallotLetter": {
+      "letters": "כן",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
     "sectors": ["jewish", "non-religious"],
     "bloc": {
       "stance": "anti-netanyahu",
       "asOf": "2026-07-22",
       "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
+    },
+    "platform": [
+      {
+        "topicKey": "security"
+      },
+      {
+        "topicKey": "economy"
+      },
+      {
+        "topicKey": "justice"
+      },
+      {
+        "topicKey": "religionAndState"
+      },
+      {
+        "topicKey": "society"
+      }
+    ]
+  },
+  {
+    "id": "amcha-yisrael",
+    "color": "#9a3412",
+    "spectrumCategory": "right",
+    "logo": "ך",
+    "officialBallotLetter": {
+      "letters": "ך",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
+    "sectors": ["jewish", "non-religious"],
+    "bloc": {
+      "stance": "pro-netanyahu",
+      "asOf": "2026-10-14",
+      "source": "https://jewishinsider.com/2026/10/amcha-yisrael-leader-ofer-winter-israeli-elections/"
+    },
+    "platform": [
+      {
+        "topicKey": "security"
+      },
+      {
+        "topicKey": "economy"
+      },
+      {
+        "topicKey": "justice"
+      },
+      {
+        "topicKey": "religionAndState"
+      },
+      {
+        "topicKey": "society"
+      }
+    ]
+  },
+  {
+    "id": "hamiluimnikim",
+    "color": "#4d7c0f",
+    "spectrumCategory": "center-right",
+    "logo": "די",
+    "officialBallotLetter": {
+      "letters": "די",
+      "confirmedAt": "2026-09-27",
+      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
+    },
+    "sectors": ["jewish", "non-religious"],
+    "bloc": {
+      "stance": "unaligned",
+      "asOf": "2026-10-14",
+      "source": "https://jewishinsider.com/2026/10/israeli-elections-yoaz-hendel-ofer-winter-threshold-polls/"
     },
     "platform": [
       {

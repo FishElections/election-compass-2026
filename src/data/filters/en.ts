@@ -33,5 +33,6 @@ export const filterLabelsEn: FilterLabels = {
 
   pollSource: {
     "channel13": "Channel 13 News",
+    "kan11": "Kan 11",
   },
 };
