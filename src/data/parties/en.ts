@@ -13,8 +13,8 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
         "summary": "Security based on military professionalism, restoring IDF readiness, and returning personal security to citizens.",
         "bulletPoints": [
           "Restoring IDF and reserves readiness after a long war",
-          "Bringing home the hostages as a supreme national goal",
-          "Measured diplomatic management while keeping options open",
+          "Opposing a Palestinian state, and annexation that would endanger the Jewish majority",
+          "Strengthening the settlement blocs and lawful construction, with no plan to evacuate settlements",
           "Strengthening the alliance with the US and regional players"
         ]
       },
@@ -56,10 +56,10 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
         "topicName": "Society & Education",
         "summary": "National unity and healing the social rifts exposed since the war.",
         "bulletPoints": [
-          "Comprehensive care for the wounded and bereaved families of the war",
-          "Investment in the periphery and public education",
-          "Strengthening national-civic service",
-          "Promoting shared dialogue between sectors"
+          "Comprehensive care for the wounded and for war-affected families",
+          "Investing in the periphery and public education",
+          "Civil union registration for every couple, including same-sex couples",
+          "A gender-equal Knesset slate (50% women) and narrowing the pay gap"
         ]
       }
     ]
@@ -262,12 +262,12 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
       {
         "topicKey": "security",
         "topicName": "Security & Foreign Policy",
-        "summary": "An assertive, national-secular security policy with no compromises with terror organizations.",
+        "summary": "Tough, secular-nationalist security policy with no compromise with terror groups.",
         "bulletPoints": [
-          "A hardline policy toward Hamas",
-          "Strengthening the IDF as the people's army",
-          "Conditioning citizenship on loyalty to the state",
-          "Strengthening home-front security"
+          "A hard line on Hamas",
+          "Applying sovereignty to Area C and building in E1",
+          "Annulling the Oslo Accords and dismantling the Palestinian Authority",
+          "Strengthening the IDF as a people's army and home-front security"
         ]
       },
       {
@@ -284,12 +284,12 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
       {
         "topicKey": "justice",
         "topicName": "Judiciary & Governance",
-        "summary": "A moderate judicial reform alongside preserving the rule of law.",
+        "summary": "A full constitution approved by referendum, instead of one-sided amendments.",
         "bulletPoints": [
-          "Measured changes to judicial selection",
-          "Preserving governmental stability",
-          "Fighting organized crime",
-          "Strengthening law enforcement"
+          "Drafting a constitution that sets relations between the branches and basic rights",
+          "Approving it by referendum, and amending it only with 80 MKs",
+          "A state commission of inquiry under existing law as the government's first decision",
+          "Fighting organized crime and strengthening law enforcement"
         ]
       },
       {
@@ -325,11 +325,11 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
       {
         "topicKey": "security",
         "topicName": "Security & Foreign Policy",
-        "summary": "Security based on a political agreement, ending the occupation, and separation from Palestinian territories.",
+        "summary": "Security alongside a diplomatic strategy: separation from the Palestinians through a regional move.",
         "bulletPoints": [
-          "Advancing a permanent agreement and the two-state solution",
-          "Opposing settlement expansion",
-          "Strengthening the army as a guarantee for security, not control",
+          "Separation through a regional move with the US and moderate Arab states, with security guarantees",
+          "Evacuating illegal outposts and fighting Jewish terror",
+          "Full freedom of action for the IDF and Shin Bet against terror",
           "Restoring Israel's international standing"
         ]
       },
@@ -347,12 +347,12 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
       {
         "topicKey": "justice",
         "topicName": "Judiciary & Governance",
-        "summary": "Firm protection of judicial independence and human rights.",
+        "summary": "A firm defense of judicial independence and human rights.",
         "bulletPoints": [
-          "Total opposition to the judicial overhaul",
-          "Anchoring a constitution and human rights",
-          "Preserving the Attorney General's standing",
-          "Strengthening judicial review of government"
+          "Repealing the \"regime coup laws\"",
+          "A \"zero indicted ministers\" law",
+          "A Basic Law: Legislation and constitutional protection for equality, free speech and freedom of religion",
+          "A state commission of inquiry appointed by the Supreme Court president, as the government's first decision"
         ]
       },
       {
@@ -662,12 +662,12 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
       {
         "topicKey": "justice",
         "topicName": "Judiciary & Governance",
-        "summary": "A substantive change to the judiciary to shift power to the elected legislature.",
+        "summary": "Continuing the judicial overhaul, as a precondition for joining any coalition.",
         "bulletPoints": [
-          "Fully abolishing the reasonableness standard",
-          "A political majority in judicial selection",
-          "Restricting the Supreme Court's authority on policy matters",
-          "Letting ministers appoint their own legal advisors"
+          "An override clause",
+          "Splitting the attorney general's role: a legal adviser of the government's choosing and a separate prosecutor general",
+          "Choosing the Supreme Court president by secret ballot of the justices; Zehut proposes direct election of Supreme Court justices",
+          "A \"national\" commission of inquiry into October 7 instead of a state commission"
         ]
       },
       {
@@ -703,12 +703,12 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
       {
         "topicKey": "security",
         "topicName": "Security & Foreign Policy",
-        "summary": "Assertive, professional security based on senior military experience, alongside caution regarding unilateral territorial commitments.",
+        "summary": "Tough, professional security grounded in senior military experience.",
         "bulletPoints": [
-          "Assertive military deterrence against Iran and terror organizations in the region",
-          "Transferring civilian responsibility in the Gaza Strip to a non-Israeli actor in the long term",
-          "Maintaining close ties and full coordination with the US",
-          "Caution regarding unilateral territorial commitments in the West Bank"
+          "Strong military deterrence against Iran and regional terror groups",
+          "Transferring civilian responsibility in Gaza to a non-Israeli body in the long term",
+          "Close ties and full coordination with the US",
+          "Strengthening settlement in the Jordan Valley, the mountain ridge and the seam zone, with no evacuations"
         ]
       },
       {
@@ -725,23 +725,23 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
       {
         "topicKey": "justice",
         "topicName": "Judiciary & Governance",
-        "summary": "Firmly preserving the judiciary's independence as a condition for public trust and the rule of law.",
+        "summary": "Regulating relations between the branches without bringing politics into legal decisions.",
         "bulletPoints": [
-          "Total opposition to any move that weakens the Supreme Court",
-          "Preserving the Attorney General's standing as an independent figure",
-          "A person indicted for serious offenses may not serve as prime minister",
-          "Establishing a state commission of inquiry for the events of October 7"
+          "A Basic Law: Legislation as the first step toward a broadly agreed constitutional process",
+          "Limiting the court's ability to intervene in government decisions, while opposing politicization",
+          "No one indicted for serious offenses may serve as prime minister",
+          "A state commission of inquiry into October 7 under the existing mechanism"
         ]
       },
       {
         "topicKey": "religionAndState",
         "topicName": "Religion & State",
-        "summary": "Equality of burden and statism, alongside respect for the state's Jewish identity.",
+        "summary": "Equal burden and civic statehood, alongside respect for the state's Jewish identity.",
         "bulletPoints": [
-          "Promoting significant, gradual conscription for the Haredi public",
-          "Opposing expanded dedicated funding for yeshivas without equality of burden",
+          "\"Service for all\" as a condition for swearing in any government",
+          "Exemptions only for outstanding individuals within quotas, and economic sanctions on draft evaders",
           "Opening the kashrut market to private competition",
-          "Respecting the diversity of lifestyles in the public sphere"
+          "Respecting the diversity of ways of life"
         ]
       },
       {
