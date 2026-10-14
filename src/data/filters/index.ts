@@ -1,6 +1,7 @@
 import { Locale } from "@/i18n/config";
 import { ExclusionReason, PartyNoteId, PartySector } from "@/types";
 import { BlocOption, SizeOption } from "./core";
+import type { PollSnapshot } from "@/data/polls";
 import { filterLabelsHe } from "./he";
 import { filterLabelsEn } from "./en";
 import { filterLabelsAr } from "./ar";
@@ -12,7 +13,7 @@ export interface FilterLabels {
   exclusionReasons: Record<ExclusionReason, string>;
   notes: Record<PartyNoteId, string>;
   /** שם הסוקר, לתצוגה. ראו PollSnapshot.sourceId. */
-  pollSource: Record<"channel13", string>;
+  pollSource: Record<PollSnapshot["sourceId"], string>;
 }
 
 const labelsByLocale: Record<Locale, FilterLabels> = {

@@ -24,7 +24,7 @@ export const partyTopicStances: PartyTopicStance[] = [
   { partyId: "beyachad", topicId: "haredi-draft", side: "pro" },
   { partyId: "beyachad", topicId: "gaza-control", side: "pro" },
   { partyId: "beyachad", topicId: "judicial-reform", side: "con" },
-  { partyId: "beyachad", topicId: "religion-state-separation", side: "con" },
+  { partyId: "beyachad", topicId: "religion-state-separation", side: "pro" },
   { partyId: "beyachad", topicId: "economy-model", side: "pro" },
 
   // עוצמה יהודית
@@ -85,7 +85,7 @@ export const partyTopicStances: PartyTopicStance[] = [
   { partyId: "raam", topicId: "religion-state-separation", side: "con" },
   { partyId: "raam", topicId: "economy-model", side: "con" },
 
-  // חד"ש-תע"ל
+  // הרשימה המשותפת (חד"ש, תע"ל ובל"ד)
   { partyId: "hadash-taal", topicId: "haredi-draft", side: "pro" },
   { partyId: "hadash-taal", topicId: "gaza-control", side: "con" },
   { partyId: "hadash-taal", topicId: "judicial-reform", side: "con" },
@@ -107,24 +107,6 @@ export const partyTopicStances: PartyTopicStance[] = [
   },
   { partyId: "religious-zionism", topicId: "economy-model", side: "pro" },
 
-  // בית ציוני
-  { partyId: "beit-tzioni", topicId: "haredi-draft", side: "pro" },
-  { partyId: "beit-tzioni", topicId: "gaza-control", side: "pro" },
-  { partyId: "beit-tzioni", topicId: "judicial-reform", side: "con" },
-  {
-    partyId: "beit-tzioni",
-    topicId: "religion-state-separation",
-    side: "pro",
-  },
-  { partyId: "beit-tzioni", topicId: "economy-model", side: "con" },
-
-  // בל"ד
-  { partyId: "balad", topicId: "haredi-draft", side: "pro" },
-  { partyId: "balad", topicId: "gaza-control", side: "con" },
-  { partyId: "balad", topicId: "judicial-reform", side: "con" },
-  { partyId: "balad", topicId: "religion-state-separation", side: "pro" },
-  { partyId: "balad", topicId: "economy-model", side: "con" },
-
   // כחול לבן
   { partyId: "kachol-lavan", topicId: "haredi-draft", side: "pro" },
   { partyId: "kachol-lavan", topicId: "gaza-control", side: "con" },
@@ -135,4 +117,26 @@ export const partyTopicStances: PartyTopicStance[] = [
     side: "pro",
   },
   { partyId: "kachol-lavan", topicId: "economy-model", side: "pro" },
+
+  // עמך ישראל
+  { partyId: "amcha-yisrael", topicId: "haredi-draft", side: "pro" },
+  { partyId: "amcha-yisrael", topicId: "gaza-control", side: "pro" },
+  { partyId: "amcha-yisrael", topicId: "judicial-reform", side: "pro" },
+  {
+    partyId: "amcha-yisrael",
+    topicId: "religion-state-separation",
+    side: "con",
+  },
+  { partyId: "amcha-yisrael", topicId: "economy-model", side: "pro" },
+
+  // המילואימניקים והכלכלית
+  { partyId: "hamiluimnikim", topicId: "haredi-draft", side: "pro" },
+  { partyId: "hamiluimnikim", topicId: "gaza-control", side: "pro" },
+  { partyId: "hamiluimnikim", topicId: "judicial-reform", side: "con" },
+  {
+    partyId: "hamiluimnikim",
+    topicId: "religion-state-separation",
+    side: "pro",
+  },
+  { partyId: "hamiluimnikim", topicId: "economy-model", side: "pro" },
 ];

@@ -26,7 +26,7 @@ export interface PollSnapshot {
    * לא נשמרת כאן. (באג אמיתי שנתפס בבדיקה: "חדשות 13" נשאר בעברית גם
    * בעמוד האנגלי לפני התיקון.)
    */
-  sourceId: "channel13";
+  sourceId: "channel13" | "kan11";
   sourceUrl: string;
   /**
    * partyId → מנדטים. מפלגה שלא עברה את אחוז החסימה בסקר מקבלת 0 -
@@ -44,11 +44,11 @@ export const THRESHOLD_PERCENT = 3.25;
 /**
  * גודל המדגם וטעות הדגימה של הסקר. אלה הקלט של סימולטור אחוז החסימה:
  * טעות הדגימה של *כל מפלגה* נגזרת מ-n דרך שגיאת התקן של שיעור
- * (sqrt(p(1-p)/n)), ולא מהמספר הכללי 3.5% - מפלגה קטנה סמוכה לחסימה
+ * (sqrt(p(1-p)/n)), ולא מהמספר הכללי 4.2% - מפלגה קטנה סמוכה לחסימה
  * רגישה לרעש אחרת מגוש גדול, וזה בדיוק מה שהסימולטור בא להראות.
  */
-export const SAMPLE_SIZE = 988;
-export const MARGIN_OF_ERROR_PERCENT = 3.5;
+export const SAMPLE_SIZE = 552;
+export const MARGIN_OF_ERROR_PERCENT = 4.2;
 
 /**
  * השיעור הממשי (באחוזים) של מפלגות שלא עברו את החסימה בסקר. seats=0
@@ -57,40 +57,41 @@ export const MARGIN_OF_ERROR_PERCENT = 3.5;
  * מופיעות כאן: השיעור שלהן נגזר מהמנדטים (ראו voteShareFor).
  */
 const belowThresholdPercent: Record<string, number> = {
-  balad: 1.9,
-  "kachol-lavan": 1.0,
+  "kachol-lavan": 0.9,
 };
 
 /** מעל הגיל הזה הנתונים לא משמשים לסינון. */
 export const STALE_AFTER_DAYS = 30;
 
 /**
- * סקר ערוץ 13, 22/07/2026 (מדגם 988 נשאלים, טעות דגימה 3.5%).
+ * סקר כאן 11 (קנטאר, דודו חסיד), 11/10/2026: 552 נשאלים, טעות דגימה 4.2%.
  *
  * נבחר סקר יחיד ולא ממוצע: ממוצע מחייב החלטות שקלול שאין להן מקור פומבי
  * אחד לצטט, ואילו סקר בודד ניתן לאימות מלא מול הפרסום. המספרים כאן
- * מסתכמים ל-120 בדיוק, והגושים מתאימים לחלוקה שפורסמה (49 / 60 / 11).
+ * מסתכמים ל-120 בדיוק, והגושים מתאימים לחלוקה שפורסמה: גוש איזנקוט 50,
+ * הקואליציה 53, המפלגות הערביות 13, והמילואימניקים (4) מחוץ לגושים.
  */
 export const currentPoll: PollSnapshot = {
-  updatedAt: "2026-07-22",
-  sourceId: "channel13",
+  updatedAt: "2026-10-11",
+  sourceId: "kan11",
   sourceUrl:
-    "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000",
+    "https://www.haaretz.com/israel-news/elections/2026-10-11/ty-article/israel-election-poll-eisenkot-bloc-continues-slump-as-coalition-gains-ground/000001a1-2c63-d7a5-a7b1-be7397560000",
   seats: {
-    likud: 21,
-    yashar: 21,
-    beyachad: 14,
-    hademocratim: 11,
-    "yisrael-beiteinu": 10,
-    shas: 8,
+    yashar: 22,
+    likud: 20,
+    beyachad: 12,
+    "otzma-yehudit": 9,
+    hademocratim: 8,
     "yahadut-hatorah": 8,
-    "otzma-yehudit": 7,
-    "hadash-taal": 6,
-    "religious-zionism": 5,
+    // הרשימה המשותפת (חד"ש, תע"ל ובל"ד)
+    "hadash-taal": 8,
+    "yisrael-beiteinu": 8,
+    shas: 7,
     raam: 5,
-    "beit-tzioni": 4,
-    // מתחת לאחוז החסימה בסקר הזה: בל"ד 1.9%, כחול לבן 1%.
-    balad: 0,
+    "religious-zionism": 5,
+    "amcha-yisrael": 4,
+    hamiluimnikim: 4,
+    // מתחת לאחוז החסימה בסקר הזה: כחול לבן 0.9%.
     "kachol-lavan": 0,
   },
 };

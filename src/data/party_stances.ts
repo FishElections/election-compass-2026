@@ -39,9 +39,34 @@ import { PartyStance } from "@/types";
  * שאותר בביקורת הזו). דוחות המקור המלאים לכל מפלגה נמצאים ב-
  * reports/stance-verification/, ופירוט מלא של כל השינויים ב-
  * reports/party-stance-updates.xlsx.
+ *
+ * עדכון מפת המפלגות, אוקטובר 2026 (אחרי הגשת הרשימות ב-7-8.9.2026):
+ * - נוספו עמך ישראל (עופר וינטר) והמילואימניקים והכלכלית (יועז הנדל / ירון
+ *   זליכה). הערכים המתועדים נשענים על ראיונות ומצעים מספטמבר-אוקטובר 2026
+ *   (ראו sourceUrl בכל שורה); השאר נגזרו מהפרופיל המוצהר של המנהיגים.
+ * - בית ציוני הוסרה: חילי טרופר הצטרף לישר!, ויועז הנדל רץ ברשימה החדשה.
+ * - בל"ד הוסרה כרשימה נפרדת: היא רצה במסגרת הרשימה המשותפת (חד"ש, תע"ל
+ *   ובל"ד), שממשיכה את המזהה hadash-taal ואת עמדות חד"ש-תע"ל, כי חד"ש
+ *   עומדת בראשה.
+ *
+ * אימות מצעים ועמדות, 14.10.2026 (שבועיים לפני הבחירות):
+ * - נבדקו מול מצעים רשמיים שפורסמו לבחירות 2026: ביחד, ישר!, עמך ישראל,
+ *   המילואימניקים, והתוכנית הכלכלית-חברתית של הרשימה המשותפת (רשימת המצעים
+ *   לפי המכון הישראלי לדמוקרטיה). לליכוד אין מצע מפורט מעבר ל"ששת העמודים".
+ * - נוסף סקר העמדות של ynet ו"ידיעות אחרונות" (ספטמבר-אוקטובר 2026), שבו כל
+ *   המפלגות נשאלו את אותן שאלות על גיוס, מערכת המשפט, יהודה ושומרון וועדת
+ *   החקירה. הליכוד סירב להשיב, ולכן עמדותיו נשענות על הצבעות בפועל.
+ * - 37 ערכים עודכנו, ובשורות שנבדקו ה-sourceNote מציין את הערך הקודם.
  */
 export const partyStances: PartyStance[] = [
-  { partyId: "yashar", questionId: "sec-1", stanceValue: -1 },
+  {
+    partyId: "yashar",
+    questionId: "sec-1",
+    stanceValue: 1,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14910407",
+    sourceNote:
+      'ישר! לynet (27.9.26): "ישר! תומכת בחיזוק גושי ההתיישבות ובהקמת יישובים חדשים באופן חוקי, בהתאם לאינטרסים הלאומיים של ישראל ולהמלצות מערכת הביטחון". מתנגדת להחלת ריבונות שתסכן את הרוב היהודי, ולכן 1 ולא 2. (עדכון מ-1-.)',
+  },
   { partyId: "yashar", questionId: "sec-2", stanceValue: 1 },
   {
     partyId: "yashar",
@@ -53,7 +78,14 @@ export const partyStances: PartyStance[] = [
   },
   { partyId: "yashar", questionId: "sec-4", stanceValue: -1 },
   { partyId: "yashar", questionId: "sec-5", stanceValue: 1 },
-  { partyId: "yashar", questionId: "sec-6", stanceValue: 0 },
+  {
+    partyId: "yashar",
+    questionId: "sec-6",
+    stanceValue: 1,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14910407",
+    sourceNote:
+      'ישר! לynet (27.9.26): "אין לנו תוכנית לפינוי יישובים במסגרת הסדר מדיני", ו"הקמת מדינה פלסטינית אינה עומדת על הפרק". מנגד מתנגדת לריבונות ולאחריות על חייהם האזרחיים של הפלסטינים. (עדכון מ-0.)',
+  },
   { partyId: "yashar", questionId: "sec-7", stanceValue: 1 },
   { partyId: "yashar", questionId: "sec-8", stanceValue: 1 },
   { partyId: "yashar", questionId: "sec-9", stanceValue: 1 },
@@ -72,7 +104,14 @@ export const partyStances: PartyStance[] = [
   { partyId: "yashar", questionId: "eco-9", stanceValue: 2 },
   { partyId: "yashar", questionId: "eco-10", stanceValue: 1 },
   { partyId: "yashar", questionId: "eco-11", stanceValue: 2 },
-  { partyId: "yashar", questionId: "eco-12", stanceValue: 1 },
+  {
+    partyId: "yashar",
+    questionId: "eco-12",
+    stanceValue: 1,
+    sourceUrl: "https://yasharwitheisenkot.com/principles/economics/",
+    sourceNote:
+      'מצע ישר! לכלכלה: "נבטל חסמי ייבוא ותקנים ייחודיים לישראל שאין להם הצדקה, ונפתח את השוק לייבוא מקביל", אבל "תוך שימור ועידוד החקלאות הישראלית" - ולכן 1 ולא 2.',
+  },
   { partyId: "yashar", questionId: "inf-1", stanceValue: 1 },
   { partyId: "yashar", questionId: "inf-2", stanceValue: 1 },
   { partyId: "yashar", questionId: "inf-3", stanceValue: 0 },
@@ -81,21 +120,35 @@ export const partyStances: PartyStance[] = [
   { partyId: "yashar", questionId: "inf-6", stanceValue: 0 },
   { partyId: "yashar", questionId: "rel-2", stanceValue: 1 },
   { partyId: "yashar", questionId: "rel-3", stanceValue: -1 },
-  { partyId: "yashar", questionId: "rel-4", stanceValue: 1 },
+  {
+    partyId: "yashar",
+    questionId: "rel-4",
+    stanceValue: 1,
+    sourceUrl: "https://yasharwitheisenkot.com/principles/lgbtqia/",
+    sourceNote:
+      'מצע ישר! (ישר! לקהילה הגאה): "נקדם מסלול לרישום זוגיות אזרחית שיהיה זמין לכל זוג, לרבות זוגות חד-מיניים". זהו רישום זוגיות ולא חוק נישואין וגירושין אזרחיים מלא, ובמצע לשוויון מגדרי ישר! מתחייבת גם "להחזרת הסטטוס-קוו" בשירותי הדת, ולכן 1 ולא 2.',
+  },
   {
     partyId: "yashar",
     questionId: "rel-5",
     stanceValue: -2,
-    sourceUrl: "https://www.kikar.co.il/interviews/t5yvrx",
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14898966",
     sourceNote:
-      "איזנקוט מוביל הצעת חוק גיוס קונקרטית: מכסת פטור של כ-3% בלבד מכלל כ-150,000 המתגייסים בשנה, באמצעות מנהלת ממלכתית שתחליף את מנגנון הפטור הרבני-האוטומטי הקיים, ודורש גיוס חובה (צבאי או לאומי) לכלל הציבור, כולל חרדים -- עמדה מפורשת נגד שימור הפטור הרחב הקיים.",
+      'ישר! לynet (15.9.26): "המנגנון היחיד לדחיית שירות יהיה הקצאה של עד 3% מכל מחזור שנתי למצטיינים מתחומים שונים ובהם לומדי תורה", ומשתמטים יהיו "נתונים לשלילת הטבות אזרחיות וכלכליות רחבה ולדין פלילי".',
   },
   { partyId: "yashar", questionId: "rel-7", stanceValue: -1 },
   { partyId: "yashar", questionId: "rel-8", stanceValue: 1 },
   { partyId: "yashar", questionId: "rel-9", stanceValue: -1 },
   { partyId: "yashar", questionId: "rel-10", stanceValue: 1 },
   { partyId: "yashar", questionId: "rel-11", stanceValue: 1 },
-  { partyId: "yashar", questionId: "jud-1", stanceValue: -1 },
+  {
+    partyId: "yashar",
+    questionId: "jud-1",
+    stanceValue: -2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14903844",
+    sourceNote:
+      'ישר! לynet (21.9.26): "אנו סבורים שמנגנון ההתגברות מעודד חיכוך מיותר בין מערכת המשפט לבין המערכת הפוליטית ואין לאמצו בישראל". (עדכון מ-1-.)',
+  },
   {
     partyId: "yashar",
     questionId: "jud-2",
@@ -104,12 +157,26 @@ export const partyStances: PartyStance[] = [
     sourceNote:
       'אתר המפלגה: המפלגה תומכת ב"בתי משפט חזקים, עצמאיים ואחראים" כחלק מחיזוק הדמוקרטיה ושלטון החוק בהפרדת רשויות, בהתאם גם להצהרת איזנקוט על "קו אדום" נגד השתלטות פוליטית על מערכת המשפט.',
   },
-  { partyId: "yashar", questionId: "jud-3", stanceValue: -1 },
+  {
+    partyId: "yashar",
+    questionId: "jud-3",
+    stanceValue: -2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14903844",
+    sourceNote:
+      'ישר! לynet (21.9.26): "ישר! תבטל את החוק לפוליטיזציה של הוועדה לבחירת שופטים, ובמקומו תוביל תהליך מקצועי שישאף להסכמות רחבות". (עדכון מ-1-.)',
+  },
   { partyId: "yashar", questionId: "jud-5", stanceValue: 0 },
   { partyId: "yashar", questionId: "jud-7", stanceValue: -1 },
   { partyId: "yashar", questionId: "jud-8", stanceValue: 1 },
   { partyId: "yashar", questionId: "jud-9", stanceValue: -1 },
-  { partyId: "yashar", questionId: "gov-1", stanceValue: 2 },
+  {
+    partyId: "yashar",
+    questionId: "gov-1",
+    stanceValue: 2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14915209",
+    sourceNote:
+      'ישר! לynet (3.10.26): "החלטת הממשלה הראשונה שלנו תהיה הקמת ועדת חקירה ממלכתית לטבח 7 באוקטובר. הוועדה תוקם בהתאם לסעיף 1 לחוק ועדות חקירה".',
+  },
   { partyId: "yashar", questionId: "gov-3", stanceValue: 1 },
   {
     partyId: "yashar",
@@ -121,8 +188,22 @@ export const partyStances: PartyStance[] = [
   },
   { partyId: "yashar", questionId: "gov-5", stanceValue: 1 },
   { partyId: "yashar", questionId: "soc-1", stanceValue: 0 },
-  { partyId: "yashar", questionId: "soc-2", stanceValue: 0 },
-  { partyId: "yashar", questionId: "soc-3", stanceValue: 1 },
+  {
+    partyId: "yashar",
+    questionId: "soc-2",
+    stanceValue: 2,
+    sourceUrl: "https://yasharwitheisenkot.com/principles/lgbtqia/",
+    sourceNote:
+      'מצע ישר!: "ישר! מחויבת לקידום שוויון זכויות לחברי וחברות קהילת הלהט"ב וחתומה על \'חוקי שגיא לשוויון\'", כולל רישום זוגיות אזרחית לזוגות חד-מיניים ו"תיקון האפליה הקיימת בחוקים הקשורים לזוגיות, הורות ומשפחה". (עדכון מ-0.)',
+  },
+  {
+    partyId: "yashar",
+    questionId: "soc-3",
+    stanceValue: -2,
+    sourceUrl: "https://yasharwitheisenkot.com/principles/lgbtqia/",
+    sourceNote:
+      'מצע ישר!: "נקדם פרסום של חוזר מנכ"ל המעגן את זכויות התלמידים והמורים הלהט"בים, לרבות הכשרות מתאימות לצוותים חינוכיים", ואיסור טיפולי המרה במערכת החינוך. הפוך מהגבלת תכנים. (עדכון מ-1.)',
+  },
   { partyId: "yashar", questionId: "soc-5", stanceValue: 1 },
   {
     partyId: "yashar",
@@ -236,9 +317,9 @@ export const partyStances: PartyStance[] = [
     partyId: "likud",
     questionId: "rel-5",
     stanceValue: 2,
-    sourceUrl: "https://www.idi.org.il/articles/62341",
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14898966",
     sourceNote:
-      'מעבר להחלטת ממשלה 682 (2023): הצעת חוק הגיוס שקידם ח"כ בועז ביסמוט מטעם הקואליציה (נובמבר 2025) קובעת יעדי גיוס בפועל נמוכים ביותר לתלמידי ישיבות -- כ-700 מגויסים נוספים בלבד על פני שנה וחצי, מעבר לבסיס הקיים של כ-3,000 בשנה -- כלומר שימור בפועל של הפטור הרחב.',
+      'בכנסת ה-25 העבירה הקואליציה בראשות הליכוד את "חוק יסוד: לימוד תורה" וחוק למניעת מעצר משתמטים. לפי ynet (15.9.26), בליכוד אמרו שיפעלו להעברת חוק ההשתמטות מיד אחרי הבחירות, לפני הקמת הממשלה, בהתאם לדרישת ש"ס. בקמפיין נתניהו תוקף את החרדים ומדבר על סנקציות ויעדים, אבל ההצבעות בפועל הן בעד שימור הפטור.',
   },
   { partyId: "likud", questionId: "rel-7", stanceValue: 1 },
   { partyId: "likud", questionId: "rel-8", stanceValue: -1 },
@@ -273,7 +354,14 @@ export const partyStances: PartyStance[] = [
   { partyId: "likud", questionId: "jud-7", stanceValue: 2 },
   { partyId: "likud", questionId: "jud-8", stanceValue: -2 },
   { partyId: "likud", questionId: "jud-9", stanceValue: 2 },
-  { partyId: "likud", questionId: "gov-1", stanceValue: -2 },
+  {
+    partyId: "likud",
+    questionId: "gov-1",
+    stanceValue: -2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14915209",
+    sourceNote:
+      'ynet (3.10.26): הליכוד לא מסר עמדה. שרי הליכוד שתמכו בתחילה בוועדה ממלכתית חזרו בהם והטילו וטו על הקמתה, והמפלגה קידמה הצעת חוק לוועדה חלופית "לאומית".',
+  },
   { partyId: "likud", questionId: "gov-3", stanceValue: -2 },
   {
     partyId: "likud",
@@ -308,23 +396,30 @@ export const partyStances: PartyStance[] = [
   {
     partyId: "beyachad",
     questionId: "sec-1",
-    stanceValue: 1,
-    sourceUrl: "https://www.ynet.co.il/news/article/ryrupmzlf",
+    stanceValue: 2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14910407",
     sourceNote:
-      'בנט הוא לשעבר יו"ר מועצת יש"ע ו"הבית היהודי", בעל היסטוריה אידאולוגית פרו-התיישבותית מובהקת, אך בפועל כרה"מ (2021-2022) נתפס כמרסן יחסית באישורי בנייה ("המתנחלים מאוכזבים: גנץ מאשר בנייה, בנט דוחה אותה"). עמדתו הנוכחית: שימור שליטה ביטחונית בשטחי C, לצד שלילה מפורשת של סיפוח שטחי A/B -- לא הרחבה אגרסיבית חדשה, אלא שימור סטטוס-קוו מוטה-ימין.',
+      'ביחד לynet (27.9.26): "אנו תומכים בהתיישבות יהודית בכל מקום בו זה נעשה באופן חוקי", ו"תוכנית בנט מ-2012 רואה את שטחי C כחלק עתידי ריבוני של מדינת ישראל". (עדכון מ-1.)',
   },
   { partyId: "beyachad", questionId: "sec-2", stanceValue: 1 },
   {
     partyId: "beyachad",
     questionId: "sec-3",
-    stanceValue: -1,
-    sourceUrl: "https://www.srugim.co.il/1036415-%D7%91%D7%A0%D7%98-%D7%96%D7%95-%D7%94%D7%A1%D7%99%D7%91%D7%94-%D7%A9%D7%90%D7%A0%D7%99-%D7%A0%D7%92%D7%93-%D7%9E%D7%93%D7%99%D7%A0%D7%94-%D7%A4%D7%9C%D7%A1%D7%98%D7%99%D7%A0%D7%99%D7%AA",
+    stanceValue: -2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14910407",
     sourceNote:
-      'פילוג מתועד בין המנהיגים: בנט חוזר ואומר "לעולם ולא בשום תנאי לא אתן את ידי להקמת מדינה פלסטינית", בעוד לפיד תמך במפורש בפתרון שתי המדינות, כולל בנאום כרה"מ באו"ם ב-2022 ("הסכם עם הפלסטינים המבוסס על שתי מדינות לשני עמים הוא הדבר הנכון לביטחון ישראל").',
+      'ביחד לynet (27.9.26): "מתנגדים למדינה פלסטינית ומסירת שטחים". (עדכון מ-1-.)',
   },
   { partyId: "beyachad", questionId: "sec-4", stanceValue: -1 },
   { partyId: "beyachad", questionId: "sec-5", stanceValue: 1 },
-  { partyId: "beyachad", questionId: "sec-6", stanceValue: 1 },
+  {
+    partyId: "beyachad",
+    questionId: "sec-6",
+    stanceValue: 2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14910407",
+    sourceNote:
+      'ביחד לynet (27.9.26): "מתנגדים לפינוי יישובים יהודיים שנבנו בהתאם לחוק בכל מצב שהוא". (עדכון מ-1.)',
+  },
   { partyId: "beyachad", questionId: "sec-7", stanceValue: 1 },
   { partyId: "beyachad", questionId: "sec-8", stanceValue: 2 },
   { partyId: "beyachad", questionId: "sec-9", stanceValue: 1 },
@@ -347,37 +442,93 @@ export const partyStances: PartyStance[] = [
   { partyId: "beyachad", questionId: "sec-12", stanceValue: 1 },
   { partyId: "beyachad", questionId: "sec-13", stanceValue: 1 },
   { partyId: "beyachad", questionId: "eco-1", stanceValue: 1 },
-  { partyId: "beyachad", questionId: "eco-2", stanceValue: -1 },
+  {
+    partyId: "beyachad",
+    questionId: "eco-2",
+    stanceValue: 0,
+    sourceUrl: "https://be-yahad.org.il/plans/",
+    sourceNote:
+      'מצע ביחד: "נעלה את קצבת הזקנה לנזקקים ביותר" ונשמור 60% מקצבת הנכות לעובדים, אבל גם "כל הקצבאות וההטבות שמעודדות השתמטות - יבוטלו". הגדלה ממוקדת לצד ביטול קצבאות - 0. (עדכון מ-1-.)',
+  },
   { partyId: "beyachad", questionId: "eco-3", stanceValue: 2 },
   { partyId: "beyachad", questionId: "eco-4", stanceValue: -1 },
   { partyId: "beyachad", questionId: "eco-5", stanceValue: 2 },
-  { partyId: "beyachad", questionId: "eco-6", stanceValue: -1 },
+  {
+    partyId: "beyachad",
+    questionId: "eco-6",
+    stanceValue: 1,
+    sourceUrl: "https://be-yahad.org.il/plans/",
+    sourceNote:
+      'מצע ביחד (משבר הדיור): "להגדיל משמעותית את היצע הדירות... ולהבטיח דיור בר-השגה ויציב לזוגות צעירים ולמשרתי מילואים". הדגש על הגדלת היצע ולא על דיור ציבורי, ולכן 1. (עדכון מ-1-.)',
+  },
   { partyId: "beyachad", questionId: "eco-7", stanceValue: 1 },
   { partyId: "beyachad", questionId: "eco-8", stanceValue: -1 },
   { partyId: "beyachad", questionId: "eco-9", stanceValue: 2 },
   { partyId: "beyachad", questionId: "eco-10", stanceValue: -1 },
   { partyId: "beyachad", questionId: "eco-11", stanceValue: 1 },
-  { partyId: "beyachad", questionId: "eco-12", stanceValue: 2 },
+  {
+    partyId: "beyachad",
+    questionId: "eco-12",
+    stanceValue: 2,
+    sourceUrl: "https://be-yahad.org.il/plans/",
+    sourceNote:
+      'מצע ביחד (יוקר המחיה): "תוך שלוש שנים נוריד את מחירי המזון ב-30%... זו נטו תוצאה של שוק סגור, ריכוזי ובלי תחרות... נצא למלחמת חורמה לפירוק קרטלי המזון".',
+  },
   { partyId: "beyachad", questionId: "inf-1", stanceValue: 1 },
   { partyId: "beyachad", questionId: "inf-2", stanceValue: 1 },
   { partyId: "beyachad", questionId: "inf-3", stanceValue: 1 },
   { partyId: "beyachad", questionId: "inf-4", stanceValue: 1 },
   { partyId: "beyachad", questionId: "inf-5", stanceValue: 2 },
   { partyId: "beyachad", questionId: "inf-6", stanceValue: 0 },
-  { partyId: "beyachad", questionId: "rel-2", stanceValue: 0 },
-  { partyId: "beyachad", questionId: "rel-3", stanceValue: 0 },
-  { partyId: "beyachad", questionId: "rel-4", stanceValue: 0 },
+  {
+    partyId: "beyachad",
+    questionId: "rel-2",
+    stanceValue: 1,
+    sourceUrl: "https://be-yahad.org.il/plans/",
+    sourceNote:
+      'מצע ביחד (דת ומדינה): "כל רשות מקומית תחליט בעצמה על תחבורה ציבורית בשבת לפי צביונה" - תחבורה בשבת כבחירה מקומית ולא בכל רחבי הארץ, ולכן 1. (עדכון מ-0.)',
+  },
+  {
+    partyId: "beyachad",
+    questionId: "rel-3",
+    stanceValue: -1,
+    sourceUrl: "https://be-yahad.org.il/plans/",
+    sourceNote:
+      'מצע ביחד: "מימון ציבורי יינתן רק למוסדות שמלמדים 100% לימודי ליבה", ו"לא נממן... את מי שמסרב לשרת". (עדכון מ-0.)',
+  },
+  {
+    partyId: "beyachad",
+    questionId: "rel-4",
+    stanceValue: 2,
+    sourceUrl: "https://be-yahad.org.il/plans/",
+    sourceNote:
+      'מצע ביחד (דת ומדינה): "כל זוג יוכל להירשם במסלול אזרחי מלא במשרד הפנים". (עדכון מ-0.)',
+  },
   {
     partyId: "beyachad",
     questionId: "rel-5",
     stanceValue: -2,
-    sourceUrl: "https://www.ynet.co.il/news/article/ryunwx4lzx",
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14898966",
     sourceNote:
-      'בנט ולפיד, יחד ובאופן חד-משמעי, נגד המשך פטור הגיוס: בנט: "כולם, כולם, חייבים להתגייס", ומי שלא משרת "לא יקבל מימון מהמדינה". לפיד: פשרות עם החרדים הן "טעות פוליטית וטעות ערכית", עם הצעה קונקרטית לגיוס בחורי ישיבה צעירים, לימודי ליבה ושילוב בשוק העבודה.',
+      'ביחד לynet (15.9.26): "כל אזרח במדינת ישראל יתגייס לצה״ל או יעשה שירות לאומי אזרחי... ללא פטורים - זה נכון לערבים ונכון גם לחרדים. אין מכסות ואין יעדים, מי שלא יתגייס לא יקבל שקל מהמדינה".',
   },
-  { partyId: "beyachad", questionId: "rel-7", stanceValue: 0 },
+  {
+    partyId: "beyachad",
+    questionId: "rel-7",
+    stanceValue: -1,
+    sourceUrl: "https://be-yahad.org.il/plans/",
+    sourceNote:
+      'מצע ביחד: מסלול אזרחי מלא לרישום זוגיות, הכרה בכשרות בינלאומית, ו"סמכויות הגיור יחזרו לרבני הקהילות" - צמצום ולא הרחבה של סמכויות הרבנות. (עדכון מ-0.)',
+  },
   { partyId: "beyachad", questionId: "rel-8", stanceValue: 0 },
-  { partyId: "beyachad", questionId: "rel-9", stanceValue: 0 },
+  {
+    partyId: "beyachad",
+    questionId: "rel-9",
+    stanceValue: -2,
+    sourceUrl: "https://be-yahad.org.il/plans/",
+    sourceNote:
+      'מצע ביחד: "זרם החינוך הממלכתי (כללי, דתי וחרדי) יהיה זרם החינוך המתוקצב היחיד במדינה... לא ממלכתי, לא על חשבוני!". (עדכון מ-0.)',
+  },
   { partyId: "beyachad", questionId: "rel-10", stanceValue: 0 },
   { partyId: "beyachad", questionId: "rel-11", stanceValue: 2 },
   {
@@ -399,10 +550,10 @@ export const partyStances: PartyStance[] = [
   {
     partyId: "beyachad",
     questionId: "jud-3",
-    stanceValue: -1,
-    sourceUrl: "https://www.ice.co.il/local-news/news/article/927041",
+    stanceValue: -2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14903844",
     sourceNote:
-      'בנט מתנגד "להעברת מינוי כלל השופטים בישראל לידי ראש הממשלה בלבד" (הגרסה הקיצונית ביותר שנדונה ב-2023), אך גם אומר שהוא "מאמין שנדרשים שינויים מסוימים במערכת המשפט" -- לא התנגדות גורפת לכל שינוי בהרכב הוועדה, אלא להעברת שליטה מוחלטת/קיצונית.',
+      'ביחד לynet (21.9.26): "נבטל את החוק לבחירת שופטים החדש שיחריב את המערכת ונמנע פוליטיזציה של מערכת המשפט". (עדכון מ-1-.)',
   },
   { partyId: "beyachad", questionId: "jud-5", stanceValue: 0 },
   { partyId: "beyachad", questionId: "jud-7", stanceValue: 0 },
@@ -417,13 +568,48 @@ export const partyStances: PartyStance[] = [
       'בכנס הראשון הרשמי של מפלגת "ביחד" (12.5.2026), בנט: "הדבר הראשון שנעשה [אם נצליח להרכיב ממשלה] יהיה הקמת ועדת חקירה ממלכתית ל-7 באוקטובר". כתבה נוספת (הארץ, 26.4.2026) מאששת התחייבות משותפת של בנט ולפיד להקמתה ביום הראשון לממשלתם.',
   },
   { partyId: "beyachad", questionId: "gov-3", stanceValue: 2 },
-  { partyId: "beyachad", questionId: "gov-4", stanceValue: 1 },
+  {
+    partyId: "beyachad",
+    questionId: "gov-4",
+    stanceValue: 0,
+    sourceUrl: "https://www.ynet.co.il/news/article/r1i4p7gq5",
+    sourceNote:
+      'עמדה חלוקה בתוך הרשימה: בנט התנגד ב-2022 ל"חוק הנאשם" (ונתן חופש הצבעה), ובקמפיין 2026 אמר שאין לו בעיה שנתניהו יכהן כשר בממשלתו; לפיד תמך בחוק ("נאשם לא יכול להיות ראש ממשלה במדינה שומרת חוק"). (עדכון מ-1.)',
+  },
   { partyId: "beyachad", questionId: "gov-5", stanceValue: 1 },
   { partyId: "beyachad", questionId: "soc-1", stanceValue: 0 },
-  { partyId: "beyachad", questionId: "soc-2", stanceValue: 0 },
-  { partyId: "beyachad", questionId: "soc-3", stanceValue: 0 },
-  { partyId: "beyachad", questionId: "soc-5", stanceValue: 1 },
-  { partyId: "beyachad", questionId: "soc-6", stanceValue: 0 },
+  {
+    partyId: "beyachad",
+    questionId: "soc-2",
+    stanceValue: 2,
+    sourceUrl: "https://be-yahad.org.il/plans/",
+    sourceNote:
+      'מצע ביחד (קהילה גאה): "נעגן את השוויון בחוק יסוד. נחוקק רישום זוגיות אזרחי שיעניק את מלוא הזכויות. נבטיח הורות שווה מהרגע הראשון". (עדכון מ-0.)',
+  },
+  {
+    partyId: "beyachad",
+    questionId: "soc-3",
+    stanceValue: -1,
+    sourceUrl: "https://be-yahad.org.il/plans/",
+    sourceNote:
+      'מצע ביחד (קהילה גאה): "נאסור בחוק טיפולי המרה, הסתה, ואפליה נגד להט"ב בכל תחום. נבטיח סביבה בטוחה יותר, גם בבתי הספר". (עדכון מ-0.)',
+  },
+  {
+    partyId: "beyachad",
+    questionId: "soc-5",
+    stanceValue: 2,
+    sourceUrl: "https://be-yahad.org.il/plans/",
+    sourceNote:
+      'מצע ביחד: "נפסיק להתייחס לפשיעה המאורגנת כעוד בעיה פלילית... נכריז עליהם רשמית כאיום ביטחוני לאומי", בשיתוף השב"כ וצה"ל. (עדכון מ-1.)',
+  },
+  {
+    partyId: "beyachad",
+    questionId: "soc-6",
+    stanceValue: 2,
+    sourceUrl: "https://be-yahad.org.il/plans/",
+    sourceNote:
+      'מצע ביחד (מעמד הנשים): "נקבע 50% ייצוג בדרג הבכיר". (עדכון מ-0.)',
+  },
   { partyId: "beyachad", questionId: "soc-7", stanceValue: 0 },
   { partyId: "beyachad", questionId: "soc-10", stanceValue: 0 },
   {
@@ -557,10 +743,10 @@ export const partyStances: PartyStance[] = [
   {
     partyId: "yisrael-beiteinu",
     questionId: "sec-1",
-    stanceValue: 1,
-    sourceUrl: "https://beytenu.org.il/party-platform/",
+    stanceValue: 2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14910407",
     sourceNote:
-      'המצע הרשמי (2026) מקדיש סעיף נפרד ל"יהודה ושומרון" שתוכנו "ייצוב המצב הביטחוני והכלכלי בשיתוף פעולה עם ירדן" -- ללא אזכור מפורש של הרחבת התיישבות יזומה.',
+      'ישראל ביתנו לynet (27.9.26): "תומכת בחיזוק ההתיישבות ביהודה ושומרון, ובכלל זה בקידום הבנייה באזור E1", ו"תומכים בהחלת ריבונות ישראלית בשטחי C". (עדכון מ-1.)',
   },
   { partyId: "yisrael-beiteinu", questionId: "sec-2", stanceValue: 2 },
   {
@@ -710,9 +896,9 @@ export const partyStances: PartyStance[] = [
     partyId: "yisrael-beiteinu",
     questionId: "gov-1",
     stanceValue: 2,
-    sourceUrl: "https://www.ynet.co.il/news/article/yokra14680635",
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14915209",
     sourceNote:
-      "ליברמן דרש וחתם על התחייבות שהממשלה הבאה תקים ועדת חקירה ממלכתית כבר בישיבתה הראשונה.",
+      'ישראל ביתנו לynet (3.10.26): "בעד הקמת ועדת חקירה ממלכתית בדיוק לפי החוק הקיים... זו תהיה ההחלטה הראשונה שנקבל בממשלה שנקים".',
   },
   { partyId: "yisrael-beiteinu", questionId: "gov-3", stanceValue: 1 },
   {
@@ -894,9 +1080,9 @@ export const partyStances: PartyStance[] = [
     partyId: "hademocratim",
     questionId: "gov-1",
     stanceValue: 2,
-    sourceUrl: "https://www.israelhayom.co.il/news/local/article/19259921",
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14915209",
     sourceNote:
-      'יאיר גולן: "חייבת לקום ועדת חקירה ממלכתית שתחשוף את האמת" -- עמדה עקבית וידועה של גולן וסיעתו, חוזרת בכותרות עצמאיות נוספות (מאקו, מעריב).',
+      'הדמוקרטים לynet (3.10.26): "הקמת ועדת חקירה ממלכתית תהיה ההחלטה הראשונה שהמפלגה תוביל בממשלה הבאה... חברי הוועדה ימונו בידי נשיא העליון".',
   },
   { partyId: "hademocratim", questionId: "gov-3", stanceValue: 2 },
   { partyId: "hademocratim", questionId: "gov-4", stanceValue: 2 },
@@ -1292,7 +1478,14 @@ export const partyStances: PartyStance[] = [
   { partyId: "raam", questionId: "soc-6", stanceValue: 1 },
   { partyId: "raam", questionId: "soc-7", stanceValue: -1 },
   { partyId: "raam", questionId: "soc-10", stanceValue: 2 },
-  { partyId: "hadash-taal", questionId: "sec-1", stanceValue: -2 },
+  {
+    partyId: "hadash-taal",
+    questionId: "sec-1",
+    stanceValue: -2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14910407",
+    sourceNote:
+      'הרשימה המשותפת לynet (27.9.26): את כלל ההתנחלויות "יש לפנות לאלתר וללא כל דיחוי", "כולל ירושלים המזרחית, מעלה אדומים, אריאל".',
+  },
   { partyId: "hadash-taal", questionId: "sec-2", stanceValue: -2 },
   {
     partyId: "hadash-taal",
@@ -1303,7 +1496,14 @@ export const partyStances: PartyStance[] = [
       'איימן עודה: "אני מתריע מזניחת ההישגים המצטברים העמוקים [של פתרון שתי המדינות] והחלפתם בבריחה קדימה לכיוון פתרון המדינה האחת" - בניגוד לבל"ד, חד"ש תומכת בכנות בפתרון שתי המדינות המסורתי.',
   },
   { partyId: "hadash-taal", questionId: "sec-4", stanceValue: 2 },
-  { partyId: "hadash-taal", questionId: "sec-5", stanceValue: -2 },
+  {
+    partyId: "hadash-taal",
+    questionId: "sec-5",
+    stanceValue: -2,
+    sourceUrl: "https://jointlist.org.il/he/economic-plan/",
+    sourceNote:
+      'התוכנית הכלכלית-חברתית של הרשימה המשותפת: "קיצוץ עמוק בהוצאות הצבאיות והפסקת מימון המלחמה בעזה, ההתנחלויות והכיבוש".',
+  },
   { partyId: "hadash-taal", questionId: "sec-6", stanceValue: -2 },
   { partyId: "hadash-taal", questionId: "sec-7", stanceValue: 0 },
   { partyId: "hadash-taal", questionId: "sec-8", stanceValue: -2 },
@@ -1349,9 +1549,23 @@ export const partyStances: PartyStance[] = [
   { partyId: "hadash-taal", questionId: "eco-7", stanceValue: -2 },
   { partyId: "hadash-taal", questionId: "eco-8", stanceValue: 2 },
   { partyId: "hadash-taal", questionId: "eco-9", stanceValue: 1 },
-  { partyId: "hadash-taal", questionId: "eco-10", stanceValue: 2 },
+  {
+    partyId: "hadash-taal",
+    questionId: "eco-10",
+    stanceValue: 2,
+    sourceUrl: "https://jointlist.org.il/he/economic-plan/",
+    sourceNote:
+      'התוכנית הכלכלית-חברתית: ביטול הטבות המס לבעלי הון ולתאגידים, והעלאת המס על רווחי הון, כולל רווחי בורסה, ל-30%.',
+  },
   { partyId: "hadash-taal", questionId: "eco-11", stanceValue: 2 },
-  { partyId: "hadash-taal", questionId: "eco-12", stanceValue: -2 },
+  {
+    partyId: "hadash-taal",
+    questionId: "eco-12",
+    stanceValue: -2,
+    sourceUrl: "https://jointlist.org.il/he/economic-plan/",
+    sourceNote:
+      'התוכנית הכלכלית-חברתית: "הגנה על הייצור המקומי מפני יבוא במחירי היצף, והטלת מכסים על ארצות הברית בדומה למכסים שארצות הברית הטילה על ישראל".',
+  },
   {
     partyId: "hadash-taal",
     questionId: "inf-1",
@@ -1375,7 +1589,14 @@ export const partyStances: PartyStance[] = [
     sourceNote:
       'תואם באופן ישיר לסעיף מפורש במצע המפלגה: "הכרה מלאה בנישואים אזרחיים", "ביטול מונופול הרבנות".',
   },
-  { partyId: "hadash-taal", questionId: "rel-5", stanceValue: -2 },
+  {
+    partyId: "hadash-taal",
+    questionId: "rel-5",
+    stanceValue: 0,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14898966",
+    sourceNote:
+      'הרשימה המשותפת לynet (15.9.26) מתנגדת "לגיוס חרדים או לכל גיוס חובה": "אין להטיל סנקציות על אדם שבוחר שלא להתגייס". היא לא תומכת בפטור ייחודי לישיבות, אבל גם לא בביטולו - ולכן 0. (עדכון מ-2-.)',
+  },
   { partyId: "hadash-taal", questionId: "rel-7", stanceValue: -2 },
   { partyId: "hadash-taal", questionId: "rel-8", stanceValue: 2 },
   { partyId: "hadash-taal", questionId: "rel-9", stanceValue: -2 },
@@ -1409,7 +1630,14 @@ export const partyStances: PartyStance[] = [
   { partyId: "hadash-taal", questionId: "jud-7", stanceValue: -2 },
   { partyId: "hadash-taal", questionId: "jud-8", stanceValue: 2 },
   { partyId: "hadash-taal", questionId: "jud-9", stanceValue: -2 },
-  { partyId: "hadash-taal", questionId: "gov-1", stanceValue: 1 },
+  {
+    partyId: "hadash-taal",
+    questionId: "gov-1",
+    stanceValue: 2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14915209",
+    sourceNote:
+      'הרשימה המשותפת לynet (3.10.26): "תומכת בהקמת ועדת חקירה ממלכתית בהתאם לדין הקיים, בראשות שופט מבית המשפט העליון ובמינוי של נשיא בית המשפט העליון".',
+  },
   { partyId: "hadash-taal", questionId: "gov-3", stanceValue: 1 },
   {
     partyId: "hadash-taal",
@@ -1583,230 +1811,16 @@ export const partyStances: PartyStance[] = [
   { partyId: "religious-zionism", questionId: "soc-6", stanceValue: -2 },
   { partyId: "religious-zionism", questionId: "soc-7", stanceValue: 2 },
   { partyId: "religious-zionism", questionId: "soc-10", stanceValue: -2 },
-  {
-    partyId: "beit-tzioni",
-    questionId: "sec-1",
-    stanceValue: 0,
-    sourceUrl: "https://www.bhol.co.il/news/1733010",
-    sourceNote:
-      'טרופר: "אני חושב שצריך לעשות פחות שם [ביהודה ושומרון] ויותר במקומות אחרים כמו בצפון ובדרום". תוכנית "מגן דוד" הרשמית ממקדת את סעיף ההתיישבות בחיזוק יישובי הגליל, הנגב וקהילות עוטף, לא הרחבה ביהודה ושומרון.',
-  },
-  { partyId: "beit-tzioni", questionId: "sec-2", stanceValue: 1 },
-  {
-    partyId: "beit-tzioni",
-    questionId: "sec-3",
-    stanceValue: -2,
-    sourceUrl: "https://www.bhol.co.il/news/1733010",
-    sourceNote:
-      'טרופר: "אני מתנגד למדינה פלסטינית".',
-  },
-  { partyId: "beit-tzioni", questionId: "sec-4", stanceValue: -1 },
-  { partyId: "beit-tzioni", questionId: "sec-5", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "sec-6", stanceValue: 2 },
-  { partyId: "beit-tzioni", questionId: "sec-7", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "sec-8", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "sec-9", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "sec-10", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "sec-11", stanceValue: -1 },
-  { partyId: "beit-tzioni", questionId: "sec-12", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "sec-13", stanceValue: 2 },
-  { partyId: "beit-tzioni", questionId: "eco-1", stanceValue: 0 },
-  { partyId: "beit-tzioni", questionId: "eco-2", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "eco-3", stanceValue: -1 },
-  { partyId: "beit-tzioni", questionId: "eco-4", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "eco-5", stanceValue: 2 },
-  { partyId: "beit-tzioni", questionId: "eco-6", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "eco-7", stanceValue: -1 },
-  { partyId: "beit-tzioni", questionId: "eco-8", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "eco-9", stanceValue: 2 },
-  { partyId: "beit-tzioni", questionId: "eco-10", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "eco-11", stanceValue: 2 },
-  {
-    partyId: "beit-tzioni",
-    questionId: "eco-12",
-    stanceValue: 1,
-    sourceUrl: "https://www.ynet.co.il/news/article/h1f79pligx",
-    sourceNote:
-      'סעיף "יוקר מחיה" בתוכנית "מגן דוד" הרשמית: "עידוד תחרות, שבירת מונופולים ותמיכה בהורים עובדים".',
-  },
-  { partyId: "beit-tzioni", questionId: "inf-1", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "inf-2", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "inf-3", stanceValue: 0 },
-  { partyId: "beit-tzioni", questionId: "inf-4", stanceValue: 0 },
-  { partyId: "beit-tzioni", questionId: "inf-5", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "inf-6", stanceValue: 0 },
-  {
-    partyId: "beit-tzioni",
-    questionId: "rel-2",
-    stanceValue: 1,
-    sourceUrl: "https://he.wikipedia.org/wiki/%D7%99%D7%95%D7%A2%D7%96_%D7%94%D7%A0%D7%93%D7%9C",
-    sourceNote:
-      "לפי הערך הביוגרפי של יועז הנדל, הוא תומך בתחבורה ציבורית בשבת.",
-  },
-  { partyId: "beit-tzioni", questionId: "rel-3", stanceValue: -1 },
-  {
-    partyId: "beit-tzioni",
-    questionId: "rel-4",
-    stanceValue: 1,
-    sourceUrl: "https://he.wikipedia.org/wiki/%D7%99%D7%95%D7%A2%D7%96_%D7%94%D7%A0%D7%93%D7%9C",
-    sourceNote:
-      "הנדל תומך בברית זוגיות (Civil Union) לזוגות בני אותו מין אך מתנגד לנישואין חד-מיניים -- תמיכה חלקית באזרוח מוסד הנישואין, לא תמיכה גורפת בנישואין וגירושין אזרחיים לכלל הציבור.",
-  },
-  {
-    partyId: "beit-tzioni",
-    questionId: "rel-5",
-    stanceValue: -2,
-    sourceUrl: "https://www.ynet.co.il/news/article/h1f79pligx",
-    sourceNote:
-      'תוכנית "מגן דוד" קובעת "מסלול שירות שוויוני" (מרכז מיון אחיד לצבאי/לאומי/אזרחי, הטבות למשרתים וסנקציות למשתמטים); הנדל דורש גיוס חובה לכלל האזרחים ("אין זכויות בלי חובות"), וטרופר מתנה הצטרפות לממשלה בחקיקת חוק גיוס לפני הקמתה.',
-  },
-  { partyId: "beit-tzioni", questionId: "rel-7", stanceValue: -1 },
-  { partyId: "beit-tzioni", questionId: "rel-8", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "rel-9", stanceValue: -1 },
-  { partyId: "beit-tzioni", questionId: "rel-10", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "rel-11", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "jud-1", stanceValue: -1 },
-  {
-    partyId: "beit-tzioni",
-    questionId: "jud-2",
-    stanceValue: 1,
-    sourceUrl: "https://www.bhol.co.il/news/1733010",
-    sourceNote:
-      'טרופר: "יותר מדי אקטיביזם שיפוטי" ותמיכה ב"תיקונים" במינוי שופטים, לצד מחויבות רשמית ומוצהרת של המפלגה ל"איזון ובלמים בין הרשויות" ו"חיזוק שלטון החוק" -- רפורמה מתונה בתוך מסגרת השומרת על עצמאות בית המשפט.',
-  },
-  {
-    partyId: "beit-tzioni",
-    questionId: "jud-3",
-    stanceValue: -1,
-    sourceUrl: "https://www.bhol.co.il/news/1733010",
-    sourceNote:
-      "טרופר תומך ברפורמה קונקרטית במינוי שופטים אך לא במודל של רוב לפוליטיקאים: מציע דרישת רוב של 7 מתוך 9 חברי הוועדה (מנגנון קונצנזוס/רוב-על החוצה קואליציה-אופוזיציה).",
-  },
-  { partyId: "beit-tzioni", questionId: "jud-5", stanceValue: -1 },
-  { partyId: "beit-tzioni", questionId: "jud-7", stanceValue: -1 },
-  { partyId: "beit-tzioni", questionId: "jud-8", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "jud-9", stanceValue: -1 },
-  {
-    partyId: "beit-tzioni",
-    questionId: "gov-1",
-    stanceValue: 2,
-    sourceUrl: "https://www.ynet.co.il/news/article/s1enybqxzl",
-    sourceNote:
-      "בין מייסדי המפלגה נמנים שירה שפירא (אמו של ענר שפירא, נהרג ב-7.10), אליסף פרץ (בנה של מרים פרץ), ודנה סיטון סילברמן (אחותה של שירי ביבס) -- קהילת השכול/חטופים של 7 באוקטובר, יחד עם מסגור אנטי-נתניהו מובהק.",
-  },
-  { partyId: "beit-tzioni", questionId: "gov-3", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "gov-4", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "gov-5", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "soc-1", stanceValue: 0 },
-  {
-    partyId: "beit-tzioni",
-    questionId: "soc-2",
-    stanceValue: 1,
-    sourceUrl: "https://he.wikipedia.org/wiki/%D7%99%D7%95%D7%A2%D7%96_%D7%94%D7%A0%D7%93%D7%9C",
-    sourceNote:
-      'הנדל תומך בברית זוגיות אזרחית (Civil Union) לזוגות חד-מיניים, אך מתנגד לנישואין חד-מיניים עצמם -- תמיכה חלקית ולא הכרה "לכל דבר ועניין".',
-  },
-  { partyId: "beit-tzioni", questionId: "soc-3", stanceValue: 0 },
-  { partyId: "beit-tzioni", questionId: "soc-5", stanceValue: 1 },
-  { partyId: "beit-tzioni", questionId: "soc-6", stanceValue: 0 },
-  { partyId: "beit-tzioni", questionId: "soc-7", stanceValue: 0 },
-  { partyId: "beit-tzioni", questionId: "soc-10", stanceValue: 1 },
+
 
   {
-    partyId: "balad",
+    partyId: "kachol-lavan",
     questionId: "sec-1",
-    stanceValue: -2,
-    sourceUrl: "https://he.wikipedia.org/wiki/%D7%91%D7%9C%22%D7%93",
-    sourceNote:
-      'מצע בל"ד דורש "נסיגת ישראל מכל השטחים הכבושים" ופינוי התנחלויות -- עמדה הפוכה חד-משמעית מהרחבת ההתיישבות.',
-  },
-  { partyId: "balad", questionId: "sec-2", stanceValue: -2 },
-  {
-    partyId: "balad",
-    questionId: "sec-3",
     stanceValue: 1,
-    sourceUrl: "https://he.wikipedia.org/wiki/%D7%A1%D7%90%D7%9E%D7%99_%D7%90%D7%91%D7%95_%D7%A9%D7%97%D7%90%D7%93%D7%94",
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14910407",
     sourceNote:
-      'סאמי אבו שחאדה: צריכות להיות "שתי מדינות: אחת לפלסטינים בשם \'פלסטין\', ולצידה מדינת כל אזרחיה" -- תמיכה בהקמת מדינה פלסטינית, אך לצד חזון של שינוי מהותי בישראל עצמה, לא "ישראל כפי שהיא היום" לצד פלסטין.',
+      'כחול לבן לynet (27.9.26): "המפלגה תומכת בחיזוק ההתיישבות ביהודה ושומרון בדגש על הבקעה, יישובי גב ההר, דרום הר חברון וקו התפר... אין צורך בפינוי יישובים". (עדכון מ-1-.)',
   },
-  { partyId: "balad", questionId: "sec-4", stanceValue: 2 },
-  { partyId: "balad", questionId: "sec-5", stanceValue: -2 },
-  { partyId: "balad", questionId: "sec-6", stanceValue: -2 },
-  { partyId: "balad", questionId: "sec-7", stanceValue: -1 },
-  { partyId: "balad", questionId: "sec-8", stanceValue: -2 },
-  { partyId: "balad", questionId: "sec-9", stanceValue: 2 },
-  { partyId: "balad", questionId: "sec-10", stanceValue: -2 },
-  { partyId: "balad", questionId: "sec-11", stanceValue: 0 },
-  { partyId: "balad", questionId: "sec-12", stanceValue: 2 },
-  { partyId: "balad", questionId: "sec-13", stanceValue: 0 },
-  { partyId: "balad", questionId: "eco-1", stanceValue: -1 },
-  { partyId: "balad", questionId: "eco-2", stanceValue: 2 },
-  { partyId: "balad", questionId: "eco-3", stanceValue: -2 },
-  { partyId: "balad", questionId: "eco-4", stanceValue: 2 },
-  { partyId: "balad", questionId: "eco-5", stanceValue: 0 },
-  { partyId: "balad", questionId: "eco-6", stanceValue: 2 },
-  { partyId: "balad", questionId: "eco-7", stanceValue: -1 },
-  { partyId: "balad", questionId: "eco-8", stanceValue: 2 },
-  { partyId: "balad", questionId: "eco-9", stanceValue: 2 },
-  { partyId: "balad", questionId: "eco-10", stanceValue: 2 },
-  { partyId: "balad", questionId: "eco-11", stanceValue: 2 },
-  { partyId: "balad", questionId: "eco-12", stanceValue: 1 },
-  { partyId: "balad", questionId: "inf-1", stanceValue: 1 },
-  { partyId: "balad", questionId: "inf-2", stanceValue: 1 },
-  { partyId: "balad", questionId: "inf-3", stanceValue: -1 },
-  { partyId: "balad", questionId: "inf-4", stanceValue: 0 },
-  { partyId: "balad", questionId: "inf-5", stanceValue: 1 },
-  { partyId: "balad", questionId: "inf-6", stanceValue: 2 },
-  {
-    partyId: "balad",
-    questionId: "rel-2",
-    stanceValue: 2,
-    sourceUrl: "https://www.idi.org.il/policy/parties-and-elections/parties/balad/",
-    sourceNote:
-      'המכון הישראלי לדמוקרטיה מאשר שהמצע הרשמי של בל"ד שואף ל"הפרדת הדת מהמדינה" (הפרדה מלאה).',
-  },
-  { partyId: "balad", questionId: "rel-3", stanceValue: -2 },
-  {
-    partyId: "balad",
-    questionId: "rel-4",
-    stanceValue: 2,
-    sourceUrl: "https://www.idi.org.il/policy/parties-and-elections/parties/balad/",
-    sourceNote:
-      "אותו יסוד אידאולוגי (הפרדת דת ומדינה מלאה) תומך ישירות בחקיקת נישואין וגירושין אזרחיים.",
-  },
-  { partyId: "balad", questionId: "rel-5", stanceValue: -2 },
-  { partyId: "balad", questionId: "rel-7", stanceValue: -2 },
-  { partyId: "balad", questionId: "rel-8", stanceValue: 2 },
-  { partyId: "balad", questionId: "rel-9", stanceValue: -2 },
-  { partyId: "balad", questionId: "rel-10", stanceValue: 2 },
-  { partyId: "balad", questionId: "rel-11", stanceValue: 1 },
-  { partyId: "balad", questionId: "jud-1", stanceValue: -2 },
-  { partyId: "balad", questionId: "jud-2", stanceValue: 2 },
-  { partyId: "balad", questionId: "jud-3", stanceValue: -2 },
-  { partyId: "balad", questionId: "jud-5", stanceValue: -2 },
-  { partyId: "balad", questionId: "jud-7", stanceValue: -2 },
-  { partyId: "balad", questionId: "jud-8", stanceValue: 2 },
-  { partyId: "balad", questionId: "jud-9", stanceValue: -2 },
-  { partyId: "balad", questionId: "gov-1", stanceValue: 1 },
-  { partyId: "balad", questionId: "gov-3", stanceValue: 1 },
-  { partyId: "balad", questionId: "gov-4", stanceValue: 1 },
-  { partyId: "balad", questionId: "gov-5", stanceValue: 1 },
-  { partyId: "balad", questionId: "soc-1", stanceValue: -1 },
-  {
-    partyId: "balad",
-    questionId: "soc-2",
-    stanceValue: 2,
-    sourceUrl: "https://www.idi.org.il/policy/parties-and-elections/parties/balad/",
-    sourceNote:
-      'היסוד האידאולוגי (הפרדת דת ומדינה מלאה) תומך בחלק ה"נישואים אזרחיים" של השאלה; לא אותר אישוש ספציפי לחלק ה"זוגיות חד-מינית" -- נושא שבו מפלגות ערביות נוטות היסטורית להיזהר בהצהרות פומביות מפורשות.',
-  },
-  { partyId: "balad", questionId: "soc-3", stanceValue: -1 },
-  { partyId: "balad", questionId: "soc-5", stanceValue: -1 },
-  { partyId: "balad", questionId: "soc-6", stanceValue: 1 },
-  { partyId: "balad", questionId: "soc-7", stanceValue: -1 },
-  { partyId: "balad", questionId: "soc-10", stanceValue: 2 },
-
-  { partyId: "kachol-lavan", questionId: "sec-1", stanceValue: -1 },
   { partyId: "kachol-lavan", questionId: "sec-2", stanceValue: 1 },
   {
     partyId: "kachol-lavan",
@@ -1885,10 +1899,10 @@ export const partyStances: PartyStance[] = [
   {
     partyId: "kachol-lavan",
     questionId: "jud-2",
-    stanceValue: 2,
-    sourceUrl: "https://he.wikipedia.org/wiki/%D7%94%D7%9E%D7%97%D7%90%D7%94_%D7%A0%D7%92%D7%93_%D7%94%D7%A8%D7%A4%D7%95%D7%A8%D7%9E%D7%94_%D7%94%D7%9E%D7%A9%D7%A4%D7%98%D7%99%D7%AA",
+    stanceValue: 1,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14903844",
     sourceNote:
-      "מפלגת אופוזיציה מרכזית שהובילה את המחאה ההמונית נגד הרפורמה המשפטית של 2023 (שכללה גם את שינוי הרכב הוועדה לבחירת שופטים), ותומכת בשימור עצמאות בית המשפט העליון.",
+      'כחול לבן לynet (21.9.26): "נכון להיום הכוח של מערכת המשפט גדול מדי, ובעיקר בלתי-מוסדר, ומצד שני אסור להכניס פוליטיזציה לתוך החלטות משפטיות". (עדכון מ-2.)',
   },
   {
     partyId: "kachol-lavan",
@@ -1898,11 +1912,25 @@ export const partyStances: PartyStance[] = [
     sourceNote:
       "מפלגת אופוזיציה שהתנגדה לשינוי הרכב הוועדה לבחירת שופטים לרוב קואליציוני, כחלק מהתנגדותה למכלול הרפורמה המשפטית של 2023.",
   },
-  { partyId: "kachol-lavan", questionId: "jud-5", stanceValue: -2 },
+  {
+    partyId: "kachol-lavan",
+    questionId: "jud-5",
+    stanceValue: 0,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14903844",
+    sourceNote:
+      'כחול לבן לynet (21.9.26): "התוכנית שלנו... תגביל את היכולת של בית המשפט להתערב בהחלטות הממשלה" - צמצום הביקורת על הממשלה, בלי התחייבות לביטול עילת הסבירות. (עדכון מ-2-.)',
+  },
   { partyId: "kachol-lavan", questionId: "jud-7", stanceValue: -2 },
   { partyId: "kachol-lavan", questionId: "jud-8", stanceValue: 2 },
   { partyId: "kachol-lavan", questionId: "jud-9", stanceValue: -1 },
-  { partyId: "kachol-lavan", questionId: "gov-1", stanceValue: 2 },
+  {
+    partyId: "kachol-lavan",
+    questionId: "gov-1",
+    stanceValue: 2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14915209",
+    sourceNote:
+      'כחול לבן לynet (3.10.26): "בעד הקמת ועדת חקירה ממלכתית, עצמאית ובלתי תלויה... המנגנון הנוכחי הוא מנגנון טוב".',
+  },
   { partyId: "kachol-lavan", questionId: "gov-3", stanceValue: 1 },
   {
     partyId: "kachol-lavan",
@@ -1927,4 +1955,355 @@ export const partyStances: PartyStance[] = [
   { partyId: "kachol-lavan", questionId: "soc-6", stanceValue: 1 },
   { partyId: "kachol-lavan", questionId: "soc-7", stanceValue: 0 },
   { partyId: "kachol-lavan", questionId: "soc-10", stanceValue: 1 },
+
+  // עמך ישראל (עופר וינטר) - נוספה באוקטובר 2026
+  {
+    partyId: "amcha-yisrael",
+    questionId: "sec-1",
+    stanceValue: 2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14910407",
+    sourceNote:
+      'עמך ישראל לynet (27.9.26): "תומכים בהקמת יישובים ביהודה ושומרון ובכל חבלי הארץ", ו"על המדינה להעמיק את האחיזה בקרקע ולהחיל ריבונות ביהודה ושומרון ובכל מקום בארץ".',
+  },
+  { partyId: "amcha-yisrael", questionId: "sec-2", stanceValue: 2 },
+  {
+    partyId: "amcha-yisrael",
+    questionId: "sec-3",
+    stanceValue: -2,
+    sourceUrl: "https://jewishinsider.com/2026/10/amcha-yisrael-leader-ofer-winter-israeli-elections/",
+    sourceNote:
+      'וינטר (Jewish Insider, אוקטובר 2026): "אין עם פלסטיני", ולדבריו רעיון המדינה הפלסטינית נועד "להשמיד את ישראל".',
+  },
+  { partyId: "amcha-yisrael", questionId: "sec-4", stanceValue: -2 },
+  { partyId: "amcha-yisrael", questionId: "sec-5", stanceValue: 2 },
+  {
+    partyId: "amcha-yisrael",
+    questionId: "sec-6",
+    stanceValue: 2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14910407",
+    sourceNote:
+      'עמך ישראל לynet (27.9.26): "פינוי יישובים והעברתם לאויב היא סכנה קיומית ולא פתרון".',
+  },
+  { partyId: "amcha-yisrael", questionId: "sec-7", stanceValue: -1 },
+  { partyId: "amcha-yisrael", questionId: "sec-8", stanceValue: 2 },
+  {
+    partyId: "amcha-yisrael",
+    questionId: "sec-9",
+    stanceValue: -2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14914571",
+    sourceNote:
+      'וינטר תומך בהתיישבות יהודית ברצועה ובעידוד "הגירה מרצון" של תושביה, כולל שליטה ישראלית בחלוקת הסיוע - כלומר נגד העברת השליטה האזרחית לגורם בינלאומי או ערבי.',
+  },
+  { partyId: "amcha-yisrael", questionId: "sec-10", stanceValue: 2 },
+  {
+    partyId: "amcha-yisrael",
+    questionId: "sec-11",
+    stanceValue: 2,
+    sourceUrl: "https://amchaisrael.co.il/foundations",
+    sourceNote:
+      'מסמך אבני היסוד של עמך ישראל: "אנו מאמינים במדינה שעצמאות ההכרעה שלה אינה נתונה לוויכוח והחלטות לגורלה נקבעות בירושלים". (עדכון מ-1.)',
+  },
+  { partyId: "amcha-yisrael", questionId: "sec-12", stanceValue: -1 },
+  { partyId: "amcha-yisrael", questionId: "sec-13", stanceValue: 1 },
+  { partyId: "amcha-yisrael", questionId: "eco-1", stanceValue: 1 },
+  { partyId: "amcha-yisrael", questionId: "eco-2", stanceValue: 0 },
+  { partyId: "amcha-yisrael", questionId: "eco-3", stanceValue: 1 },
+  { partyId: "amcha-yisrael", questionId: "eco-4", stanceValue: 0 },
+  { partyId: "amcha-yisrael", questionId: "eco-5", stanceValue: 2 },
+  { partyId: "amcha-yisrael", questionId: "eco-6", stanceValue: 0 },
+  { partyId: "amcha-yisrael", questionId: "eco-7", stanceValue: 1 },
+  { partyId: "amcha-yisrael", questionId: "eco-8", stanceValue: 0 },
+  { partyId: "amcha-yisrael", questionId: "eco-9", stanceValue: 1 },
+  { partyId: "amcha-yisrael", questionId: "eco-10", stanceValue: -1 },
+  { partyId: "amcha-yisrael", questionId: "eco-11", stanceValue: 1 },
+  {
+    partyId: "amcha-yisrael",
+    questionId: "eco-12",
+    stanceValue: 1,
+    sourceUrl: "https://amchaisrael.co.il/foundations",
+    sourceNote:
+      'אבני היסוד: "פתיחת השווקים לתחרות אמיתית, הסרת חסמי יבוא ורגולציה מיותרת", לצד "פיתוח החקלאות" כחלק מביסוס הריבונות - ולכן 1 ולא 2.',
+  },
+  { partyId: "amcha-yisrael", questionId: "inf-1", stanceValue: 0 },
+  { partyId: "amcha-yisrael", questionId: "inf-2", stanceValue: 0 },
+  { partyId: "amcha-yisrael", questionId: "inf-3", stanceValue: 1 },
+  { partyId: "amcha-yisrael", questionId: "inf-4", stanceValue: 1 },
+  { partyId: "amcha-yisrael", questionId: "inf-5", stanceValue: 0 },
+  { partyId: "amcha-yisrael", questionId: "inf-6", stanceValue: -1 },
+  { partyId: "amcha-yisrael", questionId: "rel-2", stanceValue: -1 },
+  { partyId: "amcha-yisrael", questionId: "rel-3", stanceValue: 1 },
+  { partyId: "amcha-yisrael", questionId: "rel-4", stanceValue: -1 },
+  {
+    partyId: "amcha-yisrael",
+    questionId: "rel-5",
+    stanceValue: -2,
+    sourceUrl: "https://amchaisrael.co.il/foundations",
+    sourceNote:
+      'אבני היסוד: "נחוקק חוק יסוד: השירות, לפיו כל אזרח במדינת ישראל ישרת את המדינה", לצד "מסלולים ייחודיים למצוינות תורנית" במכסות. לynet (15.9.26): חקיקת חוק המשרתים לפני השבעת הממשלה היא "תנאי סף עבור כניסתנו לכל ממשלה".',
+  },
+  { partyId: "amcha-yisrael", questionId: "rel-7", stanceValue: 1 },
+  { partyId: "amcha-yisrael", questionId: "rel-8", stanceValue: -1 },
+  { partyId: "amcha-yisrael", questionId: "rel-9", stanceValue: 0 },
+  { partyId: "amcha-yisrael", questionId: "rel-10", stanceValue: -1 },
+  { partyId: "amcha-yisrael", questionId: "rel-11", stanceValue: 0 },
+  {
+    partyId: "amcha-yisrael",
+    questionId: "jud-1",
+    stanceValue: 0,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14903844",
+    sourceNote:
+      'עמך ישראל לynet (21.9.26) ובמצע: במקום פסקת התגברות היא מציעה "להוסיף ערכאה נוספת" - ערכאת ערעור על פסיקות בג"ץ שבה ימונו שופטים "על בסיס רצון הציבור". לא התייחסה להתגברות ברוב רגיל. (עדכון מ-1.)',
+  },
+  {
+    partyId: "amcha-yisrael",
+    questionId: "jud-2",
+    stanceValue: -1,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14903844",
+    sourceNote:
+      'עמך ישראל לynet (21.9.26): "האיזון בין הרשויות הופר ובית המשפט לקח לעצמו סמכויות-יתר", ולכן נדרש תיקון שיאפשר לרצון העם לבוא לידי ביטוי.',
+  },
+  {
+    partyId: "amcha-yisrael",
+    questionId: "jud-3",
+    stanceValue: 1,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14903844",
+    sourceNote:
+      'עמך ישראל לynet (21.9.26): "נציגי לשכת עורכי הדין יוצאו מהוועדה לבחירת שופטים ותתאפשר בחירה מאוזנת של שופטים".',
+  },
+  {
+    partyId: "amcha-yisrael",
+    questionId: "jud-5",
+    stanceValue: 1,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14903844",
+    sourceNote:
+      'עמך ישראל לynet (21.9.26): "אחד מהתיקונים הנדרשים... הוא צמצום עילת הסבירות" - צמצום ולא ביטול, ולכן 1.',
+  },
+  {
+    partyId: "amcha-yisrael",
+    questionId: "jud-7",
+    stanceValue: 1,
+    sourceUrl: "https://amchaisrael.co.il/foundations",
+    sourceNote:
+      'אבני היסוד: "נקדם את חלוקת תפקיד היועץ המשפטי לממשלה - לתובע כללי עצמאי ולייעוץ המשפטי לממשלה, שיסייע לה לקדם את מדיניותה".',
+  },
+  {
+    partyId: "amcha-yisrael",
+    questionId: "jud-8",
+    stanceValue: -1,
+    sourceUrl: "https://amchaisrael.co.il/foundations",
+    sourceNote:
+      'אבני היסוד: פיצול תפקיד היועמ"ש, כך שהייעוץ המשפטי "יסייע לממשלה לקדם את מדיניותה" ולא ישמש גורם מייעץ בלתי תלוי.',
+  },
+  { partyId: "amcha-yisrael", questionId: "jud-9", stanceValue: 1 },
+  {
+    partyId: "amcha-yisrael",
+    questionId: "gov-1",
+    stanceValue: -1,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14915209",
+    sourceNote:
+      'עמך ישראל לynet (3.10.26): ועדת חקירה מיד עם הקמת הממשלה, אבל אף אחת מההצעות הקיימות (כולל ועדה ממלכתית) "לא עונה" לדרישת האמון. במקומה: "הצבעה חשאית בכנסת החדשה למינוי יו"ר הוועדה וסגנו". במצע: סמכויות של ועדה ממלכתית, אבל מינוי שאינו בידי נשיא העליון - ולכן 1- ולא 2-.',
+  },
+  { partyId: "amcha-yisrael", questionId: "gov-3", stanceValue: 0 },
+  { partyId: "amcha-yisrael", questionId: "gov-4", stanceValue: -1 },
+  { partyId: "amcha-yisrael", questionId: "gov-5", stanceValue: -1 },
+  { partyId: "amcha-yisrael", questionId: "soc-1", stanceValue: 1 },
+  { partyId: "amcha-yisrael", questionId: "soc-2", stanceValue: -1 },
+  { partyId: "amcha-yisrael", questionId: "soc-3", stanceValue: 1 },
+  { partyId: "amcha-yisrael", questionId: "soc-5", stanceValue: 2 },
+  { partyId: "amcha-yisrael", questionId: "soc-6", stanceValue: 0 },
+  { partyId: "amcha-yisrael", questionId: "soc-7", stanceValue: 1 },
+  { partyId: "amcha-yisrael", questionId: "soc-10", stanceValue: 0 },
+
+  // המילואימניקים והכלכלית (הנדל / זליכה) - נוספה באוקטובר 2026
+  {
+    partyId: "hamiluimnikim",
+    questionId: "sec-1",
+    stanceValue: 2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14910407",
+    sourceNote:
+      'המילואימניקים לynet (27.9.26): "אנו דוגלים בהתיישבות בכל שטחי מדינת ישראל". במצע: "חיזוק ההתיישבות ביהודה ושומרון והכרעה על קרקעות בשטחי C". (עדכון מ-1.)',
+  },
+  { partyId: "hamiluimnikim", questionId: "sec-2", stanceValue: 2 },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "sec-3",
+    stanceValue: -2,
+    sourceUrl: "https://www.themiluimnikim.org.il/platform/",
+    sourceNote:
+      'מצע המילואימניקים: "נפעל כדי למנוע מדינה פלסטינית בצירים הדיפלומטיים והמדיניים, לצד יצירת מציאות של הכרעה בשטח".',
+  },
+  { partyId: "hamiluimnikim", questionId: "sec-4", stanceValue: -1 },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "sec-5",
+    stanceValue: 2,
+    sourceUrl: "https://www.thepetek.com/party/reservists-economic",
+    sourceNote:
+      'המפלגה הכלכלית (זליכה) דורשת תקציב ביטחון של כ-7% מהתמ"ג.',
+  },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "sec-6",
+    stanceValue: 2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14910407",
+    sourceNote:
+      'המילואימניקים לynet (27.9.26), על פינוי במסגרת הסדר: "לא. כל מה שעלה באישור המדינה וצה"ל יישאר".',
+  },
+  { partyId: "hamiluimnikim", questionId: "sec-7", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "sec-8", stanceValue: 1 },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "sec-9",
+    stanceValue: -1,
+    sourceUrl: "https://www.thepetek.com/party/reservists-economic",
+    sourceNote:
+      'המילואימניקים (הנדל): שליטה צבאית מלאה ברצועה ומנהלת להגירה מרצון. המפלגה הכלכלית: ללא נסיגה. סותר העברת השליטה לגורם חיצוני, אם כי לא נאמר במפורש מה יהיה עם הניהול האזרחי.',
+  },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "sec-10",
+    stanceValue: 2,
+    sourceUrl: "https://www.themiluimnikim.org.il/platform/",
+    sourceNote:
+      'מצע המילואימניקים: "אין לישראל יכולת להכיל איראן עם אמצעי וכוונה לאורך זמן". המשימה "לא הסתיימה".',
+  },
+  { partyId: "hamiluimnikim", questionId: "sec-11", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "sec-12", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "sec-13", stanceValue: 2 },
+  { partyId: "hamiluimnikim", questionId: "eco-1", stanceValue: 1 },
+  { partyId: "hamiluimnikim", questionId: "eco-2", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "eco-3", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "eco-4", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "eco-5", stanceValue: 2 },
+  { partyId: "hamiluimnikim", questionId: "eco-6", stanceValue: 1 },
+  { partyId: "hamiluimnikim", questionId: "eco-7", stanceValue: 1 },
+  { partyId: "hamiluimnikim", questionId: "eco-8", stanceValue: 1 },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "eco-9",
+    stanceValue: 2,
+    sourceUrl: "https://www.themiluimnikim.org.il/platform/",
+    sourceNote:
+      'מצע המילואימניקים: "שינוי סדרי עדיפויות בתקציב: העברת תקציבים מהציבור המשתמט אל הציבור המשרת".',
+  },
+  { partyId: "hamiluimnikim", questionId: "eco-10", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "eco-11", stanceValue: 1 },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "eco-12",
+    stanceValue: 1,
+    sourceUrl: "https://www.thepetek.com/party/reservists-economic",
+    sourceNote:
+      'המפלגה הכלכלית (זליכה): "ביטול מכסים ומכסות יבוא, ופירוק מונופולים". מנגד, מצע המילואימניקים מדגיש "חיזוק ותמיכה בחקלאות" כחלק מההתיישבות - ולכן 1 ולא 2. (עדכון מ-2.)',
+  },
+  { partyId: "hamiluimnikim", questionId: "inf-1", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "inf-2", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "inf-3", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "inf-4", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "inf-5", stanceValue: 1 },
+  { partyId: "hamiluimnikim", questionId: "inf-6", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "rel-2", stanceValue: 1 },
+  { partyId: "hamiluimnikim", questionId: "rel-3", stanceValue: -1 },
+  { partyId: "hamiluimnikim", questionId: "rel-4", stanceValue: 1 },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "rel-5",
+    stanceValue: -2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14898966",
+    sourceNote:
+      'המילואימניקים-הכלכלית לynet (15.9.26): "למעט פטורים רפואיים, על מי שלא ישרת יוטלו סנקציות ויישללו הטבות מהמדינה". במצע: פטור זמני רק במבחן "עילויים בתורה, עילויים באקדמיה וספורטאים מצטיינים".',
+  },
+  { partyId: "hamiluimnikim", questionId: "rel-7", stanceValue: -1 },
+  { partyId: "hamiluimnikim", questionId: "rel-8", stanceValue: 0 },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "rel-9",
+    stanceValue: -2,
+    sourceUrl: "https://www.themiluimnikim.org.il/platform/",
+    sourceNote:
+      'מצע המילואימניקים: "תקציבי חינוך יינתנו רק למי שתורם למדינה, אין תקצוב ותמיכה למוסדות בלי שותפות בשירות".',
+  },
+  { partyId: "hamiluimnikim", questionId: "rel-10", stanceValue: 1 },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "rel-11",
+    stanceValue: 2,
+    sourceUrl: "https://www.thepetek.com/party/reservists-economic",
+    sourceNote:
+      'המפלגה הכלכלית (זליכה): הפרטת הכשרות ושבירת המונופול של הרבנות.',
+  },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "jud-1",
+    stanceValue: -1,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14903844",
+    sourceNote:
+      'המילואימניקים-הכלכלית לynet (21.9.26): "כדי שהכנסת תוכל לגבור על פסילת בג"ץ, צריך רוב מיוחס של יותר מ-72 חברי כנסת" - בעד התגברות, אבל לא ברוב רגיל. (המקור הקודם, The Petek, ייחס למילואימניקים התנגדות להתגברות.)',
+  },
+  { partyId: "hamiluimnikim", questionId: "jud-2", stanceValue: 1 },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "jud-3",
+    stanceValue: 0,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14903844",
+    sourceNote:
+      'המילואימניקים-הכלכלית לynet (21.9.26): "חברי הכנסת יקבעו בחקיקה הרכב מאוזן לוועדה לבחירת שופטים" - בלי לקבוע אם לפוליטיקאים יהיה בה רוב.',
+  },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "jud-5",
+    stanceValue: 0,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14903844",
+    sourceNote:
+      'המילואימניקים-הכלכלית לynet (21.9.26): "בנוגע לעילת הסבירות - צריך לצמצם אבל לא לבטל".',
+  },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "jud-7",
+    stanceValue: 0,
+    sourceUrl: "https://www.themiluimnikim.org.il/platform/",
+    sourceNote:
+      'מצע המילואימניקים: "פיצול תפקידי היועמ"ש" ו"ביקורת חיצונית ולא תלויה על מערכת המשפט", בלי פירוט לגבי מינוי יועצים משפטיים בידי שרים. (עדכון מ-1-.)',
+  },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "jud-8",
+    stanceValue: 0,
+    sourceUrl: "https://www.themiluimnikim.org.il/platform/",
+    sourceNote:
+      'מצע המילואימניקים: "פיצול תפקידי היועמ"ש" - שינוי במעמד הנוכחי, בלי לקבוע אם הייעוץ יישאר בלתי תלוי. (עדכון מ-1.)',
+  },
+  { partyId: "hamiluimnikim", questionId: "jud-9", stanceValue: 0 },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "gov-1",
+    stanceValue: 2,
+    sourceUrl: "https://www.ynet.co.il/news/elections2026/article/yokra14915209",
+    sourceNote:
+      'המילואימניקים-הכלכלית לynet (3.10.26): "בעד ועדת חקירה ממלכתית. רצוי להגיע להרכב בהסכמה רחבה. מי ימנה אותה? בית המשפט העליון בעדיפות לסולברג".',
+  },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "gov-3",
+    stanceValue: 2,
+    sourceUrl: "https://www.themiluimnikim.org.il/platform/",
+    sourceNote:
+      'מצע המילואימניקים: "הגבלת כהונה לשמונה שנים או לשתי קדנציות למשרת ראש ממשלה". (עדכון מ-1.)',
+  },
+  { partyId: "hamiluimnikim", questionId: "gov-4", stanceValue: 1 },
+  { partyId: "hamiluimnikim", questionId: "gov-5", stanceValue: 1 },
+  { partyId: "hamiluimnikim", questionId: "soc-1", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "soc-2", stanceValue: 0 },
+  { partyId: "hamiluimnikim", questionId: "soc-3", stanceValue: 0 },
+  {
+    partyId: "hamiluimnikim",
+    questionId: "soc-5",
+    stanceValue: 2,
+    sourceUrl: "https://www.themiluimnikim.org.il/platform/",
+    sourceNote:
+      'מצע המילואימניקים: "השבת המשילות משימה לאומית דחופה", כולל "הקמת נקודות שיטור נוספות בנגב, בגליל ובכלל במגזר הערבי" ושב"כ שמוביל את האכיפה. (עדכון מ-1.)',
+  },
+  { partyId: "hamiluimnikim", questionId: "soc-6", stanceValue: 1 },
+  { partyId: "hamiluimnikim", questionId: "soc-7", stanceValue: 1 },
+  { partyId: "hamiluimnikim", questionId: "soc-10", stanceValue: 0 },
 ];
