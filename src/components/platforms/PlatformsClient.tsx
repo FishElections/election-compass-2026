@@ -19,13 +19,21 @@ import { useDictionary } from "@/i18n/DictionaryProvider";
 
 type CategoryFilter = "all" | PlatformTopicKey;
 
+/** מפלגות שלא מוצגות בעמוד המצעים, בהחלטת עורכי האתר (אוקטובר 2026). לרע"ם
+ *  לא נמצא מצע רשמי לבחירות 2026 (היא חסרה גם ברשימת המצעים של המכון
+ *  הישראלי לדמוקרטיה). היא עדיין חלק מהשאלון, מהתוצאות ומעמוד המפלגה. */
+const HIDDEN_FROM_PLATFORMS = new Set(["raam"]);
+
 export function PlatformsClient() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<CategoryFilter>("all");
   const [activePartyId, setActivePartyId] = useState<string | null>(null);
   const { dict, locale } = useDictionary();
   const t = dict.platforms;
-  const parties = useMemo(() => getParties(locale), [locale]);
+  const parties = useMemo(
+    () => getParties(locale).filter((p) => !HIDDEN_FROM_PLATFORMS.has(p.id)),
+    [locale]
+  );
   const platformTopics = getPlatformTopics(locale);
 
   const activeParty = parties.find((p) => p.id === activePartyId) ?? null;
