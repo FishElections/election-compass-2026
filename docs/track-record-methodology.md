@@ -1,6 +1,6 @@
 # Track record: methodology
 
-**Version:** 1.0 (approved 2026-10-17)
+**Version:** 1.1 (2026-10-18; v1.0 approved 2026-10-17, see §8 for changes)
 **Applies to:** key achievements and the leader's legal record, for veteran parties.
 **Status:** once approved, this file is committed *before* any research starts. From that commit on, the rules are frozen.
 
@@ -50,9 +50,15 @@ Party B is a predecessor of party A only if a source meeting §5 documents
 that A continues B through one of these:
 - a formal rename of the same registered party,
 - a merger in which B joined A,
-- a split in which A kept B's name or registration.
+- a split in which A kept B's name or registration,
+- **a joint list:** A is a joint list in which B runs as a member party (v1.1).
 
 Without such a source, B is not a predecessor.
+
+**Joint lists (v1.1).** A joint list inherits a member party's Knesset time
+(§2.4) only when an approved source confirms that the member party is part of
+the list. Its achievements (§3) include only items led by one of its member
+parties, credited to that member party by name.
 
 ### 2.4 Veteran party
 A party is veteran if it, including documented predecessors, has held Knesset seats
@@ -240,6 +246,13 @@ broken links.
 The rules are frozen at the commit that adds this file. A change needs:
 1. a new version number here, with what changed and why,
 2. the change re-applied to **every** party, not only the one that prompted it.
+
+### Change log
+- **v1.1 (2026-10-18):** joint lists added to §2.3. Why: the rules did not say
+  whether a list of existing parties inherits their history, which affects
+  Beyachad and the Joint List. Decided by the contributor after the veteran-status
+  research (reports/track-record/veteran-status.md) and before any achievement or
+  legal research. Applies to every party.
 
 ---
 
