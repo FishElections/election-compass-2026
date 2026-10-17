@@ -1,0 +1,33 @@
+import type { TrackRecordLocaleText } from "./he";
+
+export const trackRecordTextAr: TrackRecordLocaleText = {
+  publishers: {
+    knesset: "الكنيست",
+    "gov-il": "موقع الحكومة الإسرائيلية (gov.il)",
+    police: "شرطة إسرائيل",
+    "attorney-general": "مكتب المستشار القضائي للحكومة",
+    "state-attorney": "النيابة العامة للدولة",
+    courts: "السلطة القضائية",
+    cec: "لجنة الانتخابات المركزية",
+    reshumot: "ريشوموت (الجريدة الرسمية)",
+    "un-treaties": "مجموعة معاهدات الأمم المتحدة",
+    "state-comptroller": "مراقب الدولة",
+    "bank-of-israel": "بنك إسرائيل",
+    cbs: "دائرة الإحصاء المركزية",
+    "knesset-ric": "مركز الأبحاث والمعلومات في الكنيست",
+    idi: "المعهد الإسرائيلي للديمقراطية",
+    "peer-reviewed": "دراسة محكّمة",
+    kan: "كان",
+    haaretz: "هآرتس",
+    ynet: "واينت",
+    "times-of-israel": "تايمز أوف إسرائيل",
+    jpost: "جيروزاليم بوست",
+    globes: "غلوبس",
+    calcalist: "كالكاليست",
+    walla: "والا",
+    maariv: "معاريف",
+    n12: "N12",
+    "israel-hayom": "يسرائيل هيوم",
+  },
+  parties: {},
+};
