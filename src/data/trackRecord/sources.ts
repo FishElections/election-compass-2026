@@ -62,7 +62,9 @@ export const sourcePublishers: Record<SourcePublisherId, SourcePublisher> = {
   "attorney-general": { kind: "official", hosts: ["www.gov.il"] },
   "state-attorney": { kind: "official", hosts: ["www.gov.il"] },
   courts: { kind: "official", hosts: ["court.gov.il"] },
-  cec: { kind: "official", hosts: ["bechirot.gov.il"] },
+  // The Committee's 26th-Knesset list pages are published on www.gov.il
+  // (found by the research pass, 2026-10-18).
+  cec: { kind: "official", hosts: ["www.gov.il", "bechirot.gov.il"] },
   reshumot: { kind: "official", hosts: ["www.gov.il"] },
   "un-treaties": { kind: "official", hosts: ["treaties.un.org"] },
 
