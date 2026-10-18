@@ -204,8 +204,17 @@ export interface LegalCaseCore {
 export interface PartyTrackRecordCore {
   /** Snapshot date shown to visitors ("as of"). */
   asOf: string;
-  /** Sources for who is #1 on the list submitted for the 26th Knesset (§2.2). */
+  /**
+   * Sources for who is #1 on the list submitted for the 26th Knesset (§2.2).
+   * Required for veteran parties only; a non-veteran party's record holds just
+   * its Knesset periods, so the card can say "Not applicable".
+   */
   leaderSources: SourceRef[];
+  /**
+   * §4.4 (v1.2): what was searched for the legal record, listed in the ⓘ when
+   * no case is found. Required for veteran parties with no legal cases.
+   */
+  legalSourcesChecked: SourceRef[];
   predecessors: PredecessorCore[];
   knessetPeriods: KnessetPeriod[];
   achievements: AchievementCore[];

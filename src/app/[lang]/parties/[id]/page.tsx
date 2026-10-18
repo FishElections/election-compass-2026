@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ChevronLeft } from "lucide-react";
 import { getParties } from "@/data/parties";
+import { getPartyTrackRecord } from "@/data/trackRecord";
+import { TrackRecordSections } from "@/components/trackRecord/TrackRecordSections";
 import { partiesCore } from "@/data/parties/core";
 import { getCategories } from "@/data/questions";
 import { getPartyCategoryAverages } from "@/utils/calculator";
@@ -194,9 +196,17 @@ export default async function PartyProfilePage({
           })}
         </div>
 
-        <div className="mt-8 rounded-xl border border-sapphire/20 bg-sapphire/5 p-5 text-sm text-navy">
-          {t.comingSoon}
-        </div>
+        {/* The track record takes the "coming soon" box's place once a party
+            has researched data; parties without it keep the box. */}
+        {getPartyTrackRecord(lang, party.id) ? (
+          <div className="mt-8">
+            <TrackRecordSections party={party} expanded />
+          </div>
+        ) : (
+          <div className="mt-8 rounded-xl border border-sapphire/20 bg-sapphire/5 p-5 text-sm text-navy">
+            {t.comingSoon}
+          </div>
+        )}
       </div>
     </main>
   );

@@ -259,7 +259,13 @@ export function validatePartyTrackRecord(
     return [`${partyId}: snapshot date "${asOf}" is not YYYY-MM-DD`];
   }
 
-  checkSources(`${partyId} leader`, record.leaderSources, asOf, { corroborated: true }, errors);
+  const veteran = isVeteran(record);
+  if (veteran) {
+    checkSources(`${partyId} leader`, record.leaderSources, asOf, { corroborated: true }, errors);
+    if (record.legalCases.length === 0) {
+      checkSources(`${partyId} legal sources checked`, record.legalSourcesChecked, asOf, {}, errors);
+    }
+  }
 
   checkUniqueIds(`${partyId} predecessors`, record.predecessors.map((p) => p.id), errors);
   for (const predecessor of record.predecessors) {
@@ -370,7 +376,7 @@ export function validatePartyTrackRecord(
     checkSources(label, legalCase.sources, asOf, { corroborated: true }, errors);
   }
 
-  if (!isVeteran(record) && (record.achievements.length > 0 || record.legalCases.length > 0)) {
+  if (!veteran && (record.achievements.length > 0 || record.legalCases.length > 0)) {
     errors.push(`${partyId}: not a veteran party, so it cannot have achievements or legal cases (§2.4)`);
   }
 

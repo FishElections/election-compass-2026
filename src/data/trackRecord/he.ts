@@ -21,6 +21,11 @@ export interface LegalCaseText {
 }
 
 export interface PartyTrackRecordText {
+  /**
+   * The #1 on the list (§2.2), whose legal record is shown. Needed because
+   * Party.leader can name co-leaders ("A / B"). Veteran parties only.
+   */
+  leaderName?: string;
   achievements: Record<string, AchievementText>;
   legalCases: Record<string, LegalCaseText>;
   /** predecessorId → the predecessor party's name. */

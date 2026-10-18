@@ -17,6 +17,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useDictionary } from "@/i18n/DictionaryProvider";
+import { TrackRecordSections } from "@/components/trackRecord/TrackRecordSections";
 
 interface PartyDetailSheetProps {
   party: Party | null;
@@ -133,6 +134,7 @@ export function PartyDetailSheet({ party, defaultTopicKey, onClose }: PartyDetai
                         </AccordionItem>
                       ))}
                     </Accordion>
+                    <TrackRecordSections party={renderedParty} />
                   </div>
                 </div>
 

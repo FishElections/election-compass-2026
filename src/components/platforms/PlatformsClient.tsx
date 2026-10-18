@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { ChevronRight, Search } from "lucide-react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
+import { TrackRecordSections } from "@/components/trackRecord/TrackRecordSections";
 import { getParties } from "@/data/parties";
 import { getPlatformTopics } from "@/data/platformTopics";
 import { PlatformTopicKey } from "@/types";
@@ -194,7 +196,17 @@ export function PlatformsClient() {
                           </AccordionItem>
                         ))}
                       </Accordion>
+                      <TrackRecordSections party={party} />
                     </div>
+                    {/* The desktop cards had no way to reach the profile page,
+                        which the mobile sheet already links to. */}
+                    <Link
+                      href={`/parties/${party.id}`}
+                      className="mt-4 inline-flex min-h-10 items-center gap-1 text-sm font-semibold text-sapphire hover:underline"
+                    >
+                      {dict.platforms.partyDetailSheet.fullProfileCta}
+                      <ChevronRight className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />
+                    </Link>
                   </div>
                 </div>
               );

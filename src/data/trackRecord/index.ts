@@ -5,6 +5,7 @@ import {
   trackRecordCore,
   type AchievementCore,
   type LegalCaseCore,
+  type SourceRef,
 } from "./core";
 import type { SourcePublisherId } from "./sources";
 import {
@@ -28,9 +29,12 @@ export type LegalCase = LegalCaseCore & { text: LegalCaseText; isOpen: boolean }
 export interface PartyTrackRecord {
   asOf: string;
   isVeteran: boolean;
+  legalSourcesChecked: SourceRef[];
   achievements: Achievement[];
   legalCases: LegalCase[];
   predecessorNames: Record<string, string>;
+  /** #1 on the list; set for veteran parties. */
+  leaderName?: string;
 }
 
 export function getPublisherNames(locale: Locale): Record<SourcePublisherId, string> {
@@ -90,9 +94,16 @@ export function getPartyTrackRecord(
     predecessorNames[predecessor.id] = name;
   }
 
+  const veteran = isVeteran(core);
+  if (veteran && !text.leaderName) {
+    throw new Error(`Missing ${locale} leader name for veteran party "${partyId}"`);
+  }
+
   return {
     asOf: core.asOf,
-    isVeteran: isVeteran(core),
+    isVeteran: veteran,
+    leaderName: text.leaderName,
+    legalSourcesChecked: core.legalSourcesChecked,
     achievements,
     legalCases,
     predecessorNames,

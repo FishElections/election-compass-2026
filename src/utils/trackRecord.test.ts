@@ -81,6 +81,7 @@ function record(overrides: Partial<PartyTrackRecordCore> = {}): PartyTrackRecord
   return {
     asOf: "2026-10-01",
     leaderSources: [src("cec", "https://bechirot.gov.il/fixture")],
+    legalSourcesChecked: [src("courts", "https://supreme.court.gov.il/search-fixture")],
     predecessors: [],
     knessetPeriods: [{ knesset: 1, from: "2010-01-01", to: "2016-01-01", sources: [knessetSrc] }],
     achievements: [law()],
@@ -127,6 +128,19 @@ describe("veteran status (§2.4)", () => {
 
     expect(isVeteran(record({ knessetPeriods: [{ knesset: 1, from, to: fullTermEnd, sources: [] }] }))).toBe(true);
     expect(isVeteran(record({ knessetPeriods: [{ knesset: 1, from, to: dayShort, sources: [] }] }))).toBe(false);
+  });
+
+  test("a veteran party with no legal cases must list the sources checked (v1.2)", () => {
+    expect(errorsFor(record({ legalSourcesChecked: [] }))).toContainEqual(
+      expect.stringContaining("legal sources checked: no source")
+    );
+  });
+
+  test("a non-veteran record needs only its Knesset periods", () => {
+    const short = [{ knesset: 1, from: "2025-01-01", sources: [knessetSrc] }];
+    expect(
+      errorsFor(record({ knessetPeriods: short, achievements: [], leaderSources: [], legalSourcesChecked: [] }))
+    ).toEqual([]);
   });
 
   test("a non-veteran party cannot carry achievements or legal cases", () => {
