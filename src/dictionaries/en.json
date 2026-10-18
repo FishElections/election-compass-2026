@@ -365,11 +365,11 @@
     }
   },
   "partyProfile": {
-    "backToHome": "Back to homepage",
+    "backToPlatforms": "Back to party platforms",
     "titleTemplate": "{party} - Positions and Platform for the 2026 Elections",
     "descriptionTemplate": "{description} See how well you match {party} on the Election Compass.",
-    "categoryPositionHeading": "General position by category",
-    "comingSoon": "Coming soon: full platform, list of Knesset members, and party history."
+    "platformHeading": "Main platform points by topic",
+    "noPlatformNote": "We couldn't find an official platform from this party for the 2026 elections, so no platform summary is shown here."
   },
   "hotTopics": {
     "pageTitle": "Hot Topics in the 2026 Elections",

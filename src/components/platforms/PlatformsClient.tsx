@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { ChevronRight, Search } from "lucide-react";
-import { getParties } from "@/data/parties";
+import { getParties, HIDDEN_FROM_PLATFORMS } from "@/data/parties";
 import { getPlatformTopics } from "@/data/platformTopics";
 import { PlatformTopicKey } from "@/types";
 import { PartyLogoGrid } from "@/components/platforms/PartyLogoGrid";
@@ -20,11 +20,6 @@ type CategoryFilter = "all" | PlatformTopicKey;
 
 /** מאיפה נפתחה מפלגה — לאירוע platform_open. ראו docs/analytics.md. */
 type OpenSource = "grid" | "search" | PartyNavigationSource;
-
-/** מפלגות שלא מוצגות בעמוד המצעים, בהחלטת עורכי האתר (אוקטובר 2026). לרע"ם
- *  לא נמצא מצע רשמי לבחירות 2026 (היא חסרה גם ברשימת המצעים של המכון
- *  הישראלי לדמוקרטיה). היא עדיין חלק מהשאלון, מהתוצאות ומעמוד המפלגה. */
-const HIDDEN_FROM_PLATFORMS = new Set(["raam"]);
 
 const PARTY_PARAM = "party";
 const TOPIC_PARAM = "topic";

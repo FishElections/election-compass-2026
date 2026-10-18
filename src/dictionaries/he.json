@@ -365,11 +365,11 @@
     }
   },
   "partyProfile": {
-    "backToHome": "חזרה לדף הבית",
+    "backToPlatforms": "חזרה למצעי המפלגות",
     "titleTemplate": "{party} - עמדות ומצע לבחירות 2026",
     "descriptionTemplate": "{description} בדקו כמה אתם מתאימים ל{party} במצפן הבחירות.",
-    "categoryPositionHeading": "מיקום כללי לפי קטגוריה",
-    "comingSoon": "בקרוב: מצע מלא, רשימת חברי כנסת והיסטוריית המפלגה."
+    "platformHeading": "עיקרי המצע לפי נושא",
+    "noPlatformNote": "לא נמצא מצע רשמי של המפלגה לבחירות 2026, ולכן לא מוצג כאן סיכום מצע."
   },
   "hotTopics": {
     "pageTitle": "הנושאים החמים בבחירות 2026",
