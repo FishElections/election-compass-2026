@@ -43,8 +43,8 @@ function useFormatters() {
   const yearOnly = new Intl.DateTimeFormat(locale, { year: "numeric", timeZone: "UTC" });
   const monthYear = new Intl.DateTimeFormat(locale, { year: "numeric", month: "long", timeZone: "UTC" });
   const number = new Intl.NumberFormat(locale);
-  const compact = new Intl.NumberFormat(locale, { notation: "compact", maximumFractionDigits: 1 });
-  const shekels = new Intl.NumberFormat(locale, { style: "currency", currency: "ILS", notation: "compact", maximumFractionDigits: 1 });
+  const compact = new Intl.NumberFormat(locale, { notation: "compact", compactDisplay: "long", maximumFractionDigits: 1 });
+  const shekels = new Intl.NumberFormat(locale, { style: "currency", currency: "ILS", notation: "compact", compactDisplay: "long", maximumFractionDigits: 1 });
   const regions = new Intl.DisplayNames([locale], { type: "region" });
   return {
     date: (iso: string) => date.format(new Date(`${iso}T00:00:00Z`)),
@@ -163,6 +163,7 @@ function AgreementItem({ item, party, record, t }: { item: Achievement; party: P
 
 function ProvenItem({ item, party, record, t }: { item: Achievement; party: Party; record: PartyTrackRecord; t: Labels["achievements"] }) {
   const f = useFormatters();
+  const { dir } = useDictionary();
   if (item.type !== "reform" && item.type !== "legislation") return null;
   const { impact } = item;
   return (
@@ -181,14 +182,15 @@ function ProvenItem({ item, party, record, t }: { item: Achievement; party: Part
           {fill(t.scale, { value: f.number(item.scale.value), unit: item.text.scaleUnit ?? "" })}
         </p>
       )}
-      <p className="mt-1.5 rounded-lg bg-gray-light px-2.5 py-1.5 text-xs font-semibold text-navy">
-        {fill(t.result, {
-          indicator: item.text.indicator ?? "",
-          before: f.number(impact.before.value),
-          beforeDate: f.year(impact.before.date),
-          after: f.number(impact.after.value),
-          afterDate: f.year(impact.after.date),
-        })}
+      {/* Each value sits in its own <bdi> so right-to-left text can't
+          reorder the numbers and years; the arrow follows reading direction. */}
+      <p className="mt-1.5 rounded-lg bg-gray-light px-2.5 py-1.5 text-xs text-navy">
+        <span className="block">{item.text.indicator}</span>
+        <span className="block font-semibold">
+          <bdi>{f.number(impact.before.value)} ({f.year(impact.before.date)})</bdi>
+          {dir === "rtl" ? " ← " : " → "}
+          <bdi>{f.number(impact.after.value)} ({f.year(impact.after.date)})</bdi>
+        </span>
       </p>
       {item.repealed && <p className="mt-1 text-xs font-semibold text-navy">{fill(t.repealed, { date: f.date(item.repealed.date) })}</p>}
       <p className="mt-1.5 text-xs text-gray-dark">{t.evaluatedBy}</p>
