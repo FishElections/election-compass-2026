@@ -1,6 +1,6 @@
 # Track record: methodology
 
-**Version:** 1.2 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
+**Version:** 1.3 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
 **Applies to:** key achievements and the leader's legal record, for veteran parties.
 **Status:** once approved, this file is committed *before* any research starts. From that commit on, the rules are frozen.
 
@@ -55,6 +55,12 @@ that A continues B through one of these:
 
 Without such a source, B is not a predecessor.
 
+**Same name (v1.3):** a party that has kept the same name is the same party,
+and no continuity source is needed. The exception is when an approved source
+shows that the earlier party with that name was a *different* party that
+ended before the current one was founded. Example: the 1977 "United Arab List"
+(הרשימה הערבית המאוחדת) is not today's Ra'am.
+
 **Joint lists (v1.1).** A joint list inherits a member party's Knesset time
 (§2.4) only when an approved source confirms that the member party is part of
 the list. Its achievements (§3) include only items led by one of its member
@@ -95,6 +101,16 @@ publicly supporting something.
   was signed. Other coalition parties do not get credit.
 - **Always shown:** every such agreement attributed to the party is shown,
   regardless of the limit in §3.4.
+- **"Another state" (v1.3):** any state that Israel recognized when the
+  agreement was signed.
+- **Signed but never in force (v1.3):** shown, labelled "Signed; never took effect".
+- **Steps (v1.3):** one item per country. Earlier steps (e.g. a declaration
+  before a treaty) are listed inside that item, not as separate items.
+- **Upgrades (v1.3):** upgrading relations that already exist (e.g. a
+  liaison office becoming an embassy) does not count.
+- **Display (v1.3):** peace and normalization agreements are listed in full.
+  Agreements that only establish or restore diplomatic relations are grouped
+  into one expandable line: "Diplomatic relations established with N states".
 - **Source:** the agreement text or an official government publication, or 2
   independent sources (§5).
 
@@ -106,6 +122,8 @@ publicly supporting something.
   Information Center) documents that it was applied **nationwide** and
   states its **scale** (budget, number of beneficiaries, or units).
 - **Impact:** the same evidence test as legislation (§3.3).
+- **Instrument (v1.3):** a government decision carried out by an order or
+  regulation of the party's minister counts as a government decision.
 
 ### 3.3 Legislation with a demonstrated positive impact
 A law qualifies only if **all** of these hold:
@@ -128,7 +146,16 @@ indicator, the before and after figures, and the evaluation's source.
 ### 3.4 Selection
 1. **Peace and normalization agreements:** all of them, always.
 2. **Reforms and legislation:** the qualifying items, up to 5 in total, newest first.
-3. **Nothing qualifies:** the section shows "Insufficient data".
+3. **No legislation passes §3.3 (v1.3):** up to 3 laws the party initiated or
+   sponsored are shown, labelled "Major legislation (impact not evaluated)".
+   They are chosen in this order: Basic Laws first, then the laws with the
+   largest cost estimate stated in their official explanatory notes. Ties go
+   to the newest.
+4. **Later repeal (v1.3):** an item that met the rules still counts if it was
+   later repealed or replaced. The card states the repeal as a fact, with its
+   date and source.
+5. **Nothing qualifies:** the section shows "No achievement met our evidence
+   standard" (§7).
 
 ### 3.5 Wording
 Each item has its official name, one factual sentence on what it does, the
@@ -162,8 +189,15 @@ separately. They are grouped as "Open proceedings" and "Concluded proceedings".
 The section states this explicitly.
 
 ### 4.3 Statuses
-- **Open:** under investigation · decision to indict, subject to a hearing ·
-  indicted / on trial · convicted, appeal pending.
+- **Open:** under investigation · arrest warrant issued (v1.3) · decision to
+  indict, subject to a hearing · indicted / on trial · convicted, appeal pending.
+- **Formally started only (v1.3):** a proceeding counts only once an authority
+  formally opened it, e.g. an investigation opened, a warrant application
+  filed with a court, or an indictment filed. Complaints, requests to
+  investigate, preliminary police examinations and decisions not to
+  investigate do not count.
+- **Identity (v1.3):** a case is attributed only when a source ties it to the
+  leader personally. A matching name alone is not enough.
 - **Concluded:** convicted (final) · convicted under a plea agreement (final) ·
   acquitted · pardoned · case closed (with the reason as stated by the source) ·
   ended otherwise (as described by the source).
@@ -282,6 +316,16 @@ The rules are frozen at the commit that adds this file. A change needs:
   - §7 adds new wording for an empty achievements section.
   - Deputy ministers do not count as ministers (§3.2, unchanged).
   - Applies to every party; pass 2 re-checks all of them.
+- **v1.3 (2026-10-19):** decided by the contributor after research pass 2.
+  - Same name means same party (§2.3).
+  - §3.1 defines "another state", and adds signed-not-in-force, steps, upgrades and display.
+  - §3.2 counts a government decision carried out by a minister's order.
+  - §3.4 adds top-3 "major legislation" when nothing passes §3.3, and keeps
+    items that were later repealed.
+  - §4.3 adds "arrest warrant issued", "formally started only" and the identity rule.
+  - Hadash is credited as "Hadash" (its legal party name is the Israeli
+    Communist Party, Maki).
+  - Applies to every party.
 
 ---
 
