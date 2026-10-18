@@ -347,9 +347,21 @@
     "searchPlaceholder": "חפש לפי שם מפלגה או מנהיג",
     "allFilter": "הכל",
     "noResults": "לא נמצאו מפלגות התואמות את החיפוש.",
+    "gridLabel": "המפלגות המתמודדות",
+    "gridHint": "לחצו על מפלגה כדי לקרוא את עיקרי המצע שלה.",
+    "topicHintTemplate": "בחרתם ״{topic}״ — כל מפלגה שתפתחו תיפתח בנושא הזה.",
+    "topicFilterLabel": "בחירת נושא לפתיחה",
+    "quizCta": {
+      "heading": "עדיין לא בטוחים למי להצביע?",
+      "subtitle": "20 שאלות, כ־3 דקות — ותראו אילו מפלגות הכי קרובות לעמדות שלכם.",
+      "cta": "להתחלת השאלון"
+    },
     "partyDetailSheet": {
       "close": "סגור",
-      "fullProfileCta": "לצפייה בפרופיל המלא"
+      "fullProfileCta": "לצפייה בפרופיל המלא",
+      "previousParty": "המפלגה הקודמת",
+      "nextParty": "המפלגה הבאה",
+      "quizCta": "כמה אתם מתאימים? לשאלון המהיר"
     }
   },
   "partyProfile": {

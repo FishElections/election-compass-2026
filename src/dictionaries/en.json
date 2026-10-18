@@ -347,9 +347,21 @@
     "searchPlaceholder": "Search by party name or leader",
     "allFilter": "All",
     "noResults": "No parties match your search.",
+    "gridLabel": "Competing parties",
+    "gridHint": "Select a party to read the main points of its platform.",
+    "topicHintTemplate": "You picked “{topic}” — every party you open will start on this topic.",
+    "topicFilterLabel": "Choose a topic to open first",
+    "quizCta": {
+      "heading": "Still not sure who to vote for?",
+      "subtitle": "20 questions, about 3 minutes — and see which parties are closest to your own positions.",
+      "cta": "Start the quiz"
+    },
     "partyDetailSheet": {
       "close": "Close",
-      "fullProfileCta": "View full profile"
+      "fullProfileCta": "View full profile",
+      "previousParty": "Previous party",
+      "nextParty": "Next party",
+      "quizCta": "How well do you match? Take the quick quiz"
     }
   },
   "partyProfile": {
