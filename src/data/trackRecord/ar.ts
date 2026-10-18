@@ -11,6 +11,7 @@ export const trackRecordTextAr: TrackRecordLocaleText = {
     cec: "لجنة الانتخابات المركزية",
     reshumot: "ريشوموت (الجريدة الرسمية)",
     "un-treaties": "مجموعة معاهدات الأمم المتحدة",
+    icc: "المحكمة الجنائية الدولية",
     "state-comptroller": "مراقب الدولة",
     "bank-of-israel": "بنك إسرائيل",
     cbs: "دائرة الإحصاء المركزية",

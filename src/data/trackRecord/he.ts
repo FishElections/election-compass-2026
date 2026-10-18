@@ -40,6 +40,7 @@ export const trackRecordTextHe: TrackRecordLocaleText = {
     cec: "ועדת הבחירות המרכזית",
     reshumot: "רשומות",
     "un-treaties": "אוסף האמנות של האו״ם",
+    icc: "בית הדין הפלילי הבינלאומי",
     "state-comptroller": "מבקר המדינה",
     "bank-of-israel": "בנק ישראל",
     cbs: "הלשכה המרכזית לסטטיסטיקה",

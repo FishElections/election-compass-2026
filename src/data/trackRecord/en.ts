@@ -11,6 +11,7 @@ export const trackRecordTextEn: TrackRecordLocaleText = {
     cec: "Central Elections Committee",
     reshumot: "Reshumot (Official Gazette)",
     "un-treaties": "UN Treaty Collection",
+    icc: "International Criminal Court",
     "state-comptroller": "State Comptroller",
     "bank-of-israel": "Bank of Israel",
     cbs: "Central Bureau of Statistics",

@@ -24,6 +24,7 @@ export type SourcePublisherId =
   | "cec"
   | "reshumot"
   | "un-treaties"
+  | "icc"
   // Evaluation bodies (§3.2, §3.3)
   | "state-comptroller"
   | "bank-of-israel"
@@ -67,6 +68,8 @@ export const sourcePublishers: Record<SourcePublisherId, SourcePublisher> = {
   cec: { kind: "official", hosts: ["www.gov.il", "bechirot.gov.il"] },
   reshumot: { kind: "official", hosts: ["www.gov.il"] },
   "un-treaties": { kind: "official", hosts: ["treaties.un.org"] },
+  // International proceedings (methodology v1.2 §4.5).
+  icc: { kind: "official", hosts: ["icc-cpi.int"] },
 
   "state-comptroller": { kind: "evaluation", hosts: ["mevaker.gov.il"] },
   "bank-of-israel": { kind: "evaluation", hosts: ["boi.org.il"] },

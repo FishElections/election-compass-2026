@@ -1,6 +1,6 @@
 # Track record: methodology
 
-**Version:** 1.1 (2026-10-18; v1.0 approved 2026-10-17, see §8 for changes)
+**Version:** 1.2 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
 **Applies to:** key achievements and the leader's legal record, for veteran parties.
 **Status:** once approved, this file is committed *before* any research starts. From that commit on, the rules are frozen.
 
@@ -87,8 +87,10 @@ item. **Not enough on its own:** being in the coalition, voting in favor, or
 publicly supporting something.
 
 ### 3.1 Peace and normalization agreements (always shown)
-- **What:** a signed treaty or agreement that establishes peace or normal
-  diplomatic relations between Israel and another state.
+- **What (v1.2):** any signed treaty or agreement between Israel and another
+  state that ends a state of war, or establishes or restores diplomatic
+  relations. This includes peace treaties, normalization agreements and
+  agreements establishing diplomatic relations with any state.
 - **Whose:** the party of the prime minister who led the coalition when it
   was signed. Other coalition parties do not get credit.
 - **Always shown:** every such agreement attributed to the party is shown,
@@ -141,8 +143,18 @@ Shown in its own section. It is about the leader (§2.2) personally, not the par
 ### 4.1 Scope
 **Criminal proceedings** against the leader personally, at any time:
 investigations, decisions to indict, indictments, trials, verdicts, appeals, plea agreements,
-pardons and closures. **Not included:** civil lawsuits, Knesset Ethics
+pardons and closures. Included are **closures for any reason**, including
+insufficient evidence. **Not included:** civil lawsuits, Knesset Ethics
 Committee matters, and proceedings against other party members.
+
+**Jurisdiction (v1.2):** Israeli, international (e.g. the International
+Criminal Court) and foreign national proceedings are all included. Every case
+is labelled with its jurisdiction ("Israel", "International", or the country's
+name).
+
+**Current status not confirmed (v1.2):** a case whose current status cannot be
+established from approved sources is still shown, clearly labelled: "Current
+status not confirmed. Last confirmed: [status] on [date]."
 
 ### 4.2 Open and closed cases
 **All** cases are shown, **open and closed, including past ones**, each
@@ -163,8 +175,9 @@ The section states this explicitly.
   innocent until proven guilty by a final judgment." The same line is shown for a
   conviction still under appeal.
 - **Language:** each case is described in the source's wording, with dates and the source.
-- **No cases:** if no sourced case exists, the section is not shown at all. We never
-  claim "no known proceedings", because we cannot prove a negative.
+- **No cases (v1.2):** the section is still shown, with the text "No criminal
+  proceedings were found in the sources we checked" and an ⓘ that lists those
+  sources. It never says "no proceedings exist", because we cannot prove a negative.
 
 ### 4.5 Where legal information comes from
 There is no public official registry of criminal proceedings. Israel's criminal
@@ -178,6 +191,10 @@ therefore built from public, case-specific sources, in this order of priority:
 3. **News reports**, only for a step that no official source covers, and
    then from **2 independent outlets** (§5).
 
+For international and foreign proceedings, the official documents of that
+court or prosecutor come first (e.g. the International Criminal Court's own
+publications). Otherwise the same 2-independent-outlets rule applies.
+
 Each step of a case (e.g. indictment, verdict) shows **the source's name and a
 link**.
 
@@ -190,6 +207,7 @@ link**.
 - the Official Gazette (Reshumot)
 - court rulings
 - official treaty texts
+- the International Criminal Court's own publications (v1.2)
 
 **Evaluation bodies** (for §3.2 and §3.3): the State Comptroller, the Bank of
 Israel, the Central Bureau of Statistics, the Knesset Research and Information
@@ -238,7 +256,9 @@ broken links.
 - **Neutral colours only.** Each status has text, never colour alone.
 - **Every section shows its "as of" date.**
 - **Wording for missing data:**
-  - "Insufficient data": "We don't guess."
+  - Achievements (v1.2): "No achievement met our evidence standard", with an
+    ⓘ that states the standard (§3).
+  - Legal record (v1.2): see §4.4.
   - "Not applicable": "The party has not yet served a full Knesset term."
 
 ## 8. Changing these rules
@@ -253,6 +273,15 @@ The rules are frozen at the commit that adds this file. A change needs:
   Beyachad and the Joint List. Decided by the contributor after the veteran-status
   research (reports/track-record/veteran-status.md) and before any achievement or
   legal research. Applies to every party.
+- **v1.2 (2026-10-19):** decided by the contributor after research pass 1.
+  - §3.1 now includes every agreement establishing or restoring diplomatic
+    relations, not only peace and normalization.
+  - §4.1 includes international and foreign proceedings, labelled by
+    jurisdiction, and cases whose current status is not confirmed, labelled as such.
+  - §4.4 shows the legal section even when no case is found.
+  - §7 adds new wording for an empty achievements section.
+  - Deputy ministers do not count as ministers (§3.2, unchanged).
+  - Applies to every party; pass 2 re-checks all of them.
 
 ---
 
@@ -263,7 +292,7 @@ The rules are frozen at the commit that adds this file. A change needs:
 - Achievements are public contributions shown by facts, not party claims (§3).
 - Coalition-agreement deliverables don't count unless a party office-holder led them.
 - Legal scope = criminal proceedings only (§4.1).
-- A case whose current status cannot be found is not shown.
+- A case whose current status cannot be found is shown, labelled "Current status not confirmed" (changed in v1.2; was "not shown").
 - Legal sources: official first, news only as a fallback (§4.5). Source name and link always shown.
 
 - Peace agreements are credited to the party of the prime minister leading the coalition (§3.1).
