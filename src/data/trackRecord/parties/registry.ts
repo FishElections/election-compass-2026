@@ -12,5 +12,13 @@ export interface PartyRecordModule {
   text: { he: PartyTrackRecordText; en: PartyTrackRecordText; ar: PartyTrackRecordText };
 }
 
+import { record as yashar } from "./yashar";
+import { record as amchaYisrael } from "./amcha-yisrael";
+import { record as hamiluimnikim } from "./hamiluimnikim";
+
 /** partyId → record. A party with no entry shows no track-record sections. */
-export const partyRecords: Record<string, PartyRecordModule> = {};
+export const partyRecords: Record<string, PartyRecordModule> = {
+  yashar,
+  "amcha-yisrael": amchaYisrael,
+  hamiluimnikim,
+};
