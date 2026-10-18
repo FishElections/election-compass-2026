@@ -1,6 +1,6 @@
 # Track record: methodology
 
-**Version:** 1.3 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
+**Version:** 1.4 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
 **Applies to:** key achievements and the leader's legal record, for veteran parties.
 **Status:** once approved, this file is committed *before* any research starts. From that commit on, the rules are frozen.
 
@@ -106,6 +106,10 @@ publicly supporting something.
 - **Signed but never in force (v1.3):** shown, labelled "Signed; never took effect".
 - **Steps (v1.3):** one item per country. Earlier steps (e.g. a declaration
   before a treaty) are listed inside that item, not as separate items.
+- **Restored without a signed text (v1.4):** a restoration of diplomatic
+  relations counts even without a signed text, when an official government
+  announcement or 2 independent sources confirm that ambassadors were
+  returned. It is labelled "Restored by announcement; no signed agreement".
 - **Upgrades (v1.3):** upgrading relations that already exist (e.g. a
   liaison office becoming an embassy) does not count.
 - **Display (v1.3):** peace and normalization agreements are listed in full.
@@ -122,6 +126,8 @@ publicly supporting something.
   Information Center) documents that it was applied **nationwide** and
   states its **scale** (budget, number of beneficiaries, or units).
 - **Impact:** the same evidence test as legislation (§3.3).
+- **Scale (v1.4):** an official figure for the size of the affected market or
+  population (e.g. passengers, market revenue) also counts as scale.
 - **Instrument (v1.3):** a government decision carried out by an order or
   regulation of the party's minister counts as a government decision.
 
@@ -326,6 +332,10 @@ The rules are frozen at the commit that adds this file. A change needs:
   - Hadash is credited as "Hadash" (its legal party name is the Israeli
     Communist Party, Maki).
   - Applies to every party.
+- **v1.4 (2026-10-19):** decided by the contributor after verification.
+  Restorations confirmed by ambassadors' return count without a signed text
+  (§3.1). Official market or population size counts as scale (§3.2). Applies
+  to every party.
 
 ---
 
