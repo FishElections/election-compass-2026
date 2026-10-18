@@ -83,13 +83,13 @@ interface AchievementBase {
 
 /**
  * §3.1. Credited only to the party of the prime minister leading the
- * coalition. Peace and normalization agreements are listed in full;
- * diplomatic relations are grouped on the card.
+ * coalition. Since v1.6 only peace and normalization agreements are shown:
+ * no complete dated list of diplomatic relations exists.
  */
 export interface AgreementCore extends AchievementBase {
   type: "agreement";
   role: "prime-minister";
-  category: "peace" | "normalization" | "diplomatic-relations";
+  category: "peace" | "normalization";
   /** ISO 3166-1 alpha-2, or "VA" for the Holy See. Names come from Intl. */
   country: string;
   /** "restore": relations existed before and were restored (v1.4). */

@@ -1,6 +1,6 @@
 # Track record: methodology
 
-**Version:** 1.5 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
+**Version:** 1.6 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
 **Applies to:** key achievements and the leader's legal record, for veteran parties.
 **Status:** once approved, this file is committed *before* any research starts. From that commit on, the rules are frozen.
 
@@ -118,9 +118,12 @@ publicly supporting something.
   checked, and any period left unchecked is recorded in the research report.
 - **Upgrades (v1.3):** upgrading relations that already exist (e.g. a
   liaison office becoming an embassy) does not count.
-- **Display (v1.3):** peace and normalization agreements are listed in full.
-  Agreements that only establish or restore diplomatic relations are grouped
-  into one expandable line: "Diplomatic relations established with N states".
+- **Scope as shown (v1.6):** only **peace and normalization agreements** are
+  shown, in full. Agreements that only establish or restore diplomatic
+  relations are **not shown**. A complete, dated list could not be built: the
+  Foreign Ministry's official list has no dates (reports/track-record/verified/
+  diplomatic-relations-complete.md), and a partial list would read as complete.
+  This supersedes the v1.3 grouped line and the v1.4/v1.5 bullets above for display.
 - **Source:** the agreement text or an official government publication, or 2
   independent sources (§5).
 
@@ -163,6 +166,17 @@ indicator, the before and after figures, and the evaluation's source.
    They are chosen in this order: Basic Laws first, then the laws with the
    largest cost estimate stated in their official explanatory notes. Ties go
    to the newest.
+   - **(v1.6)** Amendments to a Basic Law count as Basic Laws.
+   - **(v1.6)** Bills proposed by a Knesset committee are credited to no party.
+   - **(v1.6)** When a minister presents a bill on behalf of another minister,
+     the responsible minister's party gets the credit, not the stand-in's.
+   - **(v1.6)** Costs are compared by yearly cost when one is stated, otherwise
+     by the largest single figure stated.
+   - **(v1.6)** For a joint list, the member party that proposed the law must
+     be confirmed by a source. Otherwise the law is not credited.
+   - **(v1.6)** These items appear under a neutral sub-heading, "Major laws the
+     party led (impact not evaluated)". A law later struck down, repealed or
+     replaced says so on the card (item 4).
 4. **Later repeal (v1.3):** an item that met the rules still counts if it was
    later repealed or replaced. The card states the repeal as a fact, with its
    date and source.
@@ -345,6 +359,10 @@ The rules are frozen at the commit that adds this file. A change needs:
 - **v1.5 (2026-10-19):** decided by the contributor. Establishing relations
   counts without a confirmed signed text (§3.1), and the completeness rule is
   added. Applies to every party.
+- **v1.6 (2026-10-19):** decided by the contributor. Diplomatic-relations-only
+  agreements are not shown, because no complete dated list exists (§3.1).
+  Adds the major-legislation rulings and the neutral sub-heading (§3.4).
+  Applies to every party.
 
 ---
 
