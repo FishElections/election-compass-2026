@@ -4,9 +4,10 @@ import type { SourcePublisherId } from "./sources";
  * Locale-independent facts for the veteran-party track record: key
  * achievements and the party leader's legal record.
  *
- * Every rule here comes from docs/track-record-methodology.md (v1.0), which
- * was frozen before any research. The data is a one-time static snapshot:
- * nothing is fetched at runtime and every visitor sees the same thing.
+ * Every rule here comes from docs/track-record-methodology.md (currently
+ * v1.5; the change log there records each rule change). The data is a
+ * one-time static snapshot: nothing is fetched at runtime and every visitor
+ * sees the same thing.
  *
  * Nothing that can be computed is stored. Veteran status is derived from
  * knessetPeriods (see isVeteran in @/utils/trackRecord), so it can never
@@ -39,7 +40,10 @@ export interface KnessetPeriod {
   sources: SourceRef[];
 }
 
-/** Documented continuity with an earlier party (§2.3). */
+/**
+ * Documented continuity with an earlier party, or a member party of a joint
+ * list (§2.3). Its name is locale text.
+ */
 export interface PredecessorCore {
   id: string;
   sources: SourceRef[];
@@ -51,7 +55,7 @@ export interface PredecessorCore {
  * "Goal met" is checked from these numbers, not entered by hand.
  */
 export interface ImpactEvidence {
-  /** The purpose clause or official explanatory notes stating the goal. */
+  /** The purpose clause, explanatory notes or decision text stating the goal. */
   goalSources: SourceRef[];
   intendedDirection: "increase" | "decrease";
   before: { value: number; date: string };
@@ -59,17 +63,43 @@ export interface ImpactEvidence {
   evaluationSources: SourceRef[];
 }
 
-interface AchievementBase {
-  id: string;
-  /** Signing date, final reading date, or decision date. */
+/** A later repeal or replacement, stated on the card as a fact (§3.4 item 4). */
+export interface RepealCore {
   date: string;
   sources: SourceRef[];
 }
 
-/** §3.1. Credited only to the party of the prime minister leading the coalition. */
-export interface PeaceAgreementCore extends AchievementBase {
-  type: "peace-agreement";
+interface AchievementBase {
+  id: string;
+  /** Signing date, decision date, or final-reading date. */
+  date: string;
+  sources: SourceRef[];
+  /**
+   * When the item was led by a predecessor or a joint-list member party, its
+   * predecessor id, so the card can name it ("Labor, which … continues").
+   */
+  creditedTo?: string;
+}
+
+/**
+ * §3.1. Credited only to the party of the prime minister leading the
+ * coalition. Peace and normalization agreements are listed in full;
+ * diplomatic relations are grouped on the card.
+ */
+export interface AgreementCore extends AchievementBase {
+  type: "agreement";
   role: "prime-minister";
+  category: "peace" | "normalization" | "diplomatic-relations";
+  /** ISO 3166-1 alpha-2, or "VA" for the Holy See. Names come from Intl. */
+  country: string;
+  /** "restore": relations existed before and were restored (v1.4). */
+  relation: "establish" | "restore";
+  /** false: "Signed; never took effect" (v1.3). */
+  inForce: boolean;
+  /** false: established or restored by announcement, no signed text (v1.4/v1.5). */
+  signedText: boolean;
+  /** Earlier steps inside the same item, e.g. a declaration before a treaty. */
+  steps?: { id: string; date: string; sources: SourceRef[] }[];
 }
 
 /** §3.2. Nationwide, with an officially stated scale, and a measured result. */
@@ -77,8 +107,14 @@ export interface ReformCore extends AchievementBase {
   type: "reform";
   role: "led";
   nationwide: true;
-  scale: { value: number; sources: SourceRef[] };
+  /** v1.4: an official market or population size also counts as scale. */
+  scale: {
+    kind: "budget" | "beneficiaries" | "units" | "market-size";
+    value: number;
+    sources: SourceRef[];
+  };
   impact: ImpactEvidence;
+  repealed?: RepealCore;
 }
 
 /** §3.3. Only with a measured result showing the law met its own goal. */
@@ -86,13 +122,33 @@ export interface LegislationCore extends AchievementBase {
   type: "legislation";
   role: "initiated" | "sponsored";
   impact: ImpactEvidence;
+  repealed?: RepealCore;
 }
 
-export type AchievementCore = PeaceAgreementCore | ReformCore | LegislationCore;
+/**
+ * §3.4 item 3 (v1.3): shown only when no law passes §3.3. Up to 3, Basic Laws
+ * first, then the largest official cost estimate, ties to the newest.
+ * Labelled "Major legislation (impact not evaluated)".
+ */
+export interface MajorLegislationCore extends AchievementBase {
+  type: "major-legislation";
+  role: "initiated" | "sponsored";
+  basicLaw: boolean;
+  /** NIS, as stated in the official explanatory notes or cost note. */
+  costEstimate?: { value: number; sources: SourceRef[] };
+  repealed?: RepealCore;
+}
+
+export type AchievementCore =
+  | AgreementCore
+  | ReformCore
+  | LegislationCore
+  | MajorLegislationCore;
 
 /** §4.3. */
 export type LegalStatus =
   | "under-investigation"
+  | "arrest-warrant-issued"
   | "indictment-pending-hearing"
   | "on-trial"
   | "convicted-appeal-pending"
@@ -105,6 +161,7 @@ export type LegalStatus =
 
 export const OPEN_LEGAL_STATUSES: ReadonlySet<LegalStatus> = new Set([
   "under-investigation",
+  "arrest-warrant-issued",
   "indictment-pending-hearing",
   "on-trial",
   "convicted-appeal-pending",
@@ -116,14 +173,29 @@ export const CONVICTION_STATUSES: ReadonlySet<LegalStatus> = new Set([
   "convicted-plea-final",
 ]);
 
-/** A criminal proceeding against the leader personally (§4). */
+/**
+ * Where a proceeding takes place (§4.1, v1.2): "IL" for Israel, "ICC" for the
+ * International Criminal Court, or another country's ISO 3166-1 alpha-2 code.
+ * Country names come from Intl.DisplayNames, so they need no locale text.
+ */
+export type Jurisdiction = string;
+
+/** A formally started criminal proceeding against the leader personally (§4). */
 export interface LegalCaseCore {
   id: string;
+  jurisdiction: Jurisdiction;
   status: LegalStatus;
-  /** When the proceeding began (e.g. investigation opened, indictment filed). */
+  /** When the proceeding formally began (e.g. investigation opened, indictment filed). */
   since: string;
   /** Required for concluded statuses, forbidden for open ones. */
   endedOn?: string;
+  /**
+   * v1.2: false when the current status cannot be confirmed. The card then
+   * says "Current status not confirmed. Last confirmed: <status> on <date>".
+   */
+  statusConfirmed: boolean;
+  /** Required when statusConfirmed is false. */
+  lastConfirmedOn?: string;
   /** Only on convictions, and only when a court ruled on it. */
   moralTurpitude?: boolean;
   sources: SourceRef[];
@@ -140,8 +212,11 @@ export interface PartyTrackRecordCore {
   legalCases: LegalCaseCore[];
 }
 
-/** §3.4: reforms + legislation shown per party. Peace agreements are uncapped. */
+/** §3.4: reforms + laws with proven impact shown per party. Agreements are uncapped. */
 export const MAX_REFORMS_AND_LEGISLATION = 5;
+
+/** §3.4 item 3: at most this many "major legislation" items. */
+export const MAX_MAJOR_LEGISLATION = 3;
 
 /**
  * partyId → record. Empty until research is verified and reviewed (§6).

@@ -58,11 +58,17 @@ export function getPartyTrackRecord(
     if (!itemText) {
       throw new Error(`Missing ${locale} text for achievement "${item.id}" of "${partyId}"`);
     }
-    if (item.type !== "peace-agreement" && !itemText.indicator) {
-      throw new Error(`Missing ${locale} indicator for "${item.id}" of "${partyId}"`);
+    const missing = (what: string) =>
+      new Error(`Missing ${locale} ${what} for "${item.id}" of "${partyId}"`);
+    if ((item.type === "reform" || item.type === "legislation") && !itemText.indicator) {
+      throw missing("indicator");
     }
-    if (item.type === "reform" && !itemText.scaleUnit) {
-      throw new Error(`Missing ${locale} scale unit for "${item.id}" of "${partyId}"`);
+    if (item.type === "reform" && !itemText.scaleUnit) throw missing("scale unit");
+    if (item.type === "agreement") {
+      if (!itemText.primeMinister) throw missing("prime minister name");
+      for (const step of item.steps ?? []) {
+        if (!itemText.steps?.[step.id]) throw missing(`step "${step.id}" name`);
+      }
     }
     return { ...item, text: itemText };
   });

@@ -9,8 +9,10 @@ import {
 } from "./trackRecord";
 import type {
   AchievementCore,
+  AgreementCore,
   LegalCaseCore,
   LegislationCore,
+  MajorLegislationCore,
   PartyTrackRecordCore,
   SourceRef,
 } from "@/data/trackRecord/core";
@@ -43,6 +45,34 @@ function law(overrides: Partial<LegislationCore> = {}): LegislationCore {
       after: { value: 20, date: "2018-01-01" },
       evaluationSources: [evalSrc],
     },
+    ...overrides,
+  };
+}
+
+function agreement(overrides: Partial<AgreementCore> = {}): AgreementCore {
+  return {
+    id: "agreement-a",
+    type: "agreement",
+    role: "prime-minister",
+    category: "peace",
+    country: "JO",
+    relation: "establish",
+    inForce: true,
+    signedText: true,
+    date: "2015-03-01",
+    sources: [src("un-treaties", "https://treaties.un.org/fixture")],
+    ...overrides,
+  };
+}
+
+function major(overrides: Partial<MajorLegislationCore> = {}): MajorLegislationCore {
+  return {
+    id: "major-a",
+    type: "major-legislation",
+    role: "initiated",
+    basicLaw: false,
+    date: "2015-03-01",
+    sources: [knessetSrc],
     ...overrides,
   };
 }
@@ -221,7 +251,7 @@ describe("achievements (§3)", () => {
       nationwide: true,
       date: "2015-03-01",
       sources: [govSrc],
-      scale: { value: 0, sources: [src("haaretz", "https://www.haaretz.co.il/fixture")] },
+      scale: { kind: "budget", value: 0, sources: [src("haaretz", "https://www.haaretz.co.il/fixture")] },
       impact: law().impact,
     };
     const errors = errorsFor(record({ achievements: [reform] }));
@@ -229,18 +259,72 @@ describe("achievements (§3)", () => {
     expect(errors).toContainEqual(expect.stringContaining("expected official or evaluation"));
   });
 
-  test("at most 5 reforms and laws, while peace agreements are uncapped", () => {
+  test("at most 5 reforms and laws, while agreements are uncapped", () => {
     const laws = Array.from({ length: 6 }, (_, i) => law({ id: `law-${i}` }));
     expect(errorsFor(record({ achievements: laws }))).toContainEqual(expect.stringContaining("at most 5"));
 
-    const peace: AchievementCore[] = Array.from({ length: 3 }, (_, i) => ({
-      id: `peace-${i}`,
-      type: "peace-agreement",
-      role: "prime-minister",
-      date: "2015-03-01",
-      sources: [src("un-treaties", "https://treaties.un.org/fixture")],
-    }));
-    expect(errorsFor(record({ achievements: [...laws.slice(0, 5), ...peace] }))).toEqual([]);
+    const agreements: AchievementCore[] = ["AA", "BB", "CC"].map((country, i) => agreement({ id: `agreement-${i}`, country }));
+    expect(errorsFor(record({ achievements: [...laws.slice(0, 5), ...agreements] }))).toEqual([]);
+  });
+
+  test("an agreement may be unsigned or never in force, and is still valid (v1.3–v1.5)", () => {
+    expect(errorsFor(record({ achievements: [agreement({ signedText: false, relation: "restore" })] }))).toEqual([]);
+    expect(errorsFor(record({ achievements: [agreement({ inForce: false })] }))).toEqual([]);
+  });
+
+  test("one agreement item per country; earlier steps go inside it (v1.3)", () => {
+    expect(
+      errorsFor(record({ achievements: [agreement({ id: "a" }), agreement({ id: "b" })] }))
+    ).toContainEqual(expect.stringContaining("a second item for JO"));
+
+    const withStep = agreement({
+      steps: [{ id: "declaration", date: "2014-07-25", sources: [govSrc] }],
+    });
+    expect(errorsFor(record({ achievements: [withStep] }))).toEqual([]);
+    const lateStep = agreement({
+      steps: [{ id: "declaration", date: "2016-01-01", sources: [govSrc] }],
+    });
+    expect(errorsFor(record({ achievements: [lateStep] }))).toContainEqual(
+      expect.stringContaining("a step must come before")
+    );
+  });
+
+  test("an item credited to a predecessor must name a documented one (§2.3)", () => {
+    expect(errorsFor(record({ achievements: [agreement({ creditedTo: "labor" })] }))).toContainEqual(
+      expect.stringContaining('unknown predecessor "labor"')
+    );
+    expect(
+      errorsFor(record({ predecessors: [{ id: "labor", sources: [govSrc] }], achievements: [agreement({ creditedTo: "labor" })] }))
+    ).toEqual([]);
+  });
+
+  test("a repealed item still counts, but the repeal must be dated and sourced (v1.3)", () => {
+    expect(
+      errorsFor(record({ achievements: [law({ repealed: { date: "2019-01-01", sources: [knessetSrc] } })] }))
+    ).toEqual([]);
+    expect(
+      errorsFor(record({ achievements: [law({ repealed: { date: "2014-01-01", sources: [knessetSrc] } })] }))
+    ).toContainEqual(expect.stringContaining("repealed before it was made"));
+  });
+
+  test("major legislation: only without a proven law, at most 3, ranked by rule (v1.3)", () => {
+    const basic = major({ id: "basic", basicLaw: true, date: "2012-01-01" });
+    const costly = major({ id: "costly", costEstimate: { value: 900, sources: [knessetSrc] } });
+    const cheaper = major({ id: "cheaper", costEstimate: { value: 100, sources: [knessetSrc] } });
+
+    expect(errorsFor(record({ achievements: [basic, costly, cheaper] }))).toEqual([]);
+    expect(errorsFor(record({ achievements: [costly, basic] }))).toContainEqual(
+      expect.stringContaining("out of order")
+    );
+    expect(errorsFor(record({ achievements: [law(), basic] }))).toContainEqual(
+      expect.stringContaining("only for parties with no law passing")
+    );
+    expect(
+      errorsFor(record({ achievements: [basic, costly, cheaper, major({ id: "fourth", basicLaw: true })] }))
+    ).toContainEqual(expect.stringContaining("at most 3"));
+    expect(errorsFor(record({ achievements: [major({ id: "unranked" })] }))).toContainEqual(
+      expect.stringContaining("cannot be ranked")
+    );
   });
 
   test("ids must be unique", () => {
@@ -254,8 +338,36 @@ describe("legal record (§4)", () => {
   const court = src("courts", "https://supreme.court.gov.il/fixture");
 
   function legalCase(overrides: Partial<LegalCaseCore>): LegalCaseCore {
-    return { id: "case-a", status: "on-trial", since: "2020-01-01", sources: [court], ...overrides };
+    return {
+      id: "case-a",
+      jurisdiction: "IL",
+      status: "on-trial",
+      since: "2020-01-01",
+      statusConfirmed: true,
+      sources: [court],
+      ...overrides,
+    };
   }
+
+  test("international and foreign cases are labelled by jurisdiction (v1.2)", () => {
+    expect(errorsFor(record({ legalCases: [legalCase({ jurisdiction: "ICC", status: "arrest-warrant-issued" })] }))).toEqual([]);
+    expect(errorsFor(record({ legalCases: [legalCase({ jurisdiction: "TR" })] }))).toEqual([]);
+    expect(errorsFor(record({ legalCases: [legalCase({ jurisdiction: "Turkey" })] }))).toContainEqual(
+      expect.stringContaining("must be IL, ICC or a country code")
+    );
+  });
+
+  test("an unconfirmed status is shown, with the date it was last confirmed (v1.2)", () => {
+    expect(
+      errorsFor(record({ legalCases: [legalCase({ statusConfirmed: false, lastConfirmedOn: "2021-06-01" })] }))
+    ).toEqual([]);
+    expect(errorsFor(record({ legalCases: [legalCase({ statusConfirmed: false })] }))).toContainEqual(
+      expect.stringContaining("needs the date it was last confirmed")
+    );
+    expect(
+      errorsFor(record({ legalCases: [legalCase({ lastConfirmedOn: "2021-06-01" })] }))
+    ).toContainEqual(expect.stringContaining("only for cases whose status is not confirmed"));
+  });
 
   test("open and concluded cases are both valid", () => {
     expect(errorsFor(record({ legalCases: [legalCase({})] }))).toEqual([]);

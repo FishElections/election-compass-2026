@@ -9,6 +9,10 @@ export interface AchievementText {
   indicator?: string;
   /** Reforms: the unit of `scale.value` (e.g. "housing units"). */
   scaleUnit?: string;
+  /** Agreements: the prime minister's name at signing. */
+  primeMinister?: string;
+  /** Agreements: names of earlier steps, by step id. */
+  steps?: Record<string, string>;
 }
 
 export interface LegalCaseText {
