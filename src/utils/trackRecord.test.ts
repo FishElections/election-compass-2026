@@ -396,9 +396,13 @@ describe("legal record (§4)", () => {
     );
   });
 
-  test("a concluded case needs an end date", () => {
+  test("a concluded case needs an end date, or says it is unknown", () => {
     expect(errorsFor(record({ legalCases: [legalCase({ status: "closed" })] }))).toContainEqual(
       expect.stringContaining("concluded case needs an end date")
+    );
+    expect(errorsFor(record({ legalCases: [legalCase({ status: "closed", endDateUnknown: true })] }))).toEqual([]);
+    expect(errorsFor(record({ legalCases: [legalCase({ endDateUnknown: true })] }))).toContainEqual(
+      expect.stringContaining("endDateUnknown is only for a concluded case")
     );
   });
 

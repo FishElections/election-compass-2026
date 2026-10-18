@@ -149,6 +149,7 @@ export type AchievementCore =
 /** §4.3. */
 export type LegalStatus =
   | "under-investigation"
+  | "arrest-warrant-requested"
   | "arrest-warrant-issued"
   | "indictment-pending-hearing"
   | "on-trial"
@@ -162,6 +163,7 @@ export type LegalStatus =
 
 export const OPEN_LEGAL_STATUSES: ReadonlySet<LegalStatus> = new Set([
   "under-investigation",
+  "arrest-warrant-requested",
   "arrest-warrant-issued",
   "indictment-pending-hearing",
   "on-trial",
@@ -181,6 +183,9 @@ export const CONVICTION_STATUSES: ReadonlySet<LegalStatus> = new Set([
  */
 export type Jurisdiction = string;
 
+/** How precise a stored date is; "year"/"month" dates use day 01. */
+export type DatePrecision = "year" | "month";
+
 /** A formally started criminal proceeding against the leader personally (§4). */
 export interface LegalCaseCore {
   id: string;
@@ -188,8 +193,20 @@ export interface LegalCaseCore {
   status: LegalStatus;
   /** When the proceeding formally began (e.g. investigation opened, indictment filed). */
   since: string;
-  /** Required for concluded statuses, forbidden for open ones. */
+  /**
+   * When the sources give only the year or month it began, `since` is written
+   * YYYY-01-01 / YYYY-MM-01 and the card shows just that, never an invented day.
+   */
+  sincePrecision?: DatePrecision;
+  /** Required for concluded statuses (unless endDateUnknown), forbidden for open ones. */
   endedOn?: string;
+  /**
+   * A concluded case whose end date no approved source states. The card says
+   * "end date not confirmed" rather than guessing one.
+   */
+  endDateUnknown?: true;
+  /** Same as sincePrecision, for endedOn. */
+  endedPrecision?: DatePrecision;
   /**
    * v1.2: false when the current status cannot be confirmed. The card then
    * says "Current status not confirmed. Last confirmed: <status> on <date>".

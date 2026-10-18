@@ -607,6 +607,7 @@
       "icc": "المحكمة الجنائية الدولية",
       "statuses": {
         "under-investigation": "قيد التحقيق",
+        "arrest-warrant-requested": "طُلبت مذكرة اعتقال",
         "arrest-warrant-issued": "صدرت مذكرة اعتقال",
         "indictment-pending-hearing": "قرار بتقديم لائحة اتهام، رهناً بالاستماع",
         "on-trial": "قُدّمت لائحة اتهام / المحاكمة جارية",
@@ -617,7 +618,8 @@
         "pardoned": "عفو",
         "closed": "أُغلق الملف",
         "ended-other": "انتهى (كما يصفه المصدر)"
-      }
+      },
+      "periodEndUnknown": "{from} – تاريخ الانتهاء غير مؤكَّد"
     }
   }
 }

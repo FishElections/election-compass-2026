@@ -38,24 +38,37 @@ function fill(template: string, values: Record<string, string | number>): string
 
 function useFormatters() {
   const { locale } = useDictionary();
-  const date = new Intl.DateTimeFormat(locale, { year: "numeric", month: "long", day: "numeric" });
+  // UTC so a stored date is never shifted a day by the visitor's time zone.
+  const date = new Intl.DateTimeFormat(locale, { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+  const yearOnly = new Intl.DateTimeFormat(locale, { year: "numeric", timeZone: "UTC" });
+  const monthYear = new Intl.DateTimeFormat(locale, { year: "numeric", month: "long", timeZone: "UTC" });
   const number = new Intl.NumberFormat(locale);
-  const shekels = new Intl.NumberFormat(locale, { style: "currency", currency: "ILS", maximumFractionDigits: 0 });
+  const compact = new Intl.NumberFormat(locale, { notation: "compact", maximumFractionDigits: 1 });
+  const shekels = new Intl.NumberFormat(locale, { style: "currency", currency: "ILS", notation: "compact", maximumFractionDigits: 1 });
   const regions = new Intl.DisplayNames([locale], { type: "region" });
   return {
     date: (iso: string) => date.format(new Date(`${iso}T00:00:00Z`)),
-    number: (value: number) => number.format(value),
+    year: (iso: string) => yearOnly.format(new Date(`${iso}T00:00:00Z`)),
+    /** Shows only as much of the date as the sources give. */
+    precise: (iso: string, precision?: "year" | "month") =>
+      (precision === "year" ? yearOnly : precision === "month" ? monthYear : date).format(new Date(`${iso}T00:00:00Z`)),
+    number: (value: number) => (Math.abs(value) >= 1_000_000 ? compact.format(value) : number.format(value)),
     shekels: (value: number) => shekels.format(value),
     country: (code: string) => regions.of(code) ?? code,
   };
 }
 
+const VISIBLE_SOURCES = 3;
+
 function SourceLinks({ sources }: { sources: SourceRef[] }) {
   const { locale } = useDictionary();
   const names = getPublisherNames(locale);
+  const [showAll, setShowAll] = useState(false);
+  const hidden = sources.length - VISIBLE_SOURCES;
+  const shown = showAll || hidden <= 0 ? sources : sources.slice(0, VISIBLE_SOURCES);
   return (
     <ul className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1">
-      {sources.map((source) => (
+      {shown.map((source) => (
         <li key={source.url}>
           <a
             href={source.url}
@@ -67,6 +80,17 @@ function SourceLinks({ sources }: { sources: SourceRef[] }) {
           </a>
         </li>
       ))}
+      {hidden > 0 && !showAll && (
+        <li>
+          <button
+            type="button"
+            onClick={() => setShowAll(true)}
+            className="inline-flex min-h-8 items-center text-xs font-semibold text-gray-dark hover:text-sapphire"
+          >
+            +{hidden}
+          </button>
+        </li>
+      )}
     </ul>
   );
 }
@@ -161,9 +185,9 @@ function ProvenItem({ item, party, record, t }: { item: Achievement; party: Part
         {fill(t.result, {
           indicator: item.text.indicator ?? "",
           before: f.number(impact.before.value),
-          beforeDate: f.date(impact.before.date),
+          beforeDate: f.year(impact.before.date),
           after: f.number(impact.after.value),
-          afterDate: f.date(impact.after.date),
+          afterDate: f.year(impact.after.date),
         })}
       </p>
       {item.repealed && <p className="mt-1 text-xs font-semibold text-navy">{fill(t.repealed, { date: f.date(item.repealed.date) })}</p>}
@@ -224,7 +248,7 @@ function AchievementsBody({ party, record, t }: { party: Party; record: PartyTra
           <ul className="flex flex-col gap-2">{proven.map((item) => <ProvenItem key={item.id} item={item} party={party} record={record} t={a} />)}</ul>
         </section>
       )}
-      {proven.length === 0 && major.length > 0 && (
+      {!proven.some((x) => x.type === "legislation") && major.length > 0 && (
         <section>
           <h4 className="text-sm font-bold text-navy">{a.majorHeading}</h4>
           <p className="mb-2 mt-0.5 text-xs text-gray-dark">{a.majorNote}</p>
@@ -241,9 +265,12 @@ function LegalCaseItem({ legalCase, t }: { legalCase: LegalCase; t: Labels["lega
   const jurisdiction =
     legalCase.jurisdiction === "ICC" ? t.icc : f.country(legalCase.jurisdiction);
   const status = t.statuses[legalCase.status];
+  const since = f.precise(legalCase.since, legalCase.sincePrecision);
   const dates = legalCase.endedOn
-    ? fill(t.period, { from: f.date(legalCase.since), to: f.date(legalCase.endedOn) })
-    : fill(t.since, { date: f.date(legalCase.since) });
+    ? fill(t.period, { from: since, to: f.precise(legalCase.endedOn, legalCase.endedPrecision) })
+    : legalCase.endDateUnknown
+      ? fill(t.periodEndUnknown, { from: since })
+      : fill(t.since, { date: since });
   // §4.4: open cases and convictions still under appeal carry the line.
   const presumption = legalCase.isOpen || !legalCase.statusConfirmed;
   return (

@@ -607,6 +607,7 @@
       "icc": "International Criminal Court",
       "statuses": {
         "under-investigation": "Under investigation",
+        "arrest-warrant-requested": "Arrest warrant requested",
         "arrest-warrant-issued": "Arrest warrant issued",
         "indictment-pending-hearing": "Decision to indict, subject to a hearing",
         "on-trial": "Indicted / on trial",
@@ -617,7 +618,8 @@
         "pardoned": "Pardoned",
         "closed": "Case closed",
         "ended-other": "Ended (as described by the source)"
-      }
+      },
+      "periodEndUnknown": "{from} – end date not confirmed"
     }
   }
 }

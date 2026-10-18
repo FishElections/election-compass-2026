@@ -346,6 +346,17 @@ export function validatePartyTrackRecord(
   for (const legalCase of record.legalCases) {
     const label = `${partyId} legal case "${legalCase.id}"`;
     const started = checkDate(`${label} start`, legalCase.since, asOf, errors);
+    for (const [field, value, precision] of [
+      ["start", legalCase.since, legalCase.sincePrecision],
+      ["end", legalCase.endedOn, legalCase.endedPrecision],
+    ] as const) {
+      if (precision === "year" && !value?.endsWith("-01-01")) {
+        errors.push(`${label}: a year-only ${field} date is written YYYY-01-01`);
+      }
+      if (precision === "month" && !value?.endsWith("-01")) {
+        errors.push(`${label}: a month-only ${field} date is written YYYY-MM-01`);
+      }
+    }
     if (!isJurisdiction(legalCase.jurisdiction)) {
       errors.push(`${label}: jurisdiction "${legalCase.jurisdiction}" must be IL, ICC or a country code (§4.1)`);
     }
@@ -363,9 +374,12 @@ export function validatePartyTrackRecord(
     if (isOpen && legalCase.endedOn !== undefined) {
       errors.push(`${label}: an open case cannot have an end date`);
     }
+    if (legalCase.endDateUnknown && (isOpen || legalCase.endedOn !== undefined)) {
+      errors.push(`${label}: endDateUnknown is only for a concluded case with no end date`);
+    }
     if (!isOpen) {
       if (legalCase.endedOn === undefined) {
-        errors.push(`${label}: a concluded case needs an end date`);
+        if (!legalCase.endDateUnknown) errors.push(`${label}: a concluded case needs an end date (or endDateUnknown)`);
       } else if (checkDate(`${label} end`, legalCase.endedOn, asOf, errors) && started && legalCase.endedOn < legalCase.since) {
         errors.push(`${label}: ends before it starts`);
       }

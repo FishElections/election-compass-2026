@@ -607,6 +607,7 @@
       "icc": "בית הדין הפלילי הבינלאומי",
       "statuses": {
         "under-investigation": "בחקירה",
+        "arrest-warrant-requested": "התבקש צו מעצר",
         "arrest-warrant-issued": "הוצא צו מעצר",
         "indictment-pending-hearing": "החלטה להגיש כתב אישום, בכפוף לשימוע",
         "on-trial": "הוגש כתב אישום / משפט מתנהל",
@@ -617,7 +618,8 @@
         "pardoned": "חנינה",
         "closed": "התיק נסגר",
         "ended-other": "הסתיים (כמתואר במקור)"
-      }
+      },
+      "periodEndUnknown": "{from} – מועד הסיום לא אומת"
     }
   }
 }
