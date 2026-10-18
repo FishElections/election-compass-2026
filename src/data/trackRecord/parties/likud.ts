@@ -7,6 +7,11 @@ import type { PartyRecordModule } from "./registry";
  * reports/track-record/verified/{agreements,reforms-legislation,legal}.md,
  * reports/track-record/veteran-status.md and reports/track-record/likud.md
  * (leader sources). Methodology v1.6: peace and normalization agreements only.
+ *
+ * Major laws (v1.6 §3.4 item 3): the reforms above passed the impact test, but
+ * no law did, so up to 3 laws the party led are shown too, from
+ * verified/major-legislation.md. All three are Basic-Law amendments, which
+ * count as Basic Laws, newest first.
  */
 const ACCESSED = "2026-10-18";
 const src = (publisher: SourcePublisherId, url: string): SourceRef => ({ publisher, url, accessed: ACCESSED });
@@ -27,6 +32,13 @@ const COURT_INDICTMENT =
   "https://supremedecisions.court.gov.il/Home/Download?path=HebrewVerdicts%2F20%2F560%2F030%2Fv45&fileName=20030560.V45&type=2";
 const COURT_BAR_ON =
   "https://supremedecisions.court.gov.il/Home/Download?path=HebrewVerdicts%5C97%5C340%5C025%5CD06&fileName=97025340_D06.txt&type=2";
+const odata = "https://knesset.gov.il/Odata/ParliamentInfo.svc";
+const billSources = (billId: number, personId: number): SourceRef[] => [
+  src("knesset", `${odata}/KNS_Bill(${billId})?$format=json`),
+  src("knesset", `${odata}/KNS_BillInitiator?$filter=BillID%20eq%20${billId}&$format=json`),
+  src("knesset", `${odata}/KNS_PlmSessionItem?$filter=ItemID%20eq%20${billId}&$format=json`),
+  src("knesset", `${odata}/KNS_PersonToPosition?$filter=PersonID%20eq%20${personId}&$format=json`),
+];
 const COURT_AMEDI =
   "https://supremedecisions.court.gov.il/Home/Download?path=HebrewVerdicts%5C01%5C590%5C077%5CF12&fileName=01077590_F12.txt&type=2";
 
@@ -222,6 +234,30 @@ export const record: PartyRecordModule = {
           ],
         },
       },
+      {
+        id: "basic-law-jerusalem-amendment-3",
+        type: "major-legislation",
+        role: "initiated",
+        basicLaw: true,
+        date: "2024-10-29",
+        sources: billSources(2201428, 30839),
+      },
+      {
+        id: "basic-law-government-amendment-12",
+        type: "major-legislation",
+        role: "initiated",
+        basicLaw: true,
+        date: "2023-03-22",
+        sources: billSources(2201424, 30701),
+      },
+      {
+        id: "basic-law-government-amendment-11",
+        type: "major-legislation",
+        role: "initiated",
+        basicLaw: true,
+        date: "2022-12-26",
+        sources: billSources(2198130, 30772),
+      },
     ],
     legalCases: [
       {
@@ -293,10 +329,10 @@ export const record: PartyRecordModule = {
         id: "legal-spain-mavi-marmara-2015",
         jurisdiction: "ES",
         status: "ended-other",
-        // Day of the judge's order not stated; first report (ToI) 2015-11-17.
-        since: "2015-11-17",
-        // Cancellation reported 2015-12-26/27 (ToI 2015-12-27).
-        endedOn: "2015-12-27",
+        since: "2015-11-01",
+        sincePrecision: "month",
+        endedOn: "2015-12-01",
+        endedPrecision: "month",
         statusConfirmed: false,
         lastConfirmedOn: "2015-12-27",
         sources: [
@@ -374,6 +410,18 @@ export const record: PartyRecordModule = {
           indicator: "מחיר השירות הסלולרי, מדד משוער (2010 = 100)",
           scaleUnit: "ש״ח הכנסות חברות הסלולר (2010)",
         },
+        "basic-law-jerusalem-amendment-3": {
+          title: "חוק-יסוד: ירושלים בירת ישראל (תיקון מס' 3)",
+          summary: "הצעת חוק פרטית פ/2437/25; בין יוזמיה ח״כ דן אילוז (הליכוד).",
+        },
+        "basic-law-government-amendment-12": {
+          title: "חוק־יסוד: הממשלה (תיקון מס' 12)",
+          summary: "הצעת חוק פרטית פ/2560/25; בין יוזמיה ח״כ אופיר כץ (הליכוד).",
+        },
+        "basic-law-government-amendment-11": {
+          title: "חוק-יסוד: הממשלה (תיקון מס' 11)",
+          summary: "הצעת חוק פרטית פ/81/25; בין יוזמיה ח״כ ניסים ואטורי (הליכוד).",
+        },
       },
       legalCases: {
         "legal-cases-1000-2000-4000": {
@@ -443,6 +491,18 @@ export const record: PartyRecordModule = {
           indicator: "Cellular service price, approx. index (2010 = 100)",
           scaleUnit: "NIS in cellular company revenues (2010)",
         },
+        "basic-law-jerusalem-amendment-3": {
+          title: "Basic Law: Jerusalem, Capital of Israel (Amendment 3)",
+          summary: "Private bill P/2437/25; initiators include Likud MK Dan Illouz.",
+        },
+        "basic-law-government-amendment-12": {
+          title: "Basic Law: The Government (Amendment No. 12)",
+          summary: "Private bill P/2560/25; initiators include Likud MK Ofir Katz.",
+        },
+        "basic-law-government-amendment-11": {
+          title: "Basic Law: The Government (Amendment No. 11)",
+          summary: "Private bill P/81/25; initiators include Likud MK Nissim Vaturi.",
+        },
       },
       legalCases: {
         "legal-cases-1000-2000-4000": {
@@ -511,6 +571,18 @@ export const record: PartyRecordModule = {
           summary: "فتحت وزارة الاتصالات برئاسة موشيه كحلون سوق الخلوي أمام مشغّلين جدد وسهّلت الانتقال بين المزوّدين.",
           indicator: "سعر الخدمة الخلوية، مؤشر تقريبي (2010 = 100)",
           scaleUnit: "شيكل من إيرادات شركات الخلوي (2010)",
+        },
+        "basic-law-jerusalem-amendment-3": {
+          title: "قانون أساس: القدس عاصمة إسرائيل (التعديل رقم 3)",
+          summary: "اقتراح قانون خاص (P/2437/25)؛ من مبادريه عضو الكنيست دان إيلوز (الليكود).",
+        },
+        "basic-law-government-amendment-12": {
+          title: "قانون أساس: الحكومة (التعديل رقم 12)",
+          summary: "اقتراح قانون خاص (P/2560/25)؛ من مبادريه عضو الكنيست أوفير كاتس (الليكود).",
+        },
+        "basic-law-government-amendment-11": {
+          title: "قانون أساس: الحكومة (التعديل رقم 11)",
+          summary: "اقتراح قانون خاص (P/81/25)؛ من مبادريه عضو الكنيست نيسيم فاتوري (الليكود).",
         },
       },
       legalCases: {

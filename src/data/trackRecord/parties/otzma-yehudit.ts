@@ -9,16 +9,15 @@ import type { PartyRecordModule } from "./registry";
  * researched anew.
  *
  * No reform or law passed the impact test, so up to 3 "major laws" are shown
- * (methodology v1.6 §3.4 item 3). Item 3 follows the v1.6 yearly-cost rule:
- * 2210669 (NIS 156 million for 2024) ranks above 2228138 (NIS 151 million a
- * year). major-legislation.md states that 2210669 "also has Otzma Yehudit
- * initiators" but does not name them; review-summary.md asks to confirm them.
+ * (methodology v1.6 §3.4 item 3), ranked by the v1.6 yearly-cost rule.
+ * 2210669 (hostages' families benefits) is not credited: no Otzma Yehudit
+ * initiator is named in the verified files. Item 3 is therefore 2228138,
+ * ranked on its stated NIS 151 million a year.
  *
- * Dates: where a verified row gives only a year or a month for "since", the
- * earliest exact date stated in that row within that period is used; if there
- * is none, the first day of the period. Where "since" is not stated, the
- * earliest dated step of the proceeding in the row is used. The aggregate
- * 1993–2007 row runs from the first day of 1993 to the last day of 2007.
+ * Dates: where a verified row gives only a year or a month, the date is
+ * written YYYY-01-01 / YYYY-MM-01 with its precision set, so no day is shown.
+ * Where "since" is not stated at all, the earliest dated step of the
+ * proceeding in the row is used.
  */
 
 const ACCESSED = "2026-10-18";
@@ -76,11 +75,11 @@ const legalCases: LegalCaseCore[] = [
     sources: [turkeyFlotilla, src("jpost", "https://www.jpost.com/middle-east/article-892649")],
   },
   {
-    // Opened in 2022 (N12: "שנפתח אשתקד"); no exact date stated.
     id: "threats-investigation-2021",
     jurisdiction: "IL",
     status: "closed",
     since: "2022-01-01",
+    sincePrecision: "year",
     endedOn: "2023-09-28",
     statusConfirmed: true,
     sources: [
@@ -90,11 +89,11 @@ const legalCases: LegalCaseCore[] = [
     ],
   },
   {
-    // Indicted in 1999 (file 3021/99) over leaflets dated 21.7.1999.
     id: "temple-mount-leaflets",
     jurisdiction: "IL",
     status: "convicted-final",
-    since: "1999-07-21",
+    since: "1999-01-01",
+    sincePrecision: "year",
     endedOn: "2006-11-06",
     statusConfirmed: true,
     sources: [
@@ -157,11 +156,11 @@ const legalCases: LegalCaseCore[] = [
     ],
   },
   {
-    // Indicted January 2006; no exact date stated.
     id: "agripas-apartment",
     jurisdiction: "IL",
     status: "on-trial",
     since: "2006-01-01",
+    sincePrecision: "month",
     statusConfirmed: false,
     lastConfirmedOn: "2008-03-16",
     sources: [
@@ -170,11 +169,11 @@ const legalCases: LegalCaseCore[] = [
     ],
   },
   {
-    // Case number from 1998; the indictment date is not stated.
     id: "magistrates-file-2589-98",
     jurisdiction: "IL",
     status: "on-trial",
     since: "1998-01-01",
+    sincePrecision: "year",
     statusConfirmed: false,
     lastConfirmedOn: "2000-07-04",
     sources: [
@@ -182,11 +181,11 @@ const legalCases: LegalCaseCore[] = [
     ],
   },
   {
-    // Case number from 1997; the indictment date is not stated.
     id: "magistrates-file-4346-97",
     jurisdiction: "IL",
     status: "on-trial",
     since: "1997-01-01",
+    sincePrecision: "year",
     statusConfirmed: false,
     lastConfirmedOn: "2002-10-23",
     sources: [
@@ -200,7 +199,9 @@ const legalCases: LegalCaseCore[] = [
     jurisdiction: "IL",
     status: "ended-other",
     since: "1993-01-01",
-    endedOn: "2007-12-31",
+    sincePrecision: "year",
+    endedOn: "2007-01-01",
+    endedPrecision: "year",
     statusConfirmed: true,
     sources: [hcj8910],
   },
@@ -241,15 +242,15 @@ export const record: PartyRecordModule = {
         },
       },
       {
-        id: "hostages-missing-families-benefits",
+        id: "illegal-stay-prohibition",
         type: "major-legislation",
         role: "initiated",
         basicLaw: false,
-        date: "2023-11-06",
-        sources: billSources(2210669, []),
+        date: "2025-07-09",
+        sources: billSources(2228138, [30849, 30859, 30867]),
         costEstimate: {
-          value: 156_000_000,
-          sources: [src("knesset", "https://fs.knesset.gov.il/25/law/25_ls1_3475630.pdf")],
+          value: 151_000_000,
+          sources: [src("knesset", "https://fs.knesset.gov.il/25/law/25_ls1_5759937.pdf")],
         },
       },
     ],
@@ -267,9 +268,9 @@ export const record: PartyRecordModule = {
           title: "חוק הטבות מס ליישוב אזור קו עימות מזרחי",
           summary: "הוראת שעה; בין יוזמיה שלושה ח״כים מעוצמה יהודית; עלות של כ-450 מיליון ש״ח בשנה לפי משרד האוצר.",
         },
-        "hostages-missing-families-benefits": {
-          title: "חוק תגמולים לבני משפחה של חטופים ונעדרים",
-          summary: "הצעת חוק פרטית פ/4030/25 של 83 יוזמים, ובהם ח״כים מעוצמה יהודית; 156 מיליון ש״ח ל-2024 לפי משרד האוצר.",
+        "illegal-stay-prohibition": {
+          title: "חוק איסור שהייה וישיבה בישראל שלא כדין",
+          summary: "בין יוזמיה שלושה ח״כים מעוצמה יהודית; 151 מיליון ש״ח בשנה ועוד כ-326 מיליון ש״ח חד-פעמית, לפי משרד האוצר.",
         },
       },
       legalCases: {
@@ -326,9 +327,9 @@ export const record: PartyRecordModule = {
           title: "Tax Benefits for Settling the Eastern Confrontation-Line Area",
           summary: "Temporary provision; initiators include three Otzma Yehudit MKs; Finance Ministry estimate about NIS 450 million a year.",
         },
-        "hostages-missing-families-benefits": {
-          title: "Benefits for Hostages' and Missing Persons' Families Law",
-          summary: "Private bill P/4030/25 with 83 initiators, including Otzma Yehudit MKs; Finance Ministry estimate NIS 156 million for 2024.",
+        "illegal-stay-prohibition": {
+          title: "Law Prohibiting Unlawful Stay and Residence in Israel",
+          summary: "Initiators include three Otzma Yehudit MKs; Finance Ministry: NIS 151 million yearly plus about NIS 326 million once.",
         },
       },
       legalCases: {
@@ -385,9 +386,9 @@ export const record: PartyRecordModule = {
           title: "قانون مزايا ضريبية لإسكان منطقة خط المواجهة الشرقي",
           summary: "حكم مؤقت؛ من مبادريه ثلاثة أعضاء كنيست من عوتسما يهوديت؛ نحو 450 مليون شيكل سنويًا وفق وزارة المالية.",
         },
-        "hostages-missing-families-benefits": {
-          title: "قانون مخصصات لعائلات المخطوفين والمفقودين",
-          summary: "اقتراح قانون خاص (P/4030/25) بمبادرة 83 عضوًا بينهم أعضاء من عوتسما يهوديت؛ 156 مليون شيكل لعام 2024.",
+        "illegal-stay-prohibition": {
+          title: "قانون حظر المكوث والإقامة غير القانونيين في إسرائيل",
+          summary: "من مبادريه ثلاثة نواب من عوتسما يهوديت؛ تقدير المالية: 151 مليون شيكل سنويًا ونحو 326 مليونًا لمرة واحدة.",
         },
       },
       legalCases: {

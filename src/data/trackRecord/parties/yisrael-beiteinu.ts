@@ -7,17 +7,17 @@ import type { PartyRecordModule } from "./registry";
  * (reforms-legislation.md, legal.md), veteran-status.md and the pass-1 report
  * reports/track-record/yisrael-beiteinu.md. Nothing here was researched anew.
  *
- * Dates: where a verified row gives only a year or a month for "since", the
- * earliest exact date stated in that row within that period is used; if there
- * is none, the first day of the period. The description keeps the stated
- * precision where it matters.
+ * Dates: where a verified row gives only a year or a month, the date is
+ * written YYYY-01-01 / YYYY-MM-01 with its precision set, so no day is shown.
  *
  * Sugar tax impact: the Bank of Israel reports only a relative change (-16%
  * per capita for high-sugar drinks, Nov 2021-Oct 2022 vs Nov 2020-Oct 2021).
  * It is stored as an index (100 -> 84), dated by the start of each period.
  *
- * Major legislation: not included, because the party has an item with proven
- * impact (as in reports/track-record/review-summary.md).
+ * Major laws (v1.6 §3.4 item 3): the sugar-tax reform passed the impact
+ * test, but no law did, so up to 3 laws the party led are shown too, from
+ * verified/major-legislation.md. All three are Basic Laws or Basic-Law
+ * amendments, newest first.
  */
 
 const ACCESSED = "2026-10-18";
@@ -27,6 +27,14 @@ const uniqueSources = (sources: SourceRef[]): SourceRef[] =>
   sources.filter((s, i) => sources.findIndex((o) => o.url === s.url) === i);
 
 const faction = (id: number) => src("knesset", `https://knesset.gov.il/Odata/ParliamentInfo.svc/KNS_Faction(${id})`);
+
+const odata = "https://knesset.gov.il/Odata/ParliamentInfo.svc";
+const billSources = (billId: number, personIds: number[]): SourceRef[] => [
+  src("knesset", `${odata}/KNS_Bill(${billId})?$format=json`),
+  src("knesset", `${odata}/KNS_BillInitiator?$filter=BillID%20eq%20${billId}&$format=json`),
+  src("knesset", `${odata}/KNS_PlmSessionItem?$filter=ItemID%20eq%20${billId}&$format=json`),
+  ...personIds.map((id) => src("knesset", `${odata}/KNS_PersonToPosition?$filter=PersonID%20eq%20${id}&$format=json`)),
+];
 
 const decision263 = src("gov-il", "https://www.gov.il/he/departments/policies/dec263_2021");
 const financeReview = src(
@@ -39,7 +47,8 @@ const legalCases: LegalCaseCore[] = [
     id: "gesher-haaliyah-1997-1999",
     jurisdiction: "IL",
     status: "closed",
-    since: "1997-08-06",
+    since: "1997-01-01",
+    sincePrecision: "year",
     endedOn: "1999-03-09",
     statusConfirmed: true,
     sources: [
@@ -53,7 +62,8 @@ const legalCases: LegalCaseCore[] = [
     id: "bar-on-1997",
     jurisdiction: "IL",
     status: "under-investigation",
-    since: "1997-04-20",
+    since: "1997-01-01",
+    sincePrecision: "year",
     statusConfirmed: false,
     lastConfirmedOn: "1997-04-20",
     sources: [
@@ -83,6 +93,7 @@ const legalCases: LegalCaseCore[] = [
     jurisdiction: "IL",
     status: "closed",
     since: "1998-01-01",
+    sincePrecision: "year",
     endedOn: "2008-08-11",
     statusConfirmed: true,
     sources: [
@@ -96,6 +107,7 @@ const legalCases: LegalCaseCore[] = [
     jurisdiction: "IL",
     status: "closed",
     since: "2006-04-01",
+    sincePrecision: "month",
     endedOn: "2012-12-13",
     statusConfirmed: true,
     sources: [
@@ -131,8 +143,10 @@ const legalCases: LegalCaseCore[] = [
     id: "spain-mavi-marmara-2015",
     jurisdiction: "ES",
     status: "ended-other",
-    since: "2015-11-16",
-    endedOn: "2015-12-26",
+    since: "2015-11-01",
+    sincePrecision: "month",
+    endedOn: "2015-12-01",
+    endedPrecision: "month",
     statusConfirmed: false,
     lastConfirmedOn: "2015-12-27",
     sources: [
@@ -187,6 +201,30 @@ export const record: PartyRecordModule = {
           sources: [src("gov-il", "https://www.gov.il/he/departments/policies/dec397-2023"), financeReview],
         },
       },
+      {
+        id: "basic-law-nation-state",
+        type: "major-legislation",
+        role: "initiated",
+        basicLaw: true,
+        date: "2018-07-17",
+        sources: billSources(565913, [4412]),
+      },
+      {
+        id: "basic-law-jerusalem-amendment-2",
+        type: "major-legislation",
+        role: "initiated",
+        basicLaw: true,
+        date: "2018-01-01",
+        sources: billSources(2018487, [4412]),
+      },
+      {
+        id: "basic-law-knesset-amendment-46",
+        type: "major-legislation",
+        role: "initiated",
+        basicLaw: true,
+        date: "2017-03-14",
+        sources: billSources(570495, [30121, 12952, 12938, 4412]),
+      },
     ],
     legalCases,
   },
@@ -199,6 +237,18 @@ export const record: PartyRecordModule = {
           summary: "בעקבות החלטת ממשלה 263 הטיל שר האוצר ליברמן בצו מס קנייה על משקאות ממותקים מינואר 2022.",
           indicator: "רכישות משקאות עתירי סוכר לנפש (מדד)",
           scaleUnit: "ש״ח הכנסות נוספות ממס ב-2022 (בקירוב)",
+        },
+        "basic-law-nation-state": {
+          title: "חוק-יסוד: ישראל – מדינת הלאום של העם היהודי",
+          summary: "הצעת חוק פרטית פ/1989/20 של 11 יוזמים; בין יוזמיה ח״כ רוברט אילטוב (ישראל ביתנו).",
+        },
+        "basic-law-jerusalem-amendment-2": {
+          title: "חוק-יסוד: ירושלים בירת ישראל (תיקון מס' 2)",
+          summary: "הצעת חוק פרטית פ/4346/20 של 22 יוזמים; בין יוזמיה ח״כ רוברט אילטוב (ישראל ביתנו).",
+        },
+        "basic-law-knesset-amendment-46": {
+          title: "חוק-יסוד: הכנסת (תיקון מס' 46)",
+          summary: "הצעת חוק פרטית פ/2266/20; כל ארבעת יוזמיה היו ח״כים מסיעת ישראל ביתנו.",
         },
       },
       legalCases: {
@@ -235,6 +285,18 @@ export const record: PartyRecordModule = {
           indicator: "High-sugar drink purchases per capita (index)",
           scaleUnit: "NIS in added tax revenue in 2022 (approx.)",
         },
+        "basic-law-nation-state": {
+          title: "Basic Law: Israel, Nation-State of the Jewish People",
+          summary: "Private bill P/1989/20 with 11 initiators, including Yisrael Beiteinu MK Robert Ilatov.",
+        },
+        "basic-law-jerusalem-amendment-2": {
+          title: "Basic Law: Jerusalem, Capital of Israel (Amendment 2)",
+          summary: "Private bill P/4346/20 with 22 initiators, including Yisrael Beiteinu MK Robert Ilatov.",
+        },
+        "basic-law-knesset-amendment-46": {
+          title: "Basic Law: The Knesset (Amendment No. 46)",
+          summary: "Private bill P/2266/20; all four initiators were Yisrael Beiteinu MKs.",
+        },
       },
       legalCases: {
         "gesher-haaliyah-1997-1999": {
@@ -269,6 +331,18 @@ export const record: PartyRecordModule = {
           summary: "بموجب قرار الحكومة 263، فرض وزير المالية ليبرمان بأمرٍ ضريبة شراء على المشروبات المحلّاة اعتبارًا من يناير 2022.",
           indicator: "مشتريات المشروبات عالية السكر للفرد (مؤشر)",
           scaleUnit: "شيكل إيرادات ضريبية إضافية في 2022 (تقريبًا)",
+        },
+        "basic-law-nation-state": {
+          title: "قانون أساس: إسرائيل – الدولة القومية للشعب اليهودي",
+          summary: "اقتراح قانون خاص (P/1989/20) بمبادرة 11 عضوًا؛ من مبادريه عضو الكنيست روبرت إيلاتوف (إسرائيل بيتنا).",
+        },
+        "basic-law-jerusalem-amendment-2": {
+          title: "قانون أساس: القدس عاصمة إسرائيل (التعديل رقم 2)",
+          summary: "اقتراح قانون خاص (P/4346/20) بمبادرة 22 عضوًا؛ من مبادريه عضو الكنيست روبرت إيلاتوف (إسرائيل بيتنا).",
+        },
+        "basic-law-knesset-amendment-46": {
+          title: "قانون أساس: الكنيست (التعديل رقم 46)",
+          summary: "اقتراح قانون خاص (P/2266/20)؛ مبادروه الأربعة جميعًا أعضاء كنيست من كتلة إسرائيل بيتنا.",
         },
       },
       legalCases: {

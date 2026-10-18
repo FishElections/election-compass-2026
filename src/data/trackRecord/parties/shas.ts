@@ -11,8 +11,8 @@ import type { PartyRecordModule } from "./registry";
  * (methodology v1.6 §3.4 item 3). All three are Basic-Law amendments, which
  * count as Basic Laws; laws presented by a deputy minister are not credited.
  *
- * Dates: where a verified row gives only a year or a month for "since", the
- * first day of that period is used (no exact date is stated within it).
+ * Dates: where a verified row gives only a year or a month, the date is
+ * written YYYY-01-01 / YYYY-MM-01 with its precision set, so no day is shown.
  */
 
 const ACCESSED = "2026-10-18";
@@ -42,11 +42,11 @@ const hcj232 = src(
 
 const legalCases: LegalCaseCore[] = [
   {
-    // Indictment in 1993 (case 305/93); no exact date stated.
     id: "personal-case-bribery",
     jurisdiction: "IL",
     status: "convicted-final",
     since: "1993-01-01",
+    sincePrecision: "year",
     endedOn: "2000-08-23",
     statusConfirmed: true,
     moralTurpitude: true,
@@ -60,11 +60,11 @@ const legalCases: LegalCaseCore[] = [
     ],
   },
   {
-    // Case number 1872/99; the indictment date is not stated.
     id: "public-case-breach-of-trust",
     jurisdiction: "IL",
     status: "convicted-final",
     since: "1999-01-01",
+    sincePrecision: "year",
     endedOn: "2003-11-20",
     statusConfirmed: true,
     sources: [hcj232, hcj8948],
@@ -74,6 +74,7 @@ const legalCases: LegalCaseCore[] = [
     jurisdiction: "IL",
     status: "closed",
     since: "1997-04-01",
+    sincePrecision: "month",
     endedOn: "2001-12-16",
     statusConfirmed: true,
     sources: [
@@ -86,6 +87,7 @@ const legalCases: LegalCaseCore[] = [
     jurisdiction: "IL",
     status: "closed",
     since: "2016-03-01",
+    sincePrecision: "month",
     endedOn: "2021-01-08",
     statusConfirmed: true,
     sources: [
