@@ -31,8 +31,8 @@ don't change the result.
 | kachol-lavan | 1,762 | Veteran |
 | otzma-yehudit | 1,568 | Veteran |
 | hadash-taal (Joint List) | 2,483 | Veteran, see note 1 |
-| hademocratim | 0 under its own name | **Open:** depends on predecessors, see note 2 |
-| beyachad | 0 under its own name | **Open:** depends on the joint-list question, see note 3 |
+| hademocratim | 2,021 via Labor | Veteran (resolved 2026-10-18: Labor continuity documented in reports/track-record/hademocratim.md) |
+| beyachad | 2,021 via Yesh Atid | Veteran (resolved 2026-10-18: joint-list rule, methodology v1.1; Yesh Atid membership sourced in reports/track-record/beyachad.md) |
 | yashar | 0 | Not veteran: no Knesset faction |
 | amcha-yisrael | 0 | Not veteran: no Knesset faction |
 | hamiluimnikim | 0 | Not veteran, see note 4 |
