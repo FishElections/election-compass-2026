@@ -158,7 +158,7 @@ Independent verification (§6 step 2) of `reports/track-record/pass2/reforms-leg
     - a temporary order cancelling the tax took effect on 30 March 2023, until the end of 2023;
     - a further temporary order extended the cancellation to the end of 2024;
     - "בתחילת ינואר 2025 נקבעה הוראה קבועה לביטול המס".
-  - **Knesset RIC confirmation:** RIC, 2024-02-11 ("תיאור וניתוח הכנסות המדינה בשנת 2023…") lists "מיסוי משקאות ממותקים (בוטל בסוף חודש מרץ 2023)" (knesset-ric | https://fs.knesset.gov.il/globaldocs/MMM/289281c6-bec4-ee11-815f-005056aa4246/2_289281c6-bec4-ee11-815f-005056aa4246_11_20502.pdf | 2026-10-18).
+  - ~~Knesset RIC confirmation (RIC, 2024-02-11)~~. **Removed after the sample eval (2026-10-19):** the link returns HTTP 404. The repeal rests on Government Decision 397 and the gov.il review above, so it is not used as a source.
   - **For the card:** "repealed from 30 March 2023 (Government Decision 397, 28 March 2023)".
 - **Wording corrections to pass 2:**
   - **Decision number:** 263 is confirmed. The Finance Ministry review's footnote says 236, which is a typo.
