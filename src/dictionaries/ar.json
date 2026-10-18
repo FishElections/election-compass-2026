@@ -573,7 +573,7 @@
       "peace": "اتفاقية سلام",
       "normalization": "اتفاقية تطبيع",
       "signedUnder": "وُقّعت في عهد رئيس الحكومة {pm} ({party})",
-      "continues": "{predecessor}، سلف {party}",
+      "continues": "{predecessor}، سلف حزب {party}",
       "neverInForce": "وُقّعت؛ لم تدخل حيز التنفيذ",
       "includes": "تشمل: {step} ({date})",
       "provenHeading": "إصلاحات وقوانين ذات أثر مُثبت",
