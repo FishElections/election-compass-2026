@@ -1,6 +1,6 @@
 # Track record: methodology
 
-**Version:** 1.4 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
+**Version:** 1.5 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
 **Applies to:** key achievements and the leader's legal record, for veteran parties.
 **Status:** once approved, this file is committed *before* any research starts. From that commit on, the rules are frozen.
 
@@ -110,6 +110,12 @@ publicly supporting something.
   relations counts even without a signed text, when an official government
   announcement or 2 independent sources confirm that ambassadors were
   returned. It is labelled "Restored by announcement; no signed agreement".
+- **Established without a confirmed signed text (v1.5):** the same applies to
+  establishing relations. It counts when an official source or 2 independent
+  sources confirm that relations were established, with the date.
+- **Completeness (v1.5):** the list of diplomatic relations is built from an
+  official Foreign Ministry list when one exists. Otherwise each period is
+  checked, and any period left unchecked is recorded in the research report.
 - **Upgrades (v1.3):** upgrading relations that already exist (e.g. a
   liaison office becoming an embassy) does not count.
 - **Display (v1.3):** peace and normalization agreements are listed in full.
@@ -336,6 +342,9 @@ The rules are frozen at the commit that adds this file. A change needs:
   Restorations confirmed by ambassadors' return count without a signed text
   (§3.1). Official market or population size counts as scale (§3.2). Applies
   to every party.
+- **v1.5 (2026-10-19):** decided by the contributor. Establishing relations
+  counts without a confirmed signed text (§3.1), and the completeness rule is
+  added. Applies to every party.
 
 ---
 
