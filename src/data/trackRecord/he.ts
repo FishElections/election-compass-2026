@@ -1,4 +1,5 @@
 import type { SourcePublisherId } from "./sources";
+import { partyRecords } from "./parties/registry";
 
 export interface AchievementText {
   /** The official name (e.g. the law's name). */
@@ -38,6 +39,13 @@ export interface TrackRecordLocaleText {
   parties: Record<string, PartyTrackRecordText>;
 }
 
+/** Each party file holds its own he/en/ar text (see ./parties/registry). */
+function textFor(locale: "he" | "en" | "ar"): Record<string, PartyTrackRecordText> {
+  return Object.fromEntries(
+    Object.entries(partyRecords).map(([id, record]) => [id, record.text[locale]])
+  );
+}
+
 export const trackRecordTextHe: TrackRecordLocaleText = {
   publishers: {
     knesset: "הכנסת",
@@ -68,5 +76,5 @@ export const trackRecordTextHe: TrackRecordLocaleText = {
     n12: "N12",
     "israel-hayom": "ישראל היום",
   },
-  parties: {},
+  parties: textFor("he"),
 };

@@ -5,6 +5,7 @@ import {
   trackRecordCore,
   type AchievementCore,
   type LegalCaseCore,
+  type PartyTrackRecordCore,
   type SourceRef,
 } from "./core";
 import type { SourcePublisherId } from "./sources";
@@ -12,6 +13,7 @@ import {
   trackRecordTextHe,
   type AchievementText,
   type LegalCaseText,
+  type PartyTrackRecordText,
   type TrackRecordLocaleText,
 } from "./he";
 import { trackRecordTextEn } from "./en";
@@ -56,7 +58,16 @@ export function getPartyTrackRecord(
 
   const text = textByLocale[locale].parties[partyId];
   if (!text) throw new Error(`Missing ${locale} track-record text for party "${partyId}"`);
+  return buildPartyTrackRecord(locale, partyId, core, text);
+}
 
+/** Merges one party's facts with its text; throws on any missing text. */
+export function buildPartyTrackRecord(
+  locale: Locale,
+  partyId: string,
+  core: PartyTrackRecordCore,
+  text: PartyTrackRecordText
+): PartyTrackRecord {
   const achievements = core.achievements.map((item) => {
     const itemText = text.achievements[item.id];
     if (!itemText) {

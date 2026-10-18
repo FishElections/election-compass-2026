@@ -1,4 +1,12 @@
-import type { TrackRecordLocaleText } from "./he";
+import type { PartyTrackRecordText, TrackRecordLocaleText } from "./he";
+import { partyRecords } from "./parties/registry";
+
+/** Each party file holds its own he/en/ar text (see ./parties/registry). */
+function textFor(locale: "he" | "en" | "ar"): Record<string, PartyTrackRecordText> {
+  return Object.fromEntries(
+    Object.entries(partyRecords).map(([id, record]) => [id, record.text[locale]])
+  );
+}
 
 export const trackRecordTextAr: TrackRecordLocaleText = {
   publishers: {
@@ -30,5 +38,5 @@ export const trackRecordTextAr: TrackRecordLocaleText = {
     n12: "N12",
     "israel-hayom": "يسرائيل هيوم",
   },
-  parties: {},
+  parties: textFor("ar"),
 };

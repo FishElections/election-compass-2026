@@ -1,4 +1,5 @@
 import type { SourcePublisherId } from "./sources";
+import { partyRecords } from "./parties/registry";
 
 /**
  * Locale-independent facts for the veteran-party track record: key
@@ -228,7 +229,9 @@ export const MAX_REFORMS_AND_LEGISLATION = 5;
 export const MAX_MAJOR_LEGISLATION = 3;
 
 /**
- * partyId → record. Empty until research is verified and reviewed (§6).
- * A party with no entry shows no track-record sections.
+ * partyId → record, built from the per-party files in ./parties (§6: only
+ * verified and reviewed facts). A party with no entry shows no sections.
  */
-export const trackRecordCore: Record<string, PartyTrackRecordCore> = {};
+export const trackRecordCore: Record<string, PartyTrackRecordCore> = Object.fromEntries(
+  Object.entries(partyRecords).map(([id, record]) => [id, record.core])
+);
