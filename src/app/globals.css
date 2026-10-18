@@ -129,6 +129,16 @@ body {
   border-radius: 999px;
 }
 
+/* Horizontal chip rows that scroll on mobile — the cut-off last chip already
+   signals that the row scrolls. Unlayered (like the rules above), so a
+   Tailwind utility couldn't override them; hence a class here. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Subtle atmospheric dot-grid, used behind hero / header sections */
 .bg-dot-grid {
   background-image: radial-gradient(

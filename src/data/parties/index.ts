@@ -11,6 +11,12 @@ const partiesTextByLocale: Record<Locale, typeof partiesTextHe> = {
   ar: partiesTextAr,
 };
 
+/** מפלגות שהמצע שלהן לא מוצג באתר (עמוד המצעים ועמוד הפרופיל), בהחלטת עורכי
+ *  האתר (אוקטובר 2026). לרע"ם לא נמצא מצע רשמי לבחירות 2026 (היא חסרה גם
+ *  ברשימת המצעים של המכון הישראלי לדמוקרטיה). היא עדיין חלק מהשאלון, מהתוצאות
+ *  ומעמוד המפלגה. */
+export const HIDDEN_FROM_PLATFORMS: ReadonlySet<string> = new Set(["raam"]);
+
 export function getParties(locale: Locale): Party[] {
   const text = partiesTextByLocale[locale];
   return partiesCore.map((p) => {

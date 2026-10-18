@@ -1,42 +1,132 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
-import { getParties } from "@/data/parties";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { ChevronRight, Search } from "lucide-react";
+import { getParties, HIDDEN_FROM_PLATFORMS } from "@/data/parties";
 import { getPlatformTopics } from "@/data/platformTopics";
 import { PlatformTopicKey } from "@/types";
-import { PartyLogo } from "@/components/PartyLogo";
 import { PartyLogoGrid } from "@/components/platforms/PartyLogoGrid";
-import { PartyDetailSheet } from "@/components/platforms/PartyDetailSheet";
-import { cn } from "@/lib/utils";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+  PartyDetailSheet,
+  type PartyNavigationSource,
+} from "@/components/platforms/PartyDetailSheet";
+import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
+import { Button } from "@/components/ui/button";
 import { useDictionary } from "@/i18n/DictionaryProvider";
 
 type CategoryFilter = "all" | PlatformTopicKey;
 
-/** מפלגות שלא מוצגות בעמוד המצעים, בהחלטת עורכי האתר (אוקטובר 2026). לרע"ם
- *  לא נמצא מצע רשמי לבחירות 2026 (היא חסרה גם ברשימת המצעים של המכון
- *  הישראלי לדמוקרטיה). היא עדיין חלק מהשאלון, מהתוצאות ומעמוד המפלגה. */
-const HIDDEN_FROM_PLATFORMS = new Set(["raam"]);
+/** מאיפה נפתחה מפלגה — לאירוע platform_open. ראו docs/analytics.md. */
+type OpenSource = "grid" | "search" | PartyNavigationSource;
+
+const PARTY_PARAM = "party";
+const TOPIC_PARAM = "topic";
+/** pushState/replaceState לא יורים popstate, ולכן writeUrl יורה אירוע משלו
+ *  כדי ש-useSyncExternalStore יקרא את ה-URL מחדש. */
+const URL_CHANGE_EVENT = "platforms:urlchange";
+
+/** המפלגה והנושא הפתוחים חיים ב-URL (?party=…&topic=…), כדי שאפשר יהיה לשתף
+ *  קישור ישיר למפלגה וכדי שכפתור "אחורה" יסגור את הפאנל. History API ולא
+ *  useSearchParams: כך העמוד נשאר מרונדר סטטית בלי גבול Suspense. */
+function subscribeToUrl(onChange: () => void) {
+  window.addEventListener("popstate", onChange);
+  window.addEventListener(URL_CHANGE_EVENT, onChange);
+  return () => {
+    window.removeEventListener("popstate", onChange);
+    window.removeEventListener(URL_CHANGE_EVENT, onChange);
+  };
+}
+const getUrlSnapshot = () => window.location.search;
+const getServerUrlSnapshot = () => "";
+
+function writeUrl(
+  partyId: string | null,
+  category: CategoryFilter,
+  mode: "push" | "replace"
+) {
+  const params = new URLSearchParams(window.location.search);
+  if (partyId) params.set(PARTY_PARAM, partyId);
+  else params.delete(PARTY_PARAM);
+  if (category !== "all") params.set(TOPIC_PARAM, category);
+  else params.delete(TOPIC_PARAM);
+  const query = params.toString();
+  const url = `${window.location.pathname}${query ? `?${query}` : ""}`;
+  if (mode === "push") window.history.pushState(null, "", url);
+  else window.history.replaceState(null, "", url);
+  window.dispatchEvent(new Event(URL_CHANGE_EVENT));
+}
 
 export function PlatformsClient() {
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<CategoryFilter>("all");
-  const [activePartyId, setActivePartyId] = useState<string | null>(null);
+  // האם הפאנל נפתח ב-pushState שלנו. אם כן, סגירה = history.back(), כך
+  // שכפתור "אחורה" וסגירה ידנית מתנהגים אותו דבר ולא נשארת רשומה מיותרת.
+  // אם נכנסו מקישור ישיר (?party=…), אין רשומה שלנו לחזור אליה.
+  const pushedRef = useRef(false);
   const { dict, locale } = useDictionary();
   const t = dict.platforms;
   const parties = useMemo(
     () => getParties(locale).filter((p) => !HIDDEN_FROM_PLATFORMS.has(p.id)),
     [locale]
   );
-  const platformTopics = getPlatformTopics(locale);
+  const platformTopics = useMemo(() => getPlatformTopics(locale), [locale]);
 
-  const activeParty = parties.find((p) => p.id === activePartyId) ?? null;
+  // ערכים לא מוכרים ב-URL (מפלגה מוסתרת, נושא שלא קיים) פשוט מתעלמים מהם.
+  const search = useSyncExternalStore(subscribeToUrl, getUrlSnapshot, getServerUrlSnapshot);
+  const params = new URLSearchParams(search);
+  const activeParty = parties.find((p) => p.id === params.get(PARTY_PARAM)) ?? null;
+  const activePartyId = activeParty?.id ?? null;
+  const category: CategoryFilter =
+    platformTopics.find((pt) => pt.key === params.get(TOPIC_PARAM))?.key ?? "all";
+
+  // כניסה מקישור ישיר (?party=…) נספרת כפתיחה. נקרא מה-URL ולא מ-activePartyId,
+  // כי בהידרציה הראשונה ה-snapshot עדיין ריק.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const partyId = params.get(PARTY_PARAM);
+    if (!partyId || !parties.some((p) => p.id === partyId)) return;
+    trackEvent("platform_open", {
+      party: partyId,
+      source: "deeplink",
+      topic: params.get(TOPIC_PARAM) ?? "all",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once per page load
+  }, []);
+
+  useEffect(() => {
+    const onPopState = () => {
+      pushedRef.current = new URLSearchParams(window.location.search).has(PARTY_PARAM);
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
+  const openParty = (partyId: string, source: OpenSource) => {
+    if (partyId === activePartyId) return;
+    trackEvent("platform_open", { party: partyId, source, topic: category });
+    if (activePartyId) {
+      writeUrl(partyId, category, "replace");
+    } else {
+      writeUrl(partyId, category, "push");
+      pushedRef.current = true;
+    }
+  };
+
+  const closeParty = () => {
+    if (pushedRef.current) {
+      pushedRef.current = false;
+      window.history.back();
+    } else {
+      writeUrl(null, category, "replace");
+    }
+  };
+
+  const selectCategory = (next: CategoryFilter) => {
+    if (next === category) return;
+    trackEvent("platform_topic_filter", { topic: next });
+    writeUrl(activePartyId, next, "replace");
+  };
 
   const filteredParties = useMemo(() => {
     const q = query.trim();
@@ -45,6 +135,22 @@ export function PlatformsClient() {
       (party) => party.name.includes(q) || party.leader.includes(q)
     );
   }, [query, parties]);
+
+  // מעבר בין מפלגות בפאנל, לפי הסדר שמוצג ברשת (כולל סינון החיפוש, אם
+  // המפלגה הפתוחה בתוכו), עם גלישה מהסוף להתחלה.
+  const navigateParty = (delta: 1 | -1, source: PartyNavigationSource) => {
+    const list = filteredParties.some((p) => p.id === activePartyId)
+      ? filteredParties
+      : parties;
+    const index = list.findIndex((p) => p.id === activePartyId);
+    if (index === -1) return;
+    openParty(list[(index + delta + list.length) % list.length].id, source);
+  };
+
+  const selectedTopicLabel =
+    category !== "all"
+      ? platformTopics.find((pt) => pt.key === category)?.label
+      : undefined;
 
   return (
     <main className="flex-1">
@@ -60,12 +166,10 @@ export function PlatformsClient() {
       </div>
 
       <div className="mx-auto max-w-5xl px-4 pb-16">
-        {/* חיפוש וסינון מוצגים רק מ-sm ומעלה: במסך טלפון שתי השורות האלה
-            תופסות גובה משמעותי לפני שרואים מפלגה אחת, והרשימה קצרה מספיק
-            כדי לגלול אותה. אותו breakpoint שבו רשת הלוגואים מתחלפת בכרטיסים,
-            כך שבנייד query נשאר "" ו-category נשאר "all". */}
-        <div className="hidden flex-col gap-4 sm:flex">
-          <div className="relative">
+        {/* החיפוש מוצג רק מ-sm ומעלה: בטלפון הוא תופס גובה משמעותי לפני שרואים
+            מפלגה אחת, ו-13 מפלגות לא צריכות חיפוש. בנייד query נשאר "". */}
+        <div className="flex flex-col gap-4">
+          <div className="relative hidden sm:block">
             <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-dark" />
             {/* text-base (16px), not text-sm — a sub-16px input triggers Safari's
                 auto-zoom on iOS; shrink to text-sm only from sm: up. */}
@@ -74,17 +178,30 @@ export function PlatformsClient() {
               enterKeyHint="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && filteredParties.length === 1) {
+                  openParty(filteredParties[0].id, "search");
+                }
+              }}
               placeholder={t.searchPlaceholder}
               className="w-full rounded-xl border-2 border-gray bg-white py-3 ps-11 pe-4 text-base text-foreground shadow-ambient placeholder:text-gray-dark focus:border-sapphire focus:outline-none sm:text-sm"
             />
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          {/* הצ'יפים לא מסננים מפלגות: הם קובעים איזה נושא ייפתח אוטומטית
+              בפאנל של כל מפלגה שנפתחת. בנייד — שורה אחת נגללת אופקית
+              (~40px) במקום כמה שורות עטופות. */}
+          <div
+            role="group"
+            aria-label={t.topicFilterLabel}
+            className="-mx-4 flex gap-2 overflow-x-auto px-4 no-scrollbar sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
+          >
             <button
               type="button"
-              onClick={() => setCategory("all")}
+              onClick={() => selectCategory("all")}
+              aria-pressed={category === "all"}
               className={cn(
-                "rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer active:scale-[0.97]",
+                "shrink-0 whitespace-nowrap rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer active:scale-[0.97]",
                 category === "all"
                   ? "border-sapphire bg-sapphire text-white"
                   : "border-gray bg-white text-navy hover:border-sapphire"
@@ -96,9 +213,10 @@ export function PlatformsClient() {
               <button
                 key={topic.key}
                 type="button"
-                onClick={() => setCategory(topic.key)}
+                onClick={() => selectCategory(topic.key)}
+                aria-pressed={category === topic.key}
                 className={cn(
-                  "rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer active:scale-[0.97]",
+                  "shrink-0 whitespace-nowrap rounded-full border-2 px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer active:scale-[0.97]",
                   category === topic.key
                     ? "border-sapphire bg-sapphire text-white"
                     : "border-gray bg-white text-navy hover:border-sapphire"
@@ -108,105 +226,63 @@ export function PlatformsClient() {
               </button>
             ))}
           </div>
+
+          {/* בנייד ההסבר הכללי מוסתר (חוסך גובה); ההסבר על נושא נבחר מוצג תמיד. */}
+          <p
+            className={cn(
+              "min-h-5 text-sm text-gray-dark",
+              !selectedTopicLabel && "hidden sm:block"
+            )}
+            aria-live="polite"
+          >
+            {selectedTopicLabel
+              ? t.topicHintTemplate.replace("{topic}", selectedTopicLabel)
+              : t.gridHint}
+          </p>
         </div>
 
-        {/* mt-4 ולא mt-10: המרווח הזה הפריד את הרשת משורת הפילטרים, ובלעדיה
-            הוא הותיר חלל ריק מתחת לכותרת. הבלוק ממילא sm:hidden, כך שזה
-            משפיע רק על הנייד. */}
         {filteredParties.length === 0 ? (
           <p className="mt-14 text-center text-gray-dark">
             {t.noResults}
           </p>
         ) : (
-          <div className="mt-4 sm:hidden">
+          <div className="mt-4 sm:mt-6">
             <PartyLogoGrid
               parties={filteredParties}
-              onSelect={(party) => setActivePartyId(party.id)}
+              activePartyId={activePartyId}
+              ariaLabel={t.gridLabel}
+              onSelect={(party) => openParty(party.id, "grid")}
             />
           </div>
         )}
 
-        {filteredParties.length > 0 && (
-          <div className="mt-10 hidden gap-6 sm:grid sm:grid-cols-2">
-            {filteredParties.map((party) => {
-              const topicsToShow =
-                category === "all"
-                  ? party.platform
-                  : party.platform.filter((t) => t.topicKey === category);
-
-              return (
-                <div
-                  key={party.id}
-                  className="overflow-hidden rounded-2xl border border-gray/80 bg-white shadow-ambient transition-all duration-200 hover:-translate-y-0.5 hover:shadow-ambient-lg"
-                >
-                  <div
-                    className="h-1.5 w-full"
-                    style={{ backgroundColor: party.color }}
-                  />
-                  <div className="p-6">
-                    <div className="flex items-center gap-3">
-                      <PartyLogo party={party} size="md" />
-                      <div className="min-w-0">
-                        <h2 className="truncate text-lg font-bold text-navy">
-                          {party.name}
-                        </h2>
-                        <p className="truncate text-sm text-gray-dark">
-                          {party.leader} · {party.spectrum}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-4 rounded-xl bg-gray-light px-4 py-3 text-sm leading-relaxed text-navy">
-                      {party.shortDescription}
-                    </div>
-
-                    <div className="mt-4">
-                      <Accordion
-                        type="single"
-                        collapsible
-                        defaultValue={
-                          category !== "all" ? topicsToShow[0]?.topicKey : undefined
-                        }
-                        key={category}
-                      >
-                        {topicsToShow.map((topic) => (
-                          <AccordionItem key={topic.topicKey} value={topic.topicKey}>
-                            <AccordionTrigger>
-                              {platformTopics.find((t) => t.key === topic.topicKey)?.icon}{" "}
-                              {topic.topicName}
-                            </AccordionTrigger>
-                            <AccordionContent>
-                              <p className="mb-3 text-sm leading-relaxed text-foreground">
-                                {topic.summary}
-                              </p>
-                              <ul className="flex flex-col gap-1.5">
-                                {topic.bulletPoints.map((point) => (
-                                  <li
-                                    key={point}
-                                    className="flex items-start gap-2 text-sm text-gray-dark"
-                                  >
-                                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sapphire" />
-                                    {point}
-                                  </li>
-                                ))}
-                              </ul>
-                            </AccordionContent>
-                          </AccordionItem>
-                        ))}
-                      </Accordion>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+        {/* לעמוד הזה מגיעים גם מי שעוד לא עשו את השאלון. אותו עיצוב כמו
+            ה-CTA שסוגר את המדריך "איך זה עובד". */}
+        <section className="notch-card bg-grain relative mx-auto mt-14 max-w-2xl overflow-hidden bg-gradient-to-br from-navy to-navy-light p-8 text-center text-white sm:p-10">
+          <h2 className="font-display relative z-10 text-2xl font-normal sm:text-3xl">
+            {t.quizCta.heading}
+          </h2>
+          <p className="relative z-10 mt-2 text-white/80">{t.quizCta.subtitle}</p>
+          <div className="relative z-10 mt-6">
+            <Link
+              href="/quiz?mode=short"
+              onClick={() => trackEvent("platform_cta_quiz", { location: "footer" })}
+            >
+              {/* accent ולא default: כפתור navy נבלע ברקע ה-navy של הכרטיס. */}
+              <Button size="lg" variant="accent">
+                {t.quizCta.cta}
+                <ChevronRight className="h-4 w-4 rtl:rotate-180" />
+              </Button>
+            </Link>
           </div>
-        )}
+        </section>
       </div>
 
       <PartyDetailSheet
         party={activeParty}
         defaultTopicKey={category !== "all" ? category : null}
-        onClose={() => setActivePartyId(null)}
+        onClose={closeParty}
+        onNavigate={navigateParty}
       />
     </main>
   );

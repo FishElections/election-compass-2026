@@ -347,17 +347,29 @@
     "searchPlaceholder": "ابحث باسم الحزب أو الزعيم",
     "allFilter": "الكل",
     "noResults": "لا توجد أحزاب تطابق بحثك.",
+    "gridLabel": "الأحزاب المتنافسة",
+    "gridHint": "اضغطوا على حزب لقراءة أبرز ما في برنامجه.",
+    "topicHintTemplate": "اخترتم «{topic}» — كل حزب تفتحونه سيُفتح على هذا الموضوع.",
+    "topicFilterLabel": "اختيار موضوع للفتح أولاً",
+    "quizCta": {
+      "heading": "لم تحسم بعد لمن تصوّت؟",
+      "subtitle": "20 سؤالاً، نحو 3 دقائق — واكتشف أي الأحزاب أقرب إلى مواقفك.",
+      "cta": "ابدأ الاستبيان"
+    },
     "partyDetailSheet": {
       "close": "إغلاق",
-      "fullProfileCta": "عرض الملف الكامل"
+      "fullProfileCta": "عرض الملف الكامل",
+      "previousParty": "الحزب السابق",
+      "nextParty": "الحزب التالي",
+      "quizCta": "ما مدى توافقك؟ إلى الاستبيان السريع"
     }
   },
   "partyProfile": {
-    "backToHome": "العودة إلى الصفحة الرئيسية",
+    "backToPlatforms": "العودة إلى برامج الأحزاب",
     "titleTemplate": "{party} - المواقف والبرنامج لانتخابات 2026",
     "descriptionTemplate": "{description} اطّلع على مدى تطابقك مع {party} على بوصلة الانتخابات.",
-    "categoryPositionHeading": "الموقف العام حسب الفئة",
-    "comingSoon": "قريباً: البرنامج الكامل، وقائمة أعضاء الكنيست، وتاريخ الحزب."
+    "platformHeading": "أبرز نقاط البرنامج حسب الموضوع",
+    "noPlatformNote": "لم نعثر على برنامج رسمي لهذا الحزب لانتخابات 2026، لذلك لا يُعرض هنا ملخص لبرنامجه."
   },
   "hotTopics": {
     "pageTitle": "قضايا ساخنة في انتخابات 2026",
