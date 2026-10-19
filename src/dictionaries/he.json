@@ -347,17 +347,29 @@
     "searchPlaceholder": "חפש לפי שם מפלגה או מנהיג",
     "allFilter": "הכל",
     "noResults": "לא נמצאו מפלגות התואמות את החיפוש.",
+    "gridLabel": "המפלגות המתמודדות",
+    "gridHint": "לחצו על מפלגה כדי לקרוא את עיקרי המצע שלה.",
+    "topicHintTemplate": "בחרתם ״{topic}״ — כל מפלגה שתפתחו תיפתח בנושא הזה.",
+    "topicFilterLabel": "בחירת נושא לפתיחה",
+    "quizCta": {
+      "heading": "עדיין לא בטוחים למי להצביע?",
+      "subtitle": "20 שאלות, כ־3 דקות — ותראו אילו מפלגות הכי קרובות לעמדות שלכם.",
+      "cta": "להתחלת השאלון"
+    },
     "partyDetailSheet": {
       "close": "סגור",
-      "fullProfileCta": "לצפייה בפרופיל המלא"
+      "fullProfileCta": "לצפייה בפרופיל המלא",
+      "previousParty": "המפלגה הקודמת",
+      "nextParty": "המפלגה הבאה",
+      "quizCta": "כמה אתם מתאימים? לשאלון המהיר"
     }
   },
   "partyProfile": {
-    "backToHome": "חזרה לדף הבית",
+    "backToPlatforms": "חזרה למצעי המפלגות",
     "titleTemplate": "{party} - עמדות ומצע לבחירות 2026",
     "descriptionTemplate": "{description} בדקו כמה אתם מתאימים ל{party} במצפן הבחירות.",
-    "categoryPositionHeading": "מיקום כללי לפי קטגוריה",
-    "comingSoon": "בקרוב: מצע מלא, רשימת חברי כנסת והיסטוריית המפלגה."
+    "platformHeading": "עיקרי המצע לפי נושא",
+    "noPlatformNote": "לא נמצא מצע רשמי של המפלגה לבחירות 2026, ולכן לא מוצג כאן סיכום מצע."
   },
   "hotTopics": {
     "pageTitle": "הנושאים החמים בבחירות 2026",

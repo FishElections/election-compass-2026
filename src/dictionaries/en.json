@@ -347,17 +347,29 @@
     "searchPlaceholder": "Search by party name or leader",
     "allFilter": "All",
     "noResults": "No parties match your search.",
+    "gridLabel": "Competing parties",
+    "gridHint": "Select a party to read the main points of its platform.",
+    "topicHintTemplate": "You picked “{topic}” — every party you open will start on this topic.",
+    "topicFilterLabel": "Choose a topic to open first",
+    "quizCta": {
+      "heading": "Still not sure who to vote for?",
+      "subtitle": "20 questions, about 3 minutes — and see which parties are closest to your own positions.",
+      "cta": "Start the quiz"
+    },
     "partyDetailSheet": {
       "close": "Close",
-      "fullProfileCta": "View full profile"
+      "fullProfileCta": "View full profile",
+      "previousParty": "Previous party",
+      "nextParty": "Next party",
+      "quizCta": "How well do you match? Take the quick quiz"
     }
   },
   "partyProfile": {
-    "backToHome": "Back to homepage",
+    "backToPlatforms": "Back to party platforms",
     "titleTemplate": "{party} - Positions and Platform for the 2026 Elections",
     "descriptionTemplate": "{description} See how well you match {party} on the Election Compass.",
-    "categoryPositionHeading": "General position by category",
-    "comingSoon": "Coming soon: full platform, list of Knesset members, and party history."
+    "platformHeading": "Main platform points by topic",
+    "noPlatformNote": "We couldn't find an official platform from this party for the 2026 elections, so no platform summary is shown here."
   },
   "hotTopics": {
     "pageTitle": "Hot Topics in the 2026 Elections",

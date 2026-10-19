@@ -2,12 +2,11 @@ import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ChevronLeft } from "lucide-react";
-import { getParties } from "@/data/parties";
+import { getParties, HIDDEN_FROM_PLATFORMS } from "@/data/parties";
 import { getPartyTrackRecord } from "@/data/trackRecord";
 import { TrackRecordSections } from "@/components/trackRecord/TrackRecordSections";
 import { partiesCore } from "@/data/parties/core";
-import { getCategories } from "@/data/questions";
-import { getPartyCategoryAverages } from "@/utils/calculator";
+import { getPlatformTopics } from "@/data/platformTopics";
 import { PartyLogo } from "@/components/PartyLogo";
 import { BallotLetterBadge } from "@/components/BallotLetterBadge";
 import { JsonLd } from "@/components/JsonLd";
@@ -15,14 +14,12 @@ import { getSiteUrl } from "@/utils/site";
 import type { Party } from "@/types";
 import {
   isLocale,
-  dirFor,
   ogLocaleFor,
   localizedPath,
   type Locale,
 } from "@/i18n/config";
 import { getDictionary, type Dictionary } from "@/i18n/dictionaries";
 import { alternatesFor } from "@/i18n/metadata";
-import { cn } from "@/lib/utils";
 
 // ProfilePage wrapping a PoliticalParty, not a bare PoliticalParty: this is our
 // profile *about* the party, not the party's own site. Claiming otherwise is
@@ -124,22 +121,20 @@ export default async function PartyProfilePage({
   if (!party) notFound();
   const dict = await getDictionary(lang);
   const t = dict.partyProfile;
-  const categories = getCategories(lang);
-  const dir = dirFor(lang);
-
-  const averages = getPartyCategoryAverages(party.id);
+  const platformTopics = getPlatformTopics(lang);
+  const showPlatform = !HIDDEN_FROM_PLATFORMS.has(party.id);
 
   return (
     <main className="flex-1">
       <JsonLd data={partyJsonLd(party, lang, dict)} />
       <div className="bg-dot-grid">
-        <div className="mx-auto max-w-3xl px-4 pb-8 pt-8 lg:pt-20">
+        <div className="mx-auto max-w-5xl px-4 pb-8 pt-8 lg:pt-20">
           <Link
-            href="/"
+            href="/platforms"
             className="mb-6 inline-flex items-center gap-1 text-sm font-medium text-navy hover:underline"
           >
             <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
-            {t.backToHome}
+            {t.backToPlatforms}
           </Link>
 
           <div className="relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-navy to-navy-light p-8 text-center text-white shadow-ambient-lg sm:flex-row sm:text-start">
@@ -160,51 +155,59 @@ export default async function PartyProfilePage({
         </div>
       </div>
 
-      <div className="mx-auto max-w-3xl px-4 pb-16">
-        <p className="leading-relaxed text-foreground">
+      <div className="mx-auto max-w-5xl px-4 pb-16">
+        <p className="max-w-3xl leading-relaxed text-foreground">
           {party.shortDescription}
         </p>
 
-        <h2 className="font-display mt-10 mb-4 text-xl font-normal text-navy">
-          {t.categoryPositionHeading}
-        </h2>
-        <div className="flex flex-col gap-5 rounded-2xl border border-gray/80 bg-white p-6 shadow-ambient">
-          {categories.map((category) => {
-            const value = averages[category.id];
-            const percent = ((value + 2) / 4) * 100;
-            return (
-              <div key={category.id}>
-                <div className="mb-1.5 flex items-center justify-between text-sm font-medium text-gray-dark">
-                  <span>
-                    {category.icon} {category.label}
-                  </span>
-                  <span className="font-semibold text-navy">
-                    {value.toFixed(1)}
-                  </span>
-                </div>
-                <div className="h-2.5 w-full rounded-full bg-gray">
-                  <div
-                    className={cn(
-                      "h-2.5 rounded-full from-sapphire to-success transition-all duration-500",
-                      dir === "rtl" ? "bg-gradient-to-l" : "bg-gradient-to-r"
-                    )}
-                    style={{ width: `${percent}%` }}
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* The track record takes the "coming soon" box's place once a party
-            has researched data; parties without it keep the box. */}
-        {getPartyTrackRecord(lang, party.id) ? (
-          <div className="mt-8">
-            <TrackRecordSections party={party} expanded />
-          </div>
+        {/* כל הנושאים פתוחים זה לצד זה — אותו תוכן שבפאנל של עמוד המצעים, בלי
+            אקורדיון. מספר אי-זוגי של נושאים: האחרון מתפרס על שתי העמודות. */}
+        {showPlatform ? (
+          <>
+            <h2 className="font-display mt-10 mb-4 text-xl font-normal text-navy">
+              {t.platformHeading}
+            </h2>
+            <div className="grid gap-5 md:grid-cols-2">
+              {party.platform.map((topic) => (
+                <section
+                  key={topic.topicKey}
+                  className="rounded-2xl border border-gray/80 bg-white p-6 shadow-ambient md:last:odd:col-span-2"
+                >
+                  <h3 className="flex items-center gap-2 text-lg font-bold text-navy">
+                    <span aria-hidden>
+                      {platformTopics.find((pt) => pt.key === topic.topicKey)?.icon}
+                    </span>
+                    {topic.topicName}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-foreground">
+                    {topic.summary}
+                  </p>
+                  <ul className="mt-3 flex flex-col gap-1.5">
+                    {topic.bulletPoints.map((point) => (
+                      <li
+                        key={point}
+                        className="flex items-start gap-2 text-sm text-gray-dark"
+                      >
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sapphire" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+            </div>
+          </>
         ) : (
           <div className="mt-8 rounded-xl border border-sapphire/20 bg-sapphire/5 p-5 text-sm text-navy">
-            {t.comingSoon}
+            {t.noPlatformNote}
+          </div>
+        )}
+
+        {/* Veteran-party track record and leader's legal record
+            (docs/track-record-methodology.md). */}
+        {getPartyTrackRecord(lang, party.id) && (
+          <div className="mt-10">
+            <TrackRecordSections party={party} expanded />
           </div>
         )}
       </div>
