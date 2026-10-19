@@ -23,7 +23,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useDictionary } from "@/i18n/DictionaryProvider";
-import { TrackRecordSections } from "@/components/trackRecord/TrackRecordSections";
+import { TrackRecordItems } from "@/components/trackRecord/TrackRecordSections";
 import { trackEvent } from "@/lib/analytics";
 
 /** מרחק (px) או מהירות (px/s) של גרירה כלפי מטה שסוגרים את הגיליון בנייד. */
@@ -241,8 +241,9 @@ export function PartyDetailSheet({
                               </AccordionContent>
                             </AccordionItem>
                           ))}
+                          {/* Same accordion as the topics: one section open at a time. */}
+                          <TrackRecordItems party={renderedParty} />
                         </Accordion>
-                        <TrackRecordSections party={renderedParty} />
                       </div>
                     </motion.div>
                   </motion.div>

@@ -207,7 +207,7 @@ export default async function PartyProfilePage({
             (docs/track-record-methodology.md). */}
         {getPartyTrackRecord(lang, party.id) && (
           <div className="mt-10">
-            <TrackRecordSections party={party} expanded />
+            <TrackRecordSections party={party} />
           </div>
         )}
       </div>

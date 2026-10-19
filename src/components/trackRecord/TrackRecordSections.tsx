@@ -323,7 +323,12 @@ function LegalBody({ record, t }: { record: PartyTrackRecord; t: Labels }) {
   );
 }
 
-export function TrackRecordSections({ party, expanded = false }: { party: Party; expanded?: boolean }) {
+/**
+ * The two track-record sections as accordion items, to be placed inside an
+ * existing <Accordion>. In the party panel they join the platform topics, so
+ * opening one section closes any other (the panel's single-open behavior).
+ */
+export function TrackRecordItems({ party }: { party: Party }) {
   const { dict, locale } = useDictionary();
   const f = useFormatters();
   const t = dict.trackRecord;
@@ -337,46 +342,55 @@ export function TrackRecordSections({ party, expanded = false }: { party: Party;
   const achievementCount = record.achievements.length;
 
   return (
-    <div className="mt-2">
-      <Accordion type="multiple" defaultValue={expanded ? ["achievements", "legal"] : []}>
-        <AccordionItem value="achievements">
-          <AccordionTrigger>
-            <span className="inline-flex items-center gap-2">
-              {t.achievements.heading}
-              {achievementCount > 0 && <Chip>{f.number(achievementCount)}</Chip>}
-            </span>
-          </AccordionTrigger>
-          <AccordionContent>
-            {record.isVeteran ? (
-              <AchievementsBody party={party} record={record} t={t} />
-            ) : (
-              <p className="text-sm text-gray-dark">{t.notApplicable}</p>
+    <>
+      <AccordionItem value="track-record-achievements">
+        <AccordionTrigger>
+          <span className="inline-flex items-center gap-2">
+            {t.achievements.heading}
+            {achievementCount > 0 && <Chip>{f.number(achievementCount)}</Chip>}
+          </span>
+        </AccordionTrigger>
+        <AccordionContent>
+          {record.isVeteran ? (
+            <AchievementsBody party={party} record={record} t={t} />
+          ) : (
+            <p className="text-sm text-gray-dark">{t.notApplicable}</p>
+          )}
+          {asOf}
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="track-record-legal">
+        <AccordionTrigger>
+          <span className="inline-flex flex-wrap items-center gap-2">
+            {t.legal.heading}
+            {record.legalCases.length > 0 && (
+              <Chip>
+                {[
+                  openCount > 0 ? fill(t.legal.countOpen, { n: f.number(openCount) }) : null,
+                  concludedCount > 0 ? fill(t.legal.countConcluded, { n: f.number(concludedCount) }) : null,
+                ]
+                  .filter(Boolean)
+                  .join(" · ")}
+              </Chip>
             )}
-            {asOf}
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="legal">
-          <AccordionTrigger>
-            <span className="inline-flex flex-wrap items-center gap-2">
-              {t.legal.heading}
-              {record.legalCases.length > 0 && (
-                <Chip>
-                  {[
-                    openCount > 0 ? fill(t.legal.countOpen, { n: f.number(openCount) }) : null,
-                    concludedCount > 0 ? fill(t.legal.countConcluded, { n: f.number(concludedCount) }) : null,
-                  ]
-                    .filter(Boolean)
-                    .join(" · ")}
-                </Chip>
-              )}
-            </span>
-          </AccordionTrigger>
-          <AccordionContent>
-            <LegalBody record={record} t={t} />
-            {asOf}
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
+          </span>
+        </AccordionTrigger>
+        <AccordionContent>
+          <LegalBody record={record} t={t} />
+          {asOf}
+        </AccordionContent>
+      </AccordionItem>
+    </>
+  );
+}
+
+/** Standalone version for the party profile page, with both sections open. */
+export function TrackRecordSections({ party }: { party: Party }) {
+  const { locale } = useDictionary();
+  if (!getPartyTrackRecord(locale, party.id)) return null;
+  return (
+    <Accordion type="multiple" defaultValue={["track-record-achievements", "track-record-legal"]}>
+      <TrackRecordItems party={party} />
+    </Accordion>
   );
 }

@@ -108,7 +108,12 @@ export const record: PartyRecordModule = {
         basicLaw: true,
         date: "2014-05-19",
         creditedTo: "labor",
-        sources: [...bill(540974), person(23570)],
+        sources: [
+          // Published law text (Reshumot), read 2026-10-19.
+          src("knesset", "https://fs.knesset.gov.il//19/law/19_lsr_303800.PDF"),
+          ...bill(540974),
+          person(23570),
+        ],
       },
     ],
     legalCases: [
@@ -142,7 +147,7 @@ export const record: PartyRecordModule = {
         },
         "basic-law-knesset-amendment-41-2014": {
           title: "חוק-יסוד: הכנסת (תיקון מס' 41)",
-          summary: "תיקון לחוק-יסוד: הכנסת.",
+          summary: "קובע שמועד חוקתי שמסתיים ביום מנוחה נדחה ליום שאחריו שאינו יום מנוחה.",
           ledBy: "ח״כ מיכל בירן (העבודה) ואחרים",
         },
       },
@@ -164,7 +169,7 @@ export const record: PartyRecordModule = {
         },
         "basic-law-knesset-amendment-41-2014": {
           title: "Basic Law: The Knesset (Amendment 41)",
-          summary: "Amends Basic Law: The Knesset.",
+          summary: "Moves constitutional deadlines that end on a day of rest to the next working day.",
           ledBy: "MK Michal Biran (Labor) and others",
         },
       },
@@ -186,7 +191,7 @@ export const record: PartyRecordModule = {
         },
         "basic-law-knesset-amendment-41-2014": {
           title: "قانون أساس: الكنيست (التعديل رقم 41)",
-          summary: "تعديل لقانون أساس: الكنيست.",
+          summary: "ينصّ على أن المهلة الدستورية التي تنتهي في يوم عطلة تُمدَّد إلى يوم العمل التالي.",
           ledBy: "عضو الكنيست ميخال بيران (العمل) وآخرون",
         },
       },
