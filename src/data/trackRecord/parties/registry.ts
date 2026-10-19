@@ -6,7 +6,6 @@ import { record as shas } from "./shas";
 import { record as yahadutHatorah } from "./yahadut-hatorah";
 import { record as raam } from "./raam";
 import { record as religiousZionism } from "./religious-zionism";
-import { record as kacholLavan } from "./kachol-lavan";
 import { record as otzmaYehudit } from "./otzma-yehudit";
 import { record as hadashTaal } from "./hadash-taal";
 import { record as hademocratim } from "./hademocratim";
@@ -34,7 +33,6 @@ export const partyRecords: Record<string, PartyRecordModule> = {
   "yahadut-hatorah": yahadutHatorah,
   raam,
   "religious-zionism": religiousZionism,
-  "kachol-lavan": kacholLavan,
   "otzma-yehudit": otzmaYehudit,
   "hadash-taal": hadashTaal,
   hademocratim,

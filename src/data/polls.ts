@@ -56,9 +56,7 @@ export const MARGIN_OF_ERROR_PERCENT = 4.2;
  * הוא נשמר כאן במפורש, מצוטט מאותו פרסום. מפלגות שעברו את החסימה לא
  * מופיעות כאן: השיעור שלהן נגזר מהמנדטים (ראו voteShareFor).
  */
-const belowThresholdPercent: Record<string, number> = {
-  "kachol-lavan": 0.9,
-};
+const belowThresholdPercent: Record<string, number> = {};
 
 /** מעל הגיל הזה הנתונים לא משמשים לסינון. */
 export const STALE_AFTER_DAYS = 30;
@@ -91,8 +89,6 @@ export const currentPoll: PollSnapshot = {
     "religious-zionism": 5,
     "amcha-yisrael": 4,
     hamiluimnikim: 4,
-    // מתחת לאחוז החסימה בסקר הזה: כחול לבן 0.9%.
-    "kachol-lavan": 0,
   },
 };
 

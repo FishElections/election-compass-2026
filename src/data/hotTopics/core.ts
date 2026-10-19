@@ -17,8 +17,7 @@ export const topicsCore: TopicCore[] = [
         "beyachad",
         "hademocratim",
         "raam",
-        "hadash-taal",
-        "kachol-lavan"
+        "hadash-taal"
       ],
       "oppose": [
         "likud",
@@ -41,8 +40,7 @@ export const topicsCore: TopicCore[] = [
       "support": [
         "yashar",
         "beyachad",
-        "hademocratim",
-        "kachol-lavan"
+        "hademocratim"
       ],
       "oppose": [
         "otzma-yehudit",
@@ -70,7 +68,6 @@ export const topicsCore: TopicCore[] = [
         "beyachad",
         "yisrael-beiteinu",
         "hademocratim",
-        "kachol-lavan",
         "amcha-yisrael",
         "hamiluimnikim"
       ],
@@ -97,7 +94,6 @@ export const topicsCore: TopicCore[] = [
         "yisrael-beiteinu",
         "hademocratim",
         "hadash-taal",
-        "kachol-lavan",
         "hamiluimnikim",
         "beyachad"
       ],
@@ -143,7 +139,6 @@ export const topicsCore: TopicCore[] = [
         "yisrael-beiteinu",
         "hademocratim",
         "hadash-taal",
-        "kachol-lavan",
         "hamiluimnikim"
       ],
       "splitOrNeutral": [
@@ -167,7 +162,6 @@ export const topicsCore: TopicCore[] = [
         "yisrael-beiteinu",
         "hademocratim",
         "hadash-taal",
-        "kachol-lavan",
         "amcha-yisrael",
         "hamiluimnikim"
       ],
@@ -194,7 +188,6 @@ export const topicsCore: TopicCore[] = [
         "yahadut-hatorah",
         "raam",
         "hadash-taal",
-        "kachol-lavan",
         "hamiluimnikim",
         "beyachad"
       ],
@@ -232,7 +225,6 @@ export const topicsCore: TopicCore[] = [
       ],
       "splitOrNeutral": [
         "otzma-yehudit",
-        "kachol-lavan",
         "hamiluimnikim"
       ]
     },
@@ -253,7 +245,6 @@ export const topicsCore: TopicCore[] = [
         "yahadut-hatorah",
         "raam",
         "religious-zionism",
-        "kachol-lavan",
         "amcha-yisrael",
         "hamiluimnikim"
       ],
@@ -279,7 +270,6 @@ export const topicsCore: TopicCore[] = [
         "yahadut-hatorah",
         "hadash-taal",
         "religious-zionism",
-        "kachol-lavan",
         "amcha-yisrael",
         "hamiluimnikim"
       ],
