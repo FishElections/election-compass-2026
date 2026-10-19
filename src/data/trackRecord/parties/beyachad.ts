@@ -75,7 +75,14 @@ export const record: PartyRecordModule = {
         basicLaw: true,
         date: "2014-03-10",
         creditedTo: "yesh-atid",
-        sources: [billRecord(479913), billInitiators(479913), billSession(479913), person(23640)],
+        sources: [
+          // Published law text (Reshumot), read 2026-10-19.
+          src("knesset", "https://fs.knesset.gov.il//19/law/19_lsr_301536.pdf"),
+          billRecord(479913),
+          billInitiators(479913),
+          billSession(479913),
+          person(23640),
+        ],
       },
       {
         id: "dov-hoz-airport-law-2017",
@@ -102,7 +109,7 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-government-amendment-2014": {
           title: "חוק-יסוד: הממשלה (תיקון)",
-          summary: "תיקון לחוק-יסוד: הממשלה.",
+          summary: "מגביל את הממשלה ל-19 חברים ואת סגני השרים ל-4, וקובע שהבעת אי-אמון מחייבת אמון בממשלה חלופית.",
           ledBy: "ח״כ רונן הופמן (יש עתיד) ואחרים",
         },
         "dov-hoz-airport-law-2017": {
@@ -119,7 +126,7 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-government-amendment-2014": {
           title: "Basic Law: The Government (Amendment)",
-          summary: "Amends Basic Law: The Government.",
+          summary: "Caps the government at 19 members and deputy ministers at 4; no-confidence requires backing an alternative government.",
           ledBy: "MK Ronen Hoffman (Yesh Atid) and others",
         },
         "dov-hoz-airport-law-2017": {
@@ -136,7 +143,7 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-government-amendment-2014": {
           title: "قانون أساس: الحكومة (تعديل)",
-          summary: "تعديل لقانون أساس: الحكومة.",
+          summary: "يحدّ الحكومة بـ19 عضوًا ونواب الوزراء بـ4، ويشترط لحجب الثقة منحها لحكومة بديلة.",
           ledBy: "عضو الكنيست رونين هوفمان (يش عتيد) وآخرون",
         },
         "dov-hoz-airport-law-2017": {

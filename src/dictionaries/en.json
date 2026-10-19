@@ -585,8 +585,8 @@
       "initiated": "Initiated by the party",
       "sponsored": "Sponsored by the party's minister",
       "ledBy": "Led by: {name}",
-      "whyBasicLaw": "Why it's here: a Basic Law (constitutional-level). Impact not measured.",
-      "whyCost": "Why it's here: one of the party's largest official cost estimates ({value}). Impact not measured."
+      "whyBasicLaw": "Why it's here: a Basic Law (constitutional-level).",
+      "whyCost": "Why it's here: one of the party's largest official cost estimates ({value})."
     },
     "legal": {
       "heading": "Party leader's legal record",

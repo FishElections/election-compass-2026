@@ -240,7 +240,11 @@ export const record: PartyRecordModule = {
         role: "initiated",
         basicLaw: true,
         date: "2024-10-29",
-        sources: billSources(2201428, 30839),
+        sources: [
+          // Published law text (Reshumot), read 2026-10-19.
+          src("knesset", "https://fs.knesset.gov.il/25/law/25_lsr_5106966.pdf"),
+          ...billSources(2201428, 30839),
+        ],
       },
       {
         id: "basic-law-government-amendment-12",
@@ -412,7 +416,7 @@ export const record: PartyRecordModule = {
         },
         "basic-law-jerusalem-amendment-3": {
           title: "חוק-יסוד: ירושלים בירת ישראל (תיקון מס' 3)",
-          summary: "אוסר הקמת נציגויות רשמיות של מדינות זרות בירושלים, למעט שגרירויות המאומנות לישראל.",
+          summary: "נציגות רשמית של מדינה זרה תוקם בירושלים רק אם היא מואמנת לישראל; המדינה תעודד הקמת נציגויות כאלה.",
           ledBy: "ח״כ דן אילוז (הליכוד) ואחרים",
         },
         "basic-law-government-amendment-12": {
@@ -496,7 +500,7 @@ export const record: PartyRecordModule = {
         },
         "basic-law-jerusalem-amendment-3": {
           title: "Basic Law: Jerusalem, Capital of Israel (Amendment 3)",
-          summary: "Bars official missions of foreign states in Jerusalem, except embassies accredited to Israel.",
+          summary: "A foreign state's official mission in Jerusalem must be accredited to Israel; the state will encourage such missions.",
           ledBy: "MK Dan Illouz (Likud) and others",
         },
         "basic-law-government-amendment-12": {
@@ -580,7 +584,7 @@ export const record: PartyRecordModule = {
         },
         "basic-law-jerusalem-amendment-3": {
           title: "قانون أساس: القدس عاصمة إسرائيل (التعديل رقم 3)",
-          summary: "يحظر إقامة ممثليات رسمية لدول أجنبية في القدس، باستثناء السفارات المعتمدة لدى إسرائيل.",
+          summary: "لا تُقام في القدس ممثلية رسمية لدولة أجنبية إلا إذا كانت معتمدة لدى إسرائيل؛ وتشجّع الدولة إقامة مثل هذه الممثليات.",
           ledBy: "عضو الكنيست دان إيلوز (الليكود) وآخرون",
         },
         "basic-law-government-amendment-12": {
