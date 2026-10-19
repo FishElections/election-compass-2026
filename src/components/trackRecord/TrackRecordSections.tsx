@@ -263,8 +263,6 @@ function LegalCaseItem({ legalCase, t }: { legalCase: LegalCase; t: Labels["lega
     : legalCase.endDateUnknown
       ? fill(t.periodEndUnknown, { from: since })
       : fill(t.since, { date: since });
-  // §4.4: open cases and convictions still under appeal carry the line.
-  const presumption = legalCase.isOpen || !legalCase.statusConfirmed;
   return (
     <li className="rounded-xl border border-gray/80 p-3">
       <div className="flex flex-wrap items-center gap-2">
@@ -278,7 +276,6 @@ function LegalCaseItem({ legalCase, t }: { legalCase: LegalCase; t: Labels["lega
         </p>
       )}
       {legalCase.moralTurpitude && <p className="mt-1 text-xs text-navy">{t.moralTurpitude}</p>}
-      {presumption && <p className="mt-1.5 rounded-lg bg-gray-light px-2.5 py-1.5 text-xs text-navy">{t.presumption}</p>}
       <SourceLinks sources={legalCase.sources} />
     </li>
   );
@@ -290,7 +287,13 @@ function LegalBody({ record, t }: { record: PartyTrackRecord; t: Labels }) {
   const open = record.legalCases.filter((c) => c.isOpen).sort(newestFirst);
   const concluded = record.legalCases.filter((c) => !c.isOpen).sort(newestFirst);
 
-  const scope = <ExplainBox title={l.scopeTitle}>{fill(l.intro, { leader: record.leaderName ?? "" })}</ExplainBox>;
+  // §4.4 (v1.8): the presumption-of-innocence line sits once in this box.
+  const scope = (
+    <ExplainBox title={l.scopeTitle}>
+      <p>{fill(l.intro, { leader: record.leaderName ?? "" })}</p>
+      <p className="mt-1.5 font-semibold">{l.presumption}</p>
+    </ExplainBox>
+  );
 
   if (record.legalCases.length === 0) {
     return (
@@ -328,20 +331,13 @@ export function TrackRecordSections({ party, expanded = false }: { party: Party;
   if (!record) return null;
 
   const asOf = <p className="mt-2 text-xs text-gray-dark">{fill(t.asOf, { date: f.date(record.asOf) })}</p>;
-  const label = (
-    <div className="mb-1 mt-4 flex items-center gap-2.5">
-      <span className="whitespace-nowrap text-xs font-bold text-gray-dark">{t.sectionLabel}</span>
-      <div className="h-px flex-1 bg-gray" />
-    </div>
-  );
 
   const openCount = record.legalCases.filter((c) => c.isOpen).length;
   const concludedCount = record.legalCases.length - openCount;
   const achievementCount = record.achievements.length;
 
   return (
-    <div>
-      {label}
+    <div className="mt-2">
       <Accordion type="multiple" defaultValue={expanded ? ["achievements", "legal"] : []}>
         <AccordionItem value="achievements">
           <AccordionTrigger>

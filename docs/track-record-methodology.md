@@ -1,6 +1,6 @@
 # Track record: methodology
 
-**Version:** 1.7 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
+**Version:** 1.8 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
 **Applies to:** key achievements and the leader's legal record, for veteran parties.
 **Status:** once approved, this file is committed *before* any research starts. From that commit on, the rules are frozen.
 
@@ -242,9 +242,9 @@ The section states this explicitly.
   case.
 
 ### 4.4 Wording
-- **Open cases** always show: "Presumption of innocence: every person is
-  innocent until proven guilty by a final judgment." The same line is shown for a
-  conviction still under appeal.
+- **Presumption of innocence (v1.8):** "Presumption of innocence: every person
+  is innocent until proven guilty by a final judgment." is shown once, in the
+  section's "What's included" box, which covers every case below it.
 - **Language:** each case is described in the source's wording, with dates and the source.
 - **No cases (v1.2):** the section is still shown, with the text "No criminal
   proceedings were found in the sources we checked" and an ⓘ that lists those
@@ -384,6 +384,10 @@ The rules are frozen at the commit that adds this file. A change needs:
   was included (§3.4). The legal record is shown for every party (§4). The site
   shows at most 3 sources per item, one per publisher, official first (§5).
   Applies to every party.
+- **v1.8 (2026-10-19):** display only, decided by the contributor. The
+  presumption-of-innocence line appears once per legal section instead of on
+  each case (§4.4). The achievements heading reads "Public record (key
+  achievements)". Applies to every party.
 ---
 
 ## Appendix: decisions

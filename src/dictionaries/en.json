@@ -559,15 +559,14 @@
     "simulating": "Simulating…"
   },
   "trackRecord": {
-    "sectionLabel": "Public record",
     "asOf": "As of {date}",
     "notApplicable": "Not applicable: the party has not yet served a full Knesset term.",
     "sourcesLabel": "Sources",
     "achievements": {
-      "heading": "Key achievements",
+      "heading": "Public record (key achievements)",
       "empty": "No achievement met our evidence standard.",
       "standardTitle": "How we chose these",
-      "standard": "Peace and normalization agreements signed when the prime minister was from the party. Reforms and laws that an official body measured and found met their own goal. If none of the party's laws has a measured impact, we list up to 3 of its main laws by a fixed rule (Basic Laws first, then the largest official cost), so every party's legislative work is visible; their impact was not measured. Only laws still in force are shown.",
+      "standard": "Peace and normalization agreements signed when the prime minister was from the party. Reforms and laws that an official body measured and found met their own goal. If none of the party's laws has a measured impact, we list up to 3 of its main laws by a fixed rule (Basic Laws first, then the largest official cost), even if their impact was not measured, so every party's legislative work is visible. Only laws still in force are shown.",
       "agreementsHeading": "Peace and normalization agreements",
       "peace": "Peace agreement",
       "normalization": "Normalization agreement",
