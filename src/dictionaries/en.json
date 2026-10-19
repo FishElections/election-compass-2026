@@ -487,10 +487,16 @@
       "heading": "Who built this",
       "intro": "Election Compass 2026 was built as a volunteer effort by two independent entrepreneurs, out of a belief in a free, transparent, and independent tool for the Israeli voter.",
       "thanks": "And a heartfelt thank-you to Tova Bani, Ohad's partner, whose belief in this project is the reason it came to be.",
-      "contributor": "Thanks to Liron Katz Goldman for adding the parties' public record: key achievements and the party leader's legal record.",
       "names": [
         "Ohad Bar-Eli",
         "Itay Eylath"
+      ]
+    },
+    "contributors": {
+      "heading": "Code contributors",
+      "intro": "Thanks to those who volunteered code to the project.",
+      "names": [
+        "Liron Katz Goldman"
       ]
     },
     "feedback": {

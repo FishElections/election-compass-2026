@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Info, Lock, Calculator, Users, Mail } from "lucide-react";
+import { Info, Lock, Calculator, Users, Mail, Code } from "lucide-react";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { alternatesFor } from "@/i18n/metadata";
@@ -23,6 +23,57 @@ const builders = [
     email: "itay.ey@gmail.com",
   },
 ];
+
+// Code contributors: same card as the builders, no email. Names come from
+// dict.about.contributors.names (same order).
+const contributors = [
+  {
+    person: "liron",
+    photo: "/team/liron.jpg",
+    linkedin: "https://www.linkedin.com/in/liron-katz-goldman/",
+  },
+];
+
+function PersonCard({
+  name,
+  photo,
+  linkedin,
+  person,
+  email,
+}: {
+  name: string;
+  photo: string;
+  linkedin: string;
+  person: string;
+  email?: string;
+}) {
+  return (
+    <div className="flex flex-col items-center rounded-2xl border border-sapphire/15 bg-white p-6 text-center shadow-ambient-lg">
+      {/* eslint-disable-next-line @next/next/no-img-element -- small static asset from public/, next/image's overhead isn't worth it here */}
+      <img
+        src={photo}
+        alt={name}
+        width={96}
+        height={96}
+        className="h-24 w-24 rounded-full object-cover shadow-sm ring-4 ring-sapphire/10"
+      />
+      <h3 className="font-display mt-4 text-lg font-normal text-navy">
+        {name}
+      </h3>
+      <LinkedinLink href={linkedin} person={person} />
+      {email && (
+        <a
+          href={`mailto:${email}`}
+          dir="ltr"
+          className="mt-1.5 inline-flex items-center gap-1.5 text-sm text-gray-dark hover:text-sapphire hover:underline"
+        >
+          <Mail className="h-4 w-4" />
+          {email}
+        </a>
+      )}
+    </div>
+  );
+}
 
 export async function generateMetadata({
   params,
@@ -103,43 +154,21 @@ export default async function AboutPage({
         <p className="leading-relaxed text-gray-dark">{t.builders.intro}</p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           {builders.map((b, i) => (
-            <div
-              key={b.email}
-              className="flex flex-col items-center rounded-2xl border border-sapphire/15 bg-white p-6 text-center shadow-ambient-lg"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element -- small static asset from public/, next/image's overhead isn't worth it here */}
-              <img
-                src={b.photo}
-                alt={t.builders.names[i]}
-                width={96}
-                height={96}
-                className="h-24 w-24 rounded-full object-cover shadow-sm ring-4 ring-sapphire/10"
-              />
-              <h3 className="font-display mt-4 text-lg font-normal text-navy">
-                {t.builders.names[i]}
-              </h3>
-              <LinkedinLink href={b.linkedin} person={b.person} />
-              <a
-                href={`mailto:${b.email}`}
-                dir="ltr"
-                className="mt-1.5 inline-flex items-center gap-1.5 text-sm text-gray-dark hover:text-sapphire hover:underline"
-              >
-                <Mail className="h-4 w-4" />
-                {b.email}
-              </a>
-            </div>
+            <PersonCard key={b.person} name={t.builders.names[i]} {...b} />
           ))}
         </div>
         <p className="mt-4 leading-relaxed text-gray-dark">{t.builders.thanks}</p>
-        {/* Contributor credit: the parties' public record (track record). */}
-        <p className="mt-2 leading-relaxed text-gray-dark">
-          {t.builders.contributor}{" "}
-          <LinkedinLink
-            href="https://www.linkedin.com/in/liron-katz-goldman/"
-            person="liron"
-            className="mt-0 align-middle"
-          />
-        </p>
+
+        <h2 className="font-display mt-10 mb-3 flex items-center gap-2 text-xl font-normal text-navy">
+          <Code className="h-5 w-5 text-sapphire" />
+          {t.contributors.heading}
+        </h2>
+        <p className="leading-relaxed text-gray-dark">{t.contributors.intro}</p>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          {contributors.map((c, i) => (
+            <PersonCard key={c.person} name={t.contributors.names[i]} {...c} />
+          ))}
+        </div>
 
         <h2 className="font-display mt-10 mb-3 flex items-center gap-2 text-xl font-normal text-navy">
           <Mail className="h-5 w-5 text-sapphire" />

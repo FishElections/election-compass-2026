@@ -1,7 +1,6 @@
 "use client";
 
 import { trackEvent } from "@/lib/analytics";
-import { cn } from "@/lib/utils";
 
 // lucide-react dropped brand icons, so inline the official LinkedIn glyph.
 function LinkedinIcon({ className }: { className?: string }) {
@@ -22,11 +21,9 @@ function LinkedinIcon({ className }: { className?: string }) {
 export function LinkedinLink({
   href,
   person,
-  className,
 }: {
   href: string;
   person: string;
-  className?: string;
 }) {
   return (
     <a
@@ -35,10 +32,7 @@ export function LinkedinLink({
       rel="noopener noreferrer"
       dir="ltr"
       onClick={() => trackEvent("linkedin_click", { person })}
-      className={cn(
-        "mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-sapphire hover:underline",
-        className
-      )}
+      className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-sapphire hover:underline"
     >
       <LinkedinIcon className="h-4 w-4" />
       LinkedIn
