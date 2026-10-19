@@ -18,7 +18,8 @@ import type { PartyRecordModule } from "./registry";
  * is left out as no longer in force (v1.7): section 11B(g) applied only to
  * tax years 2001–2003 (Reshumot text,
  * https://fs.knesset.gov.il//15/law/15_lsr_300624.pdf). The verified file
- * names no further eligible law, so one item remains.
+ * names no further eligible law. Its #2 is also left out (v1.9, see
+ * achievements below), so no item remains.
  *
  * Legal record: none found (verified/legal.md).
  */
@@ -60,43 +61,19 @@ export const record: PartyRecordModule = {
       { knesset: 23, from: "2021-01-28", to: "2021-04-06", sources: [faction(1074)] },
       { knesset: 24, from: "2021-04-06", to: "2022-09-06", sources: [faction(964)] },
     ],
-    achievements: [
-      {
-        id: "womens-work-amendment-37",
-        // v1.7 in-force check: the Women's Work Law is in force (Knesset data).
-        // The 14 paid weeks set here were later raised to 15 by bill 2012821
-        // (2017). Kept; flagged for contributor review.
-        type: "major-legislation",
-        role: "initiated",
-        basicLaw: false,
-        date: "2007-05-07",
-        creditedTo: "hadash",
-        // Stated as 220–400 million NIS a year; ranked on the upper bound
-        // (verified/major-legislation.md).
-        costEstimate: {
-          value: 400_000_000,
-          sources: [src("knesset", "https://fs.knesset.gov.il/17/law/17_ls1_566462.pdf")],
-        },
-        sources: [
-          odata("KNS_Bill(142245)?$format=json"),
-          odata("KNS_BillInitiator?$filter=BillID%20eq%20142245&$format=json"),
-          odata("KNS_PlmSessionItem?$filter=ItemID%20eq%20142245&$format=json"),
-          odata("KNS_PersonToPosition?$filter=PersonID%20eq%204416&$format=json"),
-        ],
-      },
-    ],
+    // v1.9 §3.4: Women's Work Law (Amendment 37), bill 142245, is left out.
+    // Its 14-week maternity leave and benefit period were replaced by 15 weeks
+    // in the Law on Changes to the Birth and Parenthood Period Arrangement
+    // (Legislative Amendments), 2017, bill 2012821
+    // (https://fs.knesset.gov.il//20/law/20_lsr_382405.pdf). The verified file
+    // names no further eligible law, so no item remains.
+    achievements: [],
     legalCases: [],
   },
   text: {
     he: {
       leaderName: "יוסף ג'בארין",
-      achievements: {
-        "womens-work-amendment-37": {
-          title: "חוק עבודת נשים (תיקון מס' 37), 2007",
-          summary: "האריך את חופשת הלידה ואת תקופת דמי הלידה מ-12 ל-14 שבועות.",
-          ledBy: "ח״כ דב חנין (חד״ש)",
-        },
-      },
+      achievements: {},
       legalCases: {},
       predecessors: {
         hadash: { name: "חד\"ש" },
@@ -106,13 +83,7 @@ export const record: PartyRecordModule = {
     },
     en: {
       leaderName: "Yousef Jabareen",
-      achievements: {
-        "womens-work-amendment-37": {
-          title: "Women's Work Law (Amendment 37), 2007",
-          summary: "Extended maternity leave and the maternity-benefit period from 12 to 14 weeks.",
-          ledBy: "MK Dov Khenin (Hadash)",
-        },
-      },
+      achievements: {},
       legalCases: {},
       predecessors: {
         hadash: { name: "Hadash" },
@@ -122,13 +93,7 @@ export const record: PartyRecordModule = {
     },
     ar: {
       leaderName: "يوسف جبارين",
-      achievements: {
-        "womens-work-amendment-37": {
-          title: "قانون عمل النساء (تعديل رقم 37)، 2007",
-          summary: "مدّد إجازة الولادة وفترة بدل الولادة من 12 إلى 14 أسبوعًا.",
-          ledBy: "عضو الكنيست دوف حنين (الجبهة)",
-        },
-      },
+      achievements: {},
       legalCases: {},
       predecessors: {
         hadash: { name: "الجبهة الديمقراطية للسلام والمساواة" },

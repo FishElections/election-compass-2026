@@ -59,24 +59,11 @@ export const record: PartyRecordModule = {
           odata("KNS_PersonToPosition?$filter=PersonID%20eq%2030693&$format=json"),
         ],
       },
-      {
-        id: "basic-law-government-amendment-8",
-        // v1.7 in-force check: still in force on the snapshot date. Its
-        // alternate-government arrangement is repealed from the start of the
-        // 26th Knesset (2026-11-10) by Basic Law: The Government (Amendment 13),
-        // bill 2223298 (Knesset data). Kept; flagged for contributor review.
-        type: "major-legislation",
-        role: "initiated",
-        basicLaw: true,
-        date: "2020-05-05",
-        sources: [
-          odata("KNS_Bill(2087638)?$format=json"),
-          odata("KNS_BillInitiator?$filter=BillID%20eq%202087638&$format=json"),
-          odata("KNS_PlmSessionItem?$filter=ItemID%20eq%202087638&$format=json"),
-          odata("KNS_PersonToPosition?$filter=PersonID%20eq%2030693&$format=json"),
-          odata("KNS_PersonToPosition?$filter=PersonID%20eq%2030678&$format=json"),
-        ],
-      },
+      // v1.9 §3.4: Basic Law: The Government (Amendment 8 and Temporary
+      // Provision), 2020, bill 2087638, is left out. Its alternate-government
+      // arrangement (ss. 13A, 43A–43H) is repealed, from the start of the 26th
+      // Knesset, by Basic Law: The Government (Amendment 13), 2025, bill 2223298
+      // (https://fs.knesset.gov.il/25/law/25_lsr_6802943.pdf).
     ],
     legalCases: [],
   },
@@ -88,11 +75,6 @@ export const record: PartyRecordModule = {
           title: "חוק-יסוד: הכנסת (תיקון מס' 49)",
           summary: "מאפשר לשרים ולסגני שרים להפסיק את חברותם בכנסת בזמן כהונתם ולחזור אליה בסיומה (\"החוק הנורווגי\").",
           ledBy: "ח״כים שפע וגינזבורג (כחול לבן) ואחרים",
-        },
-        "basic-law-government-amendment-8": {
-          title: "חוק-יסוד: הממשלה (תיקון מס' 8 והוראת שעה)",
-          summary: "מעגן ממשלת חילופים (רוטציה) עם ראש ממשלה וראש ממשלה חלופי.",
-          ledBy: "ח״כים גינזבורג וניסנקורן (כחול לבן) ואחרים",
         },
       },
       legalCases: {},
@@ -106,11 +88,6 @@ export const record: PartyRecordModule = {
           summary: "Lets ministers and deputy ministers leave the Knesset while in office and return afterwards (the \"Norwegian Law\").",
           ledBy: "MKs Shefa and Ginzburg (Blue and White) and others",
         },
-        "basic-law-government-amendment-8": {
-          title: "Basic Law: The Government (Amendment 8, Temporary Provision)",
-          summary: "Sets up a rotation (\"alternate\") government with a prime minister and an alternate prime minister.",
-          ledBy: "MKs Ginzburg and Nissenkorn (Blue and White) and others",
-        },
       },
       legalCases: {},
       predecessors: {},
@@ -122,11 +99,6 @@ export const record: PartyRecordModule = {
           title: "قانون أساس: الكنيست (تعديل رقم 49)",
           summary: "يتيح للوزراء ونوابهم تعليق عضويتهم في الكنيست خلال توليهم المنصب والعودة إليها بعده (\"القانون النرويجي\").",
           ledBy: "عضوا الكنيست شيفع وغينزبورغ (أزرق أبيض) وآخرون",
-        },
-        "basic-law-government-amendment-8": {
-          title: "قانون أساس: الحكومة (تعديل 8 وحكم مؤقت)",
-          summary: "يرسّخ حكومة تناوب برئيس حكومة ورئيس حكومة بديل.",
-          ledBy: "عضوا الكنيست غينزبورغ ونيسنكورن (أزرق أبيض) وآخرون",
         },
       },
       legalCases: {},

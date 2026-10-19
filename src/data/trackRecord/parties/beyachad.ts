@@ -62,28 +62,12 @@ export const record: PartyRecordModule = {
     // Knesset data lists the Basic Law it amended as "נושן" (obsolete),
     // KNS_IsraelLaw(2002342). The verified file names no further eligible law
     // (committee bill 2223298 is not credited, v1.6).
+    // v1.9 §3.4: verified #1, Basic Law: The Government (Amendment), 2014,
+    // bill 479913, is left out. Its 19-member cap (s. 5(f)) and 4-deputy cap
+    // (s. 25(d)) were repealed by Basic Law: The Government (Amendment 8 and
+    // Temporary Provision), 2020, bill 2087638, ss. 1(3) and 3
+    // (https://fs.knesset.gov.il//23/law/23_lsr_570150.pdf).
     achievements: [
-      {
-        id: "basic-law-government-amendment-2014",
-        // v1.7 in-force check: Basic Law: The Government is in force (Knesset
-        // data). Parts of this amendment were later changed: the 19-minister and
-        // 4-deputy caps were removed by Amendment 8 (2020, bill 2087638) and
-        // ministers without portfolio restored by Amendment 3 (2015, bill
-        // 564215). Kept; flagged for contributor review.
-        type: "major-legislation",
-        role: "initiated",
-        basicLaw: true,
-        date: "2014-03-10",
-        creditedTo: "yesh-atid",
-        sources: [
-          // Published law text (Reshumot), read 2026-10-19.
-          src("knesset", "https://fs.knesset.gov.il//19/law/19_lsr_301536.pdf"),
-          billRecord(479913),
-          billInitiators(479913),
-          billSession(479913),
-          person(23640),
-        ],
-      },
       {
         id: "dov-hoz-airport-law-2017",
         type: "major-legislation",
@@ -107,11 +91,6 @@ export const record: PartyRecordModule = {
     he: {
       leaderName: "נפתלי בנט",
       achievements: {
-        "basic-law-government-amendment-2014": {
-          title: "חוק-יסוד: הממשלה (תיקון)",
-          summary: "מגביל את הממשלה ל-19 חברים ואת סגני השרים ל-4, וקובע שהבעת אי-אמון מחייבת אמון בממשלה חלופית.",
-          ledBy: "ח״כ רונן הופמן (יש עתיד) ואחרים",
-        },
         "dov-hoz-airport-law-2017": {
           title: "חוק שדה התעופה דב הוז (הוראות מיוחדות), התשע\"ז-2017",
           summary: "קובע ששדה דב ימשיך לשמש שדה תעופה אזרחי כל עוד מתקיימת בו פעילות תעופה צבאית.",
@@ -124,11 +103,6 @@ export const record: PartyRecordModule = {
     en: {
       leaderName: "Naftali Bennett",
       achievements: {
-        "basic-law-government-amendment-2014": {
-          title: "Basic Law: The Government (Amendment)",
-          summary: "Caps the government at 19 members and deputy ministers at 4; no-confidence requires backing an alternative government.",
-          ledBy: "MK Ronen Hoffman (Yesh Atid) and others",
-        },
         "dov-hoz-airport-law-2017": {
           title: "Dov Hoz Airport (Special Provisions) Law, 2017",
           summary: "Keeps Sde Dov operating as a civilian airport for as long as military flights continue there.",
@@ -141,11 +115,6 @@ export const record: PartyRecordModule = {
     ar: {
       leaderName: "نفتالي بينيت",
       achievements: {
-        "basic-law-government-amendment-2014": {
-          title: "قانون أساس: الحكومة (تعديل)",
-          summary: "يحدّ الحكومة بـ19 عضوًا ونواب الوزراء بـ4، ويشترط لحجب الثقة منحها لحكومة بديلة.",
-          ledBy: "عضو الكنيست رونين هوفمان (يش عتيد) وآخرون",
-        },
         "dov-hoz-airport-law-2017": {
           title: "قانون مطار دوف هوز (أحكام خاصة)، 2017",
           summary: "ينصّ على استمرار عمل مطار سديه دوف مطارًا مدنيًا ما دام النشاط الجوي العسكري قائمًا فيه.",

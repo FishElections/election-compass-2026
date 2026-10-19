@@ -96,19 +96,11 @@ export const record: PartyRecordModule = {
       // §3.4 item 3: no law passes §3.3, so up to 3 major laws. Basic Laws
       // first, newest first. Bill 2146354 is excluded (v1.6 stand-in ruling);
       // bill 132198 is excluded (member party not sourced, no URL).
-      {
-        id: "basic-law-government-amendment-8-2020",
-        // v1.7 in-force check: still in force on the snapshot date. Its
-        // alternate-government arrangement is repealed from the start of the
-        // 26th Knesset (2026-11-10) by Basic Law: The Government (Amendment 13),
-        // bill 2223298 (Knesset data). Kept; flagged for contributor review.
-        type: "major-legislation",
-        role: "initiated",
-        basicLaw: true,
-        date: "2020-05-05",
-        creditedTo: "labor",
-        sources: [...bill(2087638), person(23568)],
-      },
+      // v1.9: Basic Law: The Government (Amendment 8 and Temporary Provision),
+      // 2020, bill 2087638, is left out. Its alternate-government arrangement
+      // (ss. 13A, 43A–43H) is repealed, from the start of the 26th Knesset, by
+      // Basic Law: The Government (Amendment 13), 2025, bill 2223298
+      // (https://fs.knesset.gov.il/25/law/25_lsr_6802943.pdf). The verified file names no further eligible law.
       {
         id: "basic-law-knesset-amendment-41-2014",
         type: "major-legislation",
@@ -148,11 +140,6 @@ export const record: PartyRecordModule = {
           primeMinister: "יצחק רבין",
           steps: { "washington-declaration": "הצהרת וושינגטון" },
         },
-        "basic-law-government-amendment-8-2020": {
-          title: "חוק-יסוד: הממשלה (תיקון מס' 8 והוראת שעה)",
-          summary: "מעגן ממשלת חילופים (רוטציה) עם ראש ממשלה וראש ממשלה חלופי.",
-          ledBy: "ח״כ איציק שמולי (העבודה) ואחרים",
-        },
         "basic-law-knesset-amendment-41-2014": {
           title: "חוק-יסוד: הכנסת (תיקון מס' 41)",
           summary: "תיקון לחוק-יסוד: הכנסת.",
@@ -175,11 +162,6 @@ export const record: PartyRecordModule = {
           primeMinister: "Yitzhak Rabin",
           steps: { "washington-declaration": "Washington Declaration" },
         },
-        "basic-law-government-amendment-8-2020": {
-          title: "Basic Law: The Government (Amendment 8, Temporary Provision)",
-          summary: "Sets up a rotation (\"alternate\") government with a prime minister and an alternate prime minister.",
-          ledBy: "MK Itzik Shmuli (Labor) and others",
-        },
         "basic-law-knesset-amendment-41-2014": {
           title: "Basic Law: The Knesset (Amendment 41)",
           summary: "Amends Basic Law: The Knesset.",
@@ -201,11 +183,6 @@ export const record: PartyRecordModule = {
           summary: "تُقيم السلام والعلاقات الدبلوماسية بين إسرائيل والأردن؛ سارية منذ 10 نوفمبر 1994.",
           primeMinister: "إسحاق رابين",
           steps: { "washington-declaration": "إعلان واشنطن" },
-        },
-        "basic-law-government-amendment-8-2020": {
-          title: "قانون أساس: الحكومة (التعديل رقم 8 وأمر مؤقت)",
-          summary: "يرسّخ حكومة تناوب برئيس حكومة ورئيس حكومة بديل.",
-          ledBy: "عضو الكنيست إيتسيك شمولي (العمل) وآخرون",
         },
         "basic-law-knesset-amendment-41-2014": {
           title: "قانون أساس: الكنيست (التعديل رقم 41)",
