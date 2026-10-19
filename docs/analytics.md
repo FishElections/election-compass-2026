@@ -30,7 +30,7 @@ right call for a public tool. Filter answers likewise never enter the share URL.
 | `guide_station` | a guide station scrolls into view | `station` (index) |
 | `guide_coalition_built` | the coalition toy reaches a majority | `seats` |
 | `guide_cta_quiz` | guide → quiz CTA clicked | — |
-| `linkedin_click` | a builder's LinkedIn is opened (About) | `person`: `"ohad"` \| `"itay"` |
+| `linkedin_click` | a builder's LinkedIn is opened (About) | `person`: `"ohad"` \| `"itay"` \| `"liron"` |
 | `platform_open` | a party's panel opens on the platforms page | `party` (id), `source`: `grid`\|`search`\|`button`\|`key`\|`swipe`\|`deeplink`, `topic` (topic key or `"all"`) |
 | `platform_topic_filter` | a topic chip is picked on the platforms page | `topic` (topic key or `"all"`) |
 | `platform_cta_quiz` | platforms page → quiz CTA clicked | `location`: `panel`\|`footer` |

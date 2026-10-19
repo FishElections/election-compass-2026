@@ -131,6 +131,15 @@ export default async function AboutPage({
           ))}
         </div>
         <p className="mt-4 leading-relaxed text-gray-dark">{t.builders.thanks}</p>
+        {/* Contributor credit: the parties' public record (track record). */}
+        <p className="mt-2 leading-relaxed text-gray-dark">
+          {t.builders.contributor}{" "}
+          <LinkedinLink
+            href="https://www.linkedin.com/in/liron-katz-goldman/"
+            person="liron"
+            className="mt-0 align-middle"
+          />
+        </p>
 
         <h2 className="font-display mt-10 mb-3 flex items-center gap-2 text-xl font-normal text-navy">
           <Mail className="h-5 w-5 text-sapphire" />
