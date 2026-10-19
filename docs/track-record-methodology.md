@@ -1,6 +1,6 @@
 # Track record: methodology
 
-**Version:** 1.8 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
+**Version:** 1.9 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
 **Applies to:** key achievements and the leader's legal record, for veteran parties.
 **Status:** once approved, this file is committed *before* any research starts. From that commit on, the rules are frozen.
 
@@ -162,6 +162,10 @@ indicator, the before and after figures, and the evaluation's source.
 - **(v1.7) Laws must still be in force.** A law (§3.3 or item 3 below) that was
   later repealed or replaced is not shown. Reforms keep item 4 (a later repeal
   is stated on the card).
+- **(v1.9) "Updated" laws are not shown either.** A law is excluded when a
+  later law repealed or replaced any of its main provisions (those its card
+  summary describes), even if other parts remain in force. Each exclusion
+  cites the later law.
 - **(v1.7) Each law shows who led it** (the initiating MK or the presenting
   minister, as named in the Knesset record) and **why it was included**.
 
@@ -388,6 +392,9 @@ The rules are frozen at the commit that adds this file. A change needs:
   presumption-of-innocence line appears once per legal section instead of on
   each case (§4.4). The achievements heading reads "Public record (key
   achievements)". Applies to every party.
+- **v1.9 (2026-10-19):** decided by the contributor. A law whose main
+  provisions were later repealed or replaced is excluded (§3.4). Applies to
+  every party.
 ---
 
 ## Appendix: decisions
