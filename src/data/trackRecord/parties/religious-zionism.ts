@@ -138,15 +138,18 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-state-economy-amendment-13": {
           title: "חוק-יסוד: משק המדינה (תיקון מס' 13)",
-          summary: "הצעת חוק ממשלתית שהציג בקריאה הראשונה שר האוצר בצלאל סמוטריץ'.",
+          summary: "כשבחירות או ממשלה חדשה מעכבות את התקציב, מאפשר להגיש יחד איתו גם את תקציב השנה הבאה.",
+          ledBy: "שר האוצר בצלאל סמוטריץ' (הציונות הדתית)",
         },
         "basic-law-government-amendment-12": {
           title: "חוק-יסוד: הממשלה (תיקון מס' 12)",
-          summary: "הצעת חוק פרטית פ/2560/25; בין יוזמיה ח״כ שמחה רוטמן.",
+          summary: "קובע שנבצרות זמנית של ראש הממשלה תהיה רק בשל אי-מסוגלות פיזית או נפשית, באישורים מוגדרים.",
+          ledBy: "ח״כ שמחה רוטמן (הציונות הדתית) ואחרים",
         },
         "basic-law-government-amendment-11": {
           title: "חוק-יסוד: הממשלה (תיקון מס' 11)",
-          summary: "הצעת חוק פרטית פ/81/25; ח״כ שמחה רוטמן רשום ראשון בין יוזמיה.",
+          summary: "מאפשר למנות במשרד שר נוסף, האחראי לתחומים מסוימים בכפוף לשר הממונה על המשרד.",
+          ledBy: "ח״כ שמחה רוטמן (הציונות הדתית) ואחרים",
         },
       },
       legalCases: {
@@ -168,15 +171,18 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-state-economy-amendment-13": {
           title: "Basic Law: The State Economy (Amendment No. 13)",
-          summary: "Government bill presented at first reading by Finance Minister Bezalel Smotrich.",
+          summary: "When elections or a new government delay the budget, lets the government also submit next year's budget.",
+          ledBy: "Finance Minister Bezalel Smotrich (Religious Zionism)",
         },
         "basic-law-government-amendment-12": {
           title: "Basic Law: The Government (Amendment No. 12)",
-          summary: "Private bill P/2560/25; its initiators include MK Simcha Rothman.",
+          summary: "Limits declaring a prime minister temporarily incapacitated to physical or mental inability, with set approval steps.",
+          ledBy: "MK Simcha Rothman (Religious Zionism) and others",
         },
         "basic-law-government-amendment-11": {
           title: "Basic Law: The Government (Amendment No. 11)",
-          summary: "Private bill P/81/25; MK Simcha Rothman is listed first among its initiators.",
+          summary: "Allows appointing an additional minister in a ministry, responsible for set areas under the ministry's minister.",
+          ledBy: "MK Simcha Rothman (Religious Zionism) and others",
         },
       },
       legalCases: {
@@ -198,15 +204,18 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-state-economy-amendment-13": {
           title: "قانون أساس: اقتصاد الدولة (تعديل رقم 13)",
-          summary: "مشروع قانون حكومي قدّمه في القراءة الأولى وزير المالية بتسلئيل سموتريتش.",
+          summary: "عندما تؤخّر الانتخابات أو حكومة جديدة الميزانية، يتيح للحكومة أن تقدّم معها أيضًا ميزانية السنة التالية.",
+          ledBy: "وزير المالية بتسلئيل سموتريتش (الصهيونية الدينية)",
         },
         "basic-law-government-amendment-12": {
           title: "قانون أساس: الحكومة (تعديل رقم 12)",
-          summary: "مشروع قانون خاص (ف/2560/25)، ومن بين المبادرين إليه عضو الكنيست سيمحا روتمان.",
+          summary: "يحصر إعلان تعذّر قيام رئيس الحكومة بمهامه مؤقتًا في العجز الجسدي أو النفسي، وفق إجراءات مصادقة محددة.",
+          ledBy: "عضو الكنيست سيمحا روتمان (الصهيونية الدينية) وآخرون",
         },
         "basic-law-government-amendment-11": {
           title: "قانون أساس: الحكومة (تعديل رقم 11)",
-          summary: "مشروع قانون خاص (ف/81/25)، ويرد اسم عضو الكنيست سيمحا روتمان أولاً بين المبادرين إليه.",
+          summary: "يتيح تعيين وزير إضافي في وزارة، مسؤول عن مجالات محددة بإشراف الوزير المسؤول عن الوزارة.",
+          ledBy: "عضو الكنيست سيمحا روتمان (الصهيونية الدينية) وآخرون",
         },
       },
       legalCases: {

@@ -260,11 +260,11 @@ export function validatePartyTrackRecord(
   }
 
   const veteran = isVeteran(record);
-  if (veteran) {
-    checkSources(`${partyId} leader`, record.leaderSources, asOf, { corroborated: true }, errors);
-    if (record.legalCases.length === 0) {
-      checkSources(`${partyId} legal sources checked`, record.legalSourcesChecked, asOf, {}, errors);
-    }
+  // §4 (v1.7): every party has a legal-record section, so every party needs
+  // its #1 sourced, and the sources checked when no case was found.
+  checkSources(`${partyId} leader`, record.leaderSources, asOf, { corroborated: true }, errors);
+  if (record.legalCases.length === 0) {
+    checkSources(`${partyId} legal sources checked`, record.legalSourcesChecked, asOf, {}, errors);
   }
 
   checkUniqueIds(`${partyId} predecessors`, record.predecessors.map((p) => p.id), errors);
@@ -328,6 +328,9 @@ export function validatePartyTrackRecord(
       }
       checkSources(`${label} cost`, item.costEstimate.sources, asOf, { kinds: ["official"] }, errors);
     }
+    if ((item.type === "legislation" || item.type === "major-legislation") && item.repealed) {
+      errors.push(`${label}: a repealed or replaced law is not shown (§3.4, v1.7)`);
+    }
     if (item.type !== "agreement" && item.repealed && dated) {
       if (checkDate(`${label} repeal`, item.repealed.date, asOf, errors) && item.repealed.date < item.date) {
         errors.push(`${label}: repealed before it was made`);
@@ -390,8 +393,8 @@ export function validatePartyTrackRecord(
     checkSources(label, legalCase.sources, asOf, { corroborated: true }, errors);
   }
 
-  if (!veteran && (record.achievements.length > 0 || record.legalCases.length > 0)) {
-    errors.push(`${partyId}: not a veteran party, so it cannot have achievements or legal cases (§2.4)`);
+  if (!veteran && record.achievements.length > 0) {
+    errors.push(`${partyId}: not a veteran party, so it cannot have achievements (§2.4)`);
   }
 
   return errors;

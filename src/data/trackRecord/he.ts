@@ -8,6 +8,11 @@ export interface AchievementText {
   summary: string;
   /** Reforms and legislation: what the before/after numbers measure. */
   indicator?: string;
+  /**
+   * Laws (v1.7): who led it — the initiating MK or the presenting minister,
+   * as named in the Knesset record, with their role.
+   */
+  ledBy?: string;
   /** Reforms: the unit of `scale.value` (e.g. "housing units"). */
   scaleUnit?: string;
   /** Agreements: the prime minister's name at signing. */

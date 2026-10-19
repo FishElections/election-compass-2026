@@ -61,6 +61,10 @@ export const record: PartyRecordModule = {
       },
       {
         id: "basic-law-government-amendment-8",
+        // v1.7 in-force check: still in force on the snapshot date. Its
+        // alternate-government arrangement is repealed from the start of the
+        // 26th Knesset (2026-11-10) by Basic Law: The Government (Amendment 13),
+        // bill 2223298 (Knesset data). Kept; flagged for contributor review.
         type: "major-legislation",
         role: "initiated",
         basicLaw: true,
@@ -82,11 +86,13 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-knesset-amendment-49": {
           title: "חוק-יסוד: הכנסת (תיקון מס' 49)",
-          summary: "הצעת חוק פרטית פ/868/23; בין יוזמיה ח״כ רם שפע (רשום ראשון) וח״כ איתן גינזבורג.",
+          summary: "מאפשר לשרים ולסגני שרים להפסיק את חברותם בכנסת בזמן כהונתם ולחזור אליה בסיומה (\"החוק הנורווגי\").",
+          ledBy: "ח״כים שפע וגינזבורג (כחול לבן) ואחרים",
         },
         "basic-law-government-amendment-8": {
           title: "חוק-יסוד: הממשלה (תיקון מס' 8 והוראת שעה)",
-          summary: "הצעת חוק פרטית פ/280/23; בין יוזמיה ח״כ איתן גינזבורג (רשום ראשון) וח״כ אבי ניסנקורן.",
+          summary: "מעגן ממשלת חילופים (רוטציה) עם ראש ממשלה וראש ממשלה חלופי.",
+          ledBy: "ח״כים גינזבורג וניסנקורן (כחול לבן) ואחרים",
         },
       },
       legalCases: {},
@@ -97,11 +103,13 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-knesset-amendment-49": {
           title: "Basic Law: The Knesset (Amendment No. 49)",
-          summary: "Private bill P/868/23; its initiators include MKs Ram Shefa (listed first) and Eitan Ginzburg.",
+          summary: "Lets ministers and deputy ministers leave the Knesset while in office and return afterwards (the \"Norwegian Law\").",
+          ledBy: "MKs Shefa and Ginzburg (Blue and White) and others",
         },
         "basic-law-government-amendment-8": {
           title: "Basic Law: The Government (Amendment 8, Temporary Provision)",
-          summary: "Private bill P/280/23; its initiators include MKs Eitan Ginzburg (listed first) and Avi Nissenkorn.",
+          summary: "Sets up a rotation (\"alternate\") government with a prime minister and an alternate prime minister.",
+          ledBy: "MKs Ginzburg and Nissenkorn (Blue and White) and others",
         },
       },
       legalCases: {},
@@ -112,11 +120,13 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-knesset-amendment-49": {
           title: "قانون أساس: الكنيست (تعديل رقم 49)",
-          summary: "مشروع قانون خاص (ف/868/23)، ومن بين المبادرين إليه عضوا الكنيست رام شيفع (أولاً) وإيتان غينزبورغ.",
+          summary: "يتيح للوزراء ونوابهم تعليق عضويتهم في الكنيست خلال توليهم المنصب والعودة إليها بعده (\"القانون النرويجي\").",
+          ledBy: "عضوا الكنيست شيفع وغينزبورغ (أزرق أبيض) وآخرون",
         },
         "basic-law-government-amendment-8": {
           title: "قانون أساس: الحكومة (تعديل 8 وحكم مؤقت)",
-          summary: "مشروع قانون خاص (ف/280/23)، ومن بين المبادرين إليه عضوا الكنيست إيتان غينزبورغ (أولاً) وآفي نيسنكورن.",
+          summary: "يرسّخ حكومة تناوب برئيس حكومة ورئيس حكومة بديل.",
+          ledBy: "عضوا الكنيست غينزبورغ ونيسنكورن (أزرق أبيض) وآخرون",
         },
       },
       legalCases: {},

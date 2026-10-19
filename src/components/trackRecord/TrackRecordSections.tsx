@@ -1,7 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
-import { Info } from "lucide-react";
+import { HelpCircle } from "lucide-react";
 import type { Party } from "@/types";
 import {
   getPartyTrackRecord,
@@ -11,6 +10,7 @@ import {
   type PartyTrackRecord,
 } from "@/data/trackRecord";
 import type { SourceRef } from "@/data/trackRecord/core";
+import { sourcePublishers, type SourceKind } from "@/data/trackRecord/sources";
 import { compareMajorLegislation } from "@/utils/trackRecord";
 import {
   Accordion,
@@ -58,17 +58,28 @@ function useFormatters() {
   };
 }
 
-const VISIBLE_SOURCES = 3;
+const MAX_SOURCES = 3;
+const KIND_ORDER: Record<SourceKind, number> = { official: 0, evaluation: 1, news: 2 };
+
+/** §5 (v1.7): at most 3 links, one per publisher, official sources first. */
+export function pickSources(sources: SourceRef[]): SourceRef[] {
+  const seen = new Set<string>();
+  return [...sources]
+    .sort((a, b) => KIND_ORDER[sourcePublishers[a.publisher].kind] - KIND_ORDER[sourcePublishers[b.publisher].kind])
+    .filter((source) => {
+      if (seen.has(source.publisher)) return false;
+      seen.add(source.publisher);
+      return true;
+    })
+    .slice(0, MAX_SOURCES);
+}
 
 function SourceLinks({ sources }: { sources: SourceRef[] }) {
   const { locale } = useDictionary();
   const names = getPublisherNames(locale);
-  const [showAll, setShowAll] = useState(false);
-  const hidden = sources.length - VISIBLE_SOURCES;
-  const shown = showAll || hidden <= 0 ? sources : sources.slice(0, VISIBLE_SOURCES);
   return (
     <ul className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1">
-      {shown.map((source) => (
+      {pickSources(sources).map((source) => (
         <li key={source.url}>
           <a
             href={source.url}
@@ -80,43 +91,19 @@ function SourceLinks({ sources }: { sources: SourceRef[] }) {
           </a>
         </li>
       ))}
-      {hidden > 0 && !showAll && (
-        <li>
-          <button
-            type="button"
-            onClick={() => setShowAll(true)}
-            className="inline-flex min-h-8 items-center text-xs font-semibold text-gray-dark hover:text-sapphire"
-          >
-            +{hidden}
-          </button>
-        </li>
-      )}
     </ul>
   );
 }
 
-/** Tap-to-open explanation (not a hover tooltip, so it works on phones). */
-function InfoDisclosure({ label, title, children }: { label: string; title: string; children: React.ReactNode }) {
-  const [open, setOpen] = useState(false);
-  const panelId = useId();
+/** The site's explanation box (same look as the hot-topics sheet). */
+function ExplainBox({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="mt-2">
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-controls={panelId}
-        onClick={() => setOpen((value) => !value)}
-        className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-gray px-3 text-xs font-semibold text-navy hover:border-sapphire"
-      >
-        <Info className="h-3.5 w-3.5" aria-hidden="true" />
-        {label}
-      </button>
-      {open && (
-        <div id={panelId} className="mt-2 rounded-xl bg-gray-light p-3 text-xs leading-relaxed text-navy">
-          <p className="font-bold">{title}</p>
-          <div className="mt-1">{children}</div>
-        </div>
-      )}
+    <div className="rounded-xl border border-sapphire/20 bg-sapphire/5 p-4">
+      <p className="mb-1 flex items-center gap-1.5 text-xs font-bold text-sapphire">
+        <HelpCircle className="h-3.5 w-3.5" aria-hidden="true" />
+        {title}
+      </p>
+      <div className="text-sm leading-relaxed text-foreground">{children}</div>
     </div>
   );
 }
@@ -211,8 +198,12 @@ function MajorLawItem({ item, t }: { item: Achievement; t: Labels["achievements"
       </div>
       <p className="mt-1.5 font-semibold text-navy">{item.text.title}</p>
       <p className="mt-0.5 text-sm text-gray-dark">{item.text.summary}</p>
-      {item.costEstimate && <p className="mt-1 text-xs text-gray-dark">{fill(t.cost, { value: f.shekels(item.costEstimate.value) })}</p>}
-      {item.repealed && <p className="mt-1 text-xs font-semibold text-navy">{fill(t.repealed, { date: f.date(item.repealed.date) })}</p>}
+      <p className="mt-1 text-xs text-navy">{fill(t.ledBy, { name: item.text.ledBy ?? "" })}</p>
+      <p className="mt-1 text-xs text-gray-dark">
+        {item.basicLaw
+          ? t.whyBasicLaw
+          : fill(t.whyCost, { value: item.costEstimate ? f.shekels(item.costEstimate.value) : "" })}
+      </p>
       <SourceLinks sources={item.sources} />
     </li>
   );
@@ -226,18 +217,19 @@ function AchievementsBody({ party, record, t }: { party: Party; record: PartyTra
   const major = record.achievements
     .filter((x) => x.type === "major-legislation")
     .sort((x, y) => (x.type === "major-legislation" && y.type === "major-legislation" ? compareMajorLegislation(x, y) : 0));
-  const standard = <InfoDisclosure label={t.infoButton} title={a.standardTitle}>{a.standard}</InfoDisclosure>;
+  const standard = <ExplainBox title={a.standardTitle}>{a.standard}</ExplainBox>;
 
   if (agreements.length + proven.length + major.length === 0) {
     return (
-      <div>
-        <p className="text-sm text-gray-dark">{a.empty}</p>
+      <div className="flex flex-col gap-3">
         {standard}
+        <p className="text-sm text-gray-dark">{a.empty}</p>
       </div>
     );
   }
   return (
     <div className="flex flex-col gap-4">
+      {standard}
       {agreements.length > 0 && (
         <section>
           <h4 className="mb-2 text-sm font-bold text-navy">{a.agreementsHeading}</h4>
@@ -252,12 +244,10 @@ function AchievementsBody({ party, record, t }: { party: Party; record: PartyTra
       )}
       {!proven.some((x) => x.type === "legislation") && major.length > 0 && (
         <section>
-          <h4 className="text-sm font-bold text-navy">{a.majorHeading}</h4>
-          <p className="mb-2 mt-0.5 text-xs text-gray-dark">{a.majorNote}</p>
+          <h4 className="mb-2 text-sm font-bold text-navy">{a.majorHeading}</h4>
           <ul className="flex flex-col gap-2">{major.map((item) => <MajorLawItem key={item.id} item={item} t={a} />)}</ul>
         </section>
       )}
-      {standard}
     </div>
   );
 }
@@ -300,21 +290,23 @@ function LegalBody({ record, t }: { record: PartyTrackRecord; t: Labels }) {
   const open = record.legalCases.filter((c) => c.isOpen).sort(newestFirst);
   const concluded = record.legalCases.filter((c) => !c.isOpen).sort(newestFirst);
 
+  const scope = <ExplainBox title={l.scopeTitle}>{fill(l.intro, { leader: record.leaderName ?? "" })}</ExplainBox>;
+
   if (record.legalCases.length === 0) {
     return (
-      <div>
+      <div className="flex flex-col gap-3">
+        {scope}
         <p className="text-sm text-gray-dark">{l.empty}</p>
-        <InfoDisclosure label={l.sourcesCheckedTitle} title={l.sourcesCheckedTitle}>
+        <div>
+          <p className="text-xs font-bold text-gray-dark">{l.sourcesCheckedTitle}</p>
           <SourceLinks sources={record.legalSourcesChecked} />
-        </InfoDisclosure>
+        </div>
       </div>
     );
   }
   return (
     <div className="flex flex-col gap-4">
-      <p className="rounded-lg border border-gray/80 bg-white px-3 py-2 text-xs leading-relaxed text-navy">
-        {fill(l.intro, { leader: record.leaderName ?? "" })}
-      </p>
+      {scope}
       {[{ heading: l.open, cases: open }, { heading: l.concluded, cases: concluded }].map(
         (group) =>
           group.cases.length > 0 && (
@@ -343,15 +335,6 @@ export function TrackRecordSections({ party, expanded = false }: { party: Party;
     </div>
   );
 
-  if (!record.isVeteran) {
-    return (
-      <div>
-        {label}
-        <p className="rounded-xl border border-dashed border-gray-dark/40 px-3 py-2.5 text-sm text-gray-dark">{t.notApplicable}</p>
-      </div>
-    );
-  }
-
   const openCount = record.legalCases.filter((c) => c.isOpen).length;
   const concludedCount = record.legalCases.length - openCount;
   const achievementCount = record.achievements.length;
@@ -368,7 +351,11 @@ export function TrackRecordSections({ party, expanded = false }: { party: Party;
             </span>
           </AccordionTrigger>
           <AccordionContent>
-            <AchievementsBody party={party} record={record} t={t} />
+            {record.isVeteran ? (
+              <AchievementsBody party={party} record={record} t={t} />
+            ) : (
+              <p className="text-sm text-gray-dark">{t.notApplicable}</p>
+            )}
             {asOf}
           </AccordionContent>
         </AccordionItem>

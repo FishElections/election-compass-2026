@@ -563,12 +563,11 @@
     "asOf": "As of {date}",
     "notApplicable": "Not applicable: the party has not yet served a full Knesset term.",
     "sourcesLabel": "Sources",
-    "infoButton": "How was this chosen?",
     "achievements": {
       "heading": "Key achievements",
       "empty": "No achievement met our evidence standard.",
-      "standardTitle": "Our evidence standard",
-      "standard": "We show peace and normalization agreements signed when the prime minister was from the party; reforms led by the party's own minister; and laws the party initiated or its minister sponsored. Reforms and laws appear only when an official evaluation (State Comptroller, Bank of Israel, Central Bureau of Statistics, Knesset Research and Information Center, Israel Democracy Institute, or a peer-reviewed study) shows they met their own stated goal. Every item links to its sources.",
+      "standardTitle": "How we chose these",
+      "standard": "Peace and normalization agreements signed when the prime minister was from the party. Reforms and laws that an official body measured and found met their own goal. If none of the party's laws has a measured impact, we list up to 3 of its main laws by a fixed rule (Basic Laws first, then the largest official cost), so every party's legislative work is visible; their impact was not measured. Only laws still in force are shown.",
       "agreementsHeading": "Peace and normalization agreements",
       "peace": "Peace agreement",
       "normalization": "Normalization agreement",
@@ -579,16 +578,16 @@
       "provenHeading": "Reforms and laws with proven impact",
       "reform": "Reform",
       "law": "Law",
-      "result": "{indicator}: {before} ({beforeDate}) → {after} ({afterDate})",
       "evaluatedBy": "Evaluation:",
       "scale": "Scale: {value} {unit}",
       "repealed": "Repealed on {date}",
       "majorHeading": "Major laws the party led (impact not evaluated)",
-      "majorNote": "Chosen by a fixed rule: Basic Laws first, then the largest official cost estimate. Their impact has not been evaluated.",
       "basicLaw": "Basic Law",
-      "cost": "Official cost estimate: {value}",
       "initiated": "Initiated by the party",
-      "sponsored": "Sponsored by the party's minister"
+      "sponsored": "Sponsored by the party's minister",
+      "ledBy": "Led by: {name}",
+      "whyBasicLaw": "Why it's here: a Basic Law (constitutional-level). Impact not measured.",
+      "whyCost": "Why it's here: one of the party's largest official cost estimates ({value}). Impact not measured."
     },
     "legal": {
       "heading": "Party leader's legal record",
@@ -619,7 +618,8 @@
         "closed": "Case closed",
         "ended-other": "Ended (as described by the source)"
       },
-      "periodEndUnknown": "{from} – end date not confirmed"
+      "periodEndUnknown": "{from} – end date not confirmed",
+      "scopeTitle": "What's included"
     }
   }
 }

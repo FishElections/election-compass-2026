@@ -262,15 +262,18 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-government-amendment-12": {
           title: "חוק־יסוד: הממשלה (תיקון מס' 12)",
-          summary: "הצעת חוק פרטית פ/2560/25; בין יוזמיה ח״כ יצחק קרויזר (עוצמה יהודית).",
+          summary: "קובע שנבצרות זמנית של ראש הממשלה תהיה רק בשל אי-מסוגלות פיזית או נפשית, באישורים מוגדרים.",
+          ledBy: "ח״כ יצחק קרויזר (עוצמה יהודית) ואחרים",
         },
         "eastern-confrontation-line-tax-benefits": {
           title: "חוק הטבות מס ליישוב אזור קו עימות מזרחי",
-          summary: "הוראת שעה; בין יוזמיה שלושה ח״כים מעוצמה יהודית; עלות של כ-450 מיליון ש״ח בשנה לפי משרד האוצר.",
+          summary: "הטבות מס בהוראת שעה ליישובים באזור קו העימות המזרחי.",
+          ledBy: "ח״כים סון הר-מלך, פוגל וקרויזר (עוצמה יהודית) ואחרים",
         },
         "illegal-stay-prohibition": {
           title: "חוק איסור שהייה וישיבה בישראל שלא כדין",
-          summary: "בין יוזמיה שלושה ח״כים מעוצמה יהודית; 151 מיליון ש״ח בשנה ועוד כ-326 מיליון ש״ח חד-פעמית, לפי משרד האוצר.",
+          summary: "אוסר מתן היתר שהייה או חידוש רישיון ישיבה בישראל לפעילי טרור, למורשעים בטרור ולבני משפחתם.",
+          ledBy: "ח״כים סון הר-מלך, פוגל וקרויזר (עוצמה יהודית) ואחרים",
         },
       },
       legalCases: {
@@ -321,15 +324,18 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-government-amendment-12": {
           title: "Basic Law: The Government (Amendment No. 12)",
-          summary: "Private bill P/2560/25; initiators include Otzma Yehudit MK Yitzhak Kroizer.",
+          summary: "Limits declaring a prime minister temporarily incapacitated to physical or mental inability, with set approval steps.",
+          ledBy: "MK Yitzhak Kroizer (Otzma Yehudit) and others",
         },
         "eastern-confrontation-line-tax-benefits": {
           title: "Tax Benefits for Settling the Eastern Confrontation-Line Area",
-          summary: "Temporary provision; initiators include three Otzma Yehudit MKs; Finance Ministry estimate about NIS 450 million a year.",
+          summary: "Temporary tax benefits for localities in the eastern confrontation-line area.",
+          ledBy: "MKs Son Har-Melech, Fogel and Kroizer (Otzma Yehudit) and others",
         },
         "illegal-stay-prohibition": {
           title: "Law Prohibiting Unlawful Stay and Residence in Israel",
-          summary: "Initiators include three Otzma Yehudit MKs; Finance Ministry: NIS 151 million yearly plus about NIS 326 million once.",
+          summary: "Bars stay permits and residence-licence renewals for terror operatives, people convicted of terrorism, and their relatives.",
+          ledBy: "MKs Son Har-Melech, Fogel and Kroizer (Otzma Yehudit) and others",
         },
       },
       legalCases: {
@@ -380,15 +386,18 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-government-amendment-12": {
           title: "قانون أساس: الحكومة (التعديل رقم 12)",
-          summary: "اقتراح قانون خاص (P/2560/25)؛ من مبادريه عضو الكنيست يتسحاق كرويزر (عوتسما يهوديت).",
+          summary: "يحصر إعلان تعذّر قيام رئيس الحكومة بمهامه مؤقتًا في العجز الجسدي أو النفسي، وفق إجراءات مصادقة محددة.",
+          ledBy: "عضو الكنيست يتسحاق كرويزر (عوتسما يهوديت) وآخرون",
         },
         "eastern-confrontation-line-tax-benefits": {
           title: "قانون مزايا ضريبية لإسكان منطقة خط المواجهة الشرقي",
-          summary: "حكم مؤقت؛ من مبادريه ثلاثة أعضاء كنيست من عوتسما يهوديت؛ نحو 450 مليون شيكل سنويًا وفق وزارة المالية.",
+          summary: "مزايا ضريبية مؤقتة لبلدات منطقة خط المواجهة الشرقي.",
+          ledBy: "أعضاء الكنيست سون هار-ميلخ وفوغل وكرويزر (عوتسما يهوديت) وآخرون",
         },
         "illegal-stay-prohibition": {
           title: "قانون حظر المكوث والإقامة غير القانونيين في إسرائيل",
-          summary: "من مبادريه ثلاثة نواب من عوتسما يهوديت؛ تقدير المالية: 151 مليون شيكل سنويًا ونحو 326 مليونًا لمرة واحدة.",
+          summary: "يحظر منح تصاريح المكوث وتجديد رخص الإقامة في إسرائيل لناشطي الإرهاب والمدانين به وأقاربهم.",
+          ledBy: "أعضاء الكنيست سون هار-ميلخ وفوغل وكرويزر (عوتسما يهوديت) وآخرون",
         },
       },
       legalCases: {

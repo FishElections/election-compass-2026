@@ -6,12 +6,20 @@ import type { PartyRecordModule } from "./registry";
  * (25th Knesset), reports/track-record/veteran-status.md. The 1977 "United
  * Arab List" factions #369 and #419 are a different party and are not used.
  *
- * Achievements: no agreement, reform or law passes §3.1–§3.3, so up to 3
- * "major laws" are shown (§3.4 item 3), from verified/major-legislation.md.
- * Its #1 there, the Dov Hoz Airport Law (579102), is left out: Ra'am
- * membership of its initiators is inferred, not sourced (review-summary.md,
- * "NEEDS SOURCE"). The named replacement (167796) has no verified source URL,
- * so it is left out too.
+ * Achievements: no agreement, reform or law passes §3.1–§3.3, and no
+ * "major law" (§3.4 item 3) from verified/major-legislation.md can be shown:
+ * - #1, the Dov Hoz Airport Law (579102): Ra'am membership of its initiators
+ *   is inferred, not sourced (review-summary.md, "NEEDS SOURCE").
+ * - #2, Income Tax Ordinance (Amendment 125, temporary provision, 174511):
+ *   not in force (v1.7). Its section 11B(g) applied only to tax years
+ *   2001–2003 (Reshumot text, https://fs.knesset.gov.il//15/law/15_lsr_300624.pdf).
+ * - #3, Public Libraries Law (Amendment), 2002 (173777): not in force (v1.7).
+ *   The Public Libraries Law, 1975 it amended was repealed by the Public
+ *   Libraries Law, 2024 (Knesset data: KNS_IsraelLaw(2000473) "בטל",
+ *   2024-07-29; KNS_LawBinding of bill 2219315).
+ * - The named replacement (167796) has no verified source URL, and is itself
+ *   a 2000 temporary provision.
+ * So the section shows "No achievement met our evidence standard".
  *
  * Legal record: none found (verified/legal.md).
  */
@@ -38,87 +46,25 @@ export const record: PartyRecordModule = {
       { knesset: 24, from: "2021-04-06", to: "2022-11-15", sources: [faction(973)] },
       { knesset: 25, from: "2022-11-15", sources: [faction(1099)] },
     ],
-    achievements: [
-      {
-        id: "income-tax-amendment-125",
-        type: "major-legislation",
-        role: "initiated",
-        basicLaw: false,
-        date: "2001-02-14",
-        costEstimate: {
-          value: 300_000_000,
-          sources: [src("knesset", "https://fs.knesset.gov.il/15/law/15_ls1_515837.PDF")],
-        },
-        sources: [
-          odata("KNS_Bill(174511)?$format=json"),
-          odata("KNS_BillInitiator?$filter=BillID%20eq%20174511&$format=json"),
-          odata("KNS_PlmSessionItem?$filter=ItemID%20eq%20174511&$format=json"),
-          odata("KNS_PersonToPosition?$filter=PersonID%20eq%20549&$format=json"),
-        ],
-      },
-      {
-        id: "public-libraries-amendment-2002",
-        type: "major-legislation",
-        role: "initiated",
-        basicLaw: false,
-        date: "2002-06-18",
-        costEstimate: {
-          value: 70_000_000,
-          sources: [src("knesset", "https://fs.knesset.gov.il/15/law/15_ls1_516565.PDF")],
-        },
-        sources: [
-          odata("KNS_Bill(173777)?$format=json"),
-          odata("KNS_BillInitiator?$filter=BillID%20eq%20173777&$format=json"),
-          odata("KNS_PlmSessionItem?$filter=ItemID%20eq%20173777&$format=json"),
-          odata("KNS_PersonToPosition?$filter=PersonID%20eq%20551&$format=json"),
-        ],
-      },
-    ],
+    achievements: [],
     legalCases: [],
   },
   text: {
     he: {
       leaderName: "מנסור עבאס",
-      achievements: {
-        "income-tax-amendment-125": {
-          title: "תיקון פקודת מס הכנסה (מס' 125, הוראת שעה)",
-          summary: "בין היוזמים ח\"כ טלב אלסאנע (רע\"ם); אומדן העלות: כ-300 מיליון ש\"ח בשנה.",
-        },
-        "public-libraries-amendment-2002": {
-          title: "חוק הספריות הציבוריות (תיקון), 2002",
-          summary: "בין היוזמים ח\"כ האשם מחאמיד (רע\"ם); לפי משרד האוצר, העלות כ-70 מיליון ש\"ח בשנה.",
-        },
-      },
+      achievements: {},
       legalCases: {},
       predecessors: {},
     },
     en: {
       leaderName: "Mansour Abbas",
-      achievements: {
-        "income-tax-amendment-125": {
-          title: "Income Tax Ordinance (Amendment 125, Temporary Provision)",
-          summary: "Co-initiated by MK Talab al-Sana (Ra'am); estimated cost: about NIS 300 million a year.",
-        },
-        "public-libraries-amendment-2002": {
-          title: "Public Libraries Law (Amendment), 2002",
-          summary: "Co-initiated by MK Hashem Mahamid (Ra'am); Finance Ministry estimate: about NIS 70 million a year.",
-        },
-      },
+      achievements: {},
       legalCases: {},
       predecessors: {},
     },
     ar: {
       leaderName: "منصور عباس",
-      achievements: {
-        "income-tax-amendment-125": {
-          title: "تعديل أمر ضريبة الدخل (رقم 125، حكم مؤقت)",
-          summary: "من مبادريه عضو الكنيست طلب الصانع (القائمة الموحدة)، وتبلغ كلفته المقدّرة نحو 300 مليون شيكل سنويًا.",
-        },
-        "public-libraries-amendment-2002": {
-          title: "قانون المكتبات العامة (تعديل)، 2002",
-          summary: "من مبادريه عضو الكنيست هاشم محاميد (القائمة الموحدة)، وتقدّر وزارة المالية كلفته بنحو 70 مليون شيكل سنويًا.",
-        },
-      },
+      achievements: {},
       legalCases: {},
       predecessors: {},
     },

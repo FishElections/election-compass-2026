@@ -14,6 +14,11 @@ import type { PartyRecordModule } from "./registry";
  * each credited to the member party whose MK initiated it (v1.6). Its #1
  * there, the Dov Hoz Airport Law (579102), is left out: the member parties of
  * its initiators are inferred, not sourced (review-summary.md, "NEEDS SOURCE").
+ * Its #3, Income Tax Ordinance (Amendment 125, temporary provision, 174511),
+ * is left out as no longer in force (v1.7): section 11B(g) applied only to
+ * tax years 2001–2003 (Reshumot text,
+ * https://fs.knesset.gov.il//15/law/15_lsr_300624.pdf). The verified file
+ * names no further eligible law, so one item remains.
  *
  * Legal record: none found (verified/legal.md).
  */
@@ -58,13 +63,16 @@ export const record: PartyRecordModule = {
     achievements: [
       {
         id: "womens-work-amendment-37",
+        // v1.7 in-force check: the Women's Work Law is in force (Knesset data).
+        // The 14 paid weeks set here were later raised to 15 by bill 2012821
+        // (2017). Kept; flagged for contributor review.
         type: "major-legislation",
         role: "initiated",
         basicLaw: false,
         date: "2007-05-07",
         creditedTo: "hadash",
         // Stated as 220–400 million NIS a year; ranked on the upper bound
-        // (verified/major-legislation.md). The summary gives the range.
+        // (verified/major-legislation.md).
         costEstimate: {
           value: 400_000_000,
           sources: [src("knesset", "https://fs.knesset.gov.il/17/law/17_ls1_566462.pdf")],
@@ -76,26 +84,6 @@ export const record: PartyRecordModule = {
           odata("KNS_PersonToPosition?$filter=PersonID%20eq%204416&$format=json"),
         ],
       },
-      {
-        id: "income-tax-amendment-125",
-        type: "major-legislation",
-        role: "initiated",
-        basicLaw: false,
-        date: "2001-02-14",
-        creditedTo: "hadash",
-        costEstimate: {
-          value: 300_000_000,
-          sources: [src("knesset", "https://fs.knesset.gov.il/15/law/15_ls1_515837.PDF")],
-        },
-        sources: [
-          odata("KNS_Bill(174511)?$format=json"),
-          odata("KNS_BillInitiator?$filter=BillID%20eq%20174511&$format=json"),
-          odata("KNS_PlmSessionItem?$filter=ItemID%20eq%20174511&$format=json"),
-          odata("KNS_PersonToPosition?$filter=PersonID%20eq%20540&$format=json"),
-          odata("KNS_PersonToPosition?$filter=PersonID%20eq%20542&$format=json"),
-          odata("KNS_PersonToPosition?$filter=PersonID%20eq%20560&$format=json"),
-        ],
-      },
     ],
     legalCases: [],
   },
@@ -105,11 +93,8 @@ export const record: PartyRecordModule = {
       achievements: {
         "womens-work-amendment-37": {
           title: "חוק עבודת נשים (תיקון מס' 37), 2007",
-          summary: "יזם: ח\"כ דב חנין (חד\"ש); לפי משרד האוצר, העלות 220–400 מיליון ש\"ח בשנה.",
-        },
-        "income-tax-amendment-125": {
-          title: "תיקון פקודת מס הכנסה (מס' 125, הוראת שעה)",
-          summary: "בין היוזמים ח\"כ ברכה ומח'ול (חד\"ש) וטיבי (תע\"ל); אומדן העלות: כ-300 מיליון ש\"ח בשנה.",
+          summary: "האריך את חופשת הלידה ואת תקופת דמי הלידה מ-12 ל-14 שבועות.",
+          ledBy: "ח״כ דב חנין (חד״ש)",
         },
       },
       legalCases: {},
@@ -124,11 +109,8 @@ export const record: PartyRecordModule = {
       achievements: {
         "womens-work-amendment-37": {
           title: "Women's Work Law (Amendment 37), 2007",
-          summary: "Initiated by MK Dov Khenin (Hadash); Finance Ministry estimate: NIS 220–400 million a year.",
-        },
-        "income-tax-amendment-125": {
-          title: "Income Tax Ordinance (Amendment 125, Temporary Provision)",
-          summary: "Co-initiated by MKs Barakeh and Makhoul (Hadash) and Tibi (Ta'al); estimated cost: about NIS 300 million a year.",
+          summary: "Extended maternity leave and the maternity-benefit period from 12 to 14 weeks.",
+          ledBy: "MK Dov Khenin (Hadash)",
         },
       },
       legalCases: {},
@@ -143,11 +125,8 @@ export const record: PartyRecordModule = {
       achievements: {
         "womens-work-amendment-37": {
           title: "قانون عمل النساء (تعديل رقم 37)، 2007",
-          summary: "بادر إليه عضو الكنيست دوف حنين (الجبهة)، وتقدّر وزارة المالية كلفته بـ220–400 مليون شيكل سنويًا.",
-        },
-        "income-tax-amendment-125": {
-          title: "تعديل أمر ضريبة الدخل (رقم 125، حكم مؤقت)",
-          summary: "من مبادريه أعضاء الكنيست بركة ومخول (الجبهة) والطيبي (العربية للتغيير)، وكلفته المقدّرة نحو 300 مليون شيكل سنويًا.",
+          summary: "مدّد إجازة الولادة وفترة بدل الولادة من 12 إلى 14 أسبوعًا.",
+          ledBy: "عضو الكنيست دوف حنين (الجبهة)",
         },
       },
       legalCases: {},

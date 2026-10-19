@@ -79,6 +79,9 @@ export function buildPartyTrackRecord(
       throw missing("indicator");
     }
     if (item.type === "reform" && !itemText.scaleUnit) throw missing("scale unit");
+    if ((item.type === "legislation" || item.type === "major-legislation") && !itemText.ledBy) {
+      throw missing("ledBy");
+    }
     if (item.type === "agreement") {
       if (!itemText.primeMinister) throw missing("prime minister name");
       for (const step of item.steps ?? []) {

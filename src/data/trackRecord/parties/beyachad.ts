@@ -57,29 +57,25 @@ export const record: PartyRecordModule = {
     ],
     // §3.4 item 3: no law passes §3.3, so up to 3 major laws, credited to Yesh
     // Atid by name. Basic Laws first (newest first), then the largest cost.
+    // Verified #2, Basic Law: State Budget 2009–2013 (temporary provision)
+    // (Amendment 3), bill 480895, is left out as no longer in force (v1.7):
+    // Knesset data lists the Basic Law it amended as "נושן" (obsolete),
+    // KNS_IsraelLaw(2002342). The verified file names no further eligible law
+    // (committee bill 2223298 is not credited, v1.6).
     achievements: [
       {
         id: "basic-law-government-amendment-2014",
+        // v1.7 in-force check: Basic Law: The Government is in force (Knesset
+        // data). Parts of this amendment were later changed: the 19-minister and
+        // 4-deputy caps were removed by Amendment 8 (2020, bill 2087638) and
+        // ministers without portfolio restored by Amendment 3 (2015, bill
+        // 564215). Kept; flagged for contributor review.
         type: "major-legislation",
         role: "initiated",
         basicLaw: true,
         date: "2014-03-10",
         creditedTo: "yesh-atid",
         sources: [billRecord(479913), billInitiators(479913), billSession(479913), person(23640)],
-      },
-      {
-        id: "basic-law-state-budget-amendment-3-2013",
-        type: "major-legislation",
-        role: "sponsored",
-        basicLaw: true,
-        date: "2013-05-20",
-        creditedTo: "yesh-atid",
-        sources: [
-          billRecord(480895),
-          billSession(480895),
-          person(23594),
-          src("knesset", "https://fs.knesset.gov.il/19/Plenum/19_ptm_229649.doc"),
-        ],
       },
       {
         id: "dov-hoz-airport-law-2017",
@@ -106,15 +102,13 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-government-amendment-2014": {
           title: "חוק-יסוד: הממשלה (תיקון)",
-          summary: "הצעת חוק פרטית של ח״כ רונן הופמן מסיעת יש עתיד ושלושה חברי כנסת נוספים.",
-        },
-        "basic-law-state-budget-amendment-3-2013": {
-          title: "חוק-יסוד: תקציב המדינה 2009–2013 (תיקון מס' 3)",
-          summary: "הצעת חוק ממשלתית שהציג שר האוצר יאיר לפיד מיש עתיד.",
+          summary: "תיקון לחוק-יסוד: הממשלה.",
+          ledBy: "ח״כ רונן הופמן (יש עתיד) ואחרים",
         },
         "dov-hoz-airport-law-2017": {
           title: "חוק שדה התעופה דב הוז (הוראות מיוחדות), התשע\"ז-2017",
-          summary: "הצעת חוק פרטית של 69 חברי כנסת, תשעה מהם מסיעת יש עתיד.",
+          summary: "קובע ששדה דב ימשיך לשמש שדה תעופה אזרחי כל עוד מתקיימת בו פעילות תעופה צבאית.",
+          ledBy: "תשעה ח״כים מיש עתיד, מתוך 69 יוזמים",
         },
       },
       legalCases: {},
@@ -125,15 +119,13 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-government-amendment-2014": {
           title: "Basic Law: The Government (Amendment)",
-          summary: "Private bill initiated by MK Ronen Hoffman of the Yesh Atid faction and three other MKs.",
-        },
-        "basic-law-state-budget-amendment-3-2013": {
-          title: "Basic Law: State Budget 2009–2013 (Amendment 3)",
-          summary: "Government bill presented by Finance Minister Yair Lapid of Yesh Atid.",
+          summary: "Amends Basic Law: The Government.",
+          ledBy: "MK Ronen Hoffman (Yesh Atid) and others",
         },
         "dov-hoz-airport-law-2017": {
           title: "Dov Hoz Airport (Special Provisions) Law, 2017",
-          summary: "Private bill with 69 initiators, nine of them from the Yesh Atid faction.",
+          summary: "Keeps Sde Dov operating as a civilian airport for as long as military flights continue there.",
+          ledBy: "Nine Yesh Atid MKs, among 69 initiators",
         },
       },
       legalCases: {},
@@ -144,15 +136,13 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-government-amendment-2014": {
           title: "قانون أساس: الحكومة (تعديل)",
-          summary: "اقتراح قانون خاص بادر إليه عضو الكنيست رونين هوفمان من كتلة يش عتيد مع ثلاثة أعضاء آخرين.",
-        },
-        "basic-law-state-budget-amendment-3-2013": {
-          title: "قانون أساس: ميزانية الدولة 2009–2013 (التعديل رقم 3)",
-          summary: "اقتراح قانون حكومي قدّمه وزير المالية يائير لبيد من حزب يش عتيد.",
+          summary: "تعديل لقانون أساس: الحكومة.",
+          ledBy: "عضو الكنيست رونين هوفمان (يش عتيد) وآخرون",
         },
         "dov-hoz-airport-law-2017": {
           title: "قانون مطار دوف هوز (أحكام خاصة)، 2017",
-          summary: "اقتراح قانون خاص بادر إليه 69 عضو كنيست، تسعة منهم من كتلة يش عتيد.",
+          summary: "ينصّ على استمرار عمل مطار سديه دوف مطارًا مدنيًا ما دام النشاط الجوي العسكري قائمًا فيه.",
+          ledBy: "تسعة أعضاء كنيست من يش عتيد، من بين 69 مبادرًا",
         },
       },
       legalCases: {},

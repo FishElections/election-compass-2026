@@ -1,6 +1,6 @@
 # Track record: methodology
 
-**Version:** 1.6 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
+**Version:** 1.7 (2026-10-19; v1.0 approved 2026-10-17, see §8 for changes)
 **Applies to:** key achievements and the leader's legal record, for veteran parties.
 **Status:** once approved, this file is committed *before* any research starts. From that commit on, the rules are frozen.
 
@@ -159,6 +159,12 @@ independent data**, not our opinion of the goal. Each law shows its goal, the
 indicator, the before and after figures, and the evaluation's source.
 
 ### 3.4 Selection
+- **(v1.7) Laws must still be in force.** A law (§3.3 or item 3 below) that was
+  later repealed or replaced is not shown. Reforms keep item 4 (a later repeal
+  is stated on the card).
+- **(v1.7) Each law shows who led it** (the initiating MK or the presenting
+  minister, as named in the Knesset record) and **why it was included**.
+
 1. **Peace and normalization agreements:** all of them, always.
 2. **Reforms and legislation:** the qualifying items, up to 5 in total, newest first.
 3. **No legislation passes §3.3 (v1.3):** up to 3 laws the party initiated or
@@ -192,6 +198,11 @@ speaks for itself.
 ## 4. Leader's legal record
 
 Shown in its own section. It is about the leader (§2.2) personally, not the party.
+
+**(v1.7) Every party, veteran or not.** The legal-record section is shown for
+all parties on the site, including non-veteran ones, so every card is built
+the same way. When nothing is found, it says so (§4.4). Achievements remain
+for veteran parties only.
 
 ### 4.1 Scope
 **Criminal proceedings** against the leader personally, at any time:
@@ -290,6 +301,10 @@ party's own materials are not on the list either, so they are not cited.
 **Shown to visitors:** every item shows the source's name (the publisher, e.g.
 "Bank of Israel", "Knesset website") and a link to it.
 
+**Shown on the site (v1.7):** at most 3 links per item, one per publisher (no
+publisher twice), ordered official sources first, then evaluation bodies, then
+news outlets. All sources stay in the research reports.
+
 **Stored for every source:** the URL, the date it was accessed, and an archived
 copy (web.archive.org) when one can be made. The archived copy protects against
 broken links.
@@ -364,6 +379,11 @@ The rules are frozen at the commit that adds this file. A change needs:
   Adds the major-legislation rulings and the neutral sub-heading (§3.4).
   Applies to every party.
 
+- **v1.7 (2026-10-19):** decided by the contributor after reviewing the real
+  screens. Laws must still be in force; each law shows who led it and why it
+  was included (§3.4). The legal record is shown for every party (§4). The site
+  shows at most 3 sources per item, one per publisher, official first (§5).
+  Applies to every party.
 ---
 
 ## Appendix: decisions

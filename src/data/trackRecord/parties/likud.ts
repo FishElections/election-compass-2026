@@ -412,15 +412,18 @@ export const record: PartyRecordModule = {
         },
         "basic-law-jerusalem-amendment-3": {
           title: "חוק-יסוד: ירושלים בירת ישראל (תיקון מס' 3)",
-          summary: "הצעת חוק פרטית פ/2437/25; בין יוזמיה ח״כ דן אילוז (הליכוד).",
+          summary: "אוסר הקמת נציגויות רשמיות של מדינות זרות בירושלים, למעט שגרירויות המאומנות לישראל.",
+          ledBy: "ח״כ דן אילוז (הליכוד) ואחרים",
         },
         "basic-law-government-amendment-12": {
           title: "חוק־יסוד: הממשלה (תיקון מס' 12)",
-          summary: "הצעת חוק פרטית פ/2560/25; בין יוזמיה ח״כ אופיר כץ (הליכוד).",
+          summary: "קובע שנבצרות זמנית של ראש הממשלה תהיה רק בשל אי-מסוגלות פיזית או נפשית, באישורים מוגדרים.",
+          ledBy: "ח״כ אופיר כץ (הליכוד) ואחרים",
         },
         "basic-law-government-amendment-11": {
           title: "חוק-יסוד: הממשלה (תיקון מס' 11)",
-          summary: "הצעת חוק פרטית פ/81/25; בין יוזמיה ח״כ ניסים ואטורי (הליכוד).",
+          summary: "מאפשר למנות במשרד שר נוסף, האחראי לתחומים מסוימים בכפוף לשר הממונה על המשרד.",
+          ledBy: "ח״כ ניסים ואטורי (הליכוד) ואחרים",
         },
       },
       legalCases: {
@@ -493,15 +496,18 @@ export const record: PartyRecordModule = {
         },
         "basic-law-jerusalem-amendment-3": {
           title: "Basic Law: Jerusalem, Capital of Israel (Amendment 3)",
-          summary: "Private bill P/2437/25; initiators include Likud MK Dan Illouz.",
+          summary: "Bars official missions of foreign states in Jerusalem, except embassies accredited to Israel.",
+          ledBy: "MK Dan Illouz (Likud) and others",
         },
         "basic-law-government-amendment-12": {
           title: "Basic Law: The Government (Amendment No. 12)",
-          summary: "Private bill P/2560/25; initiators include Likud MK Ofir Katz.",
+          summary: "Limits declaring a prime minister temporarily incapacitated to physical or mental inability, with set approval steps.",
+          ledBy: "MK Ofir Katz (Likud) and others",
         },
         "basic-law-government-amendment-11": {
           title: "Basic Law: The Government (Amendment No. 11)",
-          summary: "Private bill P/81/25; initiators include Likud MK Nissim Vaturi.",
+          summary: "Allows appointing an additional minister in a ministry, responsible for set areas under the ministry's minister.",
+          ledBy: "MK Nissim Vaturi (Likud) and others",
         },
       },
       legalCases: {
@@ -574,15 +580,18 @@ export const record: PartyRecordModule = {
         },
         "basic-law-jerusalem-amendment-3": {
           title: "قانون أساس: القدس عاصمة إسرائيل (التعديل رقم 3)",
-          summary: "اقتراح قانون خاص (P/2437/25)؛ من مبادريه عضو الكنيست دان إيلوز (الليكود).",
+          summary: "يحظر إقامة ممثليات رسمية لدول أجنبية في القدس، باستثناء السفارات المعتمدة لدى إسرائيل.",
+          ledBy: "عضو الكنيست دان إيلوز (الليكود) وآخرون",
         },
         "basic-law-government-amendment-12": {
           title: "قانون أساس: الحكومة (التعديل رقم 12)",
-          summary: "اقتراح قانون خاص (P/2560/25)؛ من مبادريه عضو الكنيست أوفير كاتس (الليكود).",
+          summary: "يحصر إعلان تعذّر قيام رئيس الحكومة بمهامه مؤقتًا في العجز الجسدي أو النفسي، وفق إجراءات مصادقة محددة.",
+          ledBy: "عضو الكنيست أوفير كاتس (الليكود) وآخرون",
         },
         "basic-law-government-amendment-11": {
           title: "قانون أساس: الحكومة (التعديل رقم 11)",
-          summary: "اقتراح قانون خاص (P/81/25)؛ من مبادريه عضو الكنيست نيسيم فاتوري (الليكود).",
+          summary: "يتيح تعيين وزير إضافي في وزارة، مسؤول عن مجالات محددة بإشراف الوزير المسؤول عن الوزارة.",
+          ledBy: "عضو الكنيست نيسيم فاتوري (الليكود) وآخرون",
         },
       },
       legalCases: {

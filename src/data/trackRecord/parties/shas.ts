@@ -155,15 +155,18 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-government-amendment-12": {
           title: "חוק־יסוד: הממשלה (תיקון מס' 12)",
-          summary: "הצעת חוק פרטית פ/2560/25; בין יוזמיה ח״כ ינון אזולאי (ש״ס).",
+          summary: "קובע שנבצרות זמנית של ראש הממשלה תהיה רק בשל אי-מסוגלות פיזית או נפשית, באישורים מוגדרים.",
+          ledBy: "ח״כ ינון אזולאי (ש״ס) ואחרים",
         },
         "basic-law-government-amendment-11": {
           title: "חוק-יסוד: הממשלה (תיקון מס' 11)",
-          summary: "הצעת חוק פרטית פ/81/25; בין יוזמיה ח״כ משה ארבל (ש״ס).",
+          summary: "מאפשר למנות במשרד שר נוסף, האחראי לתחומים מסוימים בכפוף לשר הממונה על המשרד.",
+          ledBy: "ח״כ משה ארבל (ש״ס) ואחרים",
         },
         "basic-law-knesset-amendment-49": {
           title: "חוק-יסוד: הכנסת (תיקון מס' 49)",
-          summary: "הצעת חוק פרטית פ/868/23; בין יוזמיה ח״כ משה אבוטבול (ש״ס).",
+          summary: "מאפשר לשרים ולסגני שרים להפסיק את חברותם בכנסת בזמן כהונתם ולחזור אליה בסיומה (\"החוק הנורווגי\").",
+          ledBy: "ח״כ משה אבוטבול (ש״ס) ואחרים",
         },
       },
       legalCases: {
@@ -190,15 +193,18 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-government-amendment-12": {
           title: "Basic Law: The Government (Amendment No. 12)",
-          summary: "Private bill P/2560/25; initiators include Shas MK Yinon Azoulay.",
+          summary: "Limits declaring a prime minister temporarily incapacitated to physical or mental inability, with set approval steps.",
+          ledBy: "MK Yinon Azoulay (Shas) and others",
         },
         "basic-law-government-amendment-11": {
           title: "Basic Law: The Government (Amendment No. 11)",
-          summary: "Private bill P/81/25; initiators include Shas MK Moshe Arbel.",
+          summary: "Allows appointing an additional minister in a ministry, responsible for set areas under the ministry's minister.",
+          ledBy: "MK Moshe Arbel (Shas) and others",
         },
         "basic-law-knesset-amendment-49": {
           title: "Basic Law: The Knesset (Amendment No. 49)",
-          summary: "Private bill P/868/23; initiators include Shas MK Moshe Abutbul.",
+          summary: "Lets ministers and deputy ministers leave the Knesset while in office and return afterwards (the \"Norwegian Law\").",
+          ledBy: "MK Moshe Abutbul (Shas) and others",
         },
       },
       legalCases: {
@@ -225,15 +231,18 @@ export const record: PartyRecordModule = {
       achievements: {
         "basic-law-government-amendment-12": {
           title: "قانون أساس: الحكومة (التعديل رقم 12)",
-          summary: "اقتراح قانون خاص (P/2560/25)؛ من مبادريه عضو الكنيست ينون أزولاي (شاس).",
+          summary: "يحصر إعلان تعذّر قيام رئيس الحكومة بمهامه مؤقتًا في العجز الجسدي أو النفسي، وفق إجراءات مصادقة محددة.",
+          ledBy: "عضو الكنيست ينون أزولاي (شاس) وآخرون",
         },
         "basic-law-government-amendment-11": {
           title: "قانون أساس: الحكومة (التعديل رقم 11)",
-          summary: "اقتراح قانون خاص (P/81/25)؛ من مبادريه عضو الكنيست موشيه أربيل (شاس).",
+          summary: "يتيح تعيين وزير إضافي في وزارة، مسؤول عن مجالات محددة بإشراف الوزير المسؤول عن الوزارة.",
+          ledBy: "عضو الكنيست موشيه أربيل (شاس) وآخرون",
         },
         "basic-law-knesset-amendment-49": {
           title: "قانون أساس: الكنيست (التعديل رقم 49)",
-          summary: "اقتراح قانون خاص (P/868/23)؛ من مبادريه عضو الكنيست موشيه أبوطبول (شاس).",
+          summary: "يتيح للوزراء ونوابهم تعليق عضويتهم في الكنيست خلال توليهم المنصب والعودة إليها بعده (\"القانون النرويجي\").",
+          ledBy: "عضو الكنيست موشيه أبوطبول (شاس) وآخرون",
         },
       },
       legalCases: {

@@ -240,15 +240,18 @@ export const record: PartyRecordModule = {
         },
         "basic-law-nation-state": {
           title: "חוק-יסוד: ישראל – מדינת הלאום של העם היהודי",
-          summary: "הצעת חוק פרטית פ/1989/20 של 11 יוזמים; בין יוזמיה ח״כ רוברט אילטוב (ישראל ביתנו).",
+          summary: "מגדיר את ישראל כמדינת הלאום של העם היהודי.",
+          ledBy: "ח״כ רוברט אילטוב (ישראל ביתנו) ואחרים",
         },
         "basic-law-jerusalem-amendment-2": {
           title: "חוק-יסוד: ירושלים בירת ישראל (תיקון מס' 2)",
-          summary: "הצעת חוק פרטית פ/4346/20 של 22 יוזמים; בין יוזמיה ח״כ רוברט אילטוב (ישראל ביתנו).",
+          summary: "קובע שאת איסור העברת סמכויות בירושלים לגורם זר אפשר לשנות רק ברוב של 80 ח״כים.",
+          ledBy: "ח״כ רוברט אילטוב (ישראל ביתנו) ואחרים",
         },
         "basic-law-knesset-amendment-46": {
           title: "חוק-יסוד: הכנסת (תיקון מס' 46)",
-          summary: "הצעת חוק פרטית פ/2266/20; כל ארבעת יוזמיה היו ח״כים מסיעת ישראל ביתנו.",
+          summary: "מבהיר שמעשים שבגללם ניתן למנוע ממועמד להתמודד לכנסת כוללים גם התבטאויות.",
+          ledBy: "ח״כים פורר, לוי-אבקסיס, עאמר ואילטוב (ישראל ביתנו)",
         },
       },
       legalCases: {
@@ -287,15 +290,18 @@ export const record: PartyRecordModule = {
         },
         "basic-law-nation-state": {
           title: "Basic Law: Israel, Nation-State of the Jewish People",
-          summary: "Private bill P/1989/20 with 11 initiators, including Yisrael Beiteinu MK Robert Ilatov.",
+          summary: "Defines Israel as the nation-state of the Jewish people.",
+          ledBy: "MK Robert Ilatov (Yisrael Beiteinu) and others",
         },
         "basic-law-jerusalem-amendment-2": {
           title: "Basic Law: Jerusalem, Capital of Israel (Amendment 2)",
-          summary: "Private bill P/4346/20 with 22 initiators, including Yisrael Beiteinu MK Robert Ilatov.",
+          summary: "Requires a majority of 80 MKs to change the ban on transferring Jerusalem powers to a foreign body.",
+          ledBy: "MK Robert Ilatov (Yisrael Beiteinu) and others",
         },
         "basic-law-knesset-amendment-46": {
           title: "Basic Law: The Knesset (Amendment No. 46)",
-          summary: "Private bill P/2266/20; all four initiators were Yisrael Beiteinu MKs.",
+          summary: "Clarifies that the acts that can bar a candidate from Knesset elections include statements.",
+          ledBy: "MKs Forer, Levy-Abekasis, Amar and Ilatov (Yisrael Beiteinu)",
         },
       },
       legalCases: {
@@ -334,15 +340,18 @@ export const record: PartyRecordModule = {
         },
         "basic-law-nation-state": {
           title: "قانون أساس: إسرائيل – الدولة القومية للشعب اليهودي",
-          summary: "اقتراح قانون خاص (P/1989/20) بمبادرة 11 عضوًا؛ من مبادريه عضو الكنيست روبرت إيلاتوف (إسرائيل بيتنا).",
+          summary: "يعرّف إسرائيل بوصفها الدولة القومية للشعب اليهودي.",
+          ledBy: "عضو الكنيست روبرت إيلاتوف (إسرائيل بيتنا) وآخرون",
         },
         "basic-law-jerusalem-amendment-2": {
           title: "قانون أساس: القدس عاصمة إسرائيل (التعديل رقم 2)",
-          summary: "اقتراح قانون خاص (P/4346/20) بمبادرة 22 عضوًا؛ من مبادريه عضو الكنيست روبرت إيلاتوف (إسرائيل بيتنا).",
+          summary: "يشترط أغلبية 80 عضو كنيست لتغيير حظر نقل صلاحيات في القدس إلى جهة أجنبية.",
+          ledBy: "عضو الكنيست روبرت إيلاتوف (إسرائيل بيتنا) وآخرون",
         },
         "basic-law-knesset-amendment-46": {
           title: "قانون أساس: الكنيست (التعديل رقم 46)",
-          summary: "اقتراح قانون خاص (P/2266/20)؛ مبادروه الأربعة جميعًا أعضاء كنيست من كتلة إسرائيل بيتنا.",
+          summary: "يوضح أن الأفعال التي قد تمنع مرشحًا من خوض انتخابات الكنيست تشمل تصريحاته أيضًا.",
+          ledBy: "أعضاء الكنيست فورر وليفي-أبكاسيس وعامر وإيلاتوف (إسرائيل بيتنا)",
         },
       },
       legalCases: {

@@ -130,25 +130,27 @@ describe("veteran status (§2.4)", () => {
     expect(isVeteran(record({ knessetPeriods: [{ knesset: 1, from, to: dayShort, sources: [] }] }))).toBe(false);
   });
 
-  test("a veteran party with no legal cases must list the sources checked (v1.2)", () => {
+  test("every party with no legal cases must list the sources checked (v1.2, v1.7)", () => {
     expect(errorsFor(record({ legalSourcesChecked: [] }))).toContainEqual(
       expect.stringContaining("legal sources checked: no source")
     );
   });
 
-  test("a non-veteran record needs only its Knesset periods", () => {
+  test("every party needs a sourced leader, veteran or not (v1.7)", () => {
     const short = [{ knesset: 1, from: "2025-01-01", sources: [knessetSrc] }];
-    expect(
-      errorsFor(record({ knessetPeriods: short, achievements: [], leaderSources: [], legalSourcesChecked: [] }))
-    ).toEqual([]);
+    expect(errorsFor(record({ knessetPeriods: short, achievements: [], leaderSources: [] }))).toContainEqual(
+      expect.stringContaining("leader: no source")
+    );
   });
 
-  test("a non-veteran party cannot carry achievements or legal cases", () => {
+  test("a non-veteran party has a legal record but no achievements (v1.7)", () => {
     const short = [{ knesset: 1, from: "2025-01-01", sources: [knessetSrc] }];
     expect(errorsFor(record({ knessetPeriods: short }))).toContainEqual(
       expect.stringContaining("not a veteran party")
     );
-    expect(errorsFor(record({ knessetPeriods: short, achievements: [] }))).toEqual([]);
+    const court = src("courts", "https://supreme.court.gov.il/fixture");
+    const legalCase = { id: "c", jurisdiction: "IL", status: "closed" as const, since: "2010-01-01", endedOn: "2011-01-01", statusConfirmed: true, sources: [court] };
+    expect(errorsFor(record({ knessetPeriods: short, achievements: [], legalCases: [legalCase] }))).toEqual([]);
   });
 
   test("a period held by a predecessor must name a documented predecessor (§2.3)", () => {
@@ -312,13 +314,28 @@ describe("achievements (§3)", () => {
     ).toEqual([]);
   });
 
-  test("a repealed item still counts, but the repeal must be dated and sourced (v1.3)", () => {
+  test("a repealed reform still counts, with a dated, sourced repeal (v1.3)", () => {
+    const reform = (repealDate: string): AchievementCore => ({
+      id: "reform-r",
+      type: "reform",
+      role: "led",
+      nationwide: true,
+      date: "2015-03-01",
+      sources: [govSrc],
+      scale: { kind: "budget", value: 1, sources: [govSrc] },
+      impact: law().impact,
+      repealed: { date: repealDate, sources: [knessetSrc] },
+    });
+    expect(errorsFor(record({ achievements: [reform("2019-01-01")] }))).toEqual([]);
+    expect(errorsFor(record({ achievements: [reform("2014-01-01")] }))).toContainEqual(
+      expect.stringContaining("repealed before it was made")
+    );
+  });
+
+  test("a repealed or replaced law is not shown (v1.7)", () => {
     expect(
       errorsFor(record({ achievements: [law({ repealed: { date: "2019-01-01", sources: [knessetSrc] } })] }))
-    ).toEqual([]);
-    expect(
-      errorsFor(record({ achievements: [law({ repealed: { date: "2014-01-01", sources: [knessetSrc] } })] }))
-    ).toContainEqual(expect.stringContaining("repealed before it was made"));
+    ).toContainEqual(expect.stringContaining("repealed or replaced law is not shown"));
   });
 
   test("major legislation: only without a proven law, at most 3, ranked by rule (v1.3)", () => {

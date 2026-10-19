@@ -98,6 +98,10 @@ export const record: PartyRecordModule = {
       // bill 132198 is excluded (member party not sourced, no URL).
       {
         id: "basic-law-government-amendment-8-2020",
+        // v1.7 in-force check: still in force on the snapshot date. Its
+        // alternate-government arrangement is repealed from the start of the
+        // 26th Knesset (2026-11-10) by Basic Law: The Government (Amendment 13),
+        // bill 2223298 (Knesset data). Kept; flagged for contributor review.
         type: "major-legislation",
         role: "initiated",
         basicLaw: true,
@@ -146,11 +150,13 @@ export const record: PartyRecordModule = {
         },
         "basic-law-government-amendment-8-2020": {
           title: "חוק-יסוד: הממשלה (תיקון מס' 8 והוראת שעה)",
-          summary: "הצעת חוק פרטית; בין היוזמים ח״כ איציק שמולי מסיעת העבודה.",
+          summary: "מעגן ממשלת חילופים (רוטציה) עם ראש ממשלה וראש ממשלה חלופי.",
+          ledBy: "ח״כ איציק שמולי (העבודה) ואחרים",
         },
         "basic-law-knesset-amendment-41-2014": {
           title: "חוק-יסוד: הכנסת (תיקון מס' 41)",
-          summary: "הצעת חוק פרטית של ח״כ מיכל בירן מסיעת העבודה וח״כ יריב לוין.",
+          summary: "תיקון לחוק-יסוד: הכנסת.",
+          ledBy: "ח״כ מיכל בירן (העבודה) ואחרים",
         },
       },
       legalCases: {
@@ -171,11 +177,13 @@ export const record: PartyRecordModule = {
         },
         "basic-law-government-amendment-8-2020": {
           title: "Basic Law: The Government (Amendment 8, Temporary Provision)",
-          summary: "Private bill; its initiators included MK Itzik Shmuli of the Labor faction.",
+          summary: "Sets up a rotation (\"alternate\") government with a prime minister and an alternate prime minister.",
+          ledBy: "MK Itzik Shmuli (Labor) and others",
         },
         "basic-law-knesset-amendment-41-2014": {
           title: "Basic Law: The Knesset (Amendment 41)",
-          summary: "Private bill initiated by MK Michal Biran of the Labor faction and MK Yariv Levin.",
+          summary: "Amends Basic Law: The Knesset.",
+          ledBy: "MK Michal Biran (Labor) and others",
         },
       },
       legalCases: {
@@ -196,11 +204,13 @@ export const record: PartyRecordModule = {
         },
         "basic-law-government-amendment-8-2020": {
           title: "قانون أساس: الحكومة (التعديل رقم 8 وأمر مؤقت)",
-          summary: "اقتراح قانون خاص؛ من بين المبادرين إليه عضو الكنيست إيتسيك شمولي من كتلة العمل.",
+          summary: "يرسّخ حكومة تناوب برئيس حكومة ورئيس حكومة بديل.",
+          ledBy: "عضو الكنيست إيتسيك شمولي (العمل) وآخرون",
         },
         "basic-law-knesset-amendment-41-2014": {
           title: "قانون أساس: الكنيست (التعديل رقم 41)",
-          summary: "اقتراح قانون خاص بادرت إليه عضو الكنيست ميخال بيران من كتلة العمل مع عضو الكنيست ياريف ليفين.",
+          summary: "تعديل لقانون أساس: الكنيست.",
+          ledBy: "عضو الكنيست ميخال بيران (العمل) وآخرون",
         },
       },
       legalCases: {
