@@ -17,7 +17,7 @@ function LinkedinIcon({ className }: { className?: string }) {
 }
 
 // Client wrapper so the LinkedIn click can fire a GA event tagged with which
-// person's profile was opened (ohad / itay).
+// person's profile was opened (ohad / itay / liron).
 export function LinkedinLink({
   href,
   person,

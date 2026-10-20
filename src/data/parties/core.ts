@@ -412,41 +412,6 @@ export const partiesCore: PartyCore[] = [
     ]
   },
   {
-    "id": "kachol-lavan",
-    "color": "#1d4ed8",
-    "spectrumCategory": "center",
-    "logo": "כן",
-    "logoImageUrl": "/party_logos/kachol-lavan.png",
-    "officialBallotLetter": {
-      "letters": "כן",
-      "confirmedAt": "2026-09-27",
-      "source": "https://www.ynet.co.il/news/article/s1ibdii5fe"
-    },
-    "sectors": ["jewish", "non-religious"],
-    "bloc": {
-      "stance": "anti-netanyahu",
-      "asOf": "2026-07-22",
-      "source": "https://www.haaretz.com/israel-news/elections/2026-07-22/ty-article/israel-election-poll-the-democrats-hold-steady-as-arab-parties-gain-ground/0000019f-86d5-ded0-abdf-a6d5fe220000"
-    },
-    "platform": [
-      {
-        "topicKey": "security"
-      },
-      {
-        "topicKey": "economy"
-      },
-      {
-        "topicKey": "justice"
-      },
-      {
-        "topicKey": "religionAndState"
-      },
-      {
-        "topicKey": "society"
-      }
-    ]
-  },
-  {
     "id": "amcha-yisrael",
     "color": "#9a3412",
     "spectrumCategory": "right",

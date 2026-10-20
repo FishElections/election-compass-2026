@@ -26,6 +26,9 @@ import { categoriesCore, questionsCore } from "@/data/questions/core";
 import { partiesCore } from "@/data/parties/core";
 import { topicsCore } from "@/data/hotTopics/core";
 import { counterArgumentsCore } from "@/data/counterArguments/core";
+import { getPartyTrackRecord, getPublisherNames } from "@/data/trackRecord";
+import { trackRecordCore } from "@/data/trackRecord/core";
+import { sourcePublisherIds } from "@/data/trackRecord/sources";
 
 /**
  * Fails the build the moment a locale is registered in src/i18n/config.ts
@@ -78,6 +81,16 @@ for (const { code } of locales) {
     test("every platform topic has a label", () => {
       const topics = getPlatformTopics(code);
       expect(topics.every((t) => t.label)).toBe(true);
+    });
+    test("every source publisher has a name", () => {
+      const names = getPublisherNames(code);
+      for (const id of sourcePublisherIds) expect(names[id], id).toBeTruthy();
+    });
+    test("every track record is fully translated", () => {
+      // getPartyTrackRecord throws on any missing achievement, case or predecessor text.
+      for (const partyId of Object.keys(trackRecordCore)) {
+        expect(getPartyTrackRecord(code, partyId), partyId).toBeDefined();
+      }
     });
     test("election guide content is fully translated", () => {
       expect(getToyParties(code).every((p) => p.name)).toBe(true);

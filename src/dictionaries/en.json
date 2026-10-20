@@ -492,6 +492,13 @@
         "Itay Eylath"
       ]
     },
+    "contributors": {
+      "heading": "Code contributors",
+      "intro": "Thanks to those who volunteered code to the project.",
+      "names": [
+        "Liron Katz Goldman"
+      ]
+    },
     "feedback": {
       "heading": "Got feedback?",
       "body": "We'd love to hear what's working well and what could be better.",
@@ -569,5 +576,68 @@
       "ogDescription": "Try out the different scenarios yourself 🧐"
     },
     "simulating": "Simulating…"
+  },
+  "trackRecord": {
+    "asOf": "As of {date}",
+    "notApplicable": "Not applicable: the party has not yet served a full Knesset term.",
+    "sourcesLabel": "Sources",
+    "achievements": {
+      "heading": "Public record (key achievements)",
+      "empty": "No achievement met our evidence standard.",
+      "standardTitle": "How we chose these",
+      "standard": "Peace and normalization agreements signed when the prime minister was from the party. Reforms and laws that an official body measured and found met their own goal. If none of the party's laws has a measured impact, we list up to 3 of its main laws by a fixed rule (Basic Laws first, then the largest official cost), even if their impact was not measured, so every party's legislative work is visible. Only laws still in force are shown.",
+      "agreementsHeading": "Peace and normalization agreements",
+      "peace": "Peace agreement",
+      "normalization": "Normalization agreement",
+      "signedUnder": "Signed under Prime Minister {pm} ({party})",
+      "continues": "{predecessor}, which {party} continues",
+      "neverInForce": "Signed; never took effect",
+      "includes": "Includes: {step} ({date})",
+      "provenHeading": "Reforms and laws with proven impact",
+      "reform": "Reform",
+      "law": "Law",
+      "evaluatedBy": "Evaluation:",
+      "scale": "Scale: {value} {unit}",
+      "repealed": "Repealed on {date}",
+      "majorHeading": "Major laws the party led (impact not evaluated)",
+      "basicLaw": "Basic Law",
+      "initiated": "Initiated by the party",
+      "sponsored": "Sponsored by the party's minister",
+      "ledBy": "Led by: {name}",
+      "whyBasicLaw": "Why it's here: a Basic Law (constitutional-level).",
+      "whyCost": "Why it's here: one of the party's largest official cost estimates ({value})."
+    },
+    "legal": {
+      "heading": "Party leader's legal record",
+      "intro": "All formally started criminal proceedings against {leader} personally, open and concluded, in Israel and abroad. This is the leader's personal record, not the party's.",
+      "open": "Open proceedings",
+      "concluded": "Concluded proceedings",
+      "countOpen": "Open: {n}",
+      "countConcluded": "Concluded: {n}",
+      "empty": "No criminal proceedings were found in the sources we checked.",
+      "sourcesCheckedTitle": "Sources we checked",
+      "presumption": "Presumption of innocence: every person is innocent until proven guilty by a final judgment.",
+      "notConfirmed": "Current status not confirmed. Last confirmed: {status} on {date}.",
+      "since": "Since {date}",
+      "period": "{from} – {to}",
+      "moralTurpitude": "The court ruled that the offense involves moral turpitude.",
+      "icc": "International Criminal Court",
+      "statuses": {
+        "under-investigation": "Under investigation",
+        "arrest-warrant-requested": "Arrest warrant requested",
+        "arrest-warrant-issued": "Arrest warrant issued",
+        "indictment-pending-hearing": "Decision to indict, subject to a hearing",
+        "on-trial": "Indicted / on trial",
+        "convicted-appeal-pending": "Convicted, appeal pending",
+        "convicted-final": "Convicted (final)",
+        "convicted-plea-final": "Convicted under a plea agreement (final)",
+        "acquitted": "Acquitted",
+        "pardoned": "Pardoned",
+        "closed": "Case closed",
+        "ended-other": "Ended (as described by the source)"
+      },
+      "periodEndUnknown": "{from} – end date not confirmed",
+      "scopeTitle": "What's included"
+    }
   }
 }

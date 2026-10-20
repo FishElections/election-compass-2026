@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ChevronLeft } from "lucide-react";
 import { getParties, HIDDEN_FROM_PLATFORMS } from "@/data/parties";
+import { getPartyTrackRecord } from "@/data/trackRecord";
+import { TrackRecordSections } from "@/components/trackRecord/TrackRecordSections";
 import { partiesCore } from "@/data/parties/core";
 import { getPlatformTopics } from "@/data/platformTopics";
 import { PartyLogo } from "@/components/PartyLogo";
@@ -198,6 +200,14 @@ export default async function PartyProfilePage({
         ) : (
           <div className="mt-8 rounded-xl border border-sapphire/20 bg-sapphire/5 p-5 text-sm text-navy">
             {t.noPlatformNote}
+          </div>
+        )}
+
+        {/* Veteran-party track record and leader's legal record
+            (docs/track-record-methodology.md). */}
+        {getPartyTrackRecord(lang, party.id) && (
+          <div className="mt-10">
+            <TrackRecordSections party={party} />
           </div>
         )}
       </div>

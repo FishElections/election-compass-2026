@@ -694,69 +694,6 @@ export const partiesTextEn: Record<string, PartyTextHe> = {
       }
     ]
   },
-  "kachol-lavan": {
-    "name": "Blue and White",
-    "leader": "Benny Gantz",
-    "spectrum": "Security-oriented statist center",
-    "shortDescription": "A centrist party led by Benny Gantz, formed around senior former military officials, combining an assertive security approach with statism, good governance, and preserving state institutions.",
-    "platform": [
-      {
-        "topicKey": "security",
-        "topicName": "Security & Foreign Policy",
-        "summary": "Tough, professional security grounded in senior military experience.",
-        "bulletPoints": [
-          "Strong military deterrence against Iran and regional terror groups",
-          "Transferring civilian responsibility in Gaza to a non-Israeli body in the long term",
-          "Close ties and full coordination with the US",
-          "Strengthening settlement in the Jordan Valley, the mountain ridge and the seam zone, with no evacuations"
-        ]
-      },
-      {
-        "topicKey": "economy",
-        "topicName": "Economy & Cost of Living",
-        "summary": "Responsible, transparent economic management, with focused support for essential public services.",
-        "bulletPoints": [
-          "Ending coalition funds and moving to equitable, transparent budgeting",
-          "Extensive investment in health, education, and scientific research",
-          "Focused support for the middle class and reservists",
-          "Responsible budget management while maintaining fiscal stability"
-        ]
-      },
-      {
-        "topicKey": "justice",
-        "topicName": "Judiciary & Governance",
-        "summary": "Regulating relations between the branches without bringing politics into legal decisions.",
-        "bulletPoints": [
-          "A Basic Law: Legislation as the first step toward a broadly agreed constitutional process",
-          "Limiting the court's ability to intervene in government decisions, while opposing politicization",
-          "No one indicted for serious offenses may serve as prime minister",
-          "A state commission of inquiry into October 7 under the existing mechanism"
-        ]
-      },
-      {
-        "topicKey": "religionAndState",
-        "topicName": "Religion & State",
-        "summary": "Equal burden and civic statehood, alongside respect for the state's Jewish identity.",
-        "bulletPoints": [
-          "\"Service for all\" as a condition for swearing in any government",
-          "Exemptions only for outstanding individuals within quotas, and economic sanctions on draft evaders",
-          "Opening the kashrut market to private competition",
-          "Respecting the diversity of ways of life"
-        ]
-      },
-      {
-        "topicKey": "society",
-        "topicName": "Society & Education",
-        "summary": "National solidarity, good governance, and care for the wounded and families of the war.",
-        "bulletPoints": [
-          "Comprehensive care for the war's wounded and bereaved families",
-          "Promoting adequate representation for women in public service",
-          "Investment in public education and the periphery",
-          "Strengthening public trust in state institutions"
-        ]
-      }
-    ]
-  },
   "amcha-yisrael": {
     "name": "Amcha Yisrael",
     "leader": "Ofer Winter",

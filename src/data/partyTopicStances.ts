@@ -107,17 +107,6 @@ export const partyTopicStances: PartyTopicStance[] = [
   },
   { partyId: "religious-zionism", topicId: "economy-model", side: "pro" },
 
-  // כחול לבן
-  { partyId: "kachol-lavan", topicId: "haredi-draft", side: "pro" },
-  { partyId: "kachol-lavan", topicId: "gaza-control", side: "con" },
-  { partyId: "kachol-lavan", topicId: "judicial-reform", side: "con" },
-  {
-    partyId: "kachol-lavan",
-    topicId: "religion-state-separation",
-    side: "pro",
-  },
-  { partyId: "kachol-lavan", topicId: "economy-model", side: "pro" },
-
   // עמך ישראל
   { partyId: "amcha-yisrael", topicId: "haredi-draft", side: "pro" },
   { partyId: "amcha-yisrael", topicId: "gaza-control", side: "pro" },
