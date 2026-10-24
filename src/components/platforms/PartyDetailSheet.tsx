@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/accordion";
 import { useDictionary } from "@/i18n/DictionaryProvider";
 import { TrackRecordItems } from "@/components/trackRecord/TrackRecordSections";
+import { CandidateListItem } from "@/components/candidates/CandidateList";
 import { trackEvent } from "@/lib/analytics";
 
 /** מרחק (px) או מהירות (px/s) של גרירה כלפי מטה שסוגרים את הגיליון בנייד. */
@@ -243,6 +244,7 @@ export function PartyDetailSheet({
                           ))}
                           {/* Same accordion as the topics: one section open at a time. */}
                           <TrackRecordItems party={renderedParty} />
+                          <CandidateListItem party={renderedParty} />
                         </Accordion>
                       </div>
                     </motion.div>

@@ -203,8 +203,8 @@ export default async function PartyProfilePage({
           </div>
         )}
 
-        {/* Veteran-party track record and leader's legal record
-            (docs/track-record-methodology.md). */}
+        {/* Veteran-party track record, leader's legal record
+            (docs/track-record-methodology.md) and the candidate list. */}
         {getPartyTrackRecord(lang, party.id) && (
           <div className="mt-10">
             <TrackRecordSections party={party} />
