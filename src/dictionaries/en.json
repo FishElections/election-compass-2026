@@ -340,9 +340,9 @@
     }
   },
   "platforms": {
-    "pageTitle": "Party Platforms for the 2026 Elections, in Brief",
+    "pageTitle": "Elections 2026 – Everything You Wanted to Know About the Parties",
     "pageDescription": "A summary of the positions of parties running in the 2026 elections, topic by topic: security, economy, judiciary, religion and state, and society.",
-    "heading": "Party Platform Summaries for the 2026 Elections",
+    "heading": "Elections 2026 – Everything You Wanted to Know About the Parties",
     "subtitle": "A neutral, concise, and comprehensive overview of party positions on core issues.",
     "searchPlaceholder": "Search by party name or leader",
     "allFilter": "All",
@@ -639,5 +639,23 @@
       "periodEndUnknown": "{from} – end date not confirmed",
       "scopeTitle": "What's included"
     }
+  },
+  "candidateList": {
+    "heading": "Candidate list",
+    "count": "{n} candidates",
+    "womenLabel": "Women in realistic places",
+    "womenTitle": "What this means",
+    "womenText": "The share of women in the list's realistic places: the first {places} places, which the list was expected to win based on an average of {polls} polls (from {from} to {to}). Figure from the {source}.",
+    "womenSource": "Israel Democracy Institute",
+    "womenNoData": "Insufficient data",
+    "showAll": "Show the full list ({n} more)",
+    "showTop": "Show only the first {n}",
+    "namesNote": "Names in Hebrew, exactly as on the official list (surname first).",
+    "linksNote": "A linked name leads to the candidate's page on the party's website. No link: we found no page on the party's website.",
+    "source": "Official list, Central Elections Committee",
+    "sourceLink": "Source",
+    "dates": "Updated by the committee: {updated} · Checked: {checked}",
+    "noticesTitle": "Elections Committee notices",
+    "newTab": "(opens in a new tab)"
   }
 }

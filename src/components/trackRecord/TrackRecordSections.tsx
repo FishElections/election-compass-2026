@@ -96,7 +96,7 @@ function SourceLinks({ sources }: { sources: SourceRef[] }) {
 }
 
 /** The site's explanation box (same look as the hot-topics sheet). */
-function ExplainBox({ title, children }: { title: string; children: React.ReactNode }) {
+export function ExplainBox({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="rounded-xl border border-sapphire/20 bg-sapphire/5 p-4">
       <p className="mb-1 flex items-center gap-1.5 text-xs font-bold text-sapphire">
