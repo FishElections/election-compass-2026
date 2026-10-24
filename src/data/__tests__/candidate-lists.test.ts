@@ -6,7 +6,7 @@ import {
   WOMEN_SOURCE,
   womenRepresentation,
 } from "@/data/candidateLists/core";
-import { candidateLinks } from "@/data/candidateLists/links";
+import { candidateLinks, wikipediaLinks } from "@/data/candidateLists/links";
 import { candidateListsCore } from "@/data/candidateLists/parties/registry";
 import he from "@/dictionaries/he.json";
 import en from "@/dictionaries/en.json";
@@ -60,6 +60,19 @@ describe("candidate lists", () => {
         expect(url, `${id} #${place}`).toMatch(/^https:\/\//);
         expect(banned.test(host), `${id} #${place}`).toBe(false);
         expect(links.officialHosts.includes(host), `${id} #${place}: ${host}`).toBe(true);
+      }
+    }
+  });
+
+  test("Wikipedia is used only where the party's site has no page", () => {
+    for (const [id, byPlace] of Object.entries(wikipediaLinks)) {
+      const list = candidateListsCore[id];
+      expect(list, id).toBeDefined();
+      for (const [place, url] of Object.entries(byPlace)) {
+        const n = Number(place);
+        expect(n >= 1 && n <= Math.min(TOP_PLACES, list.names.length), `${id} #${place}`).toBe(true);
+        expect(url, `${id} #${place}`).toMatch(/^https:\/\/he\.wikipedia\.org\/wiki\/[^#?]+$/);
+        expect(candidateLinks[id]?.byPlace[n], `${id} #${place} has a party page`).toBeUndefined();
       }
     }
   });

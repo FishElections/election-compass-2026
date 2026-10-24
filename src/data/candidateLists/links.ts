@@ -1,14 +1,91 @@
 /**
- * Links from a top-20 candidate to their own page on their party's official
- * website. Party websites only (never Wikipedia, social media or news); a
- * candidate with no such page has no entry and is shown without a link.
+ * Links from a top-20 candidate to a page about them: their own page on their
+ * party's official website first; only when there is none, their Hebrew
+ * Wikipedia article. Never social media or news. A candidate with neither is
+ * shown without a link.
  */
 export interface PartyCandidateLinks {
   /** The party's official website; every link must be on one of these hosts. */
   officialHosts: string[];
-  /** Place on the list (1–20) → the candidate's page. */
+  /** Place on the list (1–20) → the candidate's page on the party's site. */
   byPlace: Record<number, string>;
 }
+
+/** Place (1–20) → Hebrew Wikipedia article, only where the party site has no page. */
+// Checked on 2026-10-24: each article exists, is not a disambiguation page,
+// and its text ties the person to this party or its leaders.
+export const wikipediaLinks: Record<string, Record<number, string>> = {
+  "hademocratim": {
+    2: "https://he.wikipedia.org/wiki/נעמה_לזימי",
+    3: "https://he.wikipedia.org/wiki/גלעד_קריב",
+    4: "https://he.wikipedia.org/wiki/אפרת_רייטן",
+    5: "https://he.wikipedia.org/wiki/יאיא_פינק",
+    6: "https://he.wikipedia.org/wiki/גבי_לסקי",
+    7: "https://he.wikipedia.org/wiki/עמרי_רונן_(פעיל_חברתי)",
+    8: "https://he.wikipedia.org/wiki/מיכל_רוזין",
+    9: "https://he.wikipedia.org/wiki/משה_רדמן_אבוטבול",
+    10: "https://he.wikipedia.org/wiki/סומיה_בשיר",
+    11: "https://he.wikipedia.org/wiki/נמרוד_שפר",
+    12: "https://he.wikipedia.org/wiki/מורן_זר_קצנשטיין",
+    13: "https://he.wikipedia.org/wiki/אבי_דבוש",
+    14: "https://he.wikipedia.org/wiki/אמילי_מואטי",
+    15: "https://he.wikipedia.org/wiki/תומר_אביטל",
+    16: "https://he.wikipedia.org/wiki/נאווה_רוזוליו",
+    17: "https://he.wikipedia.org/wiki/רם_שפע",
+    18: "https://he.wikipedia.org/wiki/עלי_סלאלחה",
+    20: "https://he.wikipedia.org/wiki/ערן_עציון",
+  },
+  "otzma-yehudit": {
+    1: "https://he.wikipedia.org/wiki/איתמר_בן_גביר",
+    2: "https://he.wikipedia.org/wiki/טלי_גוטליב",
+    3: "https://he.wikipedia.org/wiki/יצחק_וסרלאוף",
+    4: "https://he.wikipedia.org/wiki/עמיחי_אליהו",
+    5: "https://he.wikipedia.org/wiki/לימור_סון_הר-מלך",
+    6: "https://he.wikipedia.org/wiki/יצחק_קרויזר",
+    12: "https://he.wikipedia.org/wiki/ישי_פליישר",
+  },
+  "raam": {
+    1: "https://he.wikipedia.org/wiki/מנסור_עבאס",
+    2: "https://he.wikipedia.org/wiki/יואב_סגלוביץ",
+    3: "https://he.wikipedia.org/wiki/וליד_טאהא",
+    4: "https://he.wikipedia.org/wiki/ואליד_אלהואשלה",
+    5: "https://he.wikipedia.org/wiki/אימאן_ח'טיב-יאסין",
+    6: "https://he.wikipedia.org/wiki/יאסר_חוג'יראת",
+  },
+  "religious-zionism": {
+    5: "https://he.wikipedia.org/wiki/צביקה_מור",
+    14: "https://he.wikipedia.org/wiki/עומר_רחמים",
+  },
+  "shas": {
+    1: "https://he.wikipedia.org/wiki/אריה_דרעי",
+    2: "https://he.wikipedia.org/wiki/ינון_אזולאי",
+    3: "https://he.wikipedia.org/wiki/מיכאל_מלכיאלי",
+    4: "https://he.wikipedia.org/wiki/יואב_בן_צור",
+    5: "https://he.wikipedia.org/wiki/חיים_ביטון",
+    7: "https://he.wikipedia.org/wiki/משה_אבוטבול",
+    8: "https://he.wikipedia.org/wiki/אוריאל_בוסו",
+    9: "https://he.wikipedia.org/wiki/יוסי_טייב",
+    10: "https://he.wikipedia.org/wiki/יונתן_מישרקי",
+    12: "https://he.wikipedia.org/wiki/ארז_מלול",
+    13: "https://he.wikipedia.org/wiki/סימיון_מושיאשוילי",
+  },
+  "yahadut-hatorah": {
+    1: "https://he.wikipedia.org/wiki/יעקב_אשר",
+    2: "https://he.wikipedia.org/wiki/יצחק_גולדקנופף",
+    3: "https://he.wikipedia.org/wiki/יצחק_פינדרוס",
+    4: "https://he.wikipedia.org/wiki/מאיר_פרוש",
+    7: "https://he.wikipedia.org/wiki/יהודה_וייספיש",
+    8: "https://he.wikipedia.org/wiki/יעקב_טסלר",
+    11: "https://he.wikipedia.org/wiki/משה_רוט",
+    12: "https://he.wikipedia.org/wiki/אליהו_ברוכי",
+    13: "https://he.wikipedia.org/wiki/ישראל_פרוש",
+    14: "https://he.wikipedia.org/wiki/יצחק_רייך",
+    16: "https://he.wikipedia.org/wiki/יעקב_אשר_גוטרמן",
+    17: "https://he.wikipedia.org/wiki/יוסי_דייטש",
+    18: "https://he.wikipedia.org/wiki/שמואל_גרינברג",
+    20: "https://he.wikipedia.org/wiki/יצחק_רביץ",
+  },
+};
 
 // Checked on 2026-10-24: every link loaded and showed the candidate's name.
 export const candidateLinks: Record<string, PartyCandidateLinks> = {

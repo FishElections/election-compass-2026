@@ -11,12 +11,11 @@ import {
   type Candidate,
 } from "@/data/candidateLists";
 import {
-  Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ExplainBox } from "@/components/trackRecord/TrackRecordSections";
+import { ExplainBox } from "@/components/ExplainBox";
 import { useDictionary } from "@/i18n/DictionaryProvider";
 
 /**
@@ -75,12 +74,7 @@ export function CandidateListItem({ party }: { party: Party }) {
   return (
     <AccordionItem value="candidate-list">
       <AccordionTrigger>
-        <span className="inline-flex items-center gap-2">
-          {t.heading}
-          <span className="inline-block whitespace-nowrap rounded-full bg-gray px-2.5 py-0.5 text-xs font-bold text-navy">
-            {fill(t.count, { n: number.format(total) })}
-          </span>
-        </span>
+        {t.heading}
       </AccordionTrigger>
       <AccordionContent>
         <div className="flex items-baseline justify-between gap-3 pb-3">
@@ -166,15 +160,5 @@ export function CandidateListItem({ party }: { party: Party }) {
         )}
       </AccordionContent>
     </AccordionItem>
-  );
-}
-
-/** Profile page: the same section, open, in its own accordion. */
-export function CandidateListSection({ party }: { party: Party }) {
-  if (!getCandidateList(party.id)) return null;
-  return (
-    <Accordion type="multiple" defaultValue={["candidate-list"]}>
-      <CandidateListItem party={party} />
-    </Accordion>
   );
 }

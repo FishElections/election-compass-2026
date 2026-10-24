@@ -5,7 +5,6 @@ import { ChevronLeft } from "lucide-react";
 import { getParties, HIDDEN_FROM_PLATFORMS } from "@/data/parties";
 import { getPartyTrackRecord } from "@/data/trackRecord";
 import { TrackRecordSections } from "@/components/trackRecord/TrackRecordSections";
-import { CandidateListSection } from "@/components/candidates/CandidateList";
 import { partiesCore } from "@/data/parties/core";
 import { getPlatformTopics } from "@/data/platformTopics";
 import { PartyLogo } from "@/components/PartyLogo";
@@ -204,18 +203,13 @@ export default async function PartyProfilePage({
           </div>
         )}
 
-        {/* Veteran-party track record and leader's legal record
-            (docs/track-record-methodology.md). */}
+        {/* Veteran-party track record, leader's legal record
+            (docs/track-record-methodology.md) and the candidate list. */}
         {getPartyTrackRecord(lang, party.id) && (
           <div className="mt-10">
             <TrackRecordSections party={party} />
           </div>
         )}
-
-        {/* The official candidate list (src/data/candidateLists). */}
-        <div className="mt-10">
-          <CandidateListSection party={party} />
-        </div>
       </div>
     </main>
   );

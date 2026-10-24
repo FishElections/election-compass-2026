@@ -4,7 +4,7 @@ import {
   type CandidateListCore,
   type WomenRepresentation,
 } from "./core";
-import { candidateLinks } from "./links";
+import { candidateLinks, wikipediaLinks } from "./links";
 import { candidateListsCore } from "./parties/registry";
 
 export {
@@ -31,13 +31,15 @@ export function getCandidateList(partyId: string): CandidateList | undefined {
   const core = candidateListsCore[partyId];
   if (!core) return undefined;
   const links = candidateLinks[partyId]?.byPlace ?? {};
+  const wiki = wikipediaLinks[partyId] ?? {};
   const { names, ...rest } = core;
   return {
     ...rest,
     candidates: names.map((name, i) => ({
       place: i + 1,
       name,
-      url: i < TOP_PLACES ? links[i + 1] : undefined,
+      // The party's own page first; Wikipedia only when the party has none.
+      url: i < TOP_PLACES ? (links[i + 1] ?? wiki[i + 1]) : undefined,
     })),
     women: womenRepresentation[partyId],
   };
